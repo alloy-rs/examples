@@ -28,6 +28,7 @@ alloy-transport-http.workspace = true
 alloy-transport-ws.workspace = true
 alloy-transport-ipc.workspace = true
 alloy-network.workspace = true
+alloy-signer.workspace = true
 tokio = { version = "1.36.0", features = ["rt-multi-thread", "macros"] }
 eyre = "0.6.12"
 reqwest = "0.11.26"
