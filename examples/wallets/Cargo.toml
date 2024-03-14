@@ -1,0 +1,36 @@
+[package]
+name = "examples-wallets"
+
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+exclude.workspace = true
+publish.workspace = true
+
+[dev-dependencies]
+alloy-network.workspace = true
+alloy-node-bindings.workspace = true
+alloy-primitives.workspace = true
+alloy-provider.workspace = true
+alloy-rpc-client.workspace = true
+alloy-rpc-types.workspace = true
+alloy-signer = { workspace = true, features = [
+    "eip712",
+    "mnemonic",
+    "yubihsm",
+] }
+alloy-signer-ledger.workspace = true
+alloy-signer-trezor.workspace = true
+alloy-sol-types.workspace = true
+alloy-transport-http.workspace = true
+
+# TODO: remove after https://github.com/alloy-rs/alloy/pull/309
+coins-bip39.workspace = true
+rand.workspace = true
+reqwest.workspace = true
+serde.workspace = true
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
