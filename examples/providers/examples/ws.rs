@@ -9,6 +9,9 @@ async fn main() -> Result<()> {
     let rpc_url = "wss://eth-mainnet.g.alchemy.com/v2/your-api-key";
 
     let ws_transport = WsConnect::new(rpc_url);
+    // To use auth
+    // let auth = alloy_transport::Authorization::bearer("token");
+    // let ws_transport = WsConnect::with_auth(rpc_url, Some(auth));
 
     let rpc_client = RpcClient::connect_pubsub(ws_transport).await?;
 
