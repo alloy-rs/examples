@@ -1,0 +1,17 @@
+[workspace]
+members = ["examples/*"]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.76"
+authors = ["Alloy Contributors"]
+license = "MIT OR Apache-2.0"
+homepage = "https://github.com/alloy-rs/examples"
+repository = "https://github.com/alloy-rs/examples"
+exclude = ["examples/"]
+publish = false
+
+[workspace.dependencies]
+alloy = { git = "https://github.com/alloy-rs/alloy", rev = "818b3e9", default-features = false }
