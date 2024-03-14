@@ -19,7 +19,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .password(password)
         .build()?;
 
-    println!("Wallet: {:?}", wallet);
+    println!("Wallet: {:?}", wallet.address());
 
     // Generate a random wallet (24 word phrase) at custom derivation path
     let mut rng = rand::thread_rng();
@@ -31,7 +31,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         // .write_to(path)
         .build_random(&mut rng)?;
 
-    println!("Random wallet: {:?}", wallet);
+    println!("Random wallet: {:?}", wallet.address());
 
     Ok(())
 }
