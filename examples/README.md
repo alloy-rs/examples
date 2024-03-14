@@ -11,12 +11,10 @@ cargo run --example mnemonic_signer
 
 ## Table of Contents
 
-- [ ] Address book
-- [ ] Anvil
-    - [ ] Boot anvil
-    - [ ] Deploy contracts
-    - [ ] Fork
-    - [ ] Testing
+- [x] Anvil
+    - [x] [Deploy contract](./anvil/examples/deploy_contract_anvil.rs)
+    - [x] [Fork](./anvil/examples/fork_anvil.rs)
+    - [x] [Local](./anvil/examples/local_anvil.rs)
 - [ ] Big numbers
     - [ ] Comparison and equivalence
     - [ ] Conversion

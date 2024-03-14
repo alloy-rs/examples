@@ -1,5 +1,5 @@
 [package]
-name = "examples-wallets"
+name = "examples-anvil"
 
 publish.workspace = true
 version.workspace = true
@@ -11,25 +11,15 @@ homepage.workspace = true
 repository.workspace = true
 
 [dev-dependencies]
+alloy-contract.workspace = true
 alloy-network.workspace = true
 alloy-node-bindings.workspace = true
 alloy-primitives.workspace = true
 alloy-provider.workspace = true
 alloy-rpc-client.workspace = true
-alloy-rpc-types.workspace = true
-alloy-signer = { workspace = true, features = [
-    "eip712",
-    "mnemonic",
-    "yubihsm",
-] }
-alloy-signer-ledger.workspace = true
-alloy-signer-trezor.workspace = true
+alloy-signer.workspace = true
 alloy-sol-types.workspace = true
 alloy-transport-http.workspace = true
 
-# TODO: remove after https://github.com/alloy-rs/alloy/pull/309
-coins-bip39.workspace = true
-rand.workspace = true
 reqwest.workspace = true
-serde.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
