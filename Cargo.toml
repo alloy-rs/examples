@@ -10,7 +10,6 @@ authors = ["Alloy Contributors"]
 license = "MIT OR Apache-2.0"
 homepage = "https://github.com/alloy-rs/examples"
 repository = "https://github.com/alloy-rs/examples"
-exclude = ["examples/"]
 publish = false
 
 [workspace.dependencies]
@@ -38,6 +37,13 @@ alloy-transport-http = { git = "https://github.com/alloy-rs/alloy", rev = "d5967
 alloy-transport-ipc = { git = "https://github.com/alloy-rs/alloy", rev = "d5967ab", default-features = false }
 alloy-transport-ws = { git = "https://github.com/alloy-rs/alloy", rev = "d5967ab", default-features = false }
 
+alloy-core = { version = "0.6.4", default-features = false, features = ["std"] }
+alloy-dyn-abi = { version = "0.6.4", default-features = false, features = [
+    "std",
+] }
+alloy-json-abi = { version = "0.6.4", default-features = false, features = [
+    "std",
+] }
 alloy-primitives = { version = "0.6.4", default-features = false, features = [
     "std",
 ] }
@@ -59,3 +65,12 @@ serde = { version = "1.0", features = ["derive"] }
 coins-bip39 = { version = "0.8.7", default-features = false, features = [
     "english",
 ] }
+
+[patch.crates-io]
+alloy-sol-macro = { git = "https://github.com/alloy-rs/core", rev = "907d61a45a9135e979310990744080eef5f03fe5" }
+alloy-primitives = { git = "https://github.com/alloy-rs/core", rev = "907d61a45a9135e979310990744080eef5f03fe5" }
+alloy-sol-types = { git = "https://github.com/alloy-rs/core", rev = "907d61a45a9135e979310990744080eef5f03fe5" }
+alloy-json-abi = { git = "https://github.com/alloy-rs/core", rev = "907d61a45a9135e979310990744080eef5f03fe5" }
+alloy-dyn-abi = { git = "https://github.com/alloy-rs/core", rev = "907d61a45a9135e979310990744080eef5f03fe5" }
+syn-solidity = { git = "https://github.com/alloy-rs/core", rev = "907d61a45a9135e979310990744080eef5f03fe5" }
+alloy-core = { git = "https://github.com/alloy-rs/core", rev = "907d61a45a9135e979310990744080eef5f03fe5" }
