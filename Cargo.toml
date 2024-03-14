@@ -11,6 +11,7 @@ license = "MIT OR Apache-2.0"
 homepage = "https://github.com/alloy-rs/examples"
 repository = "https://github.com/alloy-rs/examples"
 publish = false
+exclude = ["examples/"]
 
 [workspace.dependencies]
 alloy-consensus = { git = "https://github.com/alloy-rs/alloy", rev = "d5967ab", default-features = false }
