@@ -35,7 +35,9 @@ alloy-signer-ledger = { git = "https://github.com/alloy-rs/alloy", rev = "d5967a
 alloy-signer-trezor = { git = "https://github.com/alloy-rs/alloy", rev = "d5967ab", default-features = false }
 alloy-transport = { git = "https://github.com/alloy-rs/alloy", rev = "d5967ab", default-features = false }
 alloy-transport-http = { git = "https://github.com/alloy-rs/alloy", rev = "d5967ab", default-features = false }
-alloy-transport-ipc = { git = "https://github.com/alloy-rs/alloy", rev = "d5967ab", default-features = false }
+alloy-transport-ipc = { git = "https://github.com/alloy-rs/alloy", rev = "d5967ab", features = [
+    "mock",
+] }
 alloy-transport-ws = { git = "https://github.com/alloy-rs/alloy", rev = "d5967ab", default-features = false }
 
 alloy-core = { version = "0.6.4", default-features = false, features = ["std"] }
