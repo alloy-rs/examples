@@ -89,11 +89,11 @@ cargo run --example mnemonic_signer
 - [ ] Wallets
   - [ ] AWS signer
   - [ ] GCP signer
-  - [ ] [Ledger signer](./examples/wallets/examples/ledger_signer.rs)
-  - [ ] [Private key signer](./examples/wallets/examples/private_key_signer.rs)
-  - [ ] [Mnemonic signer](./examples/wallets/examples/mnemonic_signer.rs)
-  - [ ] [Sign message](./examples/wallets/examples/sign_message.rs)
-  - [ ] [Sign permit hash](./examples/wallets/examples/sign_permit_hash.rs)
-  - [ ] [Trezor signer](./examples/wallets/examples/trezor_signer.rs)
-  - [ ] [Yubi signer](./examples/wallets/examples/yubi_signer.rs)
+  - [x] [Ledger signer](./examples/wallets/examples/ledger_signer.rs)
+  - [x] [Private key signer](./examples/wallets/examples/private_key_signer.rs)
+  - [x] [Mnemonic signer](./examples/wallets/examples/mnemonic_signer.rs)
+  - [x] [Sign message](./examples/wallets/examples/sign_message.rs)
+  - [x] [Sign permit hash](./examples/wallets/examples/sign_permit_hash.rs)
+  - [x] [Trezor signer](./examples/wallets/examples/trezor_signer.rs)
+  - [x] [Yubi signer](./examples/wallets/examples/yubi_signer.rs)
   - [ ] Keystore signer
