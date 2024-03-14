@@ -14,17 +14,17 @@ sol!(
         int256 public counter = 0;
 
         event Increment(address indexed by, int256 indexed value);
-        // event Decrement(address indexed by, int256 indexed value); // Uncommenting this line would cause the duplicate definitions for EventExampleInstance_filter
+        event Decrement(address indexed by, int256 indexed value);
 
         function increment() public {
             counter += 1;
             emit Increment(msg.sender, counter);
         }
 
-        // function decrement() public {
-        //     counter -= 1;
-        //     emit Decrement(msg.sender, counter);
-        // }
+        function decrement() public {
+            counter -= 1;
+            emit Decrement(msg.sender, counter);
+        }
     }
 );
 
@@ -36,27 +36,43 @@ async fn main() -> Result<()> {
 
     println!("Deployed contract at: {:?}", deployed_contract.address());
 
-    let filter = Filter::new()
+    let increment_filter = Filter::new()
         .address(deployed_contract.address().to_owned())
         .event_signature(EventExample::Increment::SIGNATURE_HASH);
 
-    let poller = provider.watch_logs(&filter).await?;
+    let increment_poller = provider.watch_logs(&increment_filter).await?;
 
+    let decrement_filter = Filter::new()
+        .address(deployed_contract.address().to_owned())
+        .event_signature(EventExample::Decrement::SIGNATURE_HASH);
+
+    let decrement_poller = provider.watch_logs(&decrement_filter).await?;
     println!("Watching for events...");
-    println!("every {:?}", poller.poll_interval()); // Default 250ms
+    println!("every {:?}", increment_poller.poll_interval()); // Default 250ms for local connection else 7s
 
-    let mut stream = poller.into_stream().flat_map(stream::iter).take(5);
+    let mut increment_stream = increment_poller.into_stream().flat_map(stream::iter).take(2);
 
+    let mut decrement_stream = decrement_poller.into_stream().flat_map(stream::iter).take(2);
     // Build a call to increment the counter
     let increment_call = deployed_contract.increment();
-
-    // Send the increment call 5 times
-    for _ in 0..5 {
+    // Send the increment call 2 times
+    for _ in 0..2 {
         let _ = increment_call.send().await?;
     }
 
-    while let Some(log) = stream.next().await {
-        println!("Received log: {:?}", log);
+    // Build a call to decrement the counter
+    let decrement_call = deployed_contract.decrement();
+    // Send the decrement call 2 times
+    for _ in 0..2 {
+        let _ = decrement_call.send().await?;
+    }
+
+    while let Some(log) = increment_stream.next().await {
+        println!("Received Increment: {:?}", log);
+    }
+
+    while let Some(log) = decrement_stream.next().await {
+        println!("Received Decrement: {:?}", log);
     }
 
     Ok(())
