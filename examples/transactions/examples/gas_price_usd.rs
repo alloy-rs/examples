@@ -1,6 +1,6 @@
-use alloy_primitives::{address, utils::format_units, Address, Bytes, U256};
 use alloy_network::Ethereum;
 use alloy_node_bindings::{Anvil, AnvilInstance};
+use alloy_primitives::{address, utils::format_units, Address, Bytes, U256};
 use alloy_provider::{HttpProvider, Provider};
 use alloy_rpc_client::RpcClient;
 use alloy_rpc_types::TransactionRequest;

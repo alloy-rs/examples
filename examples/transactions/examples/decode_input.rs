@@ -1,4 +1,4 @@
-use alloy_primitives::{hex, Address};
+use alloy_primitives::hex;
 use alloy_sol_types::{sol, SolCall};
 use eyre::Result;
 
@@ -26,7 +26,7 @@ async fn main() -> Result<()> {
 
     match decoded {
         Ok(decoded) => {
-            let path = decoded.path.iter().map(|address| address).collect::<Vec<&Address>>();
+            let path = decoded.path;
             println!(
                 "Swap {} of token {} to {} of token {}",
                 decoded.amountIn,
