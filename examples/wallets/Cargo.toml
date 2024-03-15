@@ -16,5 +16,5 @@ alloy-sol-types.workspace = true
 
 eyre.workspace = true
 reqwest.workspace = true
-serde.workspace = true
+serde = { version = "1.0", features = ["derive"] }
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
