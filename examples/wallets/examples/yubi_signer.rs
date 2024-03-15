@@ -1,15 +1,16 @@
 //! Example of signing and sending a transaction using a Yubi device.
 
-use alloy_network::EthereumSigner;
-use alloy_primitives::{address, U256};
-use alloy_provider::{Provider, ProviderBuilder, RootProvider};
-use alloy_rpc_client::RpcClient;
-use alloy_rpc_types::request::TransactionRequest;
-use alloy_signer_wallet::{
-    yubihsm::{Connector, Credentials, UsbConfig},
-    YubiWallet,
+use alloy::{
+    network::EthereumSigner,
+    primitives::{address, U256},
+    providers::{Provider, ProviderBuilder, RootProvider},
+    rpc::{client::RpcClient, types::eth::request::TransactionRequest},
+    signers::wallet::{
+        yubihsm::{Connector, Credentials, UsbConfig},
+        YubiWallet,
+    },
+    transports::http::Http,
 };
-use alloy_transport_http::Http;
 use eyre::Result;
 use reqwest::Client;
 
