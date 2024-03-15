@@ -1,3 +1,5 @@
+//! Example of subscribing to contract events and watching contract events.
+
 use alloy_network::Ethereum;
 use alloy_node_bindings::{Anvil, AnvilInstance};
 use alloy_provider::{Provider, RootProvider};
@@ -47,14 +49,17 @@ async fn main() -> Result<()> {
         .event_signature(EventExample::Decrement::SIGNATURE_HASH);
 
     let decrement_poller = provider.watch_logs(&decrement_filter).await?;
+
     println!("Watching for events...");
     println!("every {:?}", increment_poller.poll_interval()); // Default 250ms for local connection else 7s
 
     let mut increment_stream = increment_poller.into_stream().flat_map(stream::iter).take(2);
 
     let mut decrement_stream = decrement_poller.into_stream().flat_map(stream::iter).take(2);
+
     // Build a call to increment the counter
     let increment_call = deployed_contract.increment();
+
     // Send the increment call 2 times
     for _ in 0..2 {
         let _ = increment_call.send().await?;
@@ -62,6 +67,7 @@ async fn main() -> Result<()> {
 
     // Build a call to decrement the counter
     let decrement_call = deployed_contract.decrement();
+
     // Send the decrement call 2 times
     for _ in 0..2 {
         let _ = decrement_call.send().await?;
