@@ -1,9 +1,11 @@
 //! Example of signing a message with a wallet.
 
-use alloy_signer::{LocalWallet, Signer};
+use alloy_signer::Signer;
+use alloy_signer_wallet::LocalWallet;
+use eyre::Result;
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<()> {
     // Setup up wallet.
     let wallet = LocalWallet::random();
 

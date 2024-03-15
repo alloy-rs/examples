@@ -1,8 +1,10 @@
 //! Example of signing a permit hash using a wallet.
 
 use alloy_primitives::{address, keccak256, U256};
-use alloy_signer::{LocalWallet, Signer};
+use alloy_signer::Signer;
+use alloy_signer_wallet::LocalWallet;
 use alloy_sol_types::{eip712_domain, sol, SolStruct};
+use eyre::Result;
 use serde::Serialize;
 
 sol! {
@@ -17,7 +19,7 @@ sol! {
 }
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<()> {
     // Setup up wallet.
     let wallet = LocalWallet::random();
 
