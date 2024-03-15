@@ -1,6 +1,7 @@
 //! Example of converting `U256` to native Rust types.
 
 use alloy_primitives::{utils::format_units, U256};
+use eyre::Result;
 
 /// `U256` provides useful conversion functions to enable transformation into native Rust types.
 ///
@@ -10,7 +11,7 @@ use alloy_primitives::{utils::format_units, U256};
 ///
 /// However, there may be cases where you want to perform conversions for presentation purposes.
 /// For example, you may want to display a large number to the user in a more readable format.
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn main() -> Result<()> {
     let num = U256::from(42_u8);
 
     let a: u128 = num.to::<u128>();

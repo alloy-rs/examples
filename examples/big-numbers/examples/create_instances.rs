@@ -4,9 +4,10 @@ use alloy_primitives::{
     utils::{parse_units, ParseUnits},
     U256,
 };
+use eyre::Result;
 use std::str::FromStr;
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn main() -> Result<()> {
     // From strings
     let a = U256::from_str("42")?;
     assert_eq!(a.to_string(), "42");

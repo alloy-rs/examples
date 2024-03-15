@@ -14,3 +14,5 @@ repository.workspace = true
 alloy-core.workspace = true
 alloy-primitives.workspace = true
 alloy-serde.workspace = true
+
+eyre.workspace = true
