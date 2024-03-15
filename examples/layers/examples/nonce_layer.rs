@@ -8,6 +8,7 @@ use alloy_rpc_client::RpcClient;
 use alloy_rpc_types::request::TransactionRequest;
 use alloy_signer_wallet::LocalWallet;
 use alloy_transport_http::Http;
+use eyre::Result;
 use reqwest::Client;
 
 /// In Ethereum, the nonce of a transaction is a number that represents the number of transactions
@@ -20,7 +21,7 @@ use reqwest::Client;
 /// incrementing it as needed. This can be useful if you want to ensure that transactions are sent
 /// in the correct order, or if you want to avoid having to manually manage the nonce yourself.
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH
     let anvil = Anvil::new().spawn();
