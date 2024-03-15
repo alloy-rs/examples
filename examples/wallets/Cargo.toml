@@ -24,7 +24,7 @@ alloy-signer-wallet = { workspace = true, features = ["mnemonic", "yubihsm"] }
 alloy-sol-types.workspace = true
 alloy-transport-http.workspace = true
 
-rand.workspace = true
+eyre.workspace = true
 reqwest.workspace = true
 serde.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
