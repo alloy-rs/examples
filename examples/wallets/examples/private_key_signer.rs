@@ -6,12 +6,13 @@ use alloy_primitives::{U256, U64};
 use alloy_provider::{Provider, ProviderBuilder, RootProvider};
 use alloy_rpc_client::RpcClient;
 use alloy_rpc_types::request::TransactionRequest;
-use alloy_signer::LocalWallet;
+use alloy_signer_wallet::LocalWallet;
 use alloy_transport_http::Http;
+use eyre::Result;
 use reqwest::Client;
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<()> {
     // Spin up an Anvil node.
     let anvil = Anvil::new().block_time(1).spawn();
 
