@@ -1,3 +1,5 @@
+//! Example of using the WS provider to subscribe to new blocks.
+
 use alloy_network::Ethereum;
 use alloy_provider::{Provider, RootProvider};
 use alloy_rpc_client::{RpcClient, WsConnect};

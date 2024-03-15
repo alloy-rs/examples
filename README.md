@@ -48,14 +48,11 @@ cargo run --example mnemonic_signer
   - [ ] Signer
   - [ ] Time lag
   - [ ] Transformer
-- [ ] Providers
-  - [ ] Http
-  - [ ] IPC
-  - [ ] Mock 
-  - [ ] Quorum
-  - [ ] Retry
-  - [ ] RW
-  - [ ] WS
+- [x] Providers
+  - [x] [Builder](./examples/providers/examples/builder.rs)
+  - [x] [HTTP](./examples/providers/examples/http.rs)
+  - [x] [IPC](./examples/providers/examples/ipc.rs)
+  - [x] [WS](./examples/providers/examples/ws.rs)
 - [ ] Queries
   - [ ] Blocks
   - [ ] Contracts

@@ -1,3 +1,5 @@
+//! Example of using the HTTP provider to get the latest block number.
+
 use alloy_network::Ethereum;
 use alloy_provider::{HttpProvider, Provider};
 use alloy_rpc_client::RpcClient;

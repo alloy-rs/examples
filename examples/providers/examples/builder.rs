@@ -1,10 +1,12 @@
+//! Example of using the `ProviderBuilder` to create a provider with a signer and network.
+
 use alloy_network::{Ethereum, EthereumSigner};
 use alloy_node_bindings::Anvil;
 use alloy_primitives::{U256, U64};
 use alloy_provider::{Provider, ProviderBuilder, RootProvider};
 use alloy_rpc_client::RpcClient;
 use alloy_rpc_types::TransactionRequest;
-use alloy_signer::Wallet;
+use alloy_signer_wallet::Wallet;
 use alloy_transport_http::Http;
 use eyre::Result;
 use reqwest::Client;
@@ -37,6 +39,7 @@ async fn main() -> Result<()> {
     let pending_tx = provider_with_signer.send_transaction(tx_req).await?;
 
     println!("Pending transaction...{:?}", pending_tx.tx_hash());
+
     let receipt = pending_tx.get_receipt().await?;
 
     assert_eq!(receipt.from, from);
