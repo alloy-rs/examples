@@ -10,10 +10,11 @@ use alloy_signer_wallet::{
     YubiWallet,
 };
 use alloy_transport_http::Http;
+use eyre::Result;
 use reqwest::Client;
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<()> {
     // We use USB for the example, but you can connect over HTTP as well. Refer
     // to the [YubiHSM](https://docs.rs/yubihsm/0.34.0/yubihsm/) docs for more information.
     let connector = Connector::usb(&UsbConfig::default());
