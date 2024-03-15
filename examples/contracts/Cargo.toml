@@ -17,7 +17,7 @@ alloy-node-bindings.workspace = true
 alloy-primitives.workspace = true
 alloy-provider.workspace = true
 alloy-rpc-client.workspace = true
-alloy-signer.workspace = true
+alloy-signer-wallet.workspace = true
 alloy-sol-types = { workspace = true, features = ["json"] }
 alloy-transport-http.workspace = true
 

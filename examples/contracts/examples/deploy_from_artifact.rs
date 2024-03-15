@@ -5,7 +5,7 @@ use alloy_node_bindings::Anvil;
 use alloy_primitives::{U256, U64};
 use alloy_provider::{Provider, ProviderBuilder, RootProvider};
 use alloy_rpc_client::RpcClient;
-use alloy_signer::LocalWallet;
+use alloy_signer_wallet::LocalWallet;
 use alloy_sol_types::sol;
 use alloy_transport_http::Http;
 use reqwest::Client;
