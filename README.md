@@ -64,8 +64,8 @@ cargo run --example mnemonic_signer
   - [ ] UniswapV2 pair
   - [ ] Transactions
 - [x] Subscriptions
-  - [x] [Watch blocks](./examples/subscriptions/examples/watch_blocks.rs)
-  - [x] [Watch logs](./examples/subscriptions/examples/watch_logs.rs)
+  - [x] [Subscribe and watch blocks](./examples/subscriptions/examples/subscribe_blocks.rs)
+  - [x] [Subscribe contract events and watch logs](./examples/subscriptions/examples/watch_contract_event.rs)
 - [ ] Transactions
   - [ ] Call override
   - [ ] Create raw transaction

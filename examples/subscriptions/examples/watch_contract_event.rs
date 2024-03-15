@@ -1,4 +1,4 @@
-//! Example of subscribing to contract events and watching contract events.
+//! Example of subscribing to contract events and watching logs.
 
 use alloy_network::Ethereum;
 use alloy_node_bindings::{Anvil, AnvilInstance};
