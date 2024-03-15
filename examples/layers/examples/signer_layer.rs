@@ -23,6 +23,7 @@ async fn main() -> Result<()> {
     // Create a provider with a signer and the network.
     let http = Http::<Client>::new(anvil.endpoint().parse()?);
     let provider = ProviderBuilder::new()
+        // Add the `SignerLayer` to the provider
         .signer(EthereumSigner::from(wallet))
         .provider(RootProvider::new(RpcClient::new(http, true)));
 
