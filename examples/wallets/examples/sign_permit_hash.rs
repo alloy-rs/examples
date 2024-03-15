@@ -1,7 +1,8 @@
 //! Example of signing a permit hash using a wallet.
 
 use alloy_primitives::{address, keccak256, U256};
-use alloy_signer::{LocalWallet, Signer};
+use alloy_signer::Signer;
+use alloy_signer_wallet::LocalWallet;
 use alloy_sol_types::{eip712_domain, sol, SolStruct};
 use serde::Serialize;
 
