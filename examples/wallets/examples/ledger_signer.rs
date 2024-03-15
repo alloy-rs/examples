@@ -7,15 +7,18 @@ use alloy_rpc_client::RpcClient;
 use alloy_rpc_types::request::TransactionRequest;
 use alloy_signer_ledger::{HDPath, LedgerSigner};
 use alloy_transport_http::Http;
+use eyre::Result;
 use reqwest::Client;
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<()> {
     // Instantiate the application by acquiring a lock on the Ledger device.
     let signer = LedgerSigner::new(HDPath::LedgerLive(0), Some(1)).await?;
 
     // Create a provider with the signer and the network.
     let http = Http::<Client>::new("http://localhost:8545".parse()?);
+
+    // Initialize the provider.
     let provider = ProviderBuilder::new()
         .signer(EthereumSigner::from(signer))
         .provider(RootProvider::new(RpcClient::new(http, true)));
@@ -32,7 +35,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Broadcast the transaction and wait for the receipt.
     let receipt = provider.send_transaction(tx).await?.with_confirmations(3).get_receipt().await?;
 
-    println!("Send transaction: {:?}", receipt.transaction_hash.unwrap());
+    println!("Send transaction: {:?}", receipt.transaction_hash.unwrap_or_default());
 
     Ok(())
 }
