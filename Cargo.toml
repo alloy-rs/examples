@@ -59,6 +59,7 @@ eyre = "0.6.12"
 reqwest = { version = "0.11", default-features = false }
 serde = { version = "1.0", features = ["derive"] }
 
+# TODO: are these patches still needed with new `alloy` main crate import?
 [patch.crates-io]
 alloy-core = { git = "https://github.com/alloy-rs/core", rev = "907d61a45a9135e979310990744080eef5f03fe5" }
 alloy-dyn-abi = { git = "https://github.com/alloy-rs/core", rev = "907d61a45a9135e979310990744080eef5f03fe5" }
