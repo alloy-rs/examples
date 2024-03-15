@@ -1,8 +1,6 @@
-[workspace]
-members = ["examples/*"]
-resolver = "2"
-
-[workspace.package]
+[package]
+name = "alloy-examples"
+description = "Example code using alloy and alloy-core"
 version = "0.1.0"
 edition = "2021"
 rust-version = "1.76"
@@ -11,8 +9,9 @@ license = "MIT OR Apache-2.0"
 homepage = "https://github.com/alloy-rs/examples"
 repository = "https://github.com/alloy-rs/examples"
 publish = false
+include = ["examples/*"]
 
-[workspace.dependencies]
+[dependencies]
 alloy = { git = "https://github.com/alloy-rs/alloy", rev = "e7dfb4f", features = [
     "dyn-abi",
     "json-abi",
@@ -54,11 +53,12 @@ alloy-sol-types = { version = "0.6.4", default-features = false, features = [
 ] }
 
 # async
-tokio = "1"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 
 # misc
 eyre = "0.6.12"
 reqwest = { version = "0.11", default-features = false }
+serde = { version = "1.0", features = ["derive"] }
 
 [patch.crates-io]
 alloy-core = { git = "https://github.com/alloy-rs/core", rev = "907d61a45a9135e979310990744080eef5f03fe5" }
@@ -68,3 +68,32 @@ alloy-primitives = { git = "https://github.com/alloy-rs/core", rev = "907d61a45a
 alloy-sol-macro = { git = "https://github.com/alloy-rs/core", rev = "907d61a45a9135e979310990744080eef5f03fe5" }
 alloy-sol-types = { git = "https://github.com/alloy-rs/core", rev = "907d61a45a9135e979310990744080eef5f03fe5" }
 syn-solidity = { git = "https://github.com/alloy-rs/core", rev = "907d61a45a9135e979310990744080eef5f03fe5" }
+
+# wallets
+[[example]]
+name = "ledger-signer"
+path = "examples/wallets/ledger_signer.rs"
+
+[[example]]
+name = "mnemonic-signer"
+path = "examples/wallets/mnemonic_signer.rs"
+
+[[example]]
+name = "private-key-signer"
+path = "examples/wallets/private_key_signer.rs"
+
+[[example]]
+name = "sign-message"
+path = "examples/wallets/sign_message.rs"
+
+[[example]]
+name = "sign-permit-hash"
+path = "examples/wallets/sign_permit_hash.rs"
+
+[[example]]
+name = "trezor-signer"
+path = "examples/wallets/trezor_signer.rs"
+
+[[example]]
+name = "yubi-signer"
+path = "examples/wallets/yubi_signer.rs"
