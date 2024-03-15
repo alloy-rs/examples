@@ -1,3 +1,5 @@
+//! Example of querying contract storage from the Ethereum network.
+
 use alloy_network::Ethereum;
 use alloy_primitives::{address, fixed_bytes};
 use alloy_provider::{HttpProvider, Provider};

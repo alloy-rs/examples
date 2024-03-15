@@ -1,3 +1,5 @@
+//! Example of querying deployed bytecode of a contract on Ethereum network.
+
 use alloy_network::Ethereum;
 use alloy_primitives::address;
 use alloy_provider::{HttpProvider, Provider};
