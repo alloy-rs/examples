@@ -5,7 +5,7 @@ use alloy_primitives::{address, U256};
 use alloy_provider::{Provider, ProviderBuilder, RootProvider};
 use alloy_rpc_client::RpcClient;
 use alloy_rpc_types::request::TransactionRequest;
-use alloy_signer::{
+use alloy_signer_wallet::{
     yubihsm::{Connector, Credentials, UsbConfig},
     YubiWallet,
 };

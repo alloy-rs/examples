@@ -6,7 +6,7 @@ use alloy_primitives::{U256, U64};
 use alloy_provider::{Provider, ProviderBuilder, RootProvider};
 use alloy_rpc_client::RpcClient;
 use alloy_rpc_types::request::TransactionRequest;
-use alloy_signer::LocalWallet;
+use alloy_signer_wallet::LocalWallet;
 use alloy_transport_http::Http;
 use reqwest::Client;
 
