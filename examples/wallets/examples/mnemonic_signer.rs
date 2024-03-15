@@ -1,8 +1,6 @@
 //! Example of using `MnemonicBuilder` to access a wallet from a mnemonic phrase.
 
-use alloy_signer::MnemonicBuilder;
-// TODO: remove after https://github.com/alloy-rs/alloy/pull/309
-use coins_bip39::English;
+use alloy_signer_wallet::{coins_bip39::English, MnemonicBuilder};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -22,14 +20,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Wallet: {:?}", wallet.address());
 
     // Generate a random wallet (24 word phrase) at custom derivation path
-    let mut rng = rand::thread_rng();
     let wallet = MnemonicBuilder::<English>::default()
         .word_count(24)
         .derivation_path("m/44'/60'/0'/2/1")?
         // Optionally add this if you want the generated mnemonic to be written
         // to a file
         // .write_to(path)
-        .build_random(&mut rng)?;
+        .build_random()?;
 
     println!("Random wallet: {:?}", wallet.address());
 
