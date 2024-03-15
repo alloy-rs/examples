@@ -1,3 +1,5 @@
+//! Example of how to trace a transaction using `trace_call`.
+
 use alloy_network::Ethereum;
 use alloy_node_bindings::{Anvil, AnvilInstance};
 use alloy_primitives::U256;

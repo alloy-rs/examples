@@ -1,3 +1,5 @@
+//! Example of how to get the gas price in USD using the Chainlink ETH/USD feed.
+
 use alloy_network::Ethereum;
 use alloy_node_bindings::{Anvil, AnvilInstance};
 use alloy_primitives::{address, utils::format_units, Address, Bytes, U256};
@@ -10,12 +12,13 @@ use eyre::Result;
 use reqwest::Client;
 use std::str::FromStr;
 
+const ETH_USD_FEED: Address = address!("5f4eC3Df9cbd43714FE2740f5E3616155c5b8419");
+const ETH_DECIMALS: u32 = 18;
+
 sol!(
     #[derive(Debug)]
     function latestAnswer() external view returns (int256);
 );
-const ETH_USD_FEED: Address = address!("5f4eC3Df9cbd43714FE2740f5E3616155c5b8419");
-const ETH_DECIMALS: u32 = 18;
 
 #[tokio::main]
 async fn main() -> Result<()> {

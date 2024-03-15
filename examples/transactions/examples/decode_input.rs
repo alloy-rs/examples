@@ -1,3 +1,5 @@
+//! Example of how to decode the input of a transaction.
+
 use alloy_primitives::hex;
 use alloy_sol_types::{sol, SolCall};
 use eyre::Result;
@@ -13,6 +15,7 @@ sol!(
         uint deadline
       ) external returns (uint[] memory amounts);
 );
+
 #[tokio::main]
 async fn main() -> Result<()> {
     println!("Decoding https://etherscan.io/tx/0xd1b449d8b1552156957309bffb988924569de34fbf21b51e7af31070cc80fe9a");

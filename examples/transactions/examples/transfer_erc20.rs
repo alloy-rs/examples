@@ -1,3 +1,5 @@
+//! Example of how to transfer ERC20 tokens from one account to another.
+
 use alloy_network::Ethereum;
 use alloy_node_bindings::{Anvil, AnvilInstance};
 use alloy_primitives::{Address, Bytes, U256};
@@ -10,6 +12,7 @@ use eyre::Result;
 use reqwest::Client;
 
 sol!(ERC20Example, "examples/contracts/ERC20Example.json");
+
 #[tokio::main]
 async fn main() -> Result<()> {
     let (provider, anvil) = init();

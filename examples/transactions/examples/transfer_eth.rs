@@ -1,3 +1,5 @@
+//! Example of how to transfer ETH from one account to another.
+
 use alloy_network::Ethereum;
 use alloy_node_bindings::{Anvil, AnvilInstance};
 use alloy_primitives::{address, fixed_bytes, Address, U256};
@@ -6,6 +8,7 @@ use alloy_rpc_client::RpcClient;
 use alloy_transport_http::Http;
 use eyre::Result;
 use reqwest::Client;
+
 #[tokio::main]
 async fn main() -> Result<()> {
     let (provider, _anvil) = init();

@@ -1,3 +1,5 @@
+//! Example of how to trace a transaction using `debug_trace_transaction`.
+
 use alloy_network::Ethereum;
 use alloy_node_bindings::{Anvil, AnvilInstance};
 use alloy_primitives::fixed_bytes;
