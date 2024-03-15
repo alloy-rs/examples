@@ -27,11 +27,8 @@ async fn main() -> Result<()> {
     let call = latestAnswerCall {}.abi_encode();
     let input = Bytes::from(call);
 
-    let tx = TransactionRequest {
-        to: Some(ETH_USD_FEED),
-        input: Some(input).into(),
-        ..Default::default()
-    };
+    let tx = TransactionRequest::default().to(Some(ETH_USD_FEED)).input(Some(input).into());
+
     let res = provider.call(&tx, None).await?;
 
     let u = U256::from_str(res.to_string().as_str());
@@ -49,7 +46,7 @@ async fn main() -> Result<()> {
 }
 
 fn init() -> (HttpProvider<Ethereum>, AnvilInstance) {
-    let anvil = Anvil::new().fork("https://eth.llamarpc.com").spawn();
+    let anvil = Anvil::new().fork("https://eth.merkle.io").spawn();
     let url = anvil.endpoint().parse().unwrap();
     let http = Http::<Client>::new(url);
     (HttpProvider::new(RpcClient::new(http, true)), anvil)
