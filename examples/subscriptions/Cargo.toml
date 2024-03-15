@@ -16,9 +16,9 @@ alloy-network.workspace = true
 alloy-node-bindings.workspace = true
 alloy-provider = { workspace = true, features = ["pubsub", "ws"] }
 alloy-pubsub.workspace = true
-alloy-sol-types = { workspace = true }
 alloy-rpc-client.workspace = true
 alloy-rpc-types.workspace = true
+alloy-sol-types = { workspace = true }
 
 eyre.workspace = true
 futures-util = "0.3"
