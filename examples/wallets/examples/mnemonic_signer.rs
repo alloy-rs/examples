@@ -1,9 +1,10 @@
 //! Example of using `MnemonicBuilder` to access a wallet from a mnemonic phrase.
 
 use alloy_signer_wallet::{coins_bip39::English, MnemonicBuilder};
+use eyre::Result;
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<()> {
     let phrase = "work man father plunge mystery proud hollow address reunion sauce theory bonus";
     let index = 0u32;
     let password = "TREZOR123";
