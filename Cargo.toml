@@ -9,7 +9,6 @@ license = "MIT OR Apache-2.0"
 homepage = "https://github.com/alloy-rs/examples"
 repository = "https://github.com/alloy-rs/examples"
 publish = false
-include = ["examples/*"]
 
 [dependencies]
 alloy = { git = "https://github.com/alloy-rs/alloy", rev = "e7dfb4f", features = [
