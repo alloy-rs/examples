@@ -8,10 +8,11 @@ use alloy_rpc_client::RpcClient;
 use alloy_signer_wallet::LocalWallet;
 use alloy_sol_types::sol;
 use alloy_transport_http::Http;
+use eyre::Result;
 use reqwest::Client;
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<()> {
     // Codegen from embedded Solidity code and precompiled bytecode.
     sol! {
         // solc v0.8.24; solc a.sol --via-ir --optimize --bin

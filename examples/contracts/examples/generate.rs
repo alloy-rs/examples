@@ -6,10 +6,11 @@ use alloy_provider::{ProviderBuilder, RootProvider};
 use alloy_rpc_client::RpcClient;
 use alloy_sol_types::sol;
 use alloy_transport_http::Http;
+use eyre::Result;
 use reqwest::Client;
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<()> {
     // Codegen from ABI file to interact with the contract.
     sol!(
         #[sol(rpc)]
