@@ -1,6 +1,7 @@
 //! Example of signing a message with a wallet.
 
-use alloy_signer::{LocalWallet, Signer};
+use alloy_signer::Signer;
+use alloy_signer_wallet::LocalWallet;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
