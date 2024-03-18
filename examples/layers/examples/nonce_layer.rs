@@ -46,19 +46,17 @@ async fn main() -> Result<()> {
         ..Default::default()
     };
 
-    let pending = provider.send_transaction(tx.clone()).await?;
-    let tx_hash = pending.watch().await?;
-    let mined_tx = provider.get_transaction_by_hash(tx_hash).await?;
-    assert_eq!(mined_tx.nonce, U64::from(0));
+    let builder = provider.send_transaction(tx.clone()).await?;
+    let pending_transaction = provider.get_transaction_by_hash(*builder.tx_hash()).await?;
+    assert_eq!(pending_transaction.nonce, U64::from(0));
 
-    println!("Transaction sent with nonce: {}", mined_tx.nonce);
+    println!("Transaction sent with nonce: {}", pending_transaction.nonce);
 
-    let pending = provider.send_transaction(tx).await?;
-    let tx_hash = pending.watch().await?;
-    let mined_tx = provider.get_transaction_by_hash(tx_hash).await?;
-    assert_eq!(mined_tx.nonce, U64::from(1));
+    let builder = provider.send_transaction(tx).await?;
+    let pending_transaction = provider.get_transaction_by_hash(*builder.tx_hash()).await?;
+    assert_eq!(pending_transaction.nonce, U64::from(1));
 
-    println!("Transaction sent with nonce: {}", mined_tx.nonce);
+    println!("Transaction sent with nonce: {}", pending_transaction.nonce);
 
     Ok(())
 }
