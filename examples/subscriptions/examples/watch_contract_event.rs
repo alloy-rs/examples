@@ -5,8 +5,7 @@ use alloy_node_bindings::{Anvil, AnvilInstance};
 use alloy_provider::{Provider, RootProvider};
 use alloy_pubsub::PubSubFrontend;
 use alloy_rpc_client::RpcClient;
-use alloy_rpc_types::Filter;
-use alloy_sol_types::{sol, SolEvent};
+use alloy_sol_types::sol;
 use eyre::Result;
 use futures_util::{stream, StreamExt};
 
@@ -38,15 +37,11 @@ async fn main() -> Result<()> {
 
     println!("Deployed contract at: {:?}", deployed_contract.address());
 
-    let increment_filter = Filter::new()
-        .address(deployed_contract.address().to_owned())
-        .event_signature(EventExample::Increment::SIGNATURE_HASH);
+    let increment_filter = deployed_contract.Increment_filter().filter;
 
     let increment_poller = provider.watch_logs(&increment_filter).await?;
 
-    let decrement_filter = Filter::new()
-        .address(deployed_contract.address().to_owned())
-        .event_signature(EventExample::Decrement::SIGNATURE_HASH);
+    let decrement_filter = deployed_contract.Decrement_filter().filter;
 
     let decrement_poller = provider.watch_logs(&decrement_filter).await?;
 
@@ -59,17 +54,11 @@ async fn main() -> Result<()> {
 
     // Build a call to increment the counter
     let increment_call = deployed_contract.increment();
-
-    // Send the increment call 2 times
-    for _ in 0..2 {
-        let _ = increment_call.send().await?;
-    }
-
     // Build a call to decrement the counter
     let decrement_call = deployed_contract.decrement();
-
-    // Send the decrement call 2 times
+    // Send the call 2 times
     for _ in 0..2 {
+        let _ = increment_call.send().await?;
         let _ = decrement_call.send().await?;
     }
 
