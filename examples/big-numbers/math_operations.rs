@@ -1,6 +1,6 @@
 //! Example of performing arithmetic operations with `U256`.
 
-use alloy_primitives::{utils::format_units, U256};
+use alloy::primitives::{utils::format_units, U256};
 use eyre::Result;
 use std::ops::{Div, Mul};
 
