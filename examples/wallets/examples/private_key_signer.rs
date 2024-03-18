@@ -14,7 +14,7 @@ use reqwest::Client;
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up an Anvil node.
-    let anvil = Anvil::new().block_time(1).spawn();
+    let anvil = Anvil::new().block_time(1).try_spawn()?;
 
     // Set up the wallets.
     let alice: LocalWallet = anvil.keys()[0].clone().into();
