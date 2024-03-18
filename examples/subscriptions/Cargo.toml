@@ -16,6 +16,7 @@ alloy-network.workspace = true
 alloy-node-bindings.workspace = true
 alloy-provider = { workspace = true, features = ["pubsub", "ws"] }
 alloy-pubsub.workspace = true
+alloy-primitives.workspace = true
 alloy-rpc-client.workspace = true
 alloy-rpc-types.workspace = true
 alloy-sol-types = { workspace = true }
