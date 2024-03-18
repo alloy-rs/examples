@@ -24,7 +24,7 @@ use reqwest::Client;
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH
-    let anvil = Anvil::new().spawn();
+    let anvil = Anvil::new().try_spawn()?;
 
     // Set up the wallets.
     let wallet: LocalWallet = anvil.keys()[0].clone().into();
