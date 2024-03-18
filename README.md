@@ -18,12 +18,12 @@ cargo run --example mnemonic_signer
     - [x] [Deploy contract](./examples/anvil/examples/deploy_contract_anvil.rs)
     - [x] [Fork](./examples/anvil/examples/fork_anvil.rs)
     - [x] [Local](./examples/anvil/examples/local_anvil.rs)
-- [ ] Big numbers
-    - [ ] Comparison and equivalence
-    - [ ] Conversion
-    - [ ] Creating Instances
-    - [ ] Math operations
-    - [ ] Utilities
+- [x] Big numbers
+    - [x] [Comparison and equivalence](./examples/big-numbers/examples/comparison_equivalence.rs)
+    - [x] [Conversion](./examples/big-numbers/examples/conversion.rs)
+    - [x] [Creating Instances](./examples/big-numbers/examples/create_instances.rs)
+    - [x] [Math operations](./examples/big-numbers/examples/math_operations.rs)
+    - [x] [Math utilities](./examples/big-numbers/examples/math_utilities.rs)
 - [ ] Contracts
     - [ ] Abigen
     - [ ] Compile
