@@ -1,0 +1,18 @@
+[package]
+name = "examples-big-numbers"
+
+publish.workspace = true
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+
+[dev-dependencies]
+alloy-core.workspace = true
+alloy-primitives.workspace = true
+alloy-serde.workspace = true
+
+eyre.workspace = true
