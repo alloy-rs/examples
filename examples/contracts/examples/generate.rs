@@ -20,7 +20,7 @@ sol!(
 async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH
-    let anvil = Anvil::new().fork("https://eth.llamarpc.com").spawn();
+    let anvil = Anvil::new().fork("https://eth.llamarpc.com").try_spawn()?;
 
     // Create a provider.
     let http = Http::<Client>::new(anvil.endpoint().parse()?);
