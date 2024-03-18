@@ -1,7 +1,7 @@
 //! Example of querying contract storage from the Ethereum network.
 
 use alloy_network::Ethereum;
-use alloy_primitives::{address, fixed_bytes, U256};
+use alloy_primitives::{address, U256};
 use alloy_provider::{HttpProvider, Provider};
 use alloy_rpc_client::RpcClient;
 use alloy_transport_http::Http;

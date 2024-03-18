@@ -5,7 +5,7 @@ use alloy_rpc_client::RpcClient;
 use alloy_rpc_types::Filter;
 use alloy_transport_http::Http;
 use eyre::Result;
-use reqwest::{Client, Url};
+use reqwest::Client;
 #[tokio::main]
 async fn main() -> Result<()> {
     let provider = init();
