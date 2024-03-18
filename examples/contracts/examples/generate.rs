@@ -9,15 +9,15 @@ use alloy_transport_http::Http;
 use eyre::Result;
 use reqwest::Client;
 
+// Codegen from ABI file to interact with the contract.
+sol!(
+    #[sol(rpc)]
+    IERC20,
+    "examples/abi/IERC20.json"
+);
+
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Codegen from ABI file to interact with the contract.
-    sol!(
-        #[sol(rpc)]
-        IERC20,
-        "examples/abi/IERC20.json"
-    );
-
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH
     let anvil = Anvil::new().fork("https://eth.llamarpc.com").spawn();

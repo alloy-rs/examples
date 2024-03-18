@@ -11,15 +11,15 @@ use alloy_transport_http::Http;
 use eyre::Result;
 use reqwest::Client;
 
+// Codegen from artifact.
+sol!(
+    #[sol(rpc)]
+    Counter,
+    "examples/artifacts/Counter.json"
+);
+
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Codegen from artifact.
-    sol!(
-        #[sol(rpc)]
-        Counter,
-        "examples/artifacts/Counter.json"
-    );
-
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH
     let anvil = Anvil::new().spawn();
