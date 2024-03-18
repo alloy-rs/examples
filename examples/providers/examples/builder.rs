@@ -1,6 +1,6 @@
 //! Example of using the `ProviderBuilder` to create a provider with a signer and network.
 
-use alloy_network::{Ethereum, EthereumSigner};
+use alloy_network::{Ethereum, EthereumSigner, TransactionBuilder};
 use alloy_node_bindings::Anvil;
 use alloy_primitives::{U256, U64};
 use alloy_provider::{Provider, ProviderBuilder, RootProvider};
@@ -27,14 +27,14 @@ async fn main() -> Result<()> {
         .provider(RootProvider::new(rpc_client));
 
     let to = anvil.addresses()[1];
-    let tx_req = TransactionRequest {
-        to: Some(to),
-        value: Some(U256::from(100)),
-        nonce: Some(U64::from(0)),
-        gas_price: Some(U256::from(20e9)),
-        gas: Some(U256::from(21000)),
-        ..Default::default()
-    };
+
+    let mut tx_req = TransactionRequest::default()
+        .to(Some(to))
+        .value(U256::from(100))
+        .nonce(U64::from(0))
+        .gas_limit(U256::from(21000));
+
+    tx_req.set_gas_price(U256::from(20e9));
 
     let pending_tx = provider_with_signer.send_transaction(tx_req).await?;
 
