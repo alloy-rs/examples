@@ -47,13 +47,15 @@ async fn main() -> Result<()> {
     };
 
     let builder = provider.send_transaction(tx.clone()).await?;
-    let pending_transaction = provider.get_transaction_by_hash(*builder.tx_hash()).await?;
+    let node_hash = *builder.tx_hash();
+    let pending_transaction = provider.get_transaction_by_hash(node_hash).await?;
     assert_eq!(pending_transaction.nonce, U64::from(0));
 
     println!("Transaction sent with nonce: {}", pending_transaction.nonce);
 
     let builder = provider.send_transaction(tx).await?;
-    let pending_transaction = provider.get_transaction_by_hash(*builder.tx_hash()).await?;
+    let node_hash = *builder.tx_hash();
+    let pending_transaction = provider.get_transaction_by_hash(node_hash).await?;
     assert_eq!(pending_transaction.nonce, U64::from(1));
 
     println!("Transaction sent with nonce: {}", pending_transaction.nonce);
