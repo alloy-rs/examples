@@ -25,5 +25,13 @@ async fn main() -> Result<()> {
         println!("{:?}", block.header.number);
     }
 
+    let handle = tokio::spawn(async move {
+        while let Some(block) = stream.next().await {
+            println!("{:?}", block.header.number);
+        }
+    });
+
+    handle.await?;
+
     Ok(())
 }
