@@ -52,25 +52,24 @@ async fn main() -> Result<()> {
     let contract_builder = Counter::deploy_builder(&provider);
     let estimate = contract_builder.estimate_gas().await?;
     let contract_address =
-        contract_builder.gas(estimate).gas_price(base_fee).nonce(U64::from(0)).deploy().await?;
+        contract_builder.gas(estimate).gas_price(base_fee).nonce(0).deploy().await?;
 
     println!("Deployed contract at address: {:?}", contract_address);
 
     let contract = Counter::new(contract_address, &provider);
 
     let estimate = contract.setNumber(U256::from(42)).estimate_gas().await?;
-    let builder =
-        contract.setNumber(U256::from(42)).nonce(U64::from(1)).gas(estimate).gas_price(base_fee);
+    let builder = contract.setNumber(U256::from(42)).nonce(1).gas(estimate).gas_price(base_fee);
     let receipt = builder.send().await?.get_receipt().await?;
 
-    println!("Set number to 42: {:?}", receipt.transaction_hash.unwrap());
+    println!("Set number to 42: {:?}", receipt.transaction_hash);
 
     // Increment the number to 43.
     let estimate = contract.increment().estimate_gas().await?;
-    let builder = contract.increment().nonce(U64::from(2)).gas(estimate).gas_price(base_fee);
+    let builder = contract.increment().nonce(2).gas(estimate).gas_price(base_fee);
     let receipt = builder.send().await?.get_receipt().await?;
 
-    println!("Incremented number: {:?}", receipt.transaction_hash.unwrap());
+    println!("Incremented number: {:?}", receipt.transaction_hash);
 
     // Retrieve the number, which should be 43.
     let Counter::numberReturn { _0 } = contract.number().call().await?;
