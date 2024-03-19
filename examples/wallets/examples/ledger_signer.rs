@@ -2,26 +2,22 @@
 
 use alloy_network::EthereumSigner;
 use alloy_primitives::{address, U256};
-use alloy_provider::{Provider, ProviderBuilder, RootProvider};
+use alloy_provider::{Provider, ProviderBuilder};
 use alloy_rpc_client::RpcClient;
 use alloy_rpc_types::request::TransactionRequest;
 use alloy_signer_ledger::{HDPath, LedgerSigner};
-use alloy_transport_http::Http;
 use eyre::Result;
-use reqwest::Client;
 
 #[tokio::main]
 async fn main() -> Result<()> {
     // Instantiate the application by acquiring a lock on the Ledger device.
     let signer = LedgerSigner::new(HDPath::LedgerLive(0), Some(1)).await?;
 
-    // Create a provider with the signer and the network.
-    let http = Http::<Client>::new("http://localhost:8545".parse()?);
-
-    // Initialize the provider.
+    // Create a provider with the signer.
+    let http = "http://localhost:8545".parse()?;
     let provider = ProviderBuilder::new()
         .signer(EthereumSigner::from(signer))
-        .provider(RootProvider::new(RpcClient::new(http, true)));
+        .on_client(RpcClient::new_http(http));
 
     // Create a transaction.
     let tx = TransactionRequest {
