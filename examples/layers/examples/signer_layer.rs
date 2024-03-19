@@ -3,13 +3,11 @@
 use alloy_network::EthereumSigner;
 use alloy_node_bindings::Anvil;
 use alloy_primitives::{address, b256, U256};
-use alloy_provider::{Provider, ProviderBuilder, RootProvider};
+use alloy_provider::{Provider, ProviderBuilder};
 use alloy_rpc_client::RpcClient;
 use alloy_rpc_types::request::TransactionRequest;
 use alloy_signer_wallet::LocalWallet;
-use alloy_transport_http::Http;
 use eyre::Result;
-use reqwest::Client;
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -20,12 +18,12 @@ async fn main() -> Result<()> {
     // Set up the wallets.
     let wallet: LocalWallet = anvil.keys()[0].clone().into();
 
-    // Create a provider with a signer and the network.
-    let http = Http::<Client>::new(anvil.endpoint().parse()?);
+    // Create a provider with the signer.
+    let http = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
         // Add the `SignerLayer` to the provider
         .signer(EthereumSigner::from(wallet))
-        .provider(RootProvider::new(RpcClient::new(http, true)));
+        .on_client(RpcClient::new_http(http));
 
     let tx = TransactionRequest {
         nonce: Some(0),
