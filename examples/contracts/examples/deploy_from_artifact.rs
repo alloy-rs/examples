@@ -3,13 +3,11 @@
 use alloy_network::EthereumSigner;
 use alloy_node_bindings::Anvil;
 use alloy_primitives::U256;
-use alloy_provider::{Provider, ProviderBuilder, RootProvider};
+use alloy_provider::{Provider, ProviderBuilder};
 use alloy_rpc_client::RpcClient;
 use alloy_signer_wallet::LocalWallet;
 use alloy_sol_types::sol;
-use alloy_transport_http::Http;
 use eyre::Result;
-use reqwest::Client;
 
 // Codegen from artifact.
 sol!(
@@ -27,11 +25,11 @@ async fn main() -> Result<()> {
     // Set up wallet
     let wallet: LocalWallet = anvil.keys()[0].clone().into();
 
-    // Create a provider with a signer and the network.
-    let http = Http::<Client>::new(anvil.endpoint().parse()?);
+    // Create a provider with a signer.
+    let http = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
         .signer(EthereumSigner::from(wallet))
-        .provider(RootProvider::new(RpcClient::new(http, true)));
+        .on_client(RpcClient::new_http(http));
 
     println!("Anvil running at `{}`", anvil.endpoint());
 
