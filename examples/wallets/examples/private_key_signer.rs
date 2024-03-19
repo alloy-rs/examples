@@ -2,7 +2,7 @@
 
 use alloy_network::EthereumSigner;
 use alloy_node_bindings::Anvil;
-use alloy_primitives::{U256, U64};
+use alloy_primitives::U256;
 use alloy_provider::{Provider, ProviderBuilder, RootProvider};
 use alloy_rpc_client::RpcClient;
 use alloy_rpc_types::request::TransactionRequest;
@@ -14,7 +14,7 @@ use reqwest::Client;
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up an Anvil node.
-    let anvil = Anvil::new().block_time(1).spawn();
+    let anvil = Anvil::new().block_time(1).try_spawn()?;
 
     // Set up the wallets.
     let alice: LocalWallet = anvil.keys()[0].clone().into();
@@ -30,7 +30,7 @@ async fn main() -> Result<()> {
     let tx = TransactionRequest {
         value: Some(U256::from(100)),
         to: Some(bob.address()),
-        nonce: Some(U64::from(0)),
+        nonce: Some(0),
         gas_price: Some(U256::from(20e9)),
         gas: Some(U256::from(21000)),
         ..Default::default()
@@ -39,7 +39,7 @@ async fn main() -> Result<()> {
     // Broadcast the transaction and wait for the receipt.
     let receipt = provider.send_transaction(tx).await?.with_confirmations(1).get_receipt().await?;
 
-    println!("Send transaction: {:?}", receipt.transaction_hash.unwrap());
+    println!("Send transaction: {:?}", receipt.transaction_hash);
 
     Ok(())
 }
