@@ -22,7 +22,6 @@ alloy-signer-ledger.workspace = true
 alloy-signer-trezor.workspace = true
 alloy-signer-wallet = { workspace = true, features = ["mnemonic", "yubihsm"] }
 alloy-sol-types.workspace = true
-alloy-transport-http.workspace = true
 
 eyre.workspace = true
 reqwest.workspace = true
