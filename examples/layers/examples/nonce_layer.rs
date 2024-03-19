@@ -2,7 +2,7 @@
 
 use alloy_network::EthereumSigner;
 use alloy_node_bindings::Anvil;
-use alloy_primitives::{address, U256, U64};
+use alloy_primitives::{address, U256};
 use alloy_provider::{layers::ManagedNonceLayer, Provider, ProviderBuilder, RootProvider};
 use alloy_rpc_client::RpcClient;
 use alloy_rpc_types::request::TransactionRequest;
@@ -49,14 +49,14 @@ async fn main() -> Result<()> {
     let builder = provider.send_transaction(tx.clone()).await?;
     let node_hash = *builder.tx_hash();
     let pending_transaction = provider.get_transaction_by_hash(node_hash).await?;
-    assert_eq!(pending_transaction.nonce, U64::from(0));
+    assert_eq!(pending_transaction.nonce, 0);
 
     println!("Transaction sent with nonce: {}", pending_transaction.nonce);
 
     let builder = provider.send_transaction(tx).await?;
     let node_hash = *builder.tx_hash();
     let pending_transaction = provider.get_transaction_by_hash(node_hash).await?;
-    assert_eq!(pending_transaction.nonce, U64::from(1));
+    assert_eq!(pending_transaction.nonce, 1);
 
     println!("Transaction sent with nonce: {}", pending_transaction.nonce);
 
