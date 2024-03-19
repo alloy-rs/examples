@@ -3,7 +3,7 @@
 use alloy::{
     network::EthereumSigner,
     node_bindings::Anvil,
-    primitives::{U256, U64},
+    primitives::U256,
     providers::{Provider, ProviderBuilder, RootProvider},
     rpc::{client::RpcClient, types::eth::request::TransactionRequest},
     signers::wallet::LocalWallet,
@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
     let tx = TransactionRequest {
         value: Some(U256::from(100)),
         to: Some(bob.address()),
-        nonce: Some(U64::from(0)),
+        nonce: Some(0),
         gas_price: Some(U256::from(20e9)),
         gas: Some(U256::from(21000)),
         ..Default::default()
@@ -40,7 +40,7 @@ async fn main() -> Result<()> {
     // Broadcast the transaction and wait for the receipt.
     let receipt = provider.send_transaction(tx).await?.with_confirmations(1).get_receipt().await?;
 
-    println!("Send transaction: {:?}", receipt.transaction_hash.unwrap());
+    println!("Send transaction: {:?}", receipt.transaction_hash);
 
     Ok(())
 }

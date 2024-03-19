@@ -11,7 +11,7 @@ repository = "https://github.com/alloy-rs/examples"
 publish = false
 
 [dependencies]
-alloy = { git = "https://github.com/alloy-rs/alloy", rev = "e7dfb4f", features = [
+alloy = { git = "https://github.com/alloy-rs/alloy", rev = "218ece4", features = [
     # "dyn-abi",
     # "json-abi",
     # "json",
