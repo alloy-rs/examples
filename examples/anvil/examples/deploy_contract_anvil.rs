@@ -59,8 +59,7 @@ async fn main() -> Result<()> {
     let contract = Counter::new(contract_address, &provider);
 
     let estimate = contract.setNumber(U256::from(42)).estimate_gas().await?;
-    let builder =
-        contract.setNumber(U256::from(42)).nonce(1).gas(estimate).gas_price(base_fee);
+    let builder = contract.setNumber(U256::from(42)).nonce(1).gas(estimate).gas_price(base_fee);
     let receipt = builder.send().await?.get_receipt().await?;
 
     println!("Set number to 42: {:?}", receipt.transaction_hash);
