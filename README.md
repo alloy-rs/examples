@@ -24,16 +24,10 @@ cargo run --example mnemonic_signer
     - [x] [Creating Instances](./examples/big-numbers/examples/create_instances.rs)
     - [x] [Math operations](./examples/big-numbers/examples/math_operations.rs)
     - [x] [Math utilities](./examples/big-numbers/examples/math_utilities.rs)
-- [ ] Contracts
-    - [ ] Abigen
-    - [ ] Compile
-    - [ ] Creating Instances
-    - [ ] Deploy Anvil
-    - [ ] Deploy from ABI and bytecode
-    - [ ] Deploy Moonbeam
-    - [ ] Events
-    - [ ] Events with meta
-    - [ ] Methods
+- [x] Contracts
+    - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
+    - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
+    - [x] [Generate](./examples/contracts/examples/generate.rs)
 - [ ] Events
   - [ ] Logs and filtering
   - [ ] Solidity topics
