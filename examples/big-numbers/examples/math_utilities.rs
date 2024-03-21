@@ -1,6 +1,6 @@
 //! Example of using math utilities to handle big numbers in 'wei' units.
 
-use alloy_primitives::{
+use alloy::primitives::{
     utils::{format_units, parse_units},
     U256,
 };

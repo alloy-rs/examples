@@ -14,27 +14,20 @@ cargo run --example mnemonic_signer
 ## Table of Contents
 
 - [ ] Address book
-- [ ] Anvil
-    - [ ] Boot anvil
-    - [ ] Deploy contracts
-    - [ ] Fork
-    - [ ] Testing
+- [x] Anvil
+    - [x] [Deploy contract](./examples/anvil/examples/deploy_contract_anvil.rs)
+    - [x] [Fork](./examples/anvil/examples/fork_anvil.rs)
+    - [x] [Local](./examples/anvil/examples/local_anvil.rs)
 - [x] Big numbers
     - [x] [Comparison and equivalence](./examples/big-numbers/examples/comparison_equivalence.rs)
     - [x] [Conversion](./examples/big-numbers/examples/conversion.rs)
     - [x] [Creating Instances](./examples/big-numbers/examples/create_instances.rs)
     - [x] [Math operations](./examples/big-numbers/examples/math_operations.rs)
     - [x] [Math utilities](./examples/big-numbers/examples/math_utilities.rs)
-- [ ] Contracts
-    - [ ] Abigen
-    - [ ] Compile
-    - [ ] Creating Instances
-    - [ ] Deploy Anvil
-    - [ ] Deploy from ABI and bytecode
-    - [ ] Deploy Moonbeam
-    - [ ] Events
-    - [ ] Events with meta
-    - [ ] Methods
+- [x] Contracts
+    - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
+    - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
+    - [x] [Generate](./examples/contracts/examples/generate.rs)
 - [ ] Events
   - [ ] Logs and filtering
   - [ ] Solidity topics
