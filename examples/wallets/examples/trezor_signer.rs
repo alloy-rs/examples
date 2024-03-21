@@ -5,13 +5,13 @@ use alloy_primitives::{address, U256};
 use alloy_provider::{Provider, ProviderBuilder};
 use alloy_rpc_client::RpcClient;
 use alloy_rpc_types::request::TransactionRequest;
-use alloy_signer_trezor::{TrezorHDPath, TrezorSigner};
+use alloy_signer_trezor::{HDPath, TrezorSigner};
 use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
     // Instantiate the application by acquiring a lock on the Trezor device.
-    let signer = TrezorSigner::new(TrezorHDPath::TrezorLive(0), Some(1)).await?;
+    let signer = TrezorSigner::new(HDPath::TrezorLive(0), Some(1)).await?;
 
     // Create a provider with the signer.
     let http = "http://localhost:8545".parse()?;
