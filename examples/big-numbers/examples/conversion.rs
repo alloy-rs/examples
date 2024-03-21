@@ -1,6 +1,6 @@
 //! Example of converting `U256` to native Rust types.
 
-use alloy_primitives::{utils::format_units, U256};
+use alloy::primitives::{utils::format_units, U256};
 use eyre::Result;
 
 /// `U256` provides useful conversion functions to enable transformation into native Rust types.
