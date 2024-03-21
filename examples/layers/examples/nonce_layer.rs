@@ -1,12 +1,13 @@
 //! Example of using the `ManagedNonceLayer` in the provider.
 
-use alloy_network::EthereumSigner;
-use alloy_node_bindings::Anvil;
-use alloy_primitives::{address, U256};
-use alloy_provider::{layers::ManagedNonceLayer, Provider, ProviderBuilder};
-use alloy_rpc_client::RpcClient;
-use alloy_rpc_types::request::TransactionRequest;
-use alloy_signer_wallet::LocalWallet;
+use alloy::{
+    network::EthereumSigner,
+    node_bindings::Anvil,
+    primitives::{address, U256},
+    providers::{layers::ManagedNonceLayer, Provider, ProviderBuilder},
+    rpc::{client::RpcClient, types::eth::request::TransactionRequest},
+    signers::wallet::LocalWallet,
+};
 use eyre::Result;
 
 /// In Ethereum, the nonce of a transaction is a number that represents the number of transactions

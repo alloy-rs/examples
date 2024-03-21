@@ -1,12 +1,13 @@
 //! Example of using the `SignerLayer` in the provider.
 
-use alloy_network::EthereumSigner;
-use alloy_node_bindings::Anvil;
-use alloy_primitives::{address, b256, U256};
-use alloy_provider::{Provider, ProviderBuilder};
-use alloy_rpc_client::RpcClient;
-use alloy_rpc_types::request::TransactionRequest;
-use alloy_signer_wallet::LocalWallet;
+use alloy::{
+    network::EthereumSigner,
+    node_bindings::Anvil,
+    primitives::{address, b256, U256},
+    providers::{Provider, ProviderBuilder},
+    rpc::{client::RpcClient, types::eth::request::TransactionRequest},
+    signers::wallet::LocalWallet,
+};
 use eyre::Result;
 
 #[tokio::main]
