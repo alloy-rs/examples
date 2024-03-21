@@ -1,15 +1,14 @@
 //! Example of using a local wallet to sign and broadcast a transaction on a local Anvil node.
 
-use alloy_network::EthereumSigner;
-use alloy_node_bindings::Anvil;
-use alloy_primitives::U256;
-use alloy_provider::{Provider, ProviderBuilder, RootProvider};
-use alloy_rpc_client::RpcClient;
-use alloy_rpc_types::request::TransactionRequest;
-use alloy_signer_wallet::LocalWallet;
-use alloy_transport_http::Http;
+use alloy::{
+    network::EthereumSigner,
+    node_bindings::Anvil,
+    primitives::U256,
+    providers::{Provider, ProviderBuilder},
+    rpc::{client::RpcClient, types::eth::request::TransactionRequest},
+    signers::wallet::LocalWallet,
+};
 use eyre::Result;
-use reqwest::Client;
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -20,11 +19,11 @@ async fn main() -> Result<()> {
     let alice: LocalWallet = anvil.keys()[0].clone().into();
     let bob: LocalWallet = anvil.keys()[1].clone().into();
 
-    // Create a provider with a signer and the network.
-    let http = Http::<Client>::new(anvil.endpoint().parse()?);
+    // Create a provider with the signer.
+    let http = "http://localhost:8545".parse()?;
     let provider = ProviderBuilder::new()
         .signer(EthereumSigner::from(alice))
-        .provider(RootProvider::new(RpcClient::new(http, true)));
+        .on_client(RpcClient::new_http(http));
 
     // Create a transaction.
     let tx = TransactionRequest {

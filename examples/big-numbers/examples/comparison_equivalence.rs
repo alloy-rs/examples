@@ -1,6 +1,6 @@
 //! Example of comparison and equivalence of `U256` instances.
 
-use alloy_primitives::U256;
+use alloy::primitives::U256;
 
 /// `U256` implements traits in `std::cmp`, that means `U256` instances
 /// can be easily compared using standard Rust operators.

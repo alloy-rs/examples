@@ -11,8 +11,6 @@ homepage.workspace = true
 repository.workspace = true
 
 [dev-dependencies]
-alloy-core.workspace = true
-alloy-primitives.workspace = true
-alloy-serde.workspace = true
+alloy.workspace = true
 
 eyre.workspace = true
