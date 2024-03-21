@@ -1,12 +1,14 @@
 //! Example of deploying a contract from an artifact to Anvil and interacting with it.
 
-use alloy_network::EthereumSigner;
-use alloy_node_bindings::Anvil;
-use alloy_primitives::U256;
-use alloy_provider::{Provider, ProviderBuilder};
-use alloy_rpc_client::RpcClient;
-use alloy_signer_wallet::LocalWallet;
-use alloy_sol_types::sol;
+use alloy::{
+    network::EthereumSigner,
+    node_bindings::Anvil,
+    primitives::U256,
+    providers::{Provider, ProviderBuilder},
+    rpc::client::RpcClient,
+    signers::wallet::LocalWallet,
+    sol,
+};
 use eyre::Result;
 
 // Codegen from artifact.
