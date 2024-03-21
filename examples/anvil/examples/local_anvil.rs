@@ -1,6 +1,6 @@
 //! Example of spinning up a local Anvil node.
 
-use alloy_node_bindings::Anvil;
+use alloy::node_bindings::Anvil;
 use eyre::Result;
 
 #[tokio::main]

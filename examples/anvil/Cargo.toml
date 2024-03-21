@@ -11,14 +11,7 @@ homepage.workspace = true
 repository.workspace = true
 
 [dev-dependencies]
-alloy-contract.workspace = true
-alloy-network.workspace = true
-alloy-node-bindings.workspace = true
-alloy-primitives.workspace = true
-alloy-provider.workspace = true
-alloy-rpc-client.workspace = true
-alloy-signer-wallet.workspace = true
-alloy-sol-types.workspace = true
+alloy.workspace = true
 
 eyre.workspace = true
 reqwest.workspace = true
