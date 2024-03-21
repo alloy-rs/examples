@@ -1,9 +1,10 @@
 //! Example of signing a permit hash using a wallet.
 
-use alloy_primitives::{address, keccak256, U256};
-use alloy_signer::Signer;
-use alloy_signer_wallet::LocalWallet;
-use alloy_sol_types::{eip712_domain, sol, SolStruct};
+use alloy::{
+    primitives::{address, keccak256, U256},
+    signers::{wallet::LocalWallet, Signer},
+    sol_types::{eip712_domain, sol, SolStruct},
+};
 use eyre::Result;
 use serde::Serialize;
 
@@ -43,7 +44,7 @@ async fn main() -> Result<()> {
     let hash = permit.eip712_signing_hash(&domain);
 
     // Sign the hash asynchronously with the wallet.
-    let signature = wallet.sign_typed_data(&permit, &domain).await?;
+    let signature = wallet.sign_hash(&hash).await?;
 
     println!(
         "Recovered address matches wallet address: {:?}",
