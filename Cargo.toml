@@ -17,7 +17,7 @@ alloy = { git = "https://github.com/alloy-rs/alloy", rev = "fd8f065", features =
     # "dyn-abi",
     # "json-abi",
     # "json",
-    # "sol-types",
+    "sol-types",
     # "rlp",
     # "serde",
     "contract",
