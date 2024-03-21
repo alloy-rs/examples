@@ -1,11 +1,12 @@
 //! Example of signing and sending a transaction using a Trezor device.
 
-use alloy_network::EthereumSigner;
-use alloy_primitives::{address, U256};
-use alloy_provider::{Provider, ProviderBuilder};
-use alloy_rpc_client::RpcClient;
-use alloy_rpc_types::request::TransactionRequest;
-use alloy_signer_trezor::{HDPath, TrezorSigner};
+use alloy::{
+    network::EthereumSigner,
+    primitives::{address, U256},
+    providers::{Provider, ProviderBuilder},
+    rpc::{client::RpcClient, types::eth::request::TransactionRequest},
+    signers::trezor::{HDPath, TrezorSigner},
+};
 use eyre::Result;
 
 #[tokio::main]

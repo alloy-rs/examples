@@ -1,6 +1,6 @@
 //! Example of creating instances of `U256` from strings and numbers.
 
-use alloy_primitives::{
+use alloy::primitives::{
     utils::{parse_units, ParseUnits},
     U256,
 };

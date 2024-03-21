@@ -1,7 +1,6 @@
 //! Example of signing a message with a wallet.
 
-use alloy_signer::Signer;
-use alloy_signer_wallet::LocalWallet;
+use alloy::signers::{wallet::LocalWallet, Signer};
 use eyre::Result;
 
 #[tokio::main]
