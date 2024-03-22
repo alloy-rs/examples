@@ -1,7 +1,7 @@
 //! Example of using the `ManagedNonceLayer` in the provider.
 
 use alloy::{
-    network::EthereumSigner,
+    network::{EthereumSigner, TransactionBuilder},
     node_bindings::Anvil,
     primitives::{address, U256},
     providers::{layers::ManagedNonceLayer, Provider, ProviderBuilder},
@@ -32,18 +32,19 @@ async fn main() -> Result<()> {
     // Create a provider with the signer.
     let http = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
+        // Add the `ManagedNonceLayer` to the provider
         .layer(ManagedNonceLayer)
         .signer(EthereumSigner::from(wallet))
         .on_client(RpcClient::new_http(http));
 
-    let tx = TransactionRequest {
-        from: Some(from),
-        value: Some(U256::from(100)),
-        to: address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045").into(),
-        gas_price: Some(U256::from(20e9)),
-        gas: Some(U256::from(21000)),
-        ..Default::default()
-    };
+    let tx = TransactionRequest::default()
+        .with_from(from)
+        .with_to(address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045").into())
+        .with_value(U256::from(100))
+        .with_gas_limit(U256::from(21000))
+        .with_max_fee_per_gas(U256::from(20e9))
+        .with_max_priority_fee_per_gas(U256::from(1e9))
+        .with_chain_id(anvil.chain_id().into());
 
     let builder = provider.send_transaction(tx.clone()).await?;
     let node_hash = *builder.tx_hash();

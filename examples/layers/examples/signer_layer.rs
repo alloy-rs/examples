@@ -1,7 +1,7 @@
 //! Example of using the `SignerLayer` in the provider.
 
 use alloy::{
-    network::EthereumSigner,
+    network::{EthereumSigner, TransactionBuilder},
     node_bindings::Anvil,
     primitives::{address, b256, U256},
     providers::{Provider, ProviderBuilder},
@@ -18,6 +18,7 @@ async fn main() -> Result<()> {
 
     // Set up the wallets.
     let wallet: LocalWallet = anvil.keys()[0].clone().into();
+    let from = wallet.address();
 
     // Create a provider with the signer.
     let http = anvil.endpoint().parse()?;
@@ -26,14 +27,13 @@ async fn main() -> Result<()> {
         .signer(EthereumSigner::from(wallet))
         .on_client(RpcClient::new_http(http));
 
-    let tx = TransactionRequest {
-        nonce: Some(0),
-        value: Some(U256::from(100)),
-        to: address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045").into(),
-        gas_price: Some(U256::from(20e9)),
-        gas: Some(U256::from(21000)),
-        ..Default::default()
-    };
+    let tx = TransactionRequest::default()
+        .with_nonce(0)
+        .with_from(from)
+        .with_to(address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045").into())
+        .with_value(U256::from(100))
+        .with_gas_price(U256::from(20e9))
+        .with_gas_limit(U256::from(21000));
 
     let builder = provider.send_transaction(tx).await?;
     let node_hash = *builder.tx_hash();
