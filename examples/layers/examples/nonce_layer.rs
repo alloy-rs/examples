@@ -44,7 +44,7 @@ async fn main() -> Result<()> {
         .with_gas_limit(U256::from(21000))
         .with_max_fee_per_gas(U256::from(20e9))
         .with_max_priority_fee_per_gas(U256::from(1e9))
-        .with_chain_id(anvil.chain_id().into());
+        .with_chain_id(anvil.chain_id());
 
     let builder = provider.send_transaction(tx.clone()).await?;
     let node_hash = *builder.tx_hash();
