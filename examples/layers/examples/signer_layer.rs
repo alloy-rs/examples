@@ -27,6 +27,7 @@ async fn main() -> Result<()> {
         .signer(EthereumSigner::from(wallet))
         .on_client(RpcClient::new_http(http));
 
+    // Create a legacy type transaction.
     let tx = TransactionRequest::default()
         .with_nonce(0)
         .with_from(from)
