@@ -13,7 +13,6 @@ cargo run --example mnemonic_signer
 
 ## Table of Contents
 
-- [ ] Address book
 - [x] Anvil
     - [x] [Deploy contract](./examples/anvil/examples/deploy_contract_anvil.rs)
     - [x] [Fork](./examples/anvil/examples/fork_anvil.rs)
@@ -28,54 +27,29 @@ cargo run --example mnemonic_signer
     - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
     - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
     - [x] [Generate](./examples/contracts/examples/generate.rs)
-- [ ] Events
-  - [ ] Logs and filtering
-  - [ ] Solidity topics
-- [ ] Middleware
-  - [ ] Builder
-  - [ ] Create custom middleware
-  - [ ] Gas escalator
-  - [ ] Gas oracle
-  - [ ] Nonce manager
-  - [ ] Policy
-  - [ ] Signer
-  - [ ] Time lag
-  - [ ] Transformer
 - [x] Providers
   - [x] [Builder](./examples/providers/examples/builder.rs)
   - [x] [HTTP](./examples/providers/examples/http.rs)
   - [x] [IPC](./examples/providers/examples/ipc.rs)
   - [x] [WS](./examples/providers/examples/ws.rs)
-- [ ] Queries
-  - [ ] Blocks
-  - [ ] Contracts
-  - [ ] Events
-  - [ ] Paginated logs
-  - [ ] UniswapV2 pair
-  - [ ] Transactions
+- [x] Layers
+  - [x] [Nonce manager](./examples/layers/examples/nonce_layer.rs)
+  - [x] [Signature manager](./examples/layers/examples/signer_layer.rs)
+- [x] Queries
+  - [x] [Contract storage](./examples/queries/examples/query_contract_storage.rs)
+  - [x] [Contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
+  - [x] [Logs](./examples/queries/examples/query_logs.rs)
 - [ ] Subscriptions
   - [ ] Watch blocks
   - [ ] Subscribe events by type
   - [ ] Subscribe logs
-- [ ] Transactions
-  - [ ] Call override
-  - [ ] Create raw transaction
-  - [ ] Create typed transaction
-  - [ ] Decode input
-  - [ ] EIP-1559
-  - [ ] ENS
-  - [ ] Estimate gas
-  - [ ] Get gas price
-  - [ ] Get gas price USD
-  - [ ] Remove liquidity
-  - [ ] Set gas for a transaction
-  - [ ] Send raw transaction
-  - [ ] Send typed transaction
-  - [ ] Trace
-  - [ ] Transaction receipt
-  - [ ] Transaction status
-  - [ ] Transfer ETH
-  - [ ] Transfer ERC20 token
+- [x] Transactions
+  - [x] [Decode input](./examples/transactions/examples/decode_input.rs)
+  - [x] [Get gas price in USD](./examples/transactions/examples/gas_price_usd.rs)
+  - [x] [Trace call](./examples/transactions/examples/trace_call.rs)
+  - [x] [Trace transaction](./examples/transactions/examples/trace_transaction.rs)
+  - [x] [Transfer ERC20 token](./examples/transactions/examples/transfer_erc20.rs)
+  - [x] [Transfer ETH](./examples/transactions/examples/transfer_eth.rs)
 - [ ] Wallets
   - [ ] AWS signer
   - [ ] GCP signer
