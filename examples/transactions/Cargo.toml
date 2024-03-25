@@ -1,5 +1,5 @@
 [package]
-name = "examples-wallets"
+name = "examples-transactions"
 
 publish.workspace = true
 version.workspace = true
@@ -15,5 +15,4 @@ alloy.workspace = true
 
 eyre.workspace = true
 reqwest.workspace = true
-serde.workspace = true
-tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
+tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }

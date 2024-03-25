@@ -3,7 +3,8 @@
 use alloy::{
     primitives::{address, keccak256, U256},
     signers::{wallet::LocalWallet, Signer},
-    sol_types::{eip712_domain, sol, SolStruct},
+    sol,
+    sol_types::{eip712_domain, SolStruct},
 };
 use eyre::Result;
 use serde::Serialize;
