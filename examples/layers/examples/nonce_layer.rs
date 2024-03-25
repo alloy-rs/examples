@@ -4,7 +4,10 @@ use alloy::{
     network::{EthereumSigner, TransactionBuilder},
     node_bindings::Anvil,
     primitives::{address, U256},
-    providers::{layers::ManagedNonceLayer, Provider, ProviderBuilder},
+    providers::{
+        layers::{GasEstimatorLayer, ManagedNonceLayer},
+        Provider, ProviderBuilder,
+    },
     rpc::{client::RpcClient, types::eth::request::TransactionRequest},
     signers::wallet::LocalWallet,
 };
@@ -34,6 +37,7 @@ async fn main() -> Result<()> {
     let provider = ProviderBuilder::new()
         // Add the `ManagedNonceLayer` to the provider
         .layer(ManagedNonceLayer)
+        .layer(GasEstimatorLayer)
         .signer(EthereumSigner::from(wallet))
         .on_client(RpcClient::new_http(http));
 
@@ -42,9 +46,6 @@ async fn main() -> Result<()> {
         .with_from(from)
         .with_to(address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045").into())
         .with_value(U256::from(100))
-        .with_gas_limit(U256::from(21000))
-        .with_max_fee_per_gas(U256::from(20e9))
-        .with_max_priority_fee_per_gas(U256::from(1e9))
         .with_chain_id(anvil.chain_id());
 
     // Send the transaction, the nonce (0) is automatically managed by the provider.
