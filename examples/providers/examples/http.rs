@@ -1,20 +1,19 @@
 //! Example of using the HTTP provider to get the latest block number.
 
-use alloy_network::Ethereum;
-use alloy_provider::{HttpProvider, Provider};
-use alloy_rpc_client::RpcClient;
-use alloy_transport_http::Http;
+use alloy::{
+    network::Ethereum,
+    providers::{HttpProvider, Provider},
+    rpc::client::RpcClient,
+};
 use eyre::Result;
-use reqwest::Client;
 
 #[tokio::main]
 async fn main() -> Result<()> {
     // Setup the HTTP transport which is consumed by the RPC client
     let rpc_url = "https://eth.llamarpc.com".parse().unwrap();
-    let http = Http::<Client>::new(rpc_url);
 
     // Create the RPC client
-    let rpc_client = RpcClient::new(http, false);
+    let rpc_client = RpcClient::new_http(rpc_url);
 
     // Provider can then be instantiated using the RPC client, HttpProvider is an alias
     // RootProvider. RootProvider requires two generics N: Network and T: Transport

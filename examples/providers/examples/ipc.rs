@@ -1,9 +1,11 @@
 //! Example of using the IPC provider to get the latest block number.
 
-use alloy_network::Ethereum;
-use alloy_provider::{Provider, RootProvider};
-use alloy_rpc_client::RpcClient;
-use alloy_transport_ipc::IpcConnect;
+use alloy::{
+    network::Ethereum,
+    providers::{Provider, RootProvider},
+    rpc::client::RpcClient,
+    transports::ipc::IpcConnect,
+};
 use eyre::Result;
 
 #[tokio::main]
@@ -12,7 +14,7 @@ async fn main() -> Result<()> {
     let ipc_path = "/tmp/reth.ipc";
 
     // IPC transport
-    let ipc = IpcConnect::from(ipc_path.to_string());
+    let ipc = IpcConnect::new(ipc_path.to_string());
 
     // RPC client using IPC transport
     let ipc_client = RpcClient::connect_pubsub(ipc).await?;

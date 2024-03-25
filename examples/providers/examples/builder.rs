@@ -1,15 +1,14 @@
 //! Example of using the `ProviderBuilder` to create a provider with a signer and network.
 
-use alloy_network::{Ethereum, EthereumSigner, TransactionBuilder};
-use alloy_node_bindings::Anvil;
-use alloy_primitives::{U256, U64};
-use alloy_provider::{Provider, ProviderBuilder, RootProvider};
-use alloy_rpc_client::RpcClient;
-use alloy_rpc_types::TransactionRequest;
-use alloy_signer_wallet::Wallet;
-use alloy_transport_http::Http;
+use alloy::{
+    network::{EthereumSigner, TransactionBuilder},
+    node_bindings::Anvil,
+    primitives::U256,
+    providers::{Provider, ProviderBuilder, RootProvider},
+    rpc::{client::RpcClient, types::eth::TransactionRequest},
+    signers::wallet::Wallet,
+};
 use eyre::Result;
-use reqwest::Client;
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -20,10 +19,9 @@ async fn main() -> Result<()> {
     let from = anvil.addresses()[0];
     let signer = Wallet::from(pk.to_owned());
 
-    let rpc_client = RpcClient::new(Http::<Client>::new(anvil.endpoint().parse().unwrap()), false);
-    let provider_with_signer = ProviderBuilder::<_, Ethereum>::new()
+    let rpc_client = RpcClient::new_http(anvil.endpoint().parse().unwrap());
+    let provider_with_signer = ProviderBuilder::new()
         .signer(EthereumSigner::from(signer))
-        .network::<Ethereum>()
         .provider(RootProvider::new(rpc_client));
 
     let to = anvil.addresses()[1];
@@ -31,7 +29,7 @@ async fn main() -> Result<()> {
     let mut tx_req = TransactionRequest::default()
         .to(Some(to))
         .value(U256::from(100))
-        .nonce(U64::from(0))
+        .nonce(0)
         .gas_limit(U256::from(21000));
 
     tx_req.set_gas_price(U256::from(20e9));
