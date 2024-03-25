@@ -13,7 +13,6 @@ cargo run --example mnemonic_signer
 
 ## Table of Contents
 
-- [ ] Address book
 - [x] Anvil
     - [x] [Deploy contract](./examples/anvil/examples/deploy_contract_anvil.rs)
     - [x] [Fork](./examples/anvil/examples/fork_anvil.rs)
@@ -28,9 +27,6 @@ cargo run --example mnemonic_signer
     - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
     - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
     - [x] [Generate](./examples/contracts/examples/generate.rs)
-- [ ] Events
-  - [ ] Logs and filtering
-  - [ ] Solidity topics
 - [x] Layers
   - [x] [Nonce manager](./examples/layers/examples/nonce_layer.rs)
   - [x] [Signature manager](./examples/layers/examples/signer_layer.rs)
