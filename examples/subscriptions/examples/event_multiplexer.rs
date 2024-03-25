@@ -1,16 +1,11 @@
 //! Example of multiplexing watching event logs.
 
-use std::str::FromStr;
-
-use alloy_network::Ethereum;
-use alloy_node_bindings::{Anvil, AnvilInstance};
-use alloy_primitives::I256;
+use alloy::{network::Ethereum, node_bindings::Anvil, primitives::I256, sol, sol_types::SolEvent};
 use alloy_provider::RootProvider;
-use alloy_pubsub::PubSubFrontend;
 use alloy_rpc_client::RpcClient;
-use alloy_sol_types::{sol, SolEvent};
 use eyre::Result;
 use futures_util::StreamExt;
+use std::str::FromStr;
 
 sol!(
     #[derive(Debug)]
@@ -41,7 +36,9 @@ sol!(
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let (provider, _anvil) = init().await;
+    let anvil = Anvil::new().block_time(1).spawn();
+    let ws = alloy_rpc_client::WsConnect::new(anvil.ws_endpoint());
+    let provider = RootProvider::<Ethereum, _>::new(RpcClient::connect_pubsub(ws).await?);
 
     let deployed_contract = EventMultiplexer::deploy(provider.clone()).await?;
 
@@ -109,13 +106,4 @@ async fn main() -> Result<()> {
     }
 
     Ok(())
-}
-
-async fn init() -> (RootProvider<Ethereum, PubSubFrontend>, AnvilInstance) {
-    let anvil = Anvil::new().block_time(1).spawn();
-    let ws = alloy_rpc_client::WsConnect::new(anvil.ws_endpoint());
-    let client = RpcClient::connect_pubsub(ws).await.unwrap();
-    let provider = RootProvider::<Ethereum, _>::new(client);
-
-    (provider, anvil)
 }

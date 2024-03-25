@@ -1,11 +1,8 @@
 //! Example of watching contract events.
 
-use alloy_network::Ethereum;
-use alloy_node_bindings::{Anvil, AnvilInstance};
+use alloy::{network::Ethereum, node_bindings::Anvil, sol};
 use alloy_provider::RootProvider;
-use alloy_pubsub::PubSubFrontend;
 use alloy_rpc_client::RpcClient;
-use alloy_sol_types::sol;
 use eyre::Result;
 use futures_util::StreamExt;
 
@@ -31,7 +28,9 @@ sol!(
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let (provider, _anvil) = init().await;
+    let anvil = Anvil::new().block_time(1).spawn();
+    let ws = alloy_rpc_client::WsConnect::new(anvil.ws_endpoint());
+    let provider = RootProvider::<Ethereum, _>::new(RpcClient::connect_pubsub(ws).await?);
 
     let deployed_contract = EventExample::deploy(provider.clone()).await?;
 
@@ -81,13 +80,4 @@ async fn main() -> Result<()> {
         .await;
 
     Ok(())
-}
-
-async fn init() -> (RootProvider<Ethereum, PubSubFrontend>, AnvilInstance) {
-    let anvil = Anvil::new().block_time(1).spawn();
-    let ws = alloy_rpc_client::WsConnect::new(anvil.ws_endpoint());
-    let client = RpcClient::connect_pubsub(ws).await.unwrap();
-    let provider = RootProvider::<Ethereum, _>::new(client);
-
-    (provider, anvil)
 }
