@@ -15,7 +15,7 @@ async fn main() -> Result<()> {
     // Spin up an Anvil node.
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
-    // Set up the wallet.
+    // Set up a local wallet from the first default Anvil account (Alice).
     let wallet: LocalWallet = anvil.keys()[0].clone().into();
 
     // Create a provider with the signer.
