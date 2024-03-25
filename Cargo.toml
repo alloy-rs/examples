@@ -50,11 +50,6 @@ alloy = { git = "https://github.com/alloy-rs/alloy", rev = "fd8f065", features =
     "transport-ws",
     "pubsub",
 ] }
-# TODO: sol! macro somehow requires this to be present
-alloy-sol-types = { version = "0.6.4", default-features = false, features = [
-    "std",
-] }
-
 
 # async
 tokio = "1"
