@@ -1,7 +1,7 @@
 //! Example of how to transfer ETH from one account to another.
 
 use alloy::{
-    network::{Ethereum},
+    network::Ethereum,
     node_bindings::Anvil,
     primitives::{address, Address, U256},
     providers::{HttpProvider, Provider},
