@@ -1,5 +1,5 @@
 [package]
-name = "examples-wallets"
+name = "examples-contracts"
 
 publish.workspace = true
 version.workspace = true
@@ -12,9 +12,7 @@ repository.workspace = true
 
 [dev-dependencies]
 alloy.workspace = true
-alloy-sol-types.workspace = true
 
 eyre.workspace = true
 reqwest.workspace = true
-serde.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
