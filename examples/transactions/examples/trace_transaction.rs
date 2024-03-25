@@ -1,21 +1,22 @@
-//! Example of how to trace a transaction using `debug_trace_transaction`.
+//! Example of how to trace a transaction using `trace_transaction`.
 
-use alloy_network::Ethereum;
-use alloy_node_bindings::{Anvil, AnvilInstance};
-use alloy_primitives::fixed_bytes;
-use alloy_provider::{HttpProvider, Provider};
-use alloy_rpc_client::RpcClient;
-use alloy_rpc_trace_types::geth::{
-    GethDebugBuiltInTracerType, GethDebugTracerType, GethDebugTracingOptions,
-    GethDefaultTracingOptions,
+use alloy::{
+    network::Ethereum,
+    node_bindings::Anvil,
+    primitives::fixed_bytes,
+    providers::{HttpProvider, Provider},
+    rpc::types::trace::geth::{
+        GethDebugBuiltInTracerType, GethDebugTracerType, GethDebugTracingOptions,
+        GethDefaultTracingOptions,
+    },
 };
-use alloy_transport_http::Http;
 use eyre::Result;
-use reqwest::Client;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let (provider, _anvil) = init();
+    let anvil = Anvil::new().fork("https://eth.merkle.io").spawn();
+    let url = anvil.endpoint().parse().unwrap();
+    let provider = HttpProvider::<Ethereum>::new_http(url);
     let hash = fixed_bytes!("97a02abf405d36939e5b232a5d4ef5206980c5a6661845436058f30600c52df7"); // Hash of the tx we want to trace
 
     // Default tracing
@@ -49,11 +50,4 @@ async fn main() -> Result<()> {
     println!("JS_TRACER: {:?}", res);
 
     Ok(())
-}
-
-fn init() -> (HttpProvider<Ethereum>, AnvilInstance) {
-    let anvil = Anvil::new().fork("https://eth.llamarpc.com").spawn();
-    let url = anvil.endpoint().parse().unwrap();
-    let http = Http::<Client>::new(url);
-    (HttpProvider::new(RpcClient::new(http, true)), anvil)
 }

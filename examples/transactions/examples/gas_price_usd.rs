@@ -1,15 +1,15 @@
 //! Example of how to get the gas price in USD using the Chainlink ETH/USD feed.
 
-use alloy_network::Ethereum;
-use alloy_node_bindings::{Anvil, AnvilInstance};
-use alloy_primitives::{address, utils::format_units, Address, Bytes, U256};
-use alloy_provider::{HttpProvider, Provider};
-use alloy_rpc_client::RpcClient;
-use alloy_rpc_types::TransactionRequest;
-use alloy_sol_types::{sol, SolCall};
-use alloy_transport_http::Http;
+use alloy::{
+    network::Ethereum,
+    node_bindings::Anvil,
+    primitives::{address, utils::format_units, Address, Bytes, U256},
+    providers::{HttpProvider, Provider},
+    rpc::types::eth::TransactionRequest,
+    sol,
+    sol_types::SolCall,
+};
 use eyre::Result;
-use reqwest::Client;
 use std::str::FromStr;
 
 const ETH_USD_FEED: Address = address!("5f4eC3Df9cbd43714FE2740f5E3616155c5b8419");
@@ -22,7 +22,9 @@ sol!(
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let (provider, _anvil) = init();
+    let anvil = Anvil::new().fork("https://eth.merkle.io").spawn();
+    let url = anvil.endpoint().parse().unwrap();
+    let provider = HttpProvider::<Ethereum>::new_http(url);
 
     let call = latestAnswerCall {}.abi_encode();
     let input = Bytes::from(call);
@@ -43,13 +45,6 @@ async fn main() -> Result<()> {
     println!("Gas price in USD: {}", usd);
 
     Ok(())
-}
-
-fn init() -> (HttpProvider<Ethereum>, AnvilInstance) {
-    let anvil = Anvil::new().fork("https://eth.merkle.io").spawn();
-    let url = anvil.endpoint().parse().unwrap();
-    let http = Http::<Client>::new(url);
-    (HttpProvider::new(RpcClient::new(http, true)), anvil)
 }
 
 fn usd_value(amount: U256, price_usd: U256) -> Result<f64> {

@@ -1,19 +1,23 @@
 //! Example of how to trace a transaction using `trace_call`.
 
-use alloy_network::Ethereum;
-use alloy_node_bindings::{Anvil, AnvilInstance};
-use alloy_primitives::U256;
-use alloy_provider::{HttpProvider, Provider};
-use alloy_rpc_client::RpcClient;
-use alloy_rpc_trace_types::parity::TraceType;
-use alloy_rpc_types::{BlockId, BlockNumberOrTag, TransactionRequest};
-use alloy_transport_http::Http;
+use alloy::{
+    network::Ethereum,
+    node_bindings::Anvil,
+    primitives::U256,
+    providers::{HttpProvider, Provider},
+    rpc::types::{
+        eth::{BlockId, BlockNumberOrTag, TransactionRequest},
+        trace::parity::TraceType,
+    },
+};
 use eyre::Result;
-use reqwest::Client;
+use reqwest::Url;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let (provider, anvil) = init();
+    let anvil = Anvil::new().fork("https://eth.merkle.io").spawn();
+    let provider =
+        HttpProvider::<Ethereum>::new_http("https://eth.merkle.io".parse::<Url>().unwrap());
 
     let from = anvil.addresses()[0];
     let to = anvil.addresses()[1];
@@ -32,11 +36,4 @@ async fn main() -> Result<()> {
     println!("{:?}", res.trace);
 
     Ok(())
-}
-
-fn init() -> (HttpProvider<Ethereum>, AnvilInstance) {
-    let anvil = Anvil::new().fork("https://eth.merkle.io").spawn();
-    let url = "https://eth.merkle.io".parse().unwrap(); // Use mainnet as anvil doesn't support trace_call
-    let http = Http::<Client>::new(url);
-    (HttpProvider::new(RpcClient::new(http, true)), anvil)
 }

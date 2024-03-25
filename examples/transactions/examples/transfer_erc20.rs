@@ -1,21 +1,23 @@
 //! Example of how to transfer ERC20 tokens from one account to another.
 
-use alloy_network::Ethereum;
-use alloy_node_bindings::{Anvil, AnvilInstance};
-use alloy_primitives::{Address, Bytes, U256};
-use alloy_provider::{HttpProvider, Provider};
-use alloy_rpc_client::RpcClient;
-use alloy_rpc_types::TransactionRequest;
-use alloy_sol_types::{sol, SolCall};
-use alloy_transport_http::Http;
+use alloy::{
+    network::Ethereum,
+    node_bindings::Anvil,
+    primitives::{Address, Bytes, U256},
+    providers::{HttpProvider, Provider},
+    rpc::types::eth::TransactionRequest,
+    sol,
+    sol_types::SolCall,
+};
 use eyre::Result;
-use reqwest::Client;
 
 sol!(ERC20Example, "examples/contracts/ERC20Example.json");
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let (provider, anvil) = init();
+    let anvil = Anvil::new().fork("https://eth.merkle.io").spawn();
+    let url = anvil.endpoint().parse().unwrap();
+    let provider = HttpProvider::<Ethereum>::new_http(url);
 
     let from = anvil.addresses()[0];
 
@@ -50,13 +52,6 @@ async fn main() -> Result<()> {
     assert_eq!(from_bal, U256::from(999999999999999999900_i128));
 
     Ok(())
-}
-
-fn init() -> (HttpProvider<Ethereum>, AnvilInstance) {
-    let anvil = Anvil::new().spawn();
-    let url = anvil.endpoint().parse().unwrap();
-    let http = Http::<Client>::new(url);
-    (HttpProvider::new(RpcClient::new(http, true)), anvil)
 }
 
 async fn deploy_token_contract(

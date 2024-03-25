@@ -11,16 +11,7 @@ homepage.workspace = true
 repository.workspace = true
 
 [dev-dependencies]
-alloy-network.workspace = true
-alloy-node-bindings.workspace = true
-alloy-primitives.workspace = true
-alloy-provider.workspace = true
-alloy-rpc-types.workspace = true
-alloy-rpc-client.workspace = true
-alloy-rpc-trace-types.workspace = true
-alloy-sol-types = { workspace = true, features = ["json"] }
-alloy-transport.workspace = true
-alloy-transport-http.workspace = true
+alloy.workspace = true
 
 eyre.workspace = true
 reqwest.workspace = true

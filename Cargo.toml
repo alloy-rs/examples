@@ -11,7 +11,6 @@ license = "MIT OR Apache-2.0"
 homepage = "https://github.com/alloy-rs/examples"
 repository = "https://github.com/alloy-rs/examples"
 publish = false
-exclude = ["examples/"]
 
 [workspace.dependencies]
 alloy = { git = "https://github.com/alloy-rs/alloy", rev = "fd8f065", features = [
@@ -34,7 +33,7 @@ alloy = { git = "https://github.com/alloy-rs/alloy", rev = "fd8f065", features =
     # "rpc-types",
     "rpc-types-eth",
     # "rpc-types-engine",
-    # "rpc-types-trace",
+    "rpc-types-trace",
     "signers",
     # "signer-aws",
     # "signer-gcp",

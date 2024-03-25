@@ -1,7 +1,6 @@
 //! Example of how to decode the input of a transaction.
 
-use alloy_primitives::hex;
-use alloy_sol_types::{sol, SolCall};
+use alloy::{primitives::hex, sol, sol_types::SolCall};
 use eyre::Result;
 
 // Use the sol! macro to generate bindings for the swapExactTokensForTokens function
