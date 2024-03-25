@@ -63,4 +63,5 @@ cargo run --example mnemonic_signer
   - [x] [Sign permit hash](./examples/wallets/examples/sign_permit_hash.rs)
   - [x] [Trezor signer](./examples/wallets/examples/trezor_signer.rs)
   - [x] [Yubi signer](./examples/wallets/examples/yubi_signer.rs)
-  - [ ] Keystore signer
+  - [x] [Keystore signer](./examples/wallets/examples/keystore_signer.rs)
+  - [x] [Create keystore](./examples/wallets/examples/create_keystore.rs)
