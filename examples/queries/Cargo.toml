@@ -12,12 +12,6 @@ repository.workspace = true
 
 [dev-dependencies]
 alloy.workspace = true
-# alloy-network.workspace = true
-# alloy-primitives.workspace = true
-# alloy-provider = { workspace = true, features = ["pubsub", "ws"] }
-# alloy-rpc-types.workspace = true
-# alloy-rpc-client.workspace = true
-# alloy-transport-http.workspace = true
 
 eyre.workspace = true
 futures-util = "0.3"
