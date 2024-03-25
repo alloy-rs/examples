@@ -13,41 +13,23 @@ cargo run --example mnemonic_signer
 
 ## Table of Contents
 
-- [ ] Address book
-- [ ] Anvil
-    - [ ] Boot anvil
-    - [ ] Deploy contracts
-    - [ ] Fork
-    - [ ] Testing
-- [ ] Big numbers
-    - [ ] Comparison and equivalence
-    - [ ] Conversion
-    - [ ] Creating Instances
-    - [ ] Math operations
-    - [ ] Utilities
-- [ ] Contracts
-    - [ ] Abigen
-    - [ ] Compile
-    - [ ] Creating Instances
-    - [ ] Deploy Anvil
-    - [ ] Deploy from ABI and bytecode
-    - [ ] Deploy Moonbeam
-    - [ ] Events
-    - [ ] Events with meta
-    - [ ] Methods
-- [ ] Events
-  - [ ] Logs and filtering
-  - [ ] Solidity topics
-- [ ] Middleware
-  - [ ] Builder
-  - [ ] Create custom middleware
-  - [ ] Gas escalator
-  - [ ] Gas oracle
-  - [ ] Nonce manager
-  - [ ] Policy
-  - [ ] Signer
-  - [ ] Time lag
-  - [ ] Transformer
+- [x] Anvil
+    - [x] [Deploy contract](./examples/anvil/examples/deploy_contract_anvil.rs)
+    - [x] [Fork](./examples/anvil/examples/fork_anvil.rs)
+    - [x] [Local](./examples/anvil/examples/local_anvil.rs)
+- [x] Big numbers
+    - [x] [Comparison and equivalence](./examples/big-numbers/examples/comparison_equivalence.rs)
+    - [x] [Conversion](./examples/big-numbers/examples/conversion.rs)
+    - [x] [Creating Instances](./examples/big-numbers/examples/create_instances.rs)
+    - [x] [Math operations](./examples/big-numbers/examples/math_operations.rs)
+    - [x] [Math utilities](./examples/big-numbers/examples/math_utilities.rs)
+- [x] Contracts
+    - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
+    - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
+    - [x] [Generate](./examples/contracts/examples/generate.rs)
+- [x] Layers
+  - [x] [Nonce manager](./examples/layers/examples/nonce_layer.rs)
+  - [x] [Signature manager](./examples/layers/examples/signer_layer.rs)
 - [ ] Providers
   - [ ] Http
   - [ ] IPC
@@ -56,13 +38,10 @@ cargo run --example mnemonic_signer
   - [ ] Retry
   - [ ] RW
   - [ ] WS
-- [ ] Queries
-  - [ ] Blocks
-  - [ ] Contracts
-  - [ ] Events
-  - [ ] Paginated logs
-  - [ ] UniswapV2 pair
-  - [ ] Transactions
+- [x] Queries
+  - [x] [Contract storage](./examples/queries/examples/query_contract_storage.rs)
+  - [x] [Contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
+  - [x] [Logs](./examples/queries/examples/query_logs.rs)
 - [ ] Subscriptions
   - [ ] Watch blocks
   - [ ] Subscribe events by type
