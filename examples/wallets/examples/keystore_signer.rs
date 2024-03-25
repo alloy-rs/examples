@@ -9,7 +9,7 @@ use alloy::{
     signers::wallet::Wallet,
 };
 use eyre::Result;
-use std::path::Path;
+use std::{env, path::PathBuf};
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -21,7 +21,8 @@ async fn main() -> Result<()> {
 
     // Set up a wallet using Alice's keystore file.
     // The private key belongs to Alice, the first default Anvil account.
-    let keystore_file_path = Path::new("./examples/wallets/examples/keystore/alice.json");
+    let keystore_file_path =
+        PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("examples/keystore/alice.json");
     let wallet = Wallet::decrypt_keystore(keystore_file_path, password)?;
 
     // Create a provider with the signer.
