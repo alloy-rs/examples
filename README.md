@@ -27,21 +27,21 @@ cargo run --example mnemonic_signer
   - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
   - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
   - [x] [Generate](./examples/contracts/examples/generate.rs)
+  - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
+  - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
+  - [x] [Generate](./examples/contracts/examples/generate.rs)
 - [x] Layers
   - [x] [Nonce manager](./examples/layers/examples/nonce_layer.rs)
   - [x] [Signature manager](./examples/layers/examples/signer_layer.rs)
-- [ ] Providers
-  - [ ] Http
-  - [ ] IPC
-  - [ ] Mock
-  - [ ] Quorum
-  - [ ] Retry
-  - [ ] RW
-  - [ ] WS
 - [x] Subscriptions
   - [x] [Subscribe and watch blocks](./examples/subscriptions/examples/subscribe_blocks.rs)
   - [x] [Subscribe contract events and watch logs](./examples/subscriptions/examples/watch_contract_event.rs)
   - [x] [Event multiplexer](./examples/subscriptions/examples/event_multiplexer.rs)
+- [x] Providers
+  - [x] [Builder](./examples/providers/examples/builder.rs)
+  - [x] [HTTP](./examples/providers/examples/http.rs)
+  - [x] [IPC](./examples/providers/examples/ipc.rs)
+  - [x] [WS](./examples/providers/examples/ws.rs)
 - [x] Queries
   - [x] [Contract storage](./examples/queries/examples/query_contract_storage.rs)
   - [x] [Contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
