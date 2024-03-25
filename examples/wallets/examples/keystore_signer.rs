@@ -1,4 +1,4 @@
-//! Example of using a local wallet to sign and broadcast a transaction on a local Anvil node.
+//! Example of using a keystore wallet to sign and broadcast a transaction on a local Anvil node.
 
 use alloy::{
     network::EthereumSigner,
@@ -6,17 +6,24 @@ use alloy::{
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
     rpc::{client::RpcClient, types::eth::request::TransactionRequest},
-    signers::wallet::LocalWallet,
+    signers::wallet::Wallet,
 };
 use eyre::Result;
+use std::{env, path::PathBuf};
 
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up an Anvil node.
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
-    // Set up a local wallet from the first default Anvil account (Alice).
-    let wallet: LocalWallet = anvil.keys()[0].clone().into();
+    // Password to decrypt the keystore file with.
+    let password = "test";
+
+    // Set up a wallet using Alice's keystore file.
+    // The private key belongs to Alice, the first default Anvil account.
+    let keystore_file_path =
+        PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("examples/keystore/alice.json");
+    let wallet = Wallet::decrypt_keystore(keystore_file_path, password)?;
 
     // Create a provider with the signer.
     let http = anvil.endpoint().parse()?;
