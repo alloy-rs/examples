@@ -6,7 +6,7 @@ use alloy::{
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
     rpc::{client::RpcClient, types::eth::request::TransactionRequest},
-    signers::wallet::LocalWallet,
+    signers::wallet::Wallet,
 };
 use eyre::Result;
 
@@ -15,8 +15,10 @@ async fn main() -> Result<()> {
     // Spin up an Anvil node.
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
-    // Set up the wallet.
-    let wallet: LocalWallet = anvil.keys()[0].clone().into();
+    // Read the private key from the keystore and set up the wallet.
+    // The private key belongs to Alice, the first default Anvil account.
+    let wallet =
+        Wallet::decrypt_keystore("./examples/wallets/examples/keystore/alice.json", "test")?;
 
     // Create a provider with the signer.
     let http = anvil.endpoint().parse()?;
