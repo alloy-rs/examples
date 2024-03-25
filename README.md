@@ -38,13 +38,10 @@ cargo run --example mnemonic_signer
   - [ ] Retry
   - [ ] RW
   - [ ] WS
-- [ ] Queries
-  - [ ] Blocks
-  - [ ] Contracts
-  - [ ] Events
-  - [ ] Paginated logs
-  - [ ] UniswapV2 pair
-  - [ ] Transactions
+- [x] Queries
+  - [x] [Contract storage](./examples/queries/examples/query_contract_storage.rs)
+  - [x] [Contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
+  - [x] [Logs](./examples/queries/examples/query_logs.rs)
 - [ ] Subscriptions
   - [ ] Watch blocks
   - [ ] Subscribe events by type
