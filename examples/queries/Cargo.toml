@@ -1,0 +1,19 @@
+[package]
+name = "examples-queries"
+
+publish.workspace = true
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+
+[dev-dependencies]
+alloy.workspace = true
+
+eyre.workspace = true
+futures-util = "0.3"
+reqwest.workspace = true
+tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }

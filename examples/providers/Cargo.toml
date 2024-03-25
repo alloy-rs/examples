@@ -1,0 +1,28 @@
+[package]
+name = "examples-providers"
+
+publish.workspace = true
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+
+[dev-dependencies]
+alloy.workspace = true
+# Temp dependency fix to enable relevant features - Ref: https://github.com/alloy-rs/examples/pull/3#discussion_r1537842062
+alloy-rpc-client = { git = "https://github.com/alloy-rs/alloy", rev = "fd8f065", features = [
+    "pubsub",
+] }
+alloy-provider = { git = "https://github.com/alloy-rs/alloy", rev = "fd8f065", features = [
+    "pubsub",
+    "ws",
+] }
+
+
+eyre.workspace = true
+futures-util = "0.3"
+reqwest.workspace = true
+tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }
