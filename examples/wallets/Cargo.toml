@@ -12,7 +12,6 @@ repository.workspace = true
 
 [dev-dependencies]
 alloy.workspace = true
-alloy-sol-types.workspace = true
 
 eyre.workspace = true
 reqwest.workspace = true
