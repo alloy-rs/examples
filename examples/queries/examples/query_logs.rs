@@ -1,14 +1,14 @@
-use alloy_network::Ethereum;
-use alloy_primitives::{address, fixed_bytes};
-use alloy_provider::{HttpProvider, Provider};
-use alloy_rpc_client::RpcClient;
-use alloy_rpc_types::Filter;
-use alloy_transport_http::Http;
+use alloy::{
+    network::Ethereum,
+    primitives::{address, fixed_bytes},
+    providers::{Provider, RootProvider},
+    rpc::types::eth::Filter,
+};
 use eyre::Result;
-use reqwest::Client;
 #[tokio::main]
 async fn main() -> Result<()> {
-    let provider = init();
+    let url = "https://eth.merkle.io".parse().unwrap();
+    let provider = RootProvider::<Ethereum, _>::new_http(url);
 
     // Get logs from the latest block
     let latest_block = provider.get_block_number().await?;
@@ -48,9 +48,4 @@ async fn main() -> Result<()> {
     }
 
     Ok(())
-}
-
-fn init() -> HttpProvider<Ethereum> {
-    let http = Http::<Client>::new("https://eth.merkle.io".parse().unwrap());
-    HttpProvider::new(RpcClient::new(http, false))
 }

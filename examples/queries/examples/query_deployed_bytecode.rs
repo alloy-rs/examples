@@ -1,17 +1,17 @@
 //! Example of querying deployed bytecode of a contract on Ethereum network.
 
-use alloy_network::Ethereum;
-use alloy_primitives::address;
-use alloy_provider::{HttpProvider, Provider};
-use alloy_rpc_client::RpcClient;
-use alloy_rpc_types::{BlockId, BlockNumberOrTag};
-use alloy_transport_http::Http;
+use alloy::{
+    network::Ethereum,
+    primitives::address,
+    providers::{Provider, RootProvider},
+    rpc::types::eth::{BlockId, BlockNumberOrTag},
+};
 use eyre::Result;
-use reqwest::Client;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let provider = init();
+    let url = "https://eth.merkle.io".parse().unwrap();
+    let provider = RootProvider::<Ethereum, _>::new_http(url);
 
     // Get bytecode of USDC-ETH Uniswap V3 pool
     let pool_address = address!("88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640");
@@ -22,9 +22,4 @@ async fn main() -> Result<()> {
     println!("Bytecode: {:?}", bytecode);
 
     Ok(())
-}
-
-fn init() -> HttpProvider<Ethereum> {
-    let http = Http::<Client>::new("https://eth.llamarpc.com".parse().unwrap());
-    HttpProvider::new(RpcClient::new(http, true))
 }
