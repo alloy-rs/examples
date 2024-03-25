@@ -33,7 +33,7 @@ alloy = { git = "https://github.com/alloy-rs/alloy", rev = "fd8f065", features =
     # "rpc-types",
     "rpc-types-eth",
     # "rpc-types-engine",
-    # "rpc-types-trace",
+    "rpc-types-trace",
     "signers",
     # "signer-aws",
     # "signer-gcp",

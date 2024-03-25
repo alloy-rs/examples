@@ -46,25 +46,13 @@ cargo run --example mnemonic_signer
   - [ ] Watch blocks
   - [ ] Subscribe events by type
   - [ ] Subscribe logs
-- [ ] Transactions
-  - [ ] Call override
-  - [ ] Create raw transaction
-  - [ ] Create typed transaction
-  - [ ] Decode input
-  - [ ] EIP-1559
-  - [ ] ENS
-  - [ ] Estimate gas
-  - [ ] Get gas price
-  - [ ] Get gas price USD
-  - [ ] Remove liquidity
-  - [ ] Set gas for a transaction
-  - [ ] Send raw transaction
-  - [ ] Send typed transaction
-  - [ ] Trace
-  - [ ] Transaction receipt
-  - [ ] Transaction status
-  - [ ] Transfer ETH
-  - [ ] Transfer ERC20 token
+- [x] Transactions
+  - [x] [Decode input](./examples/transactions/examples/decode_input.rs)
+  - [x] [Get gas price in USD](./examples/transactions/examples/gas_price_usd.rs)
+  - [x] [Trace call](./examples/transactions/examples/trace_call.rs)
+  - [x] [Trace transaction](./examples/transactions/examples/trace_transaction.rs)
+  - [x] [Transfer ERC20 token](./examples/transactions/examples/transfer_erc20.rs)
+  - [x] [Transfer ETH](./examples/transactions/examples/transfer_eth.rs)
 - [ ] Wallets
   - [ ] AWS signer
   - [ ] GCP signer
