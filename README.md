@@ -27,17 +27,14 @@ cargo run --example mnemonic_signer
     - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
     - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
     - [x] [Generate](./examples/contracts/examples/generate.rs)
+- [x] Providers
+  - [x] [Builder](./examples/providers/examples/builder.rs)
+  - [x] [HTTP](./examples/providers/examples/http.rs)
+  - [x] [IPC](./examples/providers/examples/ipc.rs)
+  - [x] [WS](./examples/providers/examples/ws.rs)
 - [x] Layers
   - [x] [Nonce manager](./examples/layers/examples/nonce_layer.rs)
   - [x] [Signature manager](./examples/layers/examples/signer_layer.rs)
-- [ ] Providers
-  - [ ] Http
-  - [ ] IPC
-  - [ ] Mock 
-  - [ ] Quorum
-  - [ ] Retry
-  - [ ] RW
-  - [ ] WS
 - [x] Queries
   - [x] [Contract storage](./examples/queries/examples/query_contract_storage.rs)
   - [x] [Contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
