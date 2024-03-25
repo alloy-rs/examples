@@ -9,6 +9,7 @@ use alloy::{
     signers::wallet::Wallet,
 };
 use eyre::Result;
+use std::path::Path;
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -20,8 +21,8 @@ async fn main() -> Result<()> {
 
     // Set up a wallet using Alice's keystore file.
     // The private key belongs to Alice, the first default Anvil account.
-    let wallet =
-        Wallet::decrypt_keystore("./examples/wallets/examples/keystore/alice.json", password)?;
+    let keystore_file_path = Path::new("./examples/wallets/examples/keystore/alice.json");
+    let wallet = Wallet::decrypt_keystore(keystore_file_path, password)?;
 
     // Create a provider with the signer.
     let http = anvil.endpoint().parse()?;
@@ -40,7 +41,7 @@ async fn main() -> Result<()> {
     };
 
     // Broadcast the transaction and wait for the receipt.
-    let receipt = provider.send_transaction(tx).await?.with_confirmations(1).get_receipt().await?;
+    let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
 
     println!("Send transaction: {:?}", receipt.transaction_hash);
 
