@@ -1,11 +1,10 @@
 //! Example of using the WS provider with auth to subscribe to new blocks.
 
-use alloy::{
-    network::Ethereum,
-    providers::{Provider, RootProvider},
-    rpc::client::RpcClient,
-    transports::Authorization,
-};
+use alloy::{network::Ethereum, transports::Authorization};
+// Temp Fix
+use alloy_provider::{Provider, RootProvider};
+use alloy_rpc_client::{RpcClient, WsConnect};
+//
 use eyre::Result;
 use futures_util::StreamExt;
 

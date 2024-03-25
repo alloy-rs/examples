@@ -3,9 +3,9 @@
 use alloy::{
     network::Ethereum,
     providers::{Provider, RootProvider},
-    rpc::client::RpcClient,
     transports::ipc::IpcConnect,
 };
+use alloy_rpc_client::RpcClient;
 use eyre::Result;
 
 #[tokio::main]
