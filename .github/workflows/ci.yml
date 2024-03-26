@@ -13,9 +13,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  feature-checks:
+  checks:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -26,9 +26,21 @@ jobs:
       - name: cargo hack
         run: cargo hack check --feature-powerset --depth 2
 
+  examples:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
+      - run: |
+          cargo run --example 2>&1 | grep -E '^ ' | xargs -n1 cargo run --example
+
   clippy:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@clippy
@@ -41,7 +53,7 @@ jobs:
 
   fmt:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@nightly

@@ -28,7 +28,8 @@ sol!(
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let anvil = Anvil::new().block_time(1).spawn();
+    let anvil = Anvil::new().block_time(1).try_spawn()?;
+
     let ws = alloy_rpc_client::WsConnect::new(anvil.ws_endpoint());
     let provider = RootProvider::<Ethereum, _>::new(RpcClient::connect_pubsub(ws).await?);
 

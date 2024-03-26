@@ -7,7 +7,7 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH
-    let anvil = Anvil::new().fork("https://eth.llamarpc.com").try_spawn()?;
+    let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
 
     println!("Anvil running at `{}`", anvil.endpoint());
 

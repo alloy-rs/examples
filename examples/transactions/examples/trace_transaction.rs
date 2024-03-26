@@ -14,7 +14,10 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let anvil = Anvil::new().fork("https://eth.merkle.io").spawn();
+    // Spin up a forked Anvil node.
+    // Ensure `anvil` is available in $PATH
+    let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
+
     let url = anvil.endpoint().parse().unwrap();
     let provider = HttpProvider::<Ethereum>::new_http(url);
     let hash = fixed_bytes!("97a02abf405d36939e5b232a5d4ef5206980c5a6661845436058f30600c52df7"); // Hash of the tx we want to trace

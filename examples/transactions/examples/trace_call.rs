@@ -15,7 +15,10 @@ use reqwest::Url;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let anvil = Anvil::new().fork("https://eth.merkle.io").spawn();
+    // Spin up a forked Anvil node.
+    // Ensure `anvil` is available in $PATH
+    let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
+
     let provider =
         HttpProvider::<Ethereum>::new_http("https://eth.merkle.io".parse::<Url>().unwrap());
 
