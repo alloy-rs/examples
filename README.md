@@ -31,6 +31,7 @@ cargo run --example mnemonic_signer
   - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
   - [x] [Generate](./examples/contracts/examples/generate.rs)
 - [x] Layers
+  - [x] [Recommended layers](./examples/layers/examples/recommended_layers.rs)
   - [x] [Nonce manager](./examples/layers/examples/nonce_layer.rs)
   - [x] [Signature manager](./examples/layers/examples/signer_layer.rs)
 - [x] Subscriptions

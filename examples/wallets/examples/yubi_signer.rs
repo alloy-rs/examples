@@ -39,7 +39,8 @@ async fn main() -> Result<()> {
     };
 
     // Broadcast the transaction and wait for the receipt.
-    let receipt = provider.send_transaction(tx).await?.with_confirmations(3).get_receipt().await?;
+    let receipt =
+        provider.send_transaction(tx).await?.with_required_confirmations(3).get_receipt().await?;
 
     println!("Send transaction: {:?}", receipt.transaction_hash);
 
