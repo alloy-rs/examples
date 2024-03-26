@@ -14,7 +14,7 @@ publish = false
 exclude = ["examples/"]
 
 [workspace.dependencies]
-alloy = { git = "https://github.com/alloy-rs/alloy", rev = "fd8f065", features = [
+alloy = { git = "https://github.com/alloy-rs/alloy", rev = "f7333c4", features = [
     # "dyn-abi",
     # "json-abi",
     # "json",

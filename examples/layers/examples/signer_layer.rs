@@ -29,10 +29,12 @@ async fn main() -> Result<()> {
 
     // Create a legacy type transaction.
     let tx = TransactionRequest::default()
+        // Notice that without the `ManagedNonceLayer`, you need to manually set the nonce field.
         .with_nonce(0)
         .with_from(from)
         .with_to(address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045").into())
         .with_value(U256::from(100))
+        // Notice that without the `GasEstimatorLayer`, you need to set the gas related fields.
         .with_gas_price(U256::from(20e9))
         .with_gas_limit(U256::from(21000));
 

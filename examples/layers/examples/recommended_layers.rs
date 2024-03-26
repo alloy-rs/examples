@@ -4,21 +4,12 @@ use alloy::{
     network::{EthereumSigner, TransactionBuilder},
     node_bindings::Anvil,
     primitives::{address, U256},
-    providers::{layers::ManagedNonceLayer, Provider, ProviderBuilder},
+    providers::{Provider, ProviderBuilder},
     rpc::{client::RpcClient, types::eth::request::TransactionRequest},
     signers::wallet::LocalWallet,
 };
 use eyre::Result;
 
-/// In Ethereum, the nonce of a transaction is a number that represents the number of transactions
-/// that have been sent from a particular account. The nonce is used to ensure that transactions are
-/// processed in the order they are intended, and to prevent the same transaction from being
-/// processed multiple times.
-///
-/// The nonce manager in Alloy is a layer that helps you manage the nonce
-/// of transactions by keeping track of the current nonce for a given account and automatically
-/// incrementing it as needed. This can be useful if you want to ensure that transactions are sent
-/// in the correct order, or if you want to avoid having to manually manage the nonce yourself.
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
@@ -32,23 +23,21 @@ async fn main() -> Result<()> {
     // Create a provider with the signer.
     let http = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
-        // Add the `ManagedNonceLayer` to the provider.
-        // It is generally recommended to use the `.with_recommended_layers()` method, which
-        // includes the `ManagedNonceLayer`.
-        .layer(ManagedNonceLayer)
+        // Adds the `GasEstimatorLayer` and the `ManagedNonceLayer` layers.
+        .with_recommended_layers()
+        // Alternatively, you can add the layers individually:
+        // .with_gas_estimation()
+        // .with_nonce_management()
         .signer(EthereumSigner::from(wallet))
         .on_client(RpcClient::new_http(http));
 
     // Create an EIP-1559 type transaction.
+    // Notice that the `nonce` field is set by the `ManagedNonceLayer`.
+    // Notice that without the `GasEstimatorLayer`, you need to set the gas related fields.
     let tx = TransactionRequest::default()
         .with_from(from)
         .with_to(address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045").into())
         .with_value(U256::from(100))
-        // Notice that without the `GasEstimatorLayer`, you need to set the gas related fields.
-        .with_gas_limit(U256::from(21000))
-        .with_max_fee_per_gas(U256::from(20e9))
-        .with_max_priority_fee_per_gas(U256::from(1e9))
-        // It is required to set the chain_id for EIP-1559 transactions.
         .with_chain_id(anvil.chain_id());
 
     // Send the transaction, the nonce (0) is automatically managed by the provider.
