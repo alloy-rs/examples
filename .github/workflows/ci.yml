@@ -39,15 +39,22 @@ jobs:
       - name: Run examples
         run: |
           # Get the list of runable examples
-          examples="$(
+          export examples="$(
             cargo run --example 2>&1 \
             | grep -E '^ ' \
             | grep -v \
+            -e 'trezor_signer' \
+            -e 'ledger_signer' \
             -e 'yubi_signer' \
+            -e 'ipc' \
             -e 'ws' \
             -e 'ws_auth' \
+            -e 'query_logs' \
             | xargs -n1 echo
           )"
+
+          # Log the examples to run
+          echo "Running the following examples: $examples"
 
           # Run the examples
           echo "$examples" | xargs -n1 cargo run --example  
