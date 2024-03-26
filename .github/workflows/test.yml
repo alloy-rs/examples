@@ -54,10 +54,16 @@ jobs:
             | xargs -n1 echo
           )"
 
-          # Log the examples to run
-          echo -e "Running the following examples:\n$examples"
-
           # Run the examples
           for example in $examples; do
+            echo "Running: $example ..."
+
             cargo run --example $example --quiet 1>/dev/null
+
+            if [ $? -ne 0 ]; then
+              echo "Failed to run: $example"
+              exit 1
+            else
+              echo "Successfully ran: $example"
+            fi
           done
