@@ -33,15 +33,16 @@ jobs:
             -e 'ipc' \
             -e 'ws' \
             -e 'ws_auth' \
-            -e 'query_logs' \
             | xargs -n1 echo
           )"
 
           # Log the examples to run
-          echo "Running the following examples: $examples"
+          echo -e "Running the following examples:\n$examples"
 
           # Run the examples with the current version of Alloy
-          echo "$examples" | xargs -n1 cargo run --example
+          for example in $examples; do
+            cargo run --example $example --quiet 1>/dev/null
+          done
 
           # Fetch the latest commit hash of the main branch from the Alloy repository
           export latest_alloy_commit=$(git ls-remote https://github.com/alloy-rs/alloy.git \
@@ -56,5 +57,7 @@ jobs:
           cargo update
 
           # Run the examples with the latest version of Alloy
-          echo "$examples" | xargs -n1 cargo run --example
+          for example in $examples; do
+            cargo run --example $example --quiet 1>/dev/null
+          done
         
