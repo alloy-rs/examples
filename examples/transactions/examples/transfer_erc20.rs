@@ -43,7 +43,7 @@ async fn main() -> Result<()> {
     println!("Transfer tx: {:?}", pending_tx.tx_hash());
 
     // Wait for confirmation
-    let _ = pending_tx.with_confirmations(1);
+    let _ = pending_tx.with_required_confirmations(1);
 
     let to_bal = balance_of(&provider, to, contract_address).await?;
     let from_bal = balance_of(&provider, from, contract_address).await?;
