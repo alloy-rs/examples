@@ -16,10 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
+      - uses: foundry-rs/foundry-toolchain@v1
       - uses: Swatinem/rust-cache@v2
         with:
           cache-on-failure: true
-      - run: |
+      - name: Run examples
+        run: |
           # Get the list of runable examples
           examples="$(
             cargo run --example 2>&1 \
