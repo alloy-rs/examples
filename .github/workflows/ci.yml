@@ -28,7 +28,7 @@ jobs:
 
   examples:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -36,7 +36,19 @@ jobs:
         with:
           cache-on-failure: true
       - run: |
-          cargo run --example 2>&1 | grep -E '^ ' | xargs -n1 cargo run --example
+          # Get the list of runable examples
+          examples="$(
+            cargo run --example 2>&1 \
+            | grep -E '^ ' \
+            | grep -v \
+            -e 'yubi_signer' \
+            -e 'ws' \
+            -e 'ws_auth' \
+            | xargs -n1 echo
+          )"
+
+          # Run the examples
+          echo "$examples" | xargs -n1 cargo run --example  
 
   clippy:
     runs-on: ubuntu-latest

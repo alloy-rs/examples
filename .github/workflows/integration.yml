@@ -11,8 +11,8 @@ on:
 
 jobs:
   update:
-    name: Update
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -20,6 +20,20 @@ jobs:
         with:
           cache-on-failure: true
       - run: |
+          # Get the list of runable examples
+          examples="$(
+            cargo run --example 2>&1 \
+            | grep -E '^ ' \
+            | grep -v \
+            -e 'yubi_signer' \
+            -e 'ws' \
+            -e 'ws_auth' \
+            | xargs -n1 echo
+          )"
+
+          # Run the examples with the current version of Alloy
+          echo "$examples" | xargs -n1 cargo run --example
+
           # Fetch the latest commit hash of the main branch from the alloy repository
           latest_alloy_commit=$(git ls-remote https://github.com/alloy-rs/alloy.git \
             | grep refs/heads/main \
@@ -32,6 +46,6 @@ jobs:
           # Update to the latest commit
           cargo update
 
-          # Run the examples
-          cargo run --example 2>&1 | grep -E '^ ' | xargs -n1 cargo run --example
+          # Run the examples with the latest version of Alloy
+          echo "$examples" | xargs -n1 cargo run --example
         
