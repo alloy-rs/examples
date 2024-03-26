@@ -1,0 +1,37 @@
+# Runs Alloy integration tests daily to ensure compatibility with the latest version of Alloy.
+
+name: Alloy integration test
+
+on:
+  schedule:
+    # Run daily
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+    # Needed so we can run it manually
+
+jobs:
+  update:
+    name: Update
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
+      - run: |
+          # Fetch the latest commit hash of the main branch from the alloy repository
+          latest_alloy_commit=$(git ls-remote https://github.com/alloy-rs/alloy.git \
+            | grep refs/heads/main \
+            | cut -f 1)
+
+          # Use the commit hash to update the rev in Cargo.toml
+          sed -i 's/\(alloy = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "\)[^"]*/\1'"$latest_alloy_commit"'/' \
+          Cargo.toml
+
+          # Update to the latest commit
+          cargo update
+
+          # Run the examples
+          cargo run --example 2>&1 | grep -E '^ ' | xargs -n1 cargo run --example
+        
