@@ -38,8 +38,6 @@ jobs:
 
           # Run the examples with the current version of Alloy
           for example in $examples; do
-            echo "Running: $example ..."
-            
             cargo run --example $example --quiet 1>/dev/null
 
             if [ $? -ne 0 ]; then
@@ -64,8 +62,6 @@ jobs:
 
           # Run the examples with the latest version of Alloy
           for example in $examples; do
-            echo "Running: $example ..."
-
             cargo run --example $example --quiet 1>/dev/null
 
             if [ $? -ne 0 ]; then

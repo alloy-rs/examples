@@ -56,8 +56,6 @@ jobs:
 
           # Run the examples
           for example in $examples; do
-            echo "Running: $example ..."
-
             cargo run --example $example --quiet 1>/dev/null
 
             if [ $? -ne 0 ]; then
