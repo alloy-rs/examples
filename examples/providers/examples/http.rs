@@ -10,7 +10,7 @@ use eyre::Result;
 #[tokio::main]
 async fn main() -> Result<()> {
     // Setup the HTTP transport which is consumed by the RPC client
-    let rpc_url = "https://eth.llamarpc.com".parse().unwrap();
+    let rpc_url = "https://eth.merkle.io".parse()?;
 
     // Create the RPC client
     let rpc_client = RpcClient::new_http(rpc_url);
