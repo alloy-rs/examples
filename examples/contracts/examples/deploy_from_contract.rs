@@ -1,7 +1,7 @@
 //! Example of deploying a contract from Solidity code to Anvil and interacting with it.
 
 use alloy::{
-    network::EthereumSigner,
+    network::{EthereumSigner, TransactionBuilder},
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
@@ -36,38 +36,46 @@ async fn main() -> Result<()> {
 
     // Set up wallet
     let wallet: LocalWallet = anvil.keys()[0].clone().into();
+    let alice = anvil.addresses()[0];
 
     // Create a provider with a signer.
     let http = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
+        .with_recommended_layers()
         .signer(EthereumSigner::from(wallet))
         .on_client(RpcClient::new_http(http));
 
     println!("Anvil running at `{}`", anvil.endpoint());
 
-    // Get the base fee for the block.
-    let base_fee = provider.get_gas_price().await?;
-
     // Deploy the contract.
     let contract_builder = Counter::deploy_builder(&provider);
-    let estimate = contract_builder.estimate_gas().await?;
-    let contract_address =
-        contract_builder.gas(estimate).gas_price(base_fee).nonce(0).deploy().await?;
+    let contract_address = contract_builder
+        .from(alice)
+        .map(|mut tx| {
+            tx.set_chain_id(anvil.chain_id());
+            tx
+        })
+        .deploy()
+        .await?;
 
     println!("Deployed contract at address: {:?}", contract_address);
 
     let contract = Counter::new(contract_address, &provider);
 
     // Set the number to 42.
-    let estimate = contract.setNumber(U256::from(42)).estimate_gas().await?;
-    let builder = contract.setNumber(U256::from(42)).nonce(1).gas(estimate).gas_price(base_fee);
+    let builder = contract.setNumber(U256::from(42)).from(alice).map(|mut tx| {
+        tx.set_chain_id(anvil.chain_id());
+        tx
+    });
     let receipt = builder.send().await?.get_receipt().await?;
 
     println!("Set number to 42: {:?}", receipt.transaction_hash);
 
     // Increment the number to 43.
-    let estimate = contract.increment().estimate_gas().await?;
-    let builder = contract.increment().nonce(2).gas(estimate).gas_price(base_fee);
+    let builder = contract.increment().from(alice).map(|mut tx| {
+        tx.set_chain_id(anvil.chain_id());
+        tx
+    });
     let receipt = builder.send().await?.get_receipt().await?;
 
     println!("Incremented number: {:?}", receipt.transaction_hash);
