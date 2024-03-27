@@ -32,5 +32,4 @@ alloy-provider = { git = "https://github.com/alloy-rs/alloy", rev = "f7333c4", f
 
 eyre.workspace = true
 futures-util = "0.3"
-reqwest.workspace = true
 tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }

@@ -15,7 +15,6 @@ alloy.workspace = true
 
 eyre.workspace = true
 rand = "0.8.5"
-reqwest.workspace = true
-serde.workspace = true
+serde = { version = "1.0", features = ["derive"] }
 tempfile = "3.10.1"
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
