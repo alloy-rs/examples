@@ -57,6 +57,16 @@ jobs:
           sed -i 's/\(alloy = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "\)[^"]*/\1'"$latest_alloy_commit"'/' \
           Cargo.toml
 
+          # Temporary patch until https://github.com/alloy-rs/alloy/pull/392 is resolved
+          sed -i 's/\(alloy-rpc-client = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "\)[^"]*/\1'"$latest_alloy_commit"'/' \
+          examples/providers/Cargo.toml
+          sed -i 's/\(alloy-provider = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "\)[^"]*/\1'"$latest_alloy_commit"'/' \
+          examples/providers/Cargo.toml
+          sed -i 's/\(alloy-rpc-client = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "\)[^"]*/\1'"$latest_alloy_commit"'/' \
+          examples/subscriptions/Cargo.toml
+          sed -i 's/\(alloy-provider = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "\)[^"]*/\1'"$latest_alloy_commit"'/' \
+          examples/subscriptions/Cargo.toml
+
           # Update to the latest commit
           cargo update
 
