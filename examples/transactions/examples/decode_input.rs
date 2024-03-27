@@ -3,7 +3,8 @@
 use alloy::{primitives::hex, sol, sol_types::SolCall};
 use eyre::Result;
 
-// Codegen from excerpt of Uniswap V2 interface.
+// Codegen from excerpt of Uniswap V2 Router interface.
+// See: https://docs.uniswap.org/contracts/v2/reference/smart-contracts/router-02
 sol!(
     function swapExactTokensForTokens(
         uint256 amountIn,
@@ -11,7 +12,7 @@ sol!(
         address[] calldata path,
         address to,
         uint256 deadline
-      ) external returns (uint[] memory amounts);
+      ) external returns (uint256[] memory amounts);
 );
 
 #[tokio::main]

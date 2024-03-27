@@ -17,6 +17,7 @@ const ETH_USD_FEED_DECIMALS: u8 = 8;
 const ETH_DECIMALS: u32 = 18;
 
 // Codegen from excerpt of Chainlink Aggregator interface.
+// See: https://etherscan.io/address/0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419#code
 sol!(
     function latestAnswer() external view returns (int256);
 );
