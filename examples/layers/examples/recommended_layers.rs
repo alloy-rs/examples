@@ -19,6 +19,10 @@ async fn main() -> Result<()> {
     // Set up signer.
     let signer: LocalWallet = anvil.keys()[0].clone().into();
 
+    // Create two users, Alice and Vitalik.
+    let alice = signer.address();
+    let vitalik = address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045");
+
     // Create a provider with the signer.
     let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
@@ -34,7 +38,8 @@ async fn main() -> Result<()> {
     // Notice that the `nonce` field is set by the `ManagedNonceLayer`.
     // Notice that without the `GasEstimatorLayer`, you need to set the gas related fields.
     let tx = TransactionRequest::default()
-        .with_to(address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045").into())
+        .with_from(alice)
+        .with_to(vitalik.into())
         .with_value(U256::from(100))
         .with_chain_id(anvil.chain_id());
 
