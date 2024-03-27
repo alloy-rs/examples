@@ -12,13 +12,15 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Setup the HTTP transport which is consumed by the RPC client
-    let anvil = Anvil::new().spawn();
+    // Spin up a local Anvil node.
+    // Ensure `anvil` is available in $PATH
+    let anvil = Anvil::new().block_time(1).try_spawn()?;
 
     let pk = &anvil.keys()[0];
     let from = anvil.addresses()[0];
     let signer = Wallet::from(pk.to_owned());
 
+    // Setup the HTTP transport which is consumed by the RPC client
     let rpc_client = RpcClient::new_http(anvil.endpoint().parse().unwrap());
     let provider_with_signer = ProviderBuilder::new()
         .signer(EthereumSigner::from(signer))
