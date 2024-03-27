@@ -31,13 +31,19 @@ async fn main() -> Result<()> {
     let rpc_url = anvil.endpoint().parse()?;
     let provider = HttpProvider::<Ethereum>::new_http(rpc_url);
 
+    // Create a call to get the latest answer from the Chainlink ETH/USD feed.
     let call = latestAnswerCall {}.abi_encode();
     let input = Bytes::from(call);
+
+    // Call the Chainlink ETH/USD feed contract.
     let tx = TransactionRequest::default().to(Some(ETH_USD_FEED)).input(Some(input).into());
     let response = provider.call(&tx, None).await?;
-    let result = U256::from_str(response.to_string().as_str())?;
+    let result = U256::from_str(&response.to_string())?;
 
+    // Get the gas price of the network.
     let wei_per_gas = provider.get_gas_price().await?;
+
+    // Convert the gas price to Gwei and USD.
     let gwei = format_units(wei_per_gas, "gwei")?.parse::<f64>()?;
     let usd = get_usd_value(wei_per_gas, result)?;
 
