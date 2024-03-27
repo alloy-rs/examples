@@ -2,7 +2,7 @@
 
 use alloy::{network::Ethereum, node_bindings::Anvil, primitives::I256, sol, sol_types::SolEvent};
 use alloy_provider::RootProvider;
-use alloy_rpc_client::RpcClient;
+use alloy_rpc_client::{RpcClient, WsConnect};
 use eyre::Result;
 use futures_util::StreamExt;
 use std::str::FromStr;
@@ -40,32 +40,37 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
-    let ws = alloy_rpc_client::WsConnect::new(anvil.ws_endpoint());
+    // Create a provider.
+    let ws = WsConnect::new(anvil.ws_endpoint());
     let provider = RootProvider::<Ethereum, _>::new(RpcClient::connect_pubsub(ws).await?);
 
-    let deployed_contract = EventMultiplexer::deploy(provider.clone()).await?;
+    // Deploy the `EventExample` contract.
+    let contract = EventMultiplexer::deploy(provider).await?;
 
-    println!("Deployed contract at: {:?}", deployed_contract.address());
+    println!("Deployed contract at: {:?}", contract.address());
 
-    let add_filter = deployed_contract.Add_filter().watch().await?;
-    let sub_filter = deployed_contract.Sub_filter().watch().await?;
-    let mul_filter = deployed_contract.Mul_filter().watch().await?;
-    let div_filter = deployed_contract.Div_filter().watch().await?;
+    // Create filters for each event.
+    let add_filter = contract.Add_filter().watch().await?;
+    let sub_filter = contract.Sub_filter().watch().await?;
+    let mul_filter = contract.Mul_filter().watch().await?;
+    let div_filter = contract.Div_filter().watch().await?;
 
     let a = I256::from_str("1").unwrap();
     let b = I256::from_str("1").unwrap();
-    // Build calls
-    let add_call = deployed_contract.add(a, b);
-    let sub_call = deployed_contract.sub(a, b);
-    let mul_call = deployed_contract.mul(a, b);
-    let div_call = deployed_contract.div(a, b);
 
-    // Send calls
+    // Build calls.
+    let add_call = contract.add(a, b);
+    let sub_call = contract.sub(a, b);
+    let mul_call = contract.mul(a, b);
+    let div_call = contract.div(a, b);
+
+    // Send calls.
     let _ = add_call.send().await?;
     let _ = sub_call.send().await?;
     let _ = mul_call.send().await?;
     let _ = div_call.send().await?;
 
+    // Convert the filters into streams.
     let mut add_stream = add_filter.into_stream();
     let mut sub_stream = sub_filter.into_stream();
     let mut mul_stream = mul_filter.into_stream();
