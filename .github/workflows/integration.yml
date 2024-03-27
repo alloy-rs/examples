@@ -53,7 +53,7 @@ jobs:
             | grep refs/heads/main \
             | cut -f 1)
           
-          export lastest_alloy_core_commit=$(git ls-remote https://github.com/alloy-rs/core.git \
+          export latest_alloy_core_commit=$(git ls-remote https://github.com/alloy-rs/core.git \
             | grep refs/heads/main \
             | cut -f 1)
 
