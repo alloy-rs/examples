@@ -10,7 +10,7 @@ on:
     # Needed so we can run it manually
 
 jobs:
-  update:
+  integration:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -48,13 +48,44 @@ jobs:
             fi
           done
 
-          # Fetch the latest commit hash of the main branch from the Alloy repository
+          # Fetch the latest commit hash of the `main` branch from the Alloy repository
           export latest_alloy_commit=$(git ls-remote https://github.com/alloy-rs/alloy.git \
+            | grep refs/heads/main \
+            | cut -f 1)
+          
+          # Fetch the latest commit hash of the `main` branch from the Alloy Core repository
+          export latest_alloy_core_commit=$(git ls-remote https://github.com/alloy-rs/core.git \
             | grep refs/heads/main \
             | cut -f 1)
 
           # Use the commit hash to update the rev in Cargo.toml
           sed -i 's/\(alloy = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "\)[^"]*/\1'"$latest_alloy_commit"'/' \
+          Cargo.toml
+
+          # Temporary patch until https://github.com/alloy-rs/alloy/pull/392 is resolved
+          sed -i 's/\(alloy-rpc-client = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "\)[^"]*/\1'"$latest_alloy_commit"'/' \
+          examples/providers/Cargo.toml
+          sed -i 's/\(alloy-provider = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "\)[^"]*/\1'"$latest_alloy_commit"'/' \
+          examples/providers/Cargo.toml
+          sed -i 's/\(alloy-rpc-client = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "\)[^"]*/\1'"$latest_alloy_commit"'/' \
+          examples/subscriptions/Cargo.toml
+          sed -i 's/\(alloy-provider = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "\)[^"]*/\1'"$latest_alloy_commit"'/' \
+          examples/subscriptions/Cargo.toml
+
+          # Temporary patch until `patch` section in Alloy is removed
+          sed -i 's/\(alloy-core = { git = "https:\/\/github.com\/alloy-rs\/core", rev = "\)[^"]*/\1'"$latest_alloy_core_commit"'/' \
+          Cargo.toml
+          sed -i 's/\(alloy-dyn-abi = { git = "https:\/\/github.com\/alloy-rs\/core", rev = "\)[^"]*/\1'"$latest_alloy_core_commit"'/' \
+          Cargo.toml
+          sed -i 's/\(alloy-json-abi = { git = "https:\/\/github.com\/alloy-rs\/core", rev = "\)[^"]*/\1'"$latest_alloy_core_commit"'/' \
+          Cargo.toml
+          sed -i 's/\(alloy-primitives = { git = "https:\/\/github.com\/alloy-rs\/core", rev = "\)[^"]*/\1'"$latest_alloy_core_commit"'/' \
+          Cargo.toml
+          sed -i 's/\(alloy-sol-macro = { git = "https:\/\/github.com\/alloy-rs\/core", rev = "\)[^"]*/\1'"$latest_alloy_core_commit"'/' \
+          Cargo.toml
+          sed -i 's/\(alloy-sol-types = { git = "https:\/\/github.com\/alloy-rs\/core", rev = "\)[^"]*/\1'"$latest_alloy_core_commit"'/' \
+          Cargo.toml
+          sed -i 's/\(syn-solidity = { git = "https:\/\/github.com\/alloy-rs\/core", rev = "\)[^"]*/\1'"$latest_alloy_core_commit"'/' \
           Cargo.toml
 
           # Update to the latest commit
