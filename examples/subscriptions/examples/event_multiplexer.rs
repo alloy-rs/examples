@@ -38,7 +38,7 @@ sol!(
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
-    // Ensure `anvil` is available in $PATH
+    // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
     // Create a provider.
@@ -84,7 +84,7 @@ async fn main() -> Result<()> {
 
     // Use tokio::select! to multiplex the streams and capture the log
     // tokio::select! will return the first event that arrives from any of the streams
-    // The for loop helps capture all the logs
+    // The for loop helps capture all the logs.
     for _ in 0..4 {
         let log = tokio::select! {
             Some(log) = add_stream.next() => {

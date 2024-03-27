@@ -35,21 +35,21 @@ async fn main() -> Result<()> {
 
     println!("Awaiting blocks...");
 
-    // Spawning the block processing for basic auth as a new task
+    // Spawning the block processing for basic auth as a new task.
     let basic_handle = tokio::spawn(async move {
         while let Some(block) = stream_basic.next().await {
             println!("From basic {:?}", block.header.number);
         }
     });
 
-    // Similarly for bearer auth
+    // Similarly for bearer auth.
     let bearer_handle = tokio::spawn(async move {
         while let Some(block) = stream_bearer.next().await {
             println!("From bearer {:?}", block.header.number);
         }
     });
 
-    // Wait for both tasks to complete
+    // Wait for both tasks to complete.
     let _ = tokio::try_join!(basic_handle, bearer_handle)?;
 
     Ok(())
