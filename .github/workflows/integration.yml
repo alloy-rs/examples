@@ -1,6 +1,6 @@
 # Runs Alloy integration tests daily to ensure compatibility with the latest version of Alloy.
 
-name: Alloy integration test
+name: Integration
 
 on:
   schedule:
