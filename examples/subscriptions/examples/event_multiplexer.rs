@@ -1,4 +1,4 @@
-//! Example of multiplexing watching event logs.
+//! Example of multiplexing the watching of event logs.
 
 use alloy::{network::Ethereum, node_bindings::Anvil, primitives::I256, sol, sol_types::SolEvent};
 use alloy_provider::RootProvider;
@@ -59,13 +59,13 @@ async fn main() -> Result<()> {
     let a = I256::from_str("1").unwrap();
     let b = I256::from_str("1").unwrap();
 
-    // Build calls.
+    // Build the transaction calls.
     let add_call = contract.add(a, b);
     let sub_call = contract.sub(a, b);
     let mul_call = contract.mul(a, b);
     let div_call = contract.div(a, b);
 
-    // Send calls.
+    // Send the transaction calls.
     let _ = add_call.send().await?;
     let _ = sub_call.send().await?;
     let _ = mul_call.send().await?;

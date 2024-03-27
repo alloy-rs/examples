@@ -29,7 +29,7 @@ async fn main() -> Result<()> {
         ..Default::default()
     };
 
-    // Broadcast the transaction and wait for the receipt.
+    // Send the transaction and wait for the receipt.
     let receipt =
         provider.send_transaction(tx).await?.with_required_confirmations(3).get_receipt().await?;
 

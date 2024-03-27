@@ -54,7 +54,7 @@ async fn main() -> Result<()> {
     // Build a call to decrement the counter.
     let decrement_call = contract.decrement();
 
-    // Send the call 2 times.
+    // Send the transaction call twice for each event.
     for _ in 0..2 {
         let _ = increment_call.send().await?;
         let _ = decrement_call.send().await?;

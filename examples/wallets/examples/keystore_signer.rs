@@ -1,4 +1,4 @@
-//! Example of using a keystore wallet to sign and broadcast a transaction on a local Anvil node.
+//! Example of using a keystore wallet to sign and send a transaction.
 
 use alloy::{
     network::EthereumSigner,
@@ -41,7 +41,7 @@ async fn main() -> Result<()> {
         ..Default::default()
     };
 
-    // Broadcast the transaction and wait for the receipt.
+    // Send the transaction and wait for the receipt.
     let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
 
     println!("Send transaction: {:?}", receipt.transaction_hash);

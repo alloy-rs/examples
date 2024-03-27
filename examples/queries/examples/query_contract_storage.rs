@@ -1,4 +1,4 @@
-//! Example of querying contract storage on the Ethereum network.
+//! Example of querying contract storage from the Ethereum network.
 
 use alloy::{
     network::Ethereum,

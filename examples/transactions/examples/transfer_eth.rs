@@ -26,7 +26,7 @@ async fn main() -> Result<()> {
     // Create a transaction to transfer 1 wei from Alice to Bob.
     let tx = TransactionRequest::default().from(alice).value(U256::from(1)).to(Some(bob));
 
-    // Send the transaction.
+    // Send the transaction and wait for the receipt.
     let pending_tx = provider.send_transaction(tx).await?;
 
     println!("Pending transaction...{:?}", pending_tx.tx_hash());

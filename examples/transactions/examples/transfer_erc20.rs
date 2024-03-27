@@ -43,7 +43,7 @@ async fn main() -> Result<()> {
         ..Default::default()
     };
 
-    // Broadcast the transaction and wait for the receipt.
+    // Send the transaction and wait for the receipt.
     let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
 
     println!("Send transaction: {:?}", receipt.transaction_hash);
@@ -73,7 +73,7 @@ async fn deploy_token_contract(
         ..Default::default()
     };
 
-    // Broadcast the transaction and wait for the receipt.
+    // Send the transaction and wait for the receipt.
     let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
 
     // Get the contract address.

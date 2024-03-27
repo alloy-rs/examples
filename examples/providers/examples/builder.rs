@@ -38,13 +38,18 @@ async fn main() -> Result<()> {
 
     tx.set_gas_price(U256::from(20e9));
 
-    // Send the transaction.
+    // Send the transaction and wait for the receipt.
     let pending_tx = provider_with_signer.send_transaction(tx).await?;
 
     println!("Pending transaction...{:?}", pending_tx.tx_hash());
 
     // Wait for the transaction to be included.
     let receipt = pending_tx.get_receipt().await?;
+
+    println!(
+        "Transaction included in block: {:?}",
+        receipt.block_number.expect("Failed to get block number").to_string()
+    );
 
     assert_eq!(receipt.from, alice);
     assert_eq!(receipt.to, Some(bob));
