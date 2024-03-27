@@ -16,7 +16,7 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
-    // Set up the wallet for Alice.
+    // Set up signer.
     let wallet: LocalWallet = anvil.keys()[0].clone().into();
 
     // Create two users, Alice and Bob.
@@ -29,6 +29,7 @@ async fn main() -> Result<()> {
         .signer(EthereumSigner::from(wallet))
         .provider(RootProvider::new(rpc_client));
 
+    // Create a transaction.
     let mut tx = TransactionRequest::default()
         .to(Some(bob))
         .value(U256::from(100))
@@ -37,13 +38,16 @@ async fn main() -> Result<()> {
 
     tx.set_gas_price(U256::from(20e9));
 
+    // Send the transaction.
     let pending_tx = provider_with_signer.send_transaction(tx).await?;
 
     println!("Pending transaction...{:?}", pending_tx.tx_hash());
 
+    // Wait for the transaction to be included.
     let receipt = pending_tx.get_receipt().await?;
 
     assert_eq!(receipt.from, alice);
+    assert_eq!(receipt.to, Some(bob));
 
     Ok(())
 }

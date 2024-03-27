@@ -16,22 +16,20 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH
     let anvil = Anvil::new().try_spawn()?;
 
-    // Set up the wallet for Alice.
-    let wallet: LocalWallet = anvil.keys()[0].clone().into();
-    let alice = wallet.address();
+    // Set up signer.
+    let signer: LocalWallet = anvil.keys()[0].clone().into();
 
     // Create a provider with the signer.
     let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
         // Add the `SignerLayer` to the provider
-        .signer(EthereumSigner::from(wallet))
+        .signer(EthereumSigner::from(signer))
         .on_client(RpcClient::new_http(rpc_url));
 
     // Create a legacy type transaction.
     let tx = TransactionRequest::default()
         // Notice that without the `ManagedNonceLayer`, you need to manually set the nonce field.
         .with_nonce(0)
-        .with_from(alice)
         .with_to(address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045").into())
         .with_value(U256::from(100))
         // Notice that without the `GasEstimatorLayer`, you need to set the gas related fields.

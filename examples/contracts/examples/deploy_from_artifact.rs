@@ -24,13 +24,13 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH
     let anvil = Anvil::new().try_spawn()?;
 
-    // Set up wallet
-    let wallet: LocalWallet = anvil.keys()[0].clone().into();
+    // Set up signer.
+    let signer: LocalWallet = anvil.keys()[0].clone().into();
 
     // Create a provider with a signer.
     let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
-        .signer(EthereumSigner::from(wallet))
+        .signer(EthereumSigner::from(signer))
         .on_client(RpcClient::new_http(rpc_url));
 
     println!("Anvil running at `{}`", anvil.endpoint());

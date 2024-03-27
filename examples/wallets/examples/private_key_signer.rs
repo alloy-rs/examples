@@ -16,12 +16,12 @@ async fn main() -> Result<()> {
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
     // Set up a local wallet from the first default Anvil account (Alice).
-    let wallet: LocalWallet = anvil.keys()[0].clone().into();
+    let signer: LocalWallet = anvil.keys()[0].clone().into();
 
     // Create a provider with the signer.
     let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
-        .signer(EthereumSigner::from(wallet))
+        .signer(EthereumSigner::from(signer))
         .on_client(RpcClient::new_http(rpc_url));
 
     // Create a transaction.
