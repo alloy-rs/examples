@@ -28,11 +28,14 @@ async fn main() -> Result<()> {
     let alice = anvil.addresses()[0];
     let bob = anvil.addresses()[1];
 
+    // Deploy the `ERC20Example` contract.
     let contract_address = deploy_token_contract(&provider, alice).await?;
 
+    // Create the transaction input to transfer 100 tokens from Alice to Bob.
     let input = ERC20Example::transferCall { to: bob, amount: U256::from(100) }.abi_encode();
     let input = Bytes::from(input);
 
+    // Create a transaction with the input.
     let tx = TransactionRequest {
         from: Some(alice),
         to: Some(contract_address),
@@ -45,6 +48,7 @@ async fn main() -> Result<()> {
 
     println!("Send transaction: {:?}", receipt.transaction_hash);
 
+    // Check the balances of Alice and Bob after the transfer.
     let alice_balance = balance_of(&provider, alice, contract_address).await?;
     let bob_balance = balance_of(&provider, bob, contract_address).await?;
 

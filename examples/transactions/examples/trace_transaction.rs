@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
 
     println!("DEFAULT_TRACE: {:?}", result);
 
-    // Call tracing
+    // Trace with built-in call tracer.
     let call_options = GethDebugTracingOptions {
         config: GethDefaultTracingOptions {
             disable_storage: Some(true),
@@ -45,7 +45,7 @@ async fn main() -> Result<()> {
 
     println!("CALL_TRACE: {:?}", result);
 
-    // JS tracer
+    // Trace using a custom JavaScript tracer.
     let js_options = GethDebugTracingOptions {
         tracer: Some(GethDebugTracerType::JsTracer("{data: [], fault: function(log) {}, step: function(log) { if(log.op.toString() == \"DELEGATECALL\") this.data.push(log.stack.peek(0)); }, result: function() { return this.data; }}".into())),
         ..Default::default()

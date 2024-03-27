@@ -17,15 +17,19 @@ async fn main() -> Result<()> {
     let rpc_url = "https://eth.merkle.io".parse()?;
     let provider = HttpProvider::<Ethereum>::new_http(rpc_url);
 
+    // Create two users, Alice and Bob.
     let alice = address!("f39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
     let bob = address!("70997970C51812dc3A010C7d01b50e0d17dc79C8");
 
+    // Create a transaction to send 100 wei from Alice to Bob.
     let tx = TransactionRequest {
         from: Some(alice),
         to: Some(bob),
         value: Some(U256::from(100)),
         ..Default::default()
     };
+
+    // Trace the transaction on top of the latest block.
     let trace_type = [TraceType::Trace];
     let result = provider
         .trace_call(&tx, &trace_type, Some(BlockId::Number(BlockNumberOrTag::Latest)))

@@ -23,18 +23,24 @@ async fn main() -> Result<()> {
     let alice = anvil.addresses()[0];
     let bob = anvil.addresses()[1];
 
-    // Transfer 1 wei from Alice to Bob.
+    // Create a transaction to transfer 1 wei from Alice to Bob.
     let tx = TransactionRequest::default().from(alice).value(U256::from(1)).to(Some(bob));
+
+    // Send the transaction.
     let pending_tx = provider.send_transaction(tx).await?;
-    let hash = pending_tx.tx_hash();
 
-    println!("Pending transaction hash: {}", hash);
+    println!("Pending transaction...{:?}", pending_tx.tx_hash());
 
-    let transaction = provider.get_transaction_by_hash(hash.to_owned()).await?;
+    // Wait for the transaction to be included.
+    let receipt = pending_tx.get_receipt().await?;
 
-    assert_eq!(transaction.from, alice);
-    assert_eq!(transaction.to, Some(bob));
-    assert_eq!(transaction.value, U256::from(1));
+    println!(
+        "Transaction included in block: {:?}",
+        receipt.block_number.expect("Failed to get block number").to_string()
+    );
+
+    assert_eq!(receipt.from, alice);
+    assert_eq!(receipt.to, Some(bob));
 
     Ok(())
 }
