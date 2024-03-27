@@ -16,8 +16,8 @@ const ETH_USD_FEED: Address = address!("5f4eC3Df9cbd43714FE2740f5E3616155c5b8419
 const ETH_USD_FEED_DECIMALS: u8 = 8;
 const ETH_DECIMALS: u32 = 18;
 
+// Codegen from excerpt of Chainlink Aggregator interface.
 sol!(
-    #[derive(Debug)]
     function latestAnswer() external view returns (int256);
 );
 
@@ -48,8 +48,8 @@ async fn main() -> Result<()> {
 }
 
 fn get_usd_value(amount: U256, price_usd: U256) -> Result<f64> {
-    let base: U256 = U256::from(10).pow(U256::from(ETH_DECIMALS));
-    let value: U256 = amount * price_usd / base;
+    let base = U256::from(10).pow(U256::from(ETH_DECIMALS));
+    let value = amount * price_usd / base;
     let formatted = format_units(value, ETH_USD_FEED_DECIMALS)?.parse::<f64>()?;
 
     Ok(formatted)
