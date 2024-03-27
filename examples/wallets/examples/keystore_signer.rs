@@ -23,13 +23,13 @@ async fn main() -> Result<()> {
     // The private key belongs to Alice, the first default Anvil account.
     let keystore_file_path =
         PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("examples/keystore/alice.json");
-    let wallet = Wallet::decrypt_keystore(keystore_file_path, password)?;
+    let signer = Wallet::decrypt_keystore(keystore_file_path, password)?;
 
     // Create a provider with the signer.
-    let url = anvil.endpoint().parse()?;
+    let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
-        .signer(EthereumSigner::from(wallet))
-        .on_client(RpcClient::new_http(url));
+        .signer(EthereumSigner::from(signer))
+        .on_client(RpcClient::new_http(rpc_url));
 
     // Create a transaction.
     let tx = TransactionRequest {

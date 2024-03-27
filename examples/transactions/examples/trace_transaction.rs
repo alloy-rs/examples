@@ -19,17 +19,17 @@ async fn main() -> Result<()> {
     let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
 
     // Create a provider.
-    let url = anvil.endpoint().parse()?;
-    let provider = HttpProvider::<Ethereum>::new_http(url);
+    let rpc_url = anvil.endpoint().parse()?;
+    let provider = HttpProvider::<Ethereum>::new_http(rpc_url);
 
     // Hash of the tx we want to trace
     let hash = fixed_bytes!("97a02abf405d36939e5b232a5d4ef5206980c5a6661845436058f30600c52df7");
 
     // Default tracing
     let default_options = GethDebugTracingOptions::default();
-    let res = provider.debug_trace_transaction(hash, default_options).await?;
+    let result = provider.debug_trace_transaction(hash, default_options).await?;
 
-    println!("DEFAULT_TRACE: {:?}", res);
+    println!("DEFAULT_TRACE: {:?}", result);
 
     // Call tracing
     let call_options = GethDebugTracingOptions {
@@ -41,9 +41,9 @@ async fn main() -> Result<()> {
         tracer: Some(GethDebugTracerType::BuiltInTracer(GethDebugBuiltInTracerType::CallTracer)),
         ..Default::default()
     };
-    let res = provider.debug_trace_transaction(hash, call_options).await?;
+    let result = provider.debug_trace_transaction(hash, call_options).await?;
 
-    println!("CALL_TRACE: {:?}", res);
+    println!("CALL_TRACE: {:?}", result);
 
     // JS tracer
     let js_options = GethDebugTracingOptions {
@@ -51,9 +51,9 @@ async fn main() -> Result<()> {
         ..Default::default()
     };
 
-    let res = provider.debug_trace_transaction(hash, js_options).await?;
+    let result = provider.debug_trace_transaction(hash, js_options).await?;
 
-    println!("JS_TRACER: {:?}", res);
+    println!("JS_TRACER: {:?}", result);
 
     Ok(())
 }

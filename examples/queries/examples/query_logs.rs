@@ -7,8 +7,8 @@ use alloy::{
 use eyre::Result;
 #[tokio::main]
 async fn main() -> Result<()> {
-    let url = "https://eth.merkle.io".parse()?;
-    let provider = RootProvider::<Ethereum, _>::new_http(url);
+    let rpc_url = "https://eth.merkle.io".parse()?;
+    let provider = RootProvider::<Ethereum, _>::new_http(rpc_url);
 
     // Get logs from the latest block
     let latest_block = provider.get_block_number().await?;

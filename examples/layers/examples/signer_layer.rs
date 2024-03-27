@@ -16,22 +16,22 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH
     let anvil = Anvil::new().try_spawn()?;
 
-    // Set up the wallets.
+    // Set up the wallet for Alice.
     let wallet: LocalWallet = anvil.keys()[0].clone().into();
-    let from = wallet.address();
+    let alice = wallet.address();
 
     // Create a provider with the signer.
-    let url = anvil.endpoint().parse()?;
+    let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
         // Add the `SignerLayer` to the provider
         .signer(EthereumSigner::from(wallet))
-        .on_client(RpcClient::new_http(url));
+        .on_client(RpcClient::new_http(rpc_url));
 
     // Create a legacy type transaction.
     let tx = TransactionRequest::default()
         // Notice that without the `ManagedNonceLayer`, you need to manually set the nonce field.
         .with_nonce(0)
-        .with_from(from)
+        .with_from(alice)
         .with_to(address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045").into())
         .with_value(U256::from(100))
         // Notice that without the `GasEstimatorLayer`, you need to set the gas related fields.
@@ -46,21 +46,17 @@ async fn main() -> Result<()> {
         node_hash == b256!("eb56033eab0279c6e9b685a5ec55ea0ff8d06056b62b7f36974898d4fbb57e64")
     );
 
-    let pending = builder.register().await?;
-    let pending_transaction_hash = *pending.tx_hash();
+    let pending_tx = builder.register().await?;
+    let pending_tx_hash = *pending_tx.tx_hash();
 
-    println!(
-        "Pending transaction hash matches node hash: {}",
-        pending_transaction_hash == node_hash
-    );
+    println!("Pending transaction hash matches node hash: {}", pending_tx_hash == node_hash);
 
-    let transaction_hash = pending.await?;
-    assert_eq!(transaction_hash, node_hash);
+    let tx_hash = pending_tx.await?;
+    assert_eq!(tx_hash, node_hash);
 
-    println!("Transaction hash matches node hash: {}", transaction_hash == node_hash);
+    println!("Transaction hash matches node hash: {}", tx_hash == node_hash);
 
-    let receipt =
-        provider.get_transaction_receipt(transaction_hash).await?.expect("Receipt not found");
+    let receipt = provider.get_transaction_receipt(tx_hash).await?.expect("Receipt not found");
     let receipt_hash = receipt.transaction_hash;
     assert_eq!(receipt_hash, node_hash);
 

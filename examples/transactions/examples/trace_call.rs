@@ -14,24 +14,24 @@ use eyre::Result;
 #[tokio::main]
 async fn main() -> Result<()> {
     // Create a provider.
-    let url = "https://eth.merkle.io".parse()?;
-    let provider = HttpProvider::<Ethereum>::new_http(url);
+    let rpc_url = "https://eth.merkle.io".parse()?;
+    let provider = HttpProvider::<Ethereum>::new_http(rpc_url);
 
     let alice = address!("f39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
     let bob = address!("70997970C51812dc3A010C7d01b50e0d17dc79C8");
 
-    let tx_req = TransactionRequest {
+    let tx = TransactionRequest {
         from: Some(alice),
         to: Some(bob),
         value: Some(U256::from(100)),
         ..Default::default()
     };
     let trace_type = [TraceType::Trace];
-    let res = provider
-        .trace_call(&tx_req, &trace_type, Some(BlockId::Number(BlockNumberOrTag::Latest)))
+    let result = provider
+        .trace_call(&tx, &trace_type, Some(BlockId::Number(BlockNumberOrTag::Latest)))
         .await?;
 
-    println!("{:?}", res.trace);
+    println!("{:?}", result.trace);
 
     Ok(())
 }

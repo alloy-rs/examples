@@ -28,8 +28,8 @@ async fn main() -> Result<()> {
     let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
 
     // Create a provider.
-    let url = anvil.endpoint().parse()?;
-    let provider = HttpProvider::<Ethereum>::new_http(url);
+    let rpc_url = anvil.endpoint().parse()?;
+    let provider = HttpProvider::<Ethereum>::new_http(rpc_url);
 
     let call = latestAnswerCall {}.abi_encode();
     let input = Bytes::from(call);

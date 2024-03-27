@@ -6,7 +6,7 @@ use alloy::{
     primitives::U256,
     providers::{Provider, ProviderBuilder, RootProvider},
     rpc::{client::RpcClient, types::eth::TransactionRequest},
-    signers::wallet::Wallet,
+    signers::wallet::LocalWallet,
 };
 use eyre::Result;
 
@@ -16,33 +16,34 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
-    let pk = &anvil.keys()[0];
-    let from = anvil.addresses()[0];
-    let signer = Wallet::from(pk.to_owned());
+    // Set up the wallet for Alice.
+    let wallet: LocalWallet = anvil.keys()[0].clone().into();
 
-    // Setup the HTTP transport which is consumed by the RPC client
+    // Create two users, Alice and Bob.
+    let alice = wallet.address();
+    let bob = anvil.addresses()[1];
+
+    // Setup the HTTP transport which is consumed by the RPC client.
     let rpc_client = RpcClient::new_http(anvil.endpoint().parse()?);
     let provider_with_signer = ProviderBuilder::new()
-        .signer(EthereumSigner::from(signer))
+        .signer(EthereumSigner::from(wallet))
         .provider(RootProvider::new(rpc_client));
 
-    let to = anvil.addresses()[1];
-
-    let mut tx_req = TransactionRequest::default()
-        .to(Some(to))
+    let mut tx = TransactionRequest::default()
+        .to(Some(bob))
         .value(U256::from(100))
         .nonce(0)
         .gas_limit(U256::from(21000));
 
-    tx_req.set_gas_price(U256::from(20e9));
+    tx.set_gas_price(U256::from(20e9));
 
-    let pending_tx = provider_with_signer.send_transaction(tx_req).await?;
+    let pending_tx = provider_with_signer.send_transaction(tx).await?;
 
     println!("Pending transaction...{:?}", pending_tx.tx_hash());
 
     let receipt = pending_tx.get_receipt().await?;
 
-    assert_eq!(receipt.from, from);
+    assert_eq!(receipt.from, alice);
 
     Ok(())
 }

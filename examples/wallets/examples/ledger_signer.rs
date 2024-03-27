@@ -15,10 +15,10 @@ async fn main() -> Result<()> {
     let signer = LedgerSigner::new(HDPath::LedgerLive(0), Some(1)).await?;
 
     // Create a provider with the signer.
-    let url = "http://localhost:8545".parse()?;
+    let rpc_url = "http://localhost:8545".parse()?;
     let provider = ProviderBuilder::new()
         .signer(EthereumSigner::from(signer))
-        .on_client(RpcClient::new_http(url));
+        .on_client(RpcClient::new_http(rpc_url));
 
     // Create a transaction.
     let tx = TransactionRequest {

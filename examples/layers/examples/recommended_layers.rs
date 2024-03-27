@@ -16,12 +16,12 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH
     let anvil = Anvil::new().try_spawn()?;
 
-    // Set up the wallets.
+    // Set up the wallet for Alice.
     let wallet: LocalWallet = anvil.keys()[0].clone().into();
-    let from = wallet.address();
+    let alice = wallet.address();
 
     // Create a provider with the signer.
-    let url = anvil.endpoint().parse()?;
+    let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
         // Adds the `GasEstimatorLayer` and the `ManagedNonceLayer` layers.
         .with_recommended_layers()
@@ -29,13 +29,13 @@ async fn main() -> Result<()> {
         // .with_gas_estimation()
         // .with_nonce_management()
         .signer(EthereumSigner::from(wallet))
-        .on_client(RpcClient::new_http(url));
+        .on_client(RpcClient::new_http(rpc_url));
 
     // Create an EIP-1559 type transaction.
     // Notice that the `nonce` field is set by the `ManagedNonceLayer`.
     // Notice that without the `GasEstimatorLayer`, you need to set the gas related fields.
     let tx = TransactionRequest::default()
-        .with_from(from)
+        .with_from(alice)
         .with_to(address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045").into())
         .with_value(U256::from(100))
         .with_chain_id(anvil.chain_id());
@@ -43,18 +43,18 @@ async fn main() -> Result<()> {
     // Send the transaction, the nonce (0) is automatically managed by the provider.
     let builder = provider.send_transaction(tx.clone()).await?;
     let node_hash = *builder.tx_hash();
-    let pending_transaction = provider.get_transaction_by_hash(node_hash).await?;
-    assert_eq!(pending_transaction.nonce, 0);
+    let pending_tx = provider.get_transaction_by_hash(node_hash).await?;
+    assert_eq!(pending_tx.nonce, 0);
 
-    println!("Transaction sent with nonce: {}", pending_transaction.nonce);
+    println!("Transaction sent with nonce: {}", pending_tx.nonce);
 
     // Send the transaction, the nonce (1) is automatically managed by the provider.
     let builder = provider.send_transaction(tx).await?;
     let node_hash = *builder.tx_hash();
-    let pending_transaction = provider.get_transaction_by_hash(node_hash).await?;
-    assert_eq!(pending_transaction.nonce, 1);
+    let pending_tx = provider.get_transaction_by_hash(node_hash).await?;
+    assert_eq!(pending_tx.nonce, 1);
 
-    println!("Transaction sent with nonce: {}", pending_transaction.nonce);
+    println!("Transaction sent with nonce: {}", pending_tx.nonce);
 
     Ok(())
 }
