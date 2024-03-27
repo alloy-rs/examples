@@ -10,7 +10,7 @@ on:
     # Needed so we can run it manually
 
 jobs:
-  update:
+  integration:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -48,11 +48,12 @@ jobs:
             fi
           done
 
-          # Fetch the latest commit hash of the main branch from the Alloy repository
+          # Fetch the latest commit hash of the `main` branch from the Alloy repository
           export latest_alloy_commit=$(git ls-remote https://github.com/alloy-rs/alloy.git \
             | grep refs/heads/main \
             | cut -f 1)
           
+          # Fetch the latest commit hash of the `main` branch from the Alloy Core repository
           export latest_alloy_core_commit=$(git ls-remote https://github.com/alloy-rs/core.git \
             | grep refs/heads/main \
             | cut -f 1)
