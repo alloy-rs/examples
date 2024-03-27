@@ -28,10 +28,10 @@ async fn main() -> Result<()> {
     let wallet: LocalWallet = anvil.keys()[0].clone().into();
 
     // Create a provider with a signer.
-    let http = anvil.endpoint().parse()?;
+    let url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
         .signer(EthereumSigner::from(wallet))
-        .on_client(RpcClient::new_http(http));
+        .on_client(RpcClient::new_http(url));
 
     println!("Anvil running at `{}`", anvil.endpoint());
 

@@ -15,10 +15,10 @@ async fn main() -> Result<()> {
     let signer = TrezorSigner::new(HDPath::TrezorLive(0), Some(1)).await?;
 
     // Create a provider with the signer.
-    let http = "http://localhost:8545".parse()?;
+    let url = "http://localhost:8545".parse()?;
     let provider = ProviderBuilder::new()
         .signer(EthereumSigner::from(signer))
-        .on_client(RpcClient::new_http(http));
+        .on_client(RpcClient::new_http(url));
 
     // Create a transaction.
     let tx = TransactionRequest {

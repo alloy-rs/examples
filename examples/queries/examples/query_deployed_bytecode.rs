@@ -10,7 +10,7 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let url = "https://eth.merkle.io".parse().unwrap();
+    let url = "https://eth.merkle.io".parse()?;
     let provider = RootProvider::<Ethereum, _>::new_http(url);
 
     // Get bytecode of USDC-ETH Uniswap V3 pool

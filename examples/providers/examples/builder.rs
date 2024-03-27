@@ -21,7 +21,7 @@ async fn main() -> Result<()> {
     let signer = Wallet::from(pk.to_owned());
 
     // Setup the HTTP transport which is consumed by the RPC client
-    let rpc_client = RpcClient::new_http(anvil.endpoint().parse().unwrap());
+    let rpc_client = RpcClient::new_http(anvil.endpoint().parse()?);
     let provider_with_signer = ProviderBuilder::new()
         .signer(EthereumSigner::from(signer))
         .provider(RootProvider::new(rpc_client));

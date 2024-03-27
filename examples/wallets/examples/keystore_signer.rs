@@ -26,10 +26,10 @@ async fn main() -> Result<()> {
     let wallet = Wallet::decrypt_keystore(keystore_file_path, password)?;
 
     // Create a provider with the signer.
-    let http = anvil.endpoint().parse()?;
+    let url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
         .signer(EthereumSigner::from(wallet))
-        .on_client(RpcClient::new_http(http));
+        .on_client(RpcClient::new_http(url));
 
     // Create a transaction.
     let tx = TransactionRequest {

@@ -21,7 +21,7 @@ async fn main() -> Result<()> {
     println!("Signature produced by {:?}: {:?}", wallet.address(), signature);
     println!(
         "Signature recovered address: {:?}",
-        signature.recover_address_from_msg(&message[..]).unwrap()
+        signature.recover_address_from_msg(&message[..])?
     );
 
     Ok(())

@@ -30,14 +30,14 @@ async fn main() -> Result<()> {
     let from = wallet.address();
 
     // Create a provider with the signer.
-    let http = anvil.endpoint().parse()?;
+    let url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
         // Add the `ManagedNonceLayer` to the provider.
         // It is generally recommended to use the `.with_recommended_layers()` method, which
         // includes the `ManagedNonceLayer`.
         .layer(ManagedNonceLayer)
         .signer(EthereumSigner::from(wallet))
-        .on_client(RpcClient::new_http(http));
+        .on_client(RpcClient::new_http(url));
 
     // Create an EIP-1559 type transaction.
     let tx = TransactionRequest::default()
