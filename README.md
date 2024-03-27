@@ -3,7 +3,8 @@
 Example code using [alloy](https://github.com/alloy-rs/alloy) and [alloy-core](https://github.com/alloy-rs/core).
 
 These examples demonstrate the main features of [Alloy](https://github.com/alloy-rs/alloy) and how to use them.
-To run an example, use the command `cargo run --example <Example>`.
+
+To run an example, use the command `cargo run --example <Example>`:
 
 ```sh
 cargo run --example mnemonic_signer
@@ -66,3 +67,17 @@ cargo run --example mnemonic_signer
   - [x] [Yubi signer](./examples/wallets/examples/yubi_signer.rs)
   - [x] [Keystore signer](./examples/wallets/examples/keystore_signer.rs)
   - [x] [Create keystore](./examples/wallets/examples/create_keystore.rs)
+
+## Development
+
+To run all examples:
+
+```sh
+cargo run --example 2>&1 | grep -E '^ ' | xargs -n1 cargo run --example
+```
+
+To run all examples, logging the failing ones:
+
+```sh
+cargo run --example 2>&1 | grep -E '^ ' | xargs -n1 cargo run --quiet --example $1 1>/dev/null
+```

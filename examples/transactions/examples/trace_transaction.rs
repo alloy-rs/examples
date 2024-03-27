@@ -18,9 +18,12 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH
     let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
 
+    // Create a provider.
     let url = anvil.endpoint().parse()?;
     let provider = HttpProvider::<Ethereum>::new_http(url);
-    let hash = fixed_bytes!("97a02abf405d36939e5b232a5d4ef5206980c5a6661845436058f30600c52df7"); // Hash of the tx we want to trace
+
+    // Hash of the tx we want to trace
+    let hash = fixed_bytes!("97a02abf405d36939e5b232a5d4ef5206980c5a6661845436058f30600c52df7");
 
     // Default tracing
     let default_options = GethDebugTracingOptions::default();

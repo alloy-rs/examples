@@ -19,6 +19,7 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH
     let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
 
+    // Create a provider.
     let url = anvil.endpoint().parse()?;
     let provider = HttpProvider::<Ethereum>::new_http(url);
 
@@ -64,7 +65,7 @@ async fn deploy_token_contract(
     // Compile the contract
     let bytecode = ERC20Example::BYTECODE.to_owned();
 
-    let tx_req = TransactionRequest {
+    let tx = TransactionRequest {
         from: Some(from),
         input: Some(bytecode).into(),
         to: None,
@@ -72,10 +73,10 @@ async fn deploy_token_contract(
     };
 
     // Deploy the contract
-    let pending_tx = provider.send_transaction(tx_req).await?;
+    let pending_tx = provider.send_transaction(tx).await?;
 
     // Wait for the transaction to be mined
-    let _tx = provider.get_transaction_by_hash(pending_tx.tx_hash().to_owned()).await?;
+    let _ = provider.get_transaction_by_hash(pending_tx.tx_hash().to_owned()).await?;
 
     // Get receipt
     let receipt = provider.get_transaction_receipt(pending_tx.tx_hash().to_owned()).await?;
@@ -92,13 +93,13 @@ async fn balance_of(
     let call = ERC20Example::balanceOfCall { account }.abi_encode();
     let input = Bytes::from(call);
 
-    let tx_req = TransactionRequest {
+    let tx = TransactionRequest {
         to: Some(contract_address),
         input: Some(input).into(),
         ..Default::default()
     };
 
-    let result = provider.call(&tx_req, None).await?;
+    let result = provider.call(&tx, None).await?;
     let result = ERC20Example::balanceOfCall::abi_decode_returns(&result, true)?;
     Ok(result._0)
 }

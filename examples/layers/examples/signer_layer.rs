@@ -60,7 +60,7 @@ async fn main() -> Result<()> {
     println!("Transaction hash matches node hash: {}", transaction_hash == node_hash);
 
     let receipt =
-        provider.get_transaction_receipt(transaction_hash).await.unwrap().expect("no receipt");
+        provider.get_transaction_receipt(transaction_hash).await?.expect("Receipt not found");
     let receipt_hash = receipt.transaction_hash;
     assert_eq!(receipt_hash, node_hash);
 

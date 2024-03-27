@@ -18,7 +18,9 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH
     let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
 
-    let provider = HttpProvider::<Ethereum>::new_http("https://eth.merkle.io".parse()?);
+    // Create a provider.
+    let url = "https://eth.merkle.io".parse()?;
+    let provider = HttpProvider::<Ethereum>::new_http(url);
 
     let from = anvil.addresses()[0];
     let to = anvil.addresses()[1];
