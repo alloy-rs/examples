@@ -28,12 +28,13 @@ async fn main() -> Result<()> {
     match decoded {
         Ok(decoded) => {
             let path = decoded.path;
+
             println!(
                 "Swap {} of token {} to {} of token {}",
                 decoded.amountIn,
-                path.first().expect("path is empty"),
+                path.first().expect("Path is empty"),
                 decoded.amountOutMin,
-                path.last().expect("path is empty")
+                path.last().expect("Path is empty")
             );
         }
         Err(e) => {
