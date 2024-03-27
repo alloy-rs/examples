@@ -1,6 +1,6 @@
 # Runs weeky `cargo update` to keep dependencies current.
 
-name: Update dependencies
+name: Dependencies
 
 on:
   schedule:
