@@ -4,10 +4,7 @@ use alloy::{
     network::{EthereumSigner, TransactionBuilder},
     node_bindings::Anvil,
     primitives::{address, U256},
-    providers::{
-        layers::{GasEstimatorLayer, ManagedNonceLayer},
-        Provider, ProviderBuilder,
-    },
+    providers::{layers::ManagedNonceLayer, Provider, ProviderBuilder},
     rpc::{client::RpcClient, types::eth::request::TransactionRequest},
     signers::wallet::LocalWallet,
 };
@@ -39,7 +36,6 @@ async fn main() -> Result<()> {
         // It is generally recommended to use the `.with_recommended_layers()` method, which
         // includes the `ManagedNonceLayer`.
         .layer(ManagedNonceLayer)
-        .layer(GasEstimatorLayer)
         .signer(EthereumSigner::from(wallet))
         .on_client(RpcClient::new_http(http));
 
