@@ -19,7 +19,7 @@ async fn main() -> Result<()> {
     // Password to decrypt the keystore file with.
     let password = "test";
 
-    // Set up a wallet using Alice's keystore file.
+    // Set up signer using Alice's keystore file.
     // The private key belongs to Alice, the first default Anvil account.
     let keystore_file_path =
         PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("examples/keystore/alice.json");

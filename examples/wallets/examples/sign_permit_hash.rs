@@ -22,7 +22,7 @@ sol! {
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Setup up signer.
+    // Set up a random signer.
     let signer = LocalWallet::random();
 
     let domain = eip712_domain! {

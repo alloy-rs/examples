@@ -16,14 +16,14 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
-    // Set up signer.
+    // Set up signer from the first default Anvil account (Alice).
     let wallet: LocalWallet = anvil.keys()[0].clone().into();
 
     // Create two users, Alice and Bob.
     let alice = wallet.address();
     let bob = anvil.addresses()[1];
 
-    // Setup the HTTP transport which is consumed by the RPC client.
+    // Set up the HTTP transport which is consumed by the RPC client.
     let rpc_client = RpcClient::new_http(anvil.endpoint().parse()?);
     let provider_with_signer = ProviderBuilder::new()
         .signer(EthereumSigner::from(wallet))

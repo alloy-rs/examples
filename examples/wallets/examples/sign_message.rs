@@ -5,11 +5,11 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Setup up the signer.
+    // Set up a random signer.
     let signer = LocalWallet::random();
 
     // Optionally, the wallet's chain id can be set, in order to use EIP-155
-    // replay protection with different chains
+    // replay protection with different chains.
     let signer = signer.with_chain_id(Some(1337));
 
     // The message to sign.

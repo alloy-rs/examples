@@ -21,10 +21,10 @@ sol!(
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
-    // Ensure `anvil` is available in $PATH
+    // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().try_spawn()?;
 
-    // Set up signer.
+    // Set up signer from the first default Anvil account (Alice).
     let signer: LocalWallet = anvil.keys()[0].clone().into();
 
     // Create a provider with a signer.
