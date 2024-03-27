@@ -52,6 +52,10 @@ jobs:
           export latest_alloy_commit=$(git ls-remote https://github.com/alloy-rs/alloy.git \
             | grep refs/heads/main \
             | cut -f 1)
+          
+          export lastest_alloy_core_commit=$(git ls-remote https://github.com/alloy-rs/core.git \
+            | grep refs/heads/main \
+            | cut -f 1)
 
           # Use the commit hash to update the rev in Cargo.toml
           sed -i 's/\(alloy = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "\)[^"]*/\1'"$latest_alloy_commit"'/' \
@@ -66,6 +70,22 @@ jobs:
           examples/subscriptions/Cargo.toml
           sed -i 's/\(alloy-provider = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "\)[^"]*/\1'"$latest_alloy_commit"'/' \
           examples/subscriptions/Cargo.toml
+
+          # Temporary patch until `patch` section in Alloy is removed
+          sed -i 's/\(alloy-core = { git = "https:\/\/github.com\/alloy-rs\/core", rev = "\)[^"]*/\1'"$latest_alloy_core_commit"'/' \
+          Cargo.toml
+          sed -i 's/\(alloy-dyn-abi = { git = "https:\/\/github.com\/alloy-rs\/core", rev = "\)[^"]*/\1'"$latest_alloy_core_commit"'/' \
+          Cargo.toml
+          sed -i 's/\(alloy-json-abi = { git = "https:\/\/github.com\/alloy-rs\/core", rev = "\)[^"]*/\1'"$latest_alloy_core_commit"'/' \
+          Cargo.toml
+          sed -i 's/\(alloy-primitives = { git = "https:\/\/github.com\/alloy-rs\/core", rev = "\)[^"]*/\1'"$latest_alloy_core_commit"'/' \
+          Cargo.toml
+          sed -i 's/\(alloy-sol-macro = { git = "https:\/\/github.com\/alloy-rs\/core", rev = "\)[^"]*/\1'"$latest_alloy_core_commit"'/' \
+          Cargo.toml
+          sed -i 's/\(alloy-sol-types = { git = "https:\/\/github.com\/alloy-rs\/core", rev = "\)[^"]*/\1'"$latest_alloy_core_commit"'/' \
+          Cargo.toml
+          sed -i 's/\(syn-solidity = { git = "https:\/\/github.com\/alloy-rs\/core", rev = "\)[^"]*/\1'"$latest_alloy_core_commit"'/' \
+          Cargo.toml
 
           # Update to the latest commit
           cargo update
