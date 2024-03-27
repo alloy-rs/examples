@@ -8,7 +8,10 @@ use futures_util::{stream, StreamExt};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let anvil = Anvil::new().block_time(1).spawn();
+    // Spin up a local Anvil node.
+    // Ensure `anvil` is available in $PATH
+    let anvil = Anvil::new().block_time(1).try_spawn()?;
+
     let ws = alloy_rpc_client::WsConnect::new(anvil.ws_endpoint());
     let provider = RootProvider::<Ethereum, _>::new(RpcClient::connect_pubsub(ws).await?);
 

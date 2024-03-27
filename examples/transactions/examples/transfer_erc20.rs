@@ -15,7 +15,10 @@ sol!(ERC20Example, "examples/contracts/ERC20Example.json");
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let anvil = Anvil::new().fork("https://eth.merkle.io").spawn();
+    // Spin up a forked Anvil node.
+    // Ensure `anvil` is available in $PATH
+    let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
+
     let url = anvil.endpoint().parse().unwrap();
     let provider = HttpProvider::<Ethereum>::new_http(url);
 

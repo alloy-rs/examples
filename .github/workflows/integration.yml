@@ -1,0 +1,74 @@
+# Runs Alloy integration tests daily to ensure compatibility with the latest version of Alloy.
+
+name: Alloy integration test
+
+on:
+  schedule:
+    # Run daily
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+    # Needed so we can run it manually
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: foundry-rs/foundry-toolchain@v1
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
+      - name: Run examples
+        run: |
+          # Get the list of runable examples
+          export examples="$(
+            cargo run --example 2>&1 \
+            | grep -E '^ ' \
+            | grep -v \
+            -e 'trezor_signer' \
+            -e 'ledger_signer' \
+            -e 'yubi_signer' \
+            -e 'ipc' \
+            -e 'ws' \
+            -e 'ws_auth' \
+            | xargs -n1 echo
+          )"
+
+          # Run the examples with the current version of Alloy
+          for example in $examples; do
+            cargo run --example $example --quiet 1>/dev/null
+
+            if [ $? -ne 0 ]; then
+              echo "Failed to run: $example"
+              exit 1
+            else
+              echo "Successfully ran: $example"
+            fi
+          done
+
+          # Fetch the latest commit hash of the main branch from the Alloy repository
+          export latest_alloy_commit=$(git ls-remote https://github.com/alloy-rs/alloy.git \
+            | grep refs/heads/main \
+            | cut -f 1)
+
+          # Use the commit hash to update the rev in Cargo.toml
+          sed -i 's/\(alloy = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "\)[^"]*/\1'"$latest_alloy_commit"'/' \
+          Cargo.toml
+
+          # Update to the latest commit
+          cargo update
+
+          # Run the examples with the latest version of Alloy
+          for example in $examples; do
+            cargo run --example $example --quiet 1>/dev/null
+
+            if [ $? -ne 0 ]; then
+              echo "Failed to run: $example"
+              exit 1
+            else
+              echo "Successfully ran: $example"
+            fi
+          done
+        
