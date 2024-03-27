@@ -15,6 +15,8 @@ alloy.workspace = true
 # Temp dependency fix to enable relevant features - Ref: https://github.com/alloy-rs/examples/pull/3#discussion_r1537842062
 alloy-rpc-client = { git = "https://github.com/alloy-rs/alloy", rev = "68952c0", features = [
     "pubsub",
+    "ipc",
+    "ws",
 ] }
 alloy-provider = { git = "https://github.com/alloy-rs/alloy", rev = "68952c0", features = [
     "pubsub",
@@ -25,7 +27,7 @@ alloy-provider = { git = "https://github.com/alloy-rs/alloy", rev = "68952c0", f
 alloy-network = { git = "https://github.com/alloy-rs/alloy", rev = "68952c0" }
 
 alloy-transport = { git = "https://github.com/alloy-rs/alloy", rev = "68952c0" }
-
+alloy-transport-ipc = { git = "https://github.com/alloy-rs/alloy", rev = "68952c0" }
 eyre.workspace = true
 futures-util = "0.3"
 tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }
