@@ -14,7 +14,6 @@ cargo run --example mnemonic_signer
 ## Table of Contents
 
 - [x] Anvil
-  - [x] [Deploy contract](./examples/anvil/examples/deploy_contract_anvil.rs)
   - [x] [Fork](./examples/anvil/examples/fork_anvil.rs)
   - [x] [Local](./examples/anvil/examples/local_anvil.rs)
 - [x] Big numbers

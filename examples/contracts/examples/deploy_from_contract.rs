@@ -4,7 +4,7 @@ use alloy::{
     network::{EthereumSigner, TransactionBuilder},
     node_bindings::Anvil,
     primitives::U256,
-    providers::{Provider, ProviderBuilder},
+    providers::ProviderBuilder,
     rpc::client::RpcClient,
     signers::wallet::LocalWallet,
     sol,
