@@ -14,5 +14,4 @@ repository.workspace = true
 alloy.workspace = true
 
 eyre.workspace = true
-reqwest.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
