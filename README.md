@@ -1,20 +1,18 @@
 # Alloy Examples
 
-Example code using [alloy](https://github.com/alloy-rs/alloy) and [alloy-core](https://github.com/alloy-rs/core).
-
-[![Telegram chat][telegram-badge]][telegram-url]
-
-[`ethers-rs`]: https://github.com/gakonst/ethers-rs
-[telegram-badge]: https://img.shields.io/endpoint?color=neon&style=for-the-badge&url=https%3A%2F%2Ftg.sumanjay.workers.dev%2Fethers_rs
-[telegram-url]: https://t.me/ethers_rs
-
-These examples demonstrate the main features of [Alloy](https://github.com/alloy-rs/alloy) and how to use them.
+These examples demonstrate the main features of [alloy](https://github.com/alloy-rs/alloy) and [alloy core](https://github.com/alloy-rs/core) as well as how to use them.
 
 To run an example, use the command `cargo run --example <Example>`:
 
 ```sh
 cargo run --example mnemonic_signer
 ```
+
+[![Telegram chat][telegram-badge]][telegram-url]
+
+[`ethers-rs`]: https://github.com/gakonst/ethers-rs
+[telegram-badge]: https://img.shields.io/endpoint?color=neon&style=for-the-badge&url=https%3A%2F%2Ftg.sumanjay.workers.dev%2Fethers_rs
+[telegram-url]: https://t.me/ethers_rs
 
 ---
 
