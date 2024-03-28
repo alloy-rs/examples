@@ -33,6 +33,7 @@ jobs:
             -e 'ipc' \
             -e 'ws' \
             -e 'ws_auth' \
+            -e 'connect_builtin' \
             | xargs -n1 echo
           )"
 
@@ -52,7 +53,7 @@ jobs:
           export latest_alloy_commit=$(git ls-remote https://github.com/alloy-rs/alloy.git \
             | grep refs/heads/main \
             | cut -f 1)
-          
+
           # Fetch the latest commit hash of the `main` branch from the Alloy Core repository
           export latest_alloy_core_commit=$(git ls-remote https://github.com/alloy-rs/core.git \
             | grep refs/heads/main \
@@ -102,4 +103,3 @@ jobs:
               echo "Successfully ran: $example"
             fi
           done
-        
