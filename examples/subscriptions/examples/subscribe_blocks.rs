@@ -29,7 +29,7 @@ async fn main() -> Result<()> {
     let mut stream = poller.into_stream().flat_map(stream::iter).take(2);
 
     while let Some(block_hash) = stream.next().await {
-        println!("Polled for block header: {:?}", block_hash);
+        println!("Polled for block header: {block_hash:?}");
     }
 
     Ok(())

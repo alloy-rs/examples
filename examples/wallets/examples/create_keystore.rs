@@ -40,7 +40,7 @@ async fn main() -> Result<()> {
     // Display the contents of the keystore file.
     let keystore_contents = read_to_string(keystore_file_path)?;
 
-    println!("Keystore file contents: {:?}", keystore_contents);
+    println!("Keystore file contents: {keystore_contents:?}");
 
     Ok(())
 }

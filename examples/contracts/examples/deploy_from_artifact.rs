@@ -45,7 +45,7 @@ async fn main() -> Result<()> {
     let contract_address =
         contract_builder.gas(estimate).gas_price(base_fee).nonce(0).deploy().await?;
 
-    println!("Deployed contract at address: {:?}", contract_address);
+    println!("Deployed contract at address: {contract_address:?}");
 
     let contract = Counter::new(contract_address, &provider);
 

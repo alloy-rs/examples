@@ -105,13 +105,13 @@ async fn main() -> Result<()> {
         let topic = &log.topics[0];
 
         if topic == add_log {
-            println!("Received Add: {:?}", log);
+            println!("Received Add: {log:?}");
         } else if topic == sub_log {
-            println!("Received Sub: {:?}", log);
+            println!("Received Sub: {log:?}");
         } else if topic == mul_log {
-            println!("Received Mul: {:?}", log);
+            println!("Received Mul: {log:?}");
         } else if topic == div_log {
-            println!("Received Div: {:?}", log);
+            println!("Received Div: {log:?}");
         }
     }
 

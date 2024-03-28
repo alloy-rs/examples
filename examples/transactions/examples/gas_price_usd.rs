@@ -49,8 +49,8 @@ async fn main() -> Result<()> {
     let gwei = format_units(wei_per_gas, "gwei")?.parse::<f64>()?;
     let usd = get_usd_value(wei_per_gas, result)?;
 
-    println!("Gas price in Gwei: {}", gwei);
-    println!("Gas price in USD: {}", usd);
+    println!("Gas price in Gwei: {gwei}");
+    println!("Gas price in USD: {usd}");
 
     Ok(())
 }

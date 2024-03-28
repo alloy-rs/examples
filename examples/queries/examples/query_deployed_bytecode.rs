@@ -19,7 +19,7 @@ async fn main() -> Result<()> {
     let bytecode =
         provider.get_code_at(pool_address, BlockId::Number(BlockNumberOrTag::Latest)).await?;
 
-    println!("Bytecode: {:?}", bytecode);
+    println!("Bytecode: {bytecode:?}");
 
     Ok(())
 }

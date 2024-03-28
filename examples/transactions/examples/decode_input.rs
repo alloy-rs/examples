@@ -39,7 +39,7 @@ async fn main() -> Result<()> {
             );
         }
         Err(e) => {
-            println!("Error decoding input: {:?}", e);
+            println!("Error decoding input: {e:?}");
         }
     }
 

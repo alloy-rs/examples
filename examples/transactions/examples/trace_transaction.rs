@@ -29,7 +29,7 @@ async fn main() -> Result<()> {
     let default_options = GethDebugTracingOptions::default();
     let result = provider.debug_trace_transaction(hash, default_options).await?;
 
-    println!("DEFAULT_TRACE: {:?}", result);
+    println!("DEFAULT_TRACE: {result:?}");
 
     // Trace with built-in call tracer.
     let call_options = GethDebugTracingOptions {
@@ -43,7 +43,7 @@ async fn main() -> Result<()> {
     };
     let result = provider.debug_trace_transaction(hash, call_options).await?;
 
-    println!("CALL_TRACE: {:?}", result);
+    println!("CALL_TRACE: {result:?}");
 
     // Trace using a custom JavaScript tracer.
     let js_options = GethDebugTracingOptions {
@@ -53,7 +53,7 @@ async fn main() -> Result<()> {
 
     let result = provider.debug_trace_transaction(hash, js_options).await?;
 
-    println!("JS_TRACER: {:?}", result);
+    println!("JS_TRACER: {result:?}");
 
     Ok(())
 }

@@ -83,7 +83,7 @@ async fn deploy_token_contract(
     // Get the contract address.
     let contract_address = receipt.contract_address.expect("Contract address not found");
 
-    println!("Deployed contract at: {}", contract_address);
+    println!("Deployed contract at: {contract_address}");
 
     Ok(contract_address)
 }

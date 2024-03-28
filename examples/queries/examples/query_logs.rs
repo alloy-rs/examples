@@ -24,7 +24,7 @@ async fn main() -> Result<()> {
     let logs = provider.get_logs(&filter).await?;
 
     for log in logs {
-        println!("{:?}", log);
+        println!("{log:?}");
     }
 
     // Get all logs from the latest block that match the transfer event signature/topic.
@@ -38,7 +38,7 @@ async fn main() -> Result<()> {
     let logs = provider.get_logs(&filter).await?;
 
     for log in logs {
-        println!("Transfer event: {:?}", log);
+        println!("Transfer event: {log:?}");
     }
 
     // Get all from the latest block emitted by the UNI token address.
@@ -49,7 +49,7 @@ async fn main() -> Result<()> {
     let logs = provider.get_logs(&filter).await?;
 
     for log in logs {
-        println!("Uniswap token logs: {:?}", log);
+        println!("Uniswap token logs: {log:?}");
     }
 
     Ok(())

@@ -68,10 +68,10 @@ async fn main() -> Result<()> {
         .for_each(|log| async {
             match log {
                 Ok((_event, log)) => {
-                    println!("Received Increment: {:?}", log);
+                    println!("Received Increment: {log:?}");
                 }
                 Err(e) => {
-                    println!("Error: {:?}", e);
+                    println!("Error: {e:?}");
                 }
             }
         })
@@ -83,10 +83,10 @@ async fn main() -> Result<()> {
         .for_each(|log| async {
             match log {
                 Ok((_event, log)) => {
-                    println!("Received Decrement: {:?}", log);
+                    println!("Received Decrement: {log:?}");
                 }
                 Err(e) => {
-                    println!("Error: {:?}", e);
+                    println!("Error: {e:?}");
                 }
             }
         })

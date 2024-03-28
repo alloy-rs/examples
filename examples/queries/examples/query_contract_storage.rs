@@ -18,7 +18,7 @@ async fn main() -> Result<()> {
     let storage_slot = U256::from(0);
     let storage = provider.get_storage_at(pool_address, storage_slot, None).await?;
 
-    println!("Slot 0: {:?}", storage);
+    println!("Slot 0: {storage:?}");
 
     Ok(())
 }

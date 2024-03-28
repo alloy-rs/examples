@@ -24,7 +24,7 @@ async fn main() -> Result<()> {
 
     let latest_block = provider.get_block_number().await?;
 
-    println!("Latest block: {}", latest_block);
+    println!("Latest block: {latest_block}");
 
     Ok(())
 }
