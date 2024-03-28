@@ -55,29 +55,7 @@ uninhabited_references = "warn"
 unused_peekable = "warn"
 unused_rounding = "warn"
 useless_let_if_seq = "warn"
-
-# These are nursery lints which have findings. Allow them for now. Some are not
-# quite mature enough for use in our codebase and some we don't really want.
-# Explicitly listing should make it easier to fix in the future.
-as_ptr_cast_mut = "allow"
-cognitive_complexity = "allow"
-collection_is_never_read = "allow"
-debug_assert_with_mut_call = "allow"
-empty_line_after_doc_comments = "allow"
-fallible_impl_from = "allow"
-future_not_send = "allow"
-iter_on_single_items = "allow"
-missing_const_for_fn = "allow"
-needless_collect = "allow"
-non_send_fields_in_send_ty = "allow"
-option_if_let_else = "allow"
-redundant_pub_crate = "allow"
-significant_drop_in_scrutinee = "allow"
-significant_drop_tightening = "allow"
-string_lit_as_bytes = "allow"
-type_repetition_in_bounds = "allow"
-unnecessary_struct_initialization = "allow"
-use_self = "allow"
+uninlined_format_args = "warn"
 
 [workspace.dependencies]
 alloy = { git = "https://github.com/alloy-rs/alloy", rev = "f7333c4", features = [
