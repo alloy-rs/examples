@@ -10,6 +10,42 @@ use alloy::{
 };
 use eyre::Result;
 
+/// The `.with_recommended_layers()` method includes the `GasEstimatorLayer` and the
+/// `ManagedNonceLayer`.
+///
+/// Alternatively, you can add the layers individually using the builder methods:
+///
+/// ```rust
+/// .with_gas_estimation()
+/// .with_nonce_management()
+/// ```
+///
+/// or by using the `.layer()` method:
+///
+/// ```rust
+/// .layer(GasEstimatorLayer)
+/// .layer(ManagedNonceLayer)
+/// ```
+///
+/// In Ethereum, each transaction has a gas limit that represents the maximum amount of gas that
+/// can be used to execute the transaction. The gas limit is used to ensure that transactions are
+/// processed in a timely manner and to prevent transactions from using more gas than they are
+/// supposed to.
+///
+/// The gas estimator in Alloy is a layer that helps you automatically populate the gas related
+/// fields of a transaction request if they are not set. This can be useful if you want to ensure
+/// that the gas fields are set correctly, or if you want to avoid having to manually set them
+/// yourself.
+///
+/// The nonce of a transaction is a number that represents the number of transactions
+/// that have been sent from a particular account. The nonce is used to ensure that transactions are
+/// processed in the order they are intended, and to prevent the same transaction from being
+/// processed multiple times.
+///
+/// The nonce manager in Alloy is a layer that helps you manage the nonce
+/// of transactions by keeping track of the current nonce for a given account and automatically
+/// incrementing it as needed. This can be useful if you want to ensure that transactions are sent
+/// in the correct order, or if you want to avoid having to manually manage the nonce yourself.
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
