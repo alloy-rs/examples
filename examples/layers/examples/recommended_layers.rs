@@ -1,4 +1,4 @@
-//! Example of using the `ManagedNonceLayer` in the provider.
+//! Example of using the `.with_recommended_layers()` method in the provider.
 
 use alloy::{
     network::{EthereumSigner, TransactionBuilder},
@@ -26,7 +26,7 @@ async fn main() -> Result<()> {
     // Create a provider with the signer.
     let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
-        // Adds the `GasEstimatorLayer` and the `ManagedNonceLayer` layers.
+        // Adds the `GasEstimatorLayer` and the `NonceManagerLayer` layers.
         .with_recommended_layers()
         // Alternatively, you can add the layers individually:
         // .with_gas_estimation()
@@ -35,7 +35,7 @@ async fn main() -> Result<()> {
         .on_client(RpcClient::new_http(rpc_url));
 
     // Create an EIP-1559 type transaction.
-    // Notice that the `nonce` field is set by the `ManagedNonceLayer`.
+    // Notice that the `nonce` field is set by the `NonceManagerLayer`.
     // Notice that without the `GasEstimatorLayer`, you need to set the gas related fields.
     let tx = TransactionRequest::default()
         .with_from(alice)
