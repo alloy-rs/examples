@@ -3,7 +3,7 @@
 use alloy::{
     network::Ethereum,
     node_bindings::Anvil,
-    primitives::fixed_bytes,
+    primitives::b256,
     providers::{HttpProvider, Provider},
     rpc::types::trace::geth::{
         GethDebugBuiltInTracerType, GethDebugTracerType, GethDebugTracingOptions,
@@ -23,7 +23,7 @@ async fn main() -> Result<()> {
     let provider = HttpProvider::<Ethereum>::new_http(rpc_url);
 
     // Hash of the tx we want to trace
-    let hash = fixed_bytes!("97a02abf405d36939e5b232a5d4ef5206980c5a6661845436058f30600c52df7");
+    let hash = b256!("97a02abf405d36939e5b232a5d4ef5206980c5a6661845436058f30600c52df7");
 
     // Default tracing
     let default_options = GethDebugTracingOptions::default();
