@@ -1,10 +1,10 @@
-//! Example of using the `ManagedNonceLayer` in the provider.
+//! Example of using the `NonceManagerLayer` in the provider.
 
 use alloy::{
     network::{EthereumSigner, TransactionBuilder},
     node_bindings::Anvil,
     primitives::{address, U256},
-    providers::{layers::ManagedNonceLayer, Provider, ProviderBuilder},
+    providers::{layers::NonceManagerLayer, Provider, ProviderBuilder},
     rpc::{client::RpcClient, types::eth::request::TransactionRequest},
     signers::wallet::LocalWallet,
 };
@@ -35,10 +35,10 @@ async fn main() -> Result<()> {
     // Create a provider with the signer.
     let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
-        // Add the `ManagedNonceLayer` to the provider.
+        // Add the `NonceManagerLayer` to the provider.
         // It is generally recommended to use the `.with_recommended_layers()` method, which
-        // includes the `ManagedNonceLayer`.
-        .layer(ManagedNonceLayer)
+        // includes the `NonceManagerLayer`.
+        .layer(NonceManagerLayer)
         .signer(EthereumSigner::from(signer))
         .on_client(RpcClient::new_http(rpc_url));
 

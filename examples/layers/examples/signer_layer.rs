@@ -33,7 +33,7 @@ async fn main() -> Result<()> {
     // Create a legacy type transaction.
     let tx = TransactionRequest::default()
         .with_from(alice)
-        // Notice that without the `ManagedNonceLayer`, you need to manually set the nonce field.
+        // Notice that without the `NonceManagerLayer`, you need to manually set the nonce field.
         .with_nonce(0)
         .with_to(vitalik.into())
         .with_value(U256::from(100))
