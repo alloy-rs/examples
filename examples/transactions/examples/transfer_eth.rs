@@ -3,7 +3,7 @@
 use alloy::{
     network::Ethereum,
     node_bindings::Anvil,
-    primitives::{address, Address, U256},
+    primitives::U256,
     providers::{HttpProvider, Provider},
     rpc::types::eth::TransactionRequest,
 };
@@ -12,25 +12,35 @@ use eyre::Result;
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
-    // Ensure `anvil` is available in $PATH
+    // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
 
-    let url = anvil.endpoint().parse().unwrap();
-    let provider = HttpProvider::<Ethereum>::new_http(url);
+    // Create a provider.
+    let rpc_url = anvil.endpoint().parse()?;
+    let provider = HttpProvider::<Ethereum>::new_http(rpc_url);
 
-    let from = anvil.addresses()[0];
-    // Transfer 1ETH from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266 to Address::ZERO
-    let tx = TransactionRequest::default().from(from).value(U256::from(1)).to(Some(Address::ZERO));
+    // Create two users, Alice and Bob.
+    let alice = anvil.addresses()[0];
+    let bob = anvil.addresses()[1];
 
-    let tx = provider.send_transaction(tx).await?;
-    let hash = tx.tx_hash();
-    println!("Pending transaction hash: {}", hash);
+    // Create a transaction to transfer 1 wei from Alice to Bob.
+    let tx = TransactionRequest::default().from(alice).value(U256::from(1)).to(Some(bob));
 
-    let transaction = provider.get_transaction_by_hash(hash.to_owned()).await?;
+    // Send the transaction and wait for the receipt.
+    let pending_tx = provider.send_transaction(tx).await?;
 
-    assert_eq!(transaction.from, address!("f39fd6e51aad88f6f4ce6ab8827279cfffb92266"));
-    assert_eq!(transaction.to, Some(Address::ZERO));
-    assert_eq!(transaction.value, U256::from(1));
+    println!("Pending transaction...{:?}", pending_tx.tx_hash());
+
+    // Wait for the transaction to be included.
+    let receipt = pending_tx.get_receipt().await?;
+
+    println!(
+        "Transaction included in block: {:?}",
+        receipt.block_number.expect("Failed to get block number").to_string()
+    );
+
+    assert_eq!(receipt.from, alice);
+    assert_eq!(receipt.to, Some(bob));
 
     Ok(())
 }

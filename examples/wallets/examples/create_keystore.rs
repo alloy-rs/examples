@@ -19,9 +19,9 @@ async fn main() -> Result<()> {
 
     // Create a keystore file from the private key of Alice, returning a [Wallet] instance.
     let (wallet, file_path) =
-        Wallet::encrypt_keystore(&dir, &mut rng, private_key, password, None).unwrap();
+        Wallet::encrypt_keystore(&dir, &mut rng, private_key, password, None)?;
 
-    let keystore_file_path = dir.path().join(file_path.clone());
+    let keystore_file_path = dir.path().join(file_path);
 
     println!("Wrote keystore for {:?} to {:?}", wallet.address(), keystore_file_path);
 
@@ -40,7 +40,7 @@ async fn main() -> Result<()> {
     // Display the contents of the keystore file.
     let keystore_contents = read_to_string(keystore_file_path)?;
 
-    println!("Keystore file contents: {:?}", keystore_contents);
+    println!("Keystore file contents: {keystore_contents:?}");
 
     Ok(())
 }

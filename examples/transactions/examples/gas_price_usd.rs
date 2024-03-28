@@ -13,47 +13,52 @@ use eyre::Result;
 use std::str::FromStr;
 
 const ETH_USD_FEED: Address = address!("5f4eC3Df9cbd43714FE2740f5E3616155c5b8419");
+const ETH_USD_FEED_DECIMALS: u8 = 8;
 const ETH_DECIMALS: u32 = 18;
 
+// Codegen from excerpt of Chainlink Aggregator interface.
+// See: https://etherscan.io/address/0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419#code
 sol!(
-    #[derive(Debug)]
+    #[allow(missing_docs)]
     function latestAnswer() external view returns (int256);
 );
 
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
-    // Ensure `anvil` is available in $PATH
+    // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
 
-    let url = anvil.endpoint().parse().unwrap();
-    let provider = HttpProvider::<Ethereum>::new_http(url);
+    // Create a provider.
+    let rpc_url = anvil.endpoint().parse()?;
+    let provider = HttpProvider::<Ethereum>::new_http(rpc_url);
 
+    // Create a call to get the latest answer from the Chainlink ETH/USD feed.
     let call = latestAnswerCall {}.abi_encode();
     let input = Bytes::from(call);
 
+    // Call the Chainlink ETH/USD feed contract.
     let tx = TransactionRequest::default().to(Some(ETH_USD_FEED)).input(Some(input).into());
+    let response = provider.call(&tx, None).await?;
+    let result = U256::from_str(&response.to_string())?;
 
-    let res = provider.call(&tx, None).await?;
-
-    let u = U256::from_str(res.to_string().as_str());
-
+    // Get the gas price of the network.
     let wei_per_gas = provider.get_gas_price().await?;
 
+    // Convert the gas price to Gwei and USD.
     let gwei = format_units(wei_per_gas, "gwei")?.parse::<f64>()?;
+    let usd = get_usd_value(wei_per_gas, result)?;
 
-    let usd = usd_value(wei_per_gas, u.unwrap())?;
-
-    println!("Gas price in Gwei: {}", gwei);
-    println!("Gas price in USD: {}", usd);
+    println!("Gas price in Gwei: {gwei}");
+    println!("Gas price in USD: {usd}");
 
     Ok(())
 }
 
-fn usd_value(amount: U256, price_usd: U256) -> Result<f64> {
-    let base: U256 = U256::from(10).pow(U256::from(ETH_DECIMALS));
-    let value: U256 = amount * price_usd / base;
-    let usd_price_decimals: u8 = 8;
-    let f: String = format_units(value, usd_price_decimals)?;
-    Ok(f.parse::<f64>()?)
+fn get_usd_value(amount: U256, price_usd: U256) -> Result<f64> {
+    let base = U256::from(10).pow(U256::from(ETH_DECIMALS));
+    let value = amount * price_usd / base;
+    let formatted = format_units(value, ETH_USD_FEED_DECIMALS)?.parse::<f64>()?;
+
+    Ok(formatted)
 }
