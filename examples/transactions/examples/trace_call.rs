@@ -2,8 +2,7 @@
 
 use alloy::{
     network::Ethereum,
-    node_bindings::Anvil,
-    primitives::U256,
+    primitives::{address, U256},
     providers::{HttpProvider, Provider},
     rpc::types::{
         eth::{BlockId, BlockNumberOrTag, TransactionRequest},
@@ -14,27 +13,29 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Spin up a forked Anvil node.
-    // Ensure `anvil` is available in $PATH
-    let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
+    // Create a provider.
+    let rpc_url = "https://eth.merkle.io".parse()?;
+    let provider = HttpProvider::<Ethereum>::new_http(rpc_url);
 
-    let provider = HttpProvider::<Ethereum>::new_http("https://eth.merkle.io".parse()?);
+    // Create two users, Alice and Bob.
+    let alice = address!("f39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
+    let bob = address!("70997970C51812dc3A010C7d01b50e0d17dc79C8");
 
-    let from = anvil.addresses()[0];
-    let to = anvil.addresses()[1];
-
-    let tx_req = TransactionRequest {
-        from: Some(from),
-        to: Some(to),
+    // Create a transaction to send 100 wei from Alice to Bob.
+    let tx = TransactionRequest {
+        from: Some(alice),
+        to: Some(bob),
         value: Some(U256::from(100)),
         ..Default::default()
     };
+
+    // Trace the transaction on top of the latest block.
     let trace_type = [TraceType::Trace];
-    let res = provider
-        .trace_call(&tx_req, &trace_type, Some(BlockId::Number(BlockNumberOrTag::Latest)))
+    let result = provider
+        .trace_call(&tx, &trace_type, Some(BlockId::Number(BlockNumberOrTag::Latest)))
         .await?;
 
-    println!("{:?}", res.trace);
+    println!("{:?}", result.trace);
 
     Ok(())
 }

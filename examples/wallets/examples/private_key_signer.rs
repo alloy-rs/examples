@@ -1,4 +1,4 @@
-//! Example of using a local wallet to sign and broadcast a transaction on a local Anvil node.
+//! Example of using a local wallet to sign and send a transaction.
 
 use alloy::{
     network::EthereumSigner,
@@ -15,14 +15,14 @@ async fn main() -> Result<()> {
     // Spin up an Anvil node.
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
-    // Set up a local wallet from the first default Anvil account (Alice).
-    let wallet: LocalWallet = anvil.keys()[0].clone().into();
+    // Set up signer from the first default Anvil account (Alice).
+    let signer: LocalWallet = anvil.keys()[0].clone().into();
 
     // Create a provider with the signer.
-    let http = anvil.endpoint().parse()?;
+    let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
-        .signer(EthereumSigner::from(wallet))
-        .on_client(RpcClient::new_http(http));
+        .signer(EthereumSigner::from(signer))
+        .on_client(RpcClient::new_http(rpc_url));
 
     // Create a transaction.
     let tx = TransactionRequest {
@@ -34,7 +34,7 @@ async fn main() -> Result<()> {
         ..Default::default()
     };
 
-    // Broadcast the transaction and wait for the receipt.
+    // Send the transaction and wait for the receipt.
     let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
 
     println!("Send transaction: {:?}", receipt.transaction_hash);

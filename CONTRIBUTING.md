@@ -125,11 +125,13 @@ less work from you.
 This section lists some commonly needed commands.
 
 ```sh
-cargo check --all-features
+cargo check --examples --all-features
+cargo build --examples --all-features
 cargo +nightly fmt --all
-cargo build --all-features
-cargo test --all-features
-cargo +nightly clippy --all-features
+cargo +nightly clippy \
+	--examples \
+	--all-features \
+	-- -D warnings
 ```
 
 ### Tests

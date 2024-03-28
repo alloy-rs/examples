@@ -3,7 +3,8 @@
 Example code using [alloy](https://github.com/alloy-rs/alloy) and [alloy-core](https://github.com/alloy-rs/core).
 
 These examples demonstrate the main features of [Alloy](https://github.com/alloy-rs/alloy) and how to use them.
-To run an example, use the command `cargo run --example <Example>`.
+
+To run an example, use the command `cargo run --example <Example>`:
 
 ```sh
 cargo run --example mnemonic_signer

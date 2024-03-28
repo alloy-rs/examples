@@ -13,6 +13,7 @@ use eyre::Result;
 
 // Codegen from artifact.
 sol!(
+    #[allow(missing_docs)]
     #[sol(rpc)]
     Counter,
     "examples/artifacts/Counter.json"
@@ -21,19 +22,19 @@ sol!(
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
-    // Ensure `anvil` is available in $PATH
+    // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().try_spawn()?;
 
-    // Set up wallet
-    let wallet: LocalWallet = anvil.keys()[0].clone().into();
+    // Set up signer from the first default Anvil account (Alice).
+    let signer: LocalWallet = anvil.keys()[0].clone().into();
     let alice = anvil.addresses()[0];
 
     // Create a provider with a signer.
-    let http = anvil.endpoint().parse()?;
+    let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
         .with_recommended_layers()
-        .signer(EthereumSigner::from(wallet))
-        .on_client(RpcClient::new_http(http));
+        .signer(EthereumSigner::from(signer))
+        .on_client(RpcClient::new_http(rpc_url));
 
     println!("Anvil running at `{}`", anvil.endpoint());
 
@@ -48,7 +49,7 @@ async fn main() -> Result<()> {
         .deploy()
         .await?;
 
-    println!("Deployed contract at address: {:?}", contract_address);
+    println!("Deployed contract at address: {contract_address:?}");
 
     let contract = Counter::new(contract_address, &provider);
 
