@@ -26,10 +26,10 @@ alloy-provider = { git = "https://github.com/alloy-rs/alloy", rev = "66fa192", f
     "ipc",
 ] }
 
-alloy-network = { git = "https://github.com/alloy-rs/alloy", rev = "68952c0" }
+alloy-network = { git = "https://github.com/alloy-rs/alloy", rev = "66fa192" }
 
-alloy-transport = { git = "https://github.com/alloy-rs/alloy", rev = "68952c0" }
-alloy-transport-ipc = { git = "https://github.com/alloy-rs/alloy", rev = "68952c0" }
+alloy-transport = { git = "https://github.com/alloy-rs/alloy", rev = "66fa192" }
+alloy-transport-ipc = { git = "https://github.com/alloy-rs/alloy", rev = "66fa192" }
 eyre.workspace = true
 futures-util = "0.3"
 tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }

@@ -21,7 +21,7 @@ async fn main() -> Result<()> {
     // Get latest block number
     let block_number = http_provider.get_block_number().await?;
 
-    println!("Latest block number: {:?}", block_number);
+    println!("Latest block number: {block_number:?}");
 
     // This requires the `pubsub` and `ws` features to be enabled on alloy-provider
     let ws_provider = RootProvider::<Ethereum, BoxTransport>::connect_builtin(ws.as_str()).await?;
