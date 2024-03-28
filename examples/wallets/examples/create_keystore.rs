@@ -21,7 +21,7 @@ async fn main() -> Result<()> {
     let (wallet, file_path) =
         Wallet::encrypt_keystore(&dir, &mut rng, private_key, password, None)?;
 
-    let keystore_file_path = dir.path().join(file_path.clone());
+    let keystore_file_path = dir.path().join(file_path);
 
     println!("Wrote keystore for {:?} to {:?}", wallet.address(), keystore_file_path);
 

@@ -6,6 +6,7 @@ use eyre::Result;
 // Codegen from excerpt of Uniswap V2 Router interface.
 // See: https://docs.uniswap.org/contracts/v2/reference/smart-contracts/router-02
 sol!(
+    #[allow(missing_docs)]
     function swapExactTokensForTokens(
         uint256 amountIn,
         uint256 amountOutMin,

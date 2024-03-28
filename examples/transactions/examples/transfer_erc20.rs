@@ -12,7 +12,11 @@ use alloy::{
 use eyre::Result;
 
 // Codegen from artifact.
-sol!(ERC20Example, "examples/contracts/ERC20Example.json");
+sol!(
+    #[allow(missing_docs)]
+    ERC20Example,
+    "examples/contracts/ERC20Example.json"
+);
 
 #[tokio::main]
 async fn main() -> Result<()> {

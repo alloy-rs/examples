@@ -13,6 +13,7 @@ use eyre::Result;
 
 // Codegen from artifact.
 sol!(
+    #[allow(missing_docs)]
     #[sol(rpc)]
     Counter,
     "examples/artifacts/Counter.json"

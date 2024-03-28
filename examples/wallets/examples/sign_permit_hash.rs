@@ -10,6 +10,7 @@ use eyre::Result;
 use serde::Serialize;
 
 sol! {
+    #[allow(missing_docs)]
     #[derive(Debug, Serialize)]
     struct Permit {
         address owner;
