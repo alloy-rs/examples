@@ -1,4 +1,4 @@
-//! Example of using a keystore wallet to sign and broadcast a transaction on a local Anvil node.
+//! Example of using a keystore wallet to sign and send a transaction.
 
 use alloy::{
     network::EthereumSigner,
@@ -19,17 +19,17 @@ async fn main() -> Result<()> {
     // Password to decrypt the keystore file with.
     let password = "test";
 
-    // Set up a wallet using Alice's keystore file.
+    // Set up signer using Alice's keystore file.
     // The private key belongs to Alice, the first default Anvil account.
     let keystore_file_path =
         PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("examples/keystore/alice.json");
-    let wallet = Wallet::decrypt_keystore(keystore_file_path, password)?;
+    let signer = Wallet::decrypt_keystore(keystore_file_path, password)?;
 
     // Create a provider with the signer.
-    let http = anvil.endpoint().parse()?;
+    let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
-        .signer(EthereumSigner::from(wallet))
-        .on_client(RpcClient::new_http(http));
+        .signer(EthereumSigner::from(signer))
+        .on_client(RpcClient::new_http(rpc_url));
 
     // Create a transaction.
     let tx = TransactionRequest {
@@ -41,7 +41,7 @@ async fn main() -> Result<()> {
         ..Default::default()
     };
 
-    // Broadcast the transaction and wait for the receipt.
+    // Send the transaction and wait for the receipt.
     let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
 
     println!("Send transaction: {:?}", receipt.transaction_hash);

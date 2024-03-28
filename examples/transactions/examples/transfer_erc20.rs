@@ -11,48 +11,53 @@ use alloy::{
 };
 use eyre::Result;
 
-sol!(ERC20Example, "examples/contracts/ERC20Example.json");
+// Codegen from artifact.
+sol!(
+    #[allow(missing_docs)]
+    ERC20Example,
+    "examples/contracts/ERC20Example.json"
+);
 
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
-    // Ensure `anvil` is available in $PATH
+    // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
 
-    let url = anvil.endpoint().parse().unwrap();
-    let provider = HttpProvider::<Ethereum>::new_http(url);
+    // Create a provider.
+    let rpc_url = anvil.endpoint().parse()?;
+    let provider = HttpProvider::<Ethereum>::new_http(rpc_url);
 
-    let from = anvil.addresses()[0];
+    // Create two users, Alice and Bob.
+    let alice = anvil.addresses()[0];
+    let bob = anvil.addresses()[1];
 
-    let contract_address = deploy_token_contract(&provider, from).await?;
+    // Deploy the `ERC20Example` contract.
+    let contract_address = deploy_token_contract(&provider, alice).await?;
 
-    println!("Deployed contract at: {}", contract_address);
-
-    let to = anvil.addresses()[1];
-
-    let input = ERC20Example::transferCall { to, amount: U256::from(100) }.abi_encode();
-    // Convert to Bytes
+    // Create the transaction input to transfer 100 tokens from Alice to Bob.
+    let input = ERC20Example::transferCall { to: bob, amount: U256::from(100) }.abi_encode();
     let input = Bytes::from(input);
 
-    let transfer_tx = TransactionRequest {
-        from: Some(from),
+    // Create a transaction with the input.
+    let tx = TransactionRequest {
+        from: Some(alice),
         to: Some(contract_address),
         input: Some(input).into(),
         ..Default::default()
     };
 
-    let pending_tx = provider.send_transaction(transfer_tx).await?;
+    // Send the transaction and wait for the receipt.
+    let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
 
-    println!("Transfer tx: {:?}", pending_tx.tx_hash());
+    println!("Send transaction: {:?}", receipt.transaction_hash);
 
-    // Wait for confirmation
-    let _ = pending_tx.with_required_confirmations(1);
+    // Check the balances of Alice and Bob after the transfer.
+    let alice_balance = balance_of(&provider, alice, contract_address).await?;
+    let bob_balance = balance_of(&provider, bob, contract_address).await?;
 
-    let to_bal = balance_of(&provider, to, contract_address).await?;
-    let from_bal = balance_of(&provider, from, contract_address).await?;
-
-    assert_eq!(to_bal, U256::from(100));
-    assert_eq!(from_bal, U256::from(999999999999999999900_i128));
+    assert_eq!(alice_balance, U256::from(999999999999999999900_i128));
+    assert_eq!(bob_balance, U256::from(100));
 
     Ok(())
 }
@@ -61,26 +66,25 @@ async fn deploy_token_contract(
     provider: &HttpProvider<Ethereum>,
     from: Address,
 ) -> Result<Address> {
-    // Compile the contract
+    // Compile the contract.
     let bytecode = ERC20Example::BYTECODE.to_owned();
 
-    let tx_req = TransactionRequest {
+    // Create a transaction.
+    let tx = TransactionRequest {
         from: Some(from),
         input: Some(bytecode).into(),
         to: None,
         ..Default::default()
     };
 
-    // Deploy the contract
-    let pending_tx = provider.send_transaction(tx_req).await?;
+    // Send the transaction and wait for the receipt.
+    let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
 
-    // Wait for the transaction to be mined
-    let _tx = provider.get_transaction_by_hash(pending_tx.tx_hash().to_owned()).await?;
+    // Get the contract address.
+    let contract_address = receipt.contract_address.expect("Contract address not found");
 
-    // Get receipt
-    let receipt = provider.get_transaction_receipt(pending_tx.tx_hash().to_owned()).await?;
+    println!("Deployed contract at: {contract_address}");
 
-    let contract_address = receipt.unwrap().contract_address.unwrap();
     Ok(contract_address)
 }
 
@@ -89,16 +93,22 @@ async fn balance_of(
     account: Address,
     contract_address: Address,
 ) -> Result<U256> {
+    // Encode the call.
     let call = ERC20Example::balanceOfCall { account }.abi_encode();
     let input = Bytes::from(call);
 
-    let tx_req = TransactionRequest {
+    // Create a transaction.
+    let tx = TransactionRequest {
         to: Some(contract_address),
         input: Some(input).into(),
         ..Default::default()
     };
 
-    let result = provider.call(&tx_req, None).await?;
-    let result = ERC20Example::balanceOfCall::abi_decode_returns(&result, true)?;
-    Ok(result._0)
+    // Call the contract.
+    let result = provider.call(&tx, None).await?;
+
+    // Decode the result.
+    let result = ERC20Example::balanceOfCall::abi_decode_returns(&result, true)?._0;
+
+    Ok(result)
 }

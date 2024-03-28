@@ -24,7 +24,7 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           cache-on-failure: true
-      - run: cargo clippy --workspace --all-targets --all-features
+      - run: cargo +nightly clippy --examples --all-features
         env:
           RUSTFLAGS: -Dwarnings
 
@@ -36,4 +36,4 @@ jobs:
       - uses: dtolnay/rust-toolchain@nightly
         with:
           components: rustfmt
-      - run: cargo fmt --all --check
+      - run: cargo +nightly fmt --all --check

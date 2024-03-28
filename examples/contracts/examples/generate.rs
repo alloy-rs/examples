@@ -5,6 +5,7 @@ use eyre::Result;
 
 // Codegen from ABI file to interact with the contract.
 sol!(
+    #[allow(missing_docs)]
     #[sol(rpc)]
     IERC20,
     "examples/abi/IERC20.json"
@@ -13,7 +14,7 @@ sol!(
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
-    // Ensure `anvil` is available in $PATH
+    // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
 
     // Create a provider.

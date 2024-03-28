@@ -1,4 +1,4 @@
-//! Example of querying deployed bytecode of a contract on Ethereum network.
+//! Example of querying deployed bytecode of a contract on the Ethereum network.
 
 use alloy::{
     network::Ethereum,
@@ -10,16 +10,16 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let url = "https://eth.merkle.io".parse().unwrap();
-    let provider = RootProvider::<Ethereum, _>::new_http(url);
+    // Create a provider.
+    let rpc_url = "https://eth.merkle.io".parse()?;
+    let provider = RootProvider::<Ethereum, _>::new_http(rpc_url);
 
-    // Get bytecode of USDC-ETH Uniswap V3 pool
+    // Get the bytecode of the Uniswap V3 USDC-ETH pool on Ethereum mainnet.
     let pool_address = address!("88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640");
-
     let bytecode =
         provider.get_code_at(pool_address, BlockId::Number(BlockNumberOrTag::Latest)).await?;
 
-    println!("Bytecode: {:?}", bytecode);
+    println!("Bytecode: {bytecode:?}");
 
     Ok(())
 }

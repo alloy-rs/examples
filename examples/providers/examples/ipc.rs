@@ -8,20 +8,21 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Setup the IPC transport which is consumed by the RPC client
+    // Set up the IPC transport which is consumed by the RPC client.
     let ipc_path = "/tmp/reth.ipc";
 
-    // IPC transport
+    // Create the IPC connection object.
     let ipc = IpcConnect::new(ipc_path.to_string());
 
-    // RPC client using IPC transport
+    // Connect to the IPC client.
     let ipc_client = RpcClient::connect_pubsub(ipc).await?;
 
+    // Create the provider.
     let provider = RootProvider::<Ethereum, _>::new(ipc_client);
 
     let latest_block = provider.get_block_number().await?;
 
-    println!("Latest block: {}", latest_block);
+    println!("Latest block: {latest_block}");
 
     Ok(())
 }

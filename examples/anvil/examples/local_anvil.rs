@@ -6,7 +6,7 @@ use eyre::Result;
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
-    // Ensure `anvil` is available in $PATH
+    // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().block_time(1).chain_id(1337).try_spawn()?;
 
     println!("Anvil running at `{}`", anvil.endpoint());

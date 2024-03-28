@@ -10,7 +10,8 @@ use eyre::Result;
 use serde::Serialize;
 
 sol! {
-    #[derive(Debug, Serialize)]
+    #[allow(missing_docs)]
+    #[derive(Serialize)]
     struct Permit {
         address owner;
         address spender;
@@ -22,8 +23,8 @@ sol! {
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Setup up wallet.
-    let wallet = LocalWallet::random();
+    // Set up a random signer.
+    let signer = LocalWallet::random();
 
     let domain = eip712_domain! {
         name: "Uniswap V2",
@@ -34,7 +35,7 @@ async fn main() -> Result<()> {
     };
 
     let permit = Permit {
-        owner: wallet.address(),
+        owner: signer.address(),
         spender: address!("B4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc"),
         value: U256::from(100),
         nonce: U256::from(0),
@@ -45,14 +46,14 @@ async fn main() -> Result<()> {
     let hash = permit.eip712_signing_hash(&domain);
 
     // Sign the hash asynchronously with the wallet.
-    let signature = wallet.sign_hash(&hash).await?;
+    let signature = signer.sign_hash(&hash).await?;
 
     println!(
         "Recovered address matches wallet address: {:?}",
-        signature.recover_address_from_prehash(&hash)? == wallet.address()
+        signature.recover_address_from_prehash(&hash)? == signer.address()
     );
 
-    println!("Wallet signature matches: {:?}", wallet.sign_hash(&hash).await? == signature);
+    println!("Wallet signature matches: {:?}", signer.sign_hash(&hash).await? == signature);
 
     Ok(())
 }
