@@ -1,8 +1,12 @@
 //! Example of watching contract events.
 
-use alloy::{network::Ethereum, node_bindings::Anvil, sol};
-use alloy_provider::RootProvider;
-use alloy_rpc_client::RpcClient;
+use alloy::{
+    network::Ethereum,
+    node_bindings::Anvil,
+    providers::RootProvider,
+    rpc::client::{RpcClient, WsConnect},
+    sol,
+};
 use eyre::Result;
 use futures_util::StreamExt;
 
@@ -37,7 +41,7 @@ async fn main() -> Result<()> {
 
     // Create a WebSocket provider.
     let ws_rpc_url = anvil.ws_endpoint();
-    let ws = alloy_rpc_client::WsConnect::new(ws_rpc_url);
+    let ws = WsConnect::new(ws_rpc_url);
     let provider = RootProvider::<Ethereum, _>::new(RpcClient::connect_pubsub(ws).await?);
 
     // Deploy the `Counter` contract.
