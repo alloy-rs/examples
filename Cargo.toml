@@ -81,7 +81,7 @@ unnecessary_struct_initialization = "allow"
 use_self = "allow"
 
 [workspace.dependencies]
-alloy = { git = "https://github.com/zerosnacks/alloy", branch = "fix/rpc-client-exports", features = [
+alloy = { git = "https://github.com/zerosnacks/alloy", branch = "fix/alloy-prelude-crate-exports", features = [
     "contract",
     "network",
     "node-bindings",
