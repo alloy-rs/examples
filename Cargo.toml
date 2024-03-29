@@ -81,7 +81,7 @@ unnecessary_struct_initialization = "allow"
 use_self = "allow"
 
 [workspace.dependencies]
-alloy = { git = "https://github.com/zerosnacks/alloy", branch = "feat/improve-export-flags-alloy-prelude-crate", features = [
+alloy = { git = "https://github.com/zerosnacks/alloy", branch = "fix/alloy-prelude-crate-exports", features = [
     "contract",
     "network",
     "node-bindings",
@@ -110,10 +110,10 @@ tokio = "1"
 eyre = "0.6.12"
 
 [patch.crates-io]
-alloy-core = { git = "https://github.com/alloy-rs/core", rev = "525a233" }
-alloy-dyn-abi = { git = "https://github.com/alloy-rs/core", rev = "525a233" }
-alloy-json-abi = { git = "https://github.com/alloy-rs/core", rev = "525a233" }
-alloy-primitives = { git = "https://github.com/alloy-rs/core", rev = "525a233" }
-alloy-sol-macro = { git = "https://github.com/alloy-rs/core", rev = "525a233" }
-alloy-sol-types = { git = "https://github.com/alloy-rs/core", rev = "525a233" }
-syn-solidity = { git = "https://github.com/alloy-rs/core", rev = "525a233" }
+alloy-core = { git = "https://github.com/zerosnacks/core", branch = "fix/alloy-core-prelude-crate-exports" }
+alloy-dyn-abi = { git = "https://github.com/zerosnacks/core", branch = "fix/alloy-core-prelude-crate-exports" }
+alloy-json-abi = { git = "https://github.com/zerosnacks/core", branch = "fix/alloy-core-prelude-crate-exports" }
+alloy-primitives = { git = "https://github.com/zerosnacks/core", branch = "fix/alloy-core-prelude-crate-exports" }
+alloy-sol-macro = { git = "https://github.com/zerosnacks/core", branch = "fix/alloy-core-prelude-crate-exports" }
+alloy-sol-types = { git = "https://github.com/zerosnacks/core", branch = "fix/alloy-core-prelude-crate-exports" }
+syn-solidity = { git = "https://github.com/zerosnacks/core", branch = "fix/alloy-core-prelude-crate-exports" }
