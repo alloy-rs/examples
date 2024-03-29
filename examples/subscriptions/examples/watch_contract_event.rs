@@ -1,4 +1,4 @@
-//! Example of watching contract events.
+//! Example of subscribing to blocks and watching contract events by WebSocket subscription.
 
 use alloy::{network::Ethereum, node_bindings::Anvil, sol};
 use alloy_provider::RootProvider;

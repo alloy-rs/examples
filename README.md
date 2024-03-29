@@ -33,8 +33,8 @@ This repository contains the following examples:
 - [x] Contracts
   - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
   - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
-  - [x] [Generate](./examples/contracts/examples/generate.rs)
-- [x] Layers
+  - [x] [Interact with ABI](./examples/contracts/examples/interact_with_abi.rs)
+- [x] Layers (Middleware)
   - [x] [Recommended layers](./examples/layers/examples/recommended_layers.rs)
   - [x] [Nonce manager](./examples/layers/examples/nonce_layer.rs)
   - [x] [Signature manager](./examples/layers/examples/signer_layer.rs)
