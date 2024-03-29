@@ -11,7 +11,7 @@ use serde::Serialize;
 
 sol! {
     #[allow(missing_docs)]
-    #[derive(Debug, Serialize)]
+    #[derive(Serialize)]
     struct Permit {
         address owner;
         address spender;
