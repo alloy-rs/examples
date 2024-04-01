@@ -1,7 +1,8 @@
 //! Example of using the WS provider with auth to subscribe to new blocks.
 
 // Temp Fix
-use alloy_provider::{Provider, ProviderBuilder};
+use alloy_network::Ethereum;
+use alloy_provider::{Provider, RootProvider};
 use alloy_rpc_client::{RpcClient, WsConnect};
 use alloy_transport::Authorization;
 //
@@ -26,8 +27,8 @@ async fn main() -> Result<()> {
     let rpc_client_bearer = RpcClient::connect_pubsub(ws_transport_bearer).await?;
 
     // Create the provider.
-    let provider_basic = ProviderBuilder::new().on_client(rpc_client_basic);
-    let provider_bearer = ProviderBuilder::new().on_client(rpc_client_bearer);
+    let provider_basic = RootProvider::<_, Ethereum>::new(rpc_client_basic);
+    let provider_bearer = RootProvider::<_, Ethereum>::new(rpc_client_bearer);
 
     // Subscribe to new blocks.
     let sub_basic = provider_basic.subscribe_blocks();
