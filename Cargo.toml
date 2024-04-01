@@ -108,12 +108,3 @@ tokio = "1"
 
 # misc
 eyre = "0.6.12"
-
-[patch.crates-io]
-alloy-core = { git = "https://github.com/alloy-rs/core", rev = "525a233" }
-alloy-dyn-abi = { git = "https://github.com/alloy-rs/core", rev = "525a233" }
-alloy-json-abi = { git = "https://github.com/alloy-rs/core", rev = "525a233" }
-alloy-primitives = { git = "https://github.com/alloy-rs/core", rev = "525a233" }
-alloy-sol-macro = { git = "https://github.com/alloy-rs/core", rev = "525a233" }
-alloy-sol-types = { git = "https://github.com/alloy-rs/core", rev = "525a233" }
-syn-solidity = { git = "https://github.com/alloy-rs/core", rev = "525a233" }
