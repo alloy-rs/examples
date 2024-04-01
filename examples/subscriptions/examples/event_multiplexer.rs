@@ -1,7 +1,7 @@
 //! Example of multiplexing the watching of event logs.
 
-use alloy::{network::Ethereum, node_bindings::Anvil, primitives::I256, sol, sol_types::SolEvent};
-use alloy_provider::RootProvider;
+use alloy::{node_bindings::Anvil, primitives::I256, sol, sol_types::SolEvent};
+use alloy_provider::ProviderBuilder;
 use alloy_rpc_client::{RpcClient, WsConnect};
 use eyre::Result;
 use futures_util::StreamExt;
@@ -44,7 +44,7 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let ws = WsConnect::new(anvil.ws_endpoint());
-    let provider = RootProvider::<Ethereum, _>::new(RpcClient::connect_pubsub(ws).await?);
+    let provider = ProviderBuilder::new().on_client(RpcClient::connect_pubsub(ws).await?);
 
     // Deploy the `EventExample` contract.
     let contract = EventMultiplexer::deploy(provider).await?;
@@ -102,7 +102,7 @@ async fn main() -> Result<()> {
             }
         };
 
-        let topic = &log.topics[0];
+        let topic = &log.topics()[0];
 
         if topic == add_log {
             println!("Received Add: {log:?}");

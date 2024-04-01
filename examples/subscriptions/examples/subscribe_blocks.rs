@@ -1,7 +1,7 @@
 //! Example of subscribing to blocks and watching block headers by polling.
 
-use alloy::{network::Ethereum, node_bindings::Anvil};
-use alloy_provider::{Provider, RootProvider};
+use alloy::node_bindings::Anvil;
+use alloy_provider::{Provider, ProviderBuilder};
 use alloy_rpc_client::RpcClient;
 use eyre::Result;
 use futures_util::{stream, StreamExt};
@@ -14,7 +14,7 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let ws = alloy_rpc_client::WsConnect::new(anvil.ws_endpoint());
-    let provider = RootProvider::<Ethereum, _>::new(RpcClient::connect_pubsub(ws).await?);
+    let provider = ProviderBuilder::new().on_client(RpcClient::connect_pubsub(ws).await?);
 
     // Subscribe to blocks.
     let subscription = provider.subscribe_blocks().await?;

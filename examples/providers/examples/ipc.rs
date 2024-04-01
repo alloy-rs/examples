@@ -18,7 +18,7 @@ async fn main() -> Result<()> {
     let ipc_client = RpcClient::connect_pubsub(ipc).await?;
 
     // Create the provider.
-    let provider = RootProvider::<Ethereum, _>::new(ipc_client);
+    let provider = RootProvider::<_, Ethereum>::new(ipc_client);
 
     let latest_block = provider.get_block_number().await?;
 

@@ -20,7 +20,7 @@ async fn main() -> Result<()> {
     let rpc_client = RpcClient::connect_pubsub(ws_transport).await?;
 
     // Create the provider.
-    let provider = RootProvider::<Ethereum, _>::new(rpc_client);
+    let provider = RootProvider::<_, Ethereum>::new(rpc_client);
 
     // Subscribe to new blocks.
     let sub = provider.subscribe_blocks().await?;

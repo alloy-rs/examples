@@ -4,7 +4,7 @@ use alloy::{
     network::Ethereum,
     node_bindings::Anvil,
     primitives::b256,
-    providers::{HttpProvider, Provider},
+    providers::{Provider, ReqwestProvider},
     rpc::types::trace::geth::{
         GethDebugBuiltInTracerType, GethDebugTracerType, GethDebugTracingOptions,
         GethDefaultTracingOptions,
@@ -20,7 +20,7 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = HttpProvider::<Ethereum>::new_http(rpc_url);
+    let provider = ReqwestProvider::<Ethereum>::new_http(rpc_url);
 
     // Hash of the tx we want to trace
     let hash = b256!("97a02abf405d36939e5b232a5d4ef5206980c5a6661845436058f30600c52df7");

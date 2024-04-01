@@ -15,11 +15,11 @@ workspace = true
 [dev-dependencies]
 alloy.workspace = true
 # Temp fix for enabling features. Ref: https://github.com/alloy-rs/examples/pull/3/#discussion_r1537842062
-alloy-rpc-client = { git = "https://github.com/alloy-rs/alloy", rev = "66fa192", features = [
+alloy-rpc-client = { git = "https://github.com/alloy-rs/alloy", rev = "8acf6af", features = [
     "pubsub",
     "ws",
 ] }
-alloy-provider = { git = "https://github.com/alloy-rs/alloy", rev = "66fa192", features = [
+alloy-provider = { git = "https://github.com/alloy-rs/alloy", rev = "8acf6af", features = [
     "pubsub",
 ] }
 # alloy-contract.workspace = true
