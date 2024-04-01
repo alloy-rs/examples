@@ -1,8 +1,7 @@
 //! Example of using the WS provider to subscribe to new blocks.
 
 // Temp Fix
-use alloy_network::Ethereum;
-use alloy_provider::{Provider, RootProvider};
+use alloy_provider::{Provider, ProviderBuilder};
 use alloy_rpc_client::{RpcClient, WsConnect};
 //
 use eyre::Result;
@@ -20,7 +19,7 @@ async fn main() -> Result<()> {
     let rpc_client = RpcClient::connect_pubsub(ws_transport).await?;
 
     // Create the provider.
-    let provider = RootProvider::<Ethereum, _>::new(rpc_client);
+    let provider = ProviderBuilder::new().on_client(rpc_client);
 
     // Subscribe to new blocks.
     let sub = provider.subscribe_blocks().await?;

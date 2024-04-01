@@ -3,7 +3,7 @@
 use alloy::{
     network::Ethereum,
     primitives::{address, U256},
-    providers::{Provider, RootProvider},
+    providers::{Provider, ReqwestProvider},
 };
 use eyre::Result;
 
@@ -11,7 +11,7 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Create a provider.
     let rpc_url = "https://eth.merkle.io".parse()?;
-    let provider = RootProvider::<Ethereum, _>::new_http(rpc_url);
+    let provider = ReqwestProvider::<Ethereum>::new_http(rpc_url);
 
     // Get storage slot 0 from the Uniswap V3 USDC-ETH pool on Ethereum mainnet.
     let pool_address = address!("88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640");

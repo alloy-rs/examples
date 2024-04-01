@@ -1,7 +1,7 @@
 //! Example of subscribing to blocks and watching contract events by WebSocket subscription.
 
-use alloy::{network::Ethereum, node_bindings::Anvil, sol};
-use alloy_provider::RootProvider;
+use alloy::{node_bindings::Anvil, sol};
+use alloy_provider::ProviderBuilder;
 use alloy_rpc_client::RpcClient;
 use eyre::Result;
 use futures_util::StreamExt;
@@ -38,7 +38,7 @@ async fn main() -> Result<()> {
     // Create a WebSocket provider.
     let ws_rpc_url = anvil.ws_endpoint();
     let ws = alloy_rpc_client::WsConnect::new(ws_rpc_url);
-    let provider = RootProvider::<Ethereum, _>::new(RpcClient::connect_pubsub(ws).await?);
+    let provider = ProviderBuilder::new().on_client(RpcClient::connect_pubsub(ws).await?);
 
     // Deploy the `Counter` contract.
     let contract = Counter::deploy(provider.clone()).await?;

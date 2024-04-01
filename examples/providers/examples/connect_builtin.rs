@@ -16,7 +16,7 @@ async fn main() -> Result<()> {
 
     // Instantiate a HTTP transport provider by passing the http endpoint url
     let http_provider =
-        RootProvider::<Ethereum, BoxTransport>::connect_builtin(http.as_str()).await?;
+        RootProvider::<BoxTransport, Ethereum>::connect_builtin(http.as_str()).await?;
 
     // Get latest block number
     let block_number = http_provider.get_block_number().await?;
@@ -24,7 +24,7 @@ async fn main() -> Result<()> {
     println!("Latest block number: {block_number:?}");
 
     // This requires the `pubsub` and `ws` features to be enabled on alloy-provider
-    let ws_provider = RootProvider::<Ethereum, BoxTransport>::connect_builtin(ws.as_str()).await?;
+    let ws_provider = RootProvider::<BoxTransport, Ethereum>::connect_builtin(ws.as_str()).await?;
 
     let sub = ws_provider.subscribe_blocks().await?;
 
@@ -44,7 +44,7 @@ async fn main() -> Result<()> {
 
     // This requires the `pubsub` and `ipc` features to be enabled on alloy-provider
     // This would throw a runtime error if the ipc does not exist
-    let ipc_provider = RootProvider::<Ethereum, BoxTransport>::connect_builtin(ipc_path).await?;
+    let ipc_provider = RootProvider::<BoxTransport, Ethereum>::connect_builtin(ipc_path).await?;
 
     let _block_number = ipc_provider.get_block_number().await?;
 
