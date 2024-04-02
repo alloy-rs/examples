@@ -82,7 +82,6 @@ use_self = "allow"
 
 [workspace.dependencies]
 alloy = { git = "https://github.com/zerosnacks/alloy", branch = "fix/alloy-provider-prelude", features = [
-    "hyper",
     "contract",
     "network",
     "node-bindings",
