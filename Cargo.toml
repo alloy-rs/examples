@@ -83,6 +83,8 @@ use_self = "allow"
 [workspace.dependencies]
 alloy = { git = "https://github.com/alloy-rs/alloy", rev = "27d5ba9", features = [
     "contract",
+    "consensus",
+    "eips",
     "network",
     "node-bindings",
     "providers",
