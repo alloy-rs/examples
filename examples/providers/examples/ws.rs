@@ -1,6 +1,9 @@
 //! Example of using the WS provider to subscribe to new blocks.
 
-use alloy::providers::{Provider, ProviderBuilder};
+use alloy::{
+    providers::{Provider, ProviderBuilder},
+    rpc::client::WsConnect,
+};
 use eyre::Result;
 use futures_util::StreamExt;
 
@@ -10,7 +13,8 @@ async fn main() -> Result<()> {
     let rpc_url = "wss://eth-mainnet.g.alchemy.com/v2/your-api-key";
 
     // Create the provider.
-    let provider = ProviderBuilder::new().on_builtin(rpc_url).await?;
+    let ws = WsConnect::new(rpc_url);
+    let provider = ProviderBuilder::new().on_ws(ws).await?;
 
     // Subscribe to new blocks.
     let sub = provider.subscribe_blocks().await?;

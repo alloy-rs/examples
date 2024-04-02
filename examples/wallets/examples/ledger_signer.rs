@@ -4,7 +4,7 @@ use alloy::{
     network::EthereumSigner,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
-    rpc::{client::RpcClient, types::eth::request::TransactionRequest},
+    rpc::types::eth::request::TransactionRequest,
     signers::ledger::{HDPath, LedgerSigner},
 };
 use eyre::Result;
@@ -16,9 +16,8 @@ async fn main() -> Result<()> {
 
     // Create a provider with the signer.
     let rpc_url = "http://localhost:8545".parse()?;
-    let provider = ProviderBuilder::new()
-        .signer(EthereumSigner::from(signer))
-        .on_client(RpcClient::new_http(rpc_url));
+    let provider =
+        ProviderBuilder::new().signer(EthereumSigner::from(signer)).on_reqwest_http(rpc_url)?;
 
     // Create a transaction.
     let tx = TransactionRequest {

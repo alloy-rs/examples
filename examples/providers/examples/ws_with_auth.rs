@@ -2,7 +2,7 @@
 
 use alloy::{
     providers::{Provider, ProviderBuilder},
-    rpc::client::{RpcClient, WsConnect},
+    rpc::client::WsConnect,
     transports::Authorization,
 };
 use eyre::Result;
@@ -18,16 +18,12 @@ async fn main() -> Result<()> {
     let auth_bearer = Authorization::bearer("bearer-token");
 
     // Create the WS connection object with authentication.
-    let ws_transport_basic = WsConnect::with_auth(rpc_url, Some(auth));
-    let ws_transport_bearer = WsConnect::with_auth(rpc_url, Some(auth_bearer));
-
-    // Connect to the WS client.
-    let rpc_client_basic = RpcClient::connect_pubsub(ws_transport_basic).await?;
-    let rpc_client_bearer = RpcClient::connect_pubsub(ws_transport_bearer).await?;
+    let ws_basic = WsConnect::with_auth(rpc_url, Some(auth));
+    let ws_bearer = WsConnect::with_auth(rpc_url, Some(auth_bearer));
 
     // Create the provider.
-    let provider_basic = ProviderBuilder::new().on_client(rpc_client_basic);
-    let provider_bearer = ProviderBuilder::new().on_client(rpc_client_bearer);
+    let provider_basic = ProviderBuilder::new().on_ws(ws_basic).await?;
+    let provider_bearer = ProviderBuilder::new().on_ws(ws_bearer).await?;
 
     // Subscribe to new blocks.
     let sub_basic = provider_basic.subscribe_blocks();

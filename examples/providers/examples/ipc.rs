@@ -1,6 +1,9 @@
 //! Example of using the IPC provider to get the latest block number.
 
-use alloy::providers::{Provider, ProviderBuilder};
+use alloy::{
+    providers::{Provider, ProviderBuilder},
+    rpc::client::IpcConnect,
+};
 use eyre::Result;
 
 #[tokio::main]
@@ -9,7 +12,8 @@ async fn main() -> Result<()> {
     let ipc_path = "/tmp/reth.ipc";
 
     // Create the provider.
-    let provider = ProviderBuilder::new().on_builtin(ipc_path).await?;
+    let ipc = IpcConnect::new(ipc_path.to_string());
+    let provider = ProviderBuilder::new().on_ipc(ipc).await?;
 
     let latest_block = provider.get_block_number().await?;
 
