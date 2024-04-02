@@ -4,7 +4,7 @@ use alloy::{
     network::Ethereum,
     node_bindings::Anvil,
     primitives::{address, utils::format_units, Address, Bytes, U256},
-    providers::{HttpProvider, Provider},
+    providers::{Provider, ReqwestProvider},
     rpc::types::eth::TransactionRequest,
     sol,
     sol_types::SolCall,
@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = HttpProvider::<Ethereum>::new_http(rpc_url);
+    let provider = ReqwestProvider::<Ethereum>::new_http(rpc_url);
 
     // Create a call to get the latest answer from the Chainlink ETH/USD feed.
     let call = latestAnswerCall {}.abi_encode();

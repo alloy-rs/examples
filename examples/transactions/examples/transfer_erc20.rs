@@ -4,7 +4,7 @@ use alloy::{
     network::Ethereum,
     node_bindings::Anvil,
     primitives::{Address, Bytes, U256},
-    providers::{HttpProvider, Provider},
+    providers::{Provider, ReqwestProvider},
     rpc::types::eth::TransactionRequest,
     sol,
     sol_types::SolCall,
@@ -26,7 +26,7 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = HttpProvider::<Ethereum>::new_http(rpc_url);
+    let provider = ReqwestProvider::<Ethereum>::new_http(rpc_url);
 
     // Create two users, Alice and Bob.
     let alice = anvil.addresses()[0];
@@ -63,7 +63,7 @@ async fn main() -> Result<()> {
 }
 
 async fn deploy_token_contract(
-    provider: &HttpProvider<Ethereum>,
+    provider: &ReqwestProvider<Ethereum>,
     from: Address,
 ) -> Result<Address> {
     // Compile the contract.
@@ -89,7 +89,7 @@ async fn deploy_token_contract(
 }
 
 async fn balance_of(
-    provider: &HttpProvider<Ethereum>,
+    provider: &ReqwestProvider<Ethereum>,
     account: Address,
     contract_address: Address,
 ) -> Result<U256> {

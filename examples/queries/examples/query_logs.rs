@@ -3,7 +3,7 @@
 use alloy::{
     network::Ethereum,
     primitives::{address, b256},
-    providers::{Provider, RootProvider},
+    providers::{Provider, ReqwestProvider},
     rpc::types::eth::Filter,
 };
 use eyre::Result;
@@ -12,7 +12,7 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Create a provider.
     let rpc_url = "https://eth.merkle.io".parse()?;
-    let provider = RootProvider::<Ethereum, _>::new_http(rpc_url);
+    let provider = ReqwestProvider::<Ethereum>::new_http(rpc_url);
 
     // Get logs from the latest block
     let latest_block = provider.get_block_number().await?;
