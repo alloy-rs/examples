@@ -14,23 +14,6 @@ workspace = true
 
 [dev-dependencies]
 alloy.workspace = true
-# Temp fix for enabling features. Ref: https://github.com/alloy-rs/examples/pull/3/#discussion_r1537842062
-alloy-rpc-client = { git = "https://github.com/alloy-rs/alloy", rev = "8acf6af", features = [
-    "pubsub",
-    "ws",
-] }
-alloy-provider = { git = "https://github.com/alloy-rs/alloy", rev = "8acf6af", features = [
-    "pubsub",
-] }
-# alloy-contract.workspace = true
-# alloy-network.workspace = true
-# alloy-node-bindings.workspace = true
-# alloy-provider = { workspace = true, features = ["pubsub", "ws"] }
-# alloy-pubsub.workspace = true
-# alloy-primitives.workspace = true
-# alloy-rpc-client.workspace = true
-# alloy-rpc-types.workspace = true
-# alloy-sol-types = { workspace = true }
 
 eyre.workspace = true
 futures-util = "0.3"

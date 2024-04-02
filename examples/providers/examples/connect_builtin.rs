@@ -1,10 +1,12 @@
 //! Example of using the `RootProvider<N, T: BoxTransport>::connect_builtin` to create a provider
 //! from a connection string. The connection string can be a HTTP, WS or IPC endpoint.
 
-use alloy::node_bindings::Anvil;
-use alloy_network::Ethereum;
-use alloy_provider::{Provider, RootProvider};
-use alloy_transport::BoxTransport;
+use alloy::{
+    network::Ethereum,
+    node_bindings::Anvil,
+    providers::{Provider, RootProvider},
+    transports::BoxTransport,
+};
 use eyre::Result;
 use futures_util::StreamExt;
 

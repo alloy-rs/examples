@@ -1,8 +1,13 @@
 //! Example of multiplexing the watching of event logs.
 
-use alloy::{node_bindings::Anvil, primitives::I256, sol, sol_types::SolEvent};
-use alloy_provider::ProviderBuilder;
-use alloy_rpc_client::{RpcClient, WsConnect};
+use alloy::{
+    node_bindings::Anvil,
+    primitives::I256,
+    providers::ProviderBuilder,
+    rpc::client::{RpcClient, WsConnect},
+    sol,
+    sol_types::SolEvent,
+};
 use eyre::Result;
 use futures_util::StreamExt;
 use std::str::FromStr;

@@ -81,41 +81,26 @@ unnecessary_struct_initialization = "allow"
 use_self = "allow"
 
 [workspace.dependencies]
-alloy = { git = "https://github.com/alloy-rs/alloy", rev = "8acf6af", features = [
-    # "dyn-abi",
-    # "json-abi",
-    # "json",
-    "sol-types",
-    # "rlp",
-    # "serde",
+alloy = { git = "https://github.com/alloy-rs/alloy", rev = "27d5ba9", features = [
     "contract",
-    # "consensus",
-    # "eips",
     "network",
-    # "genesis",
     "node-bindings",
     "providers",
-    "rpc",
-    # "json-rpc",
+    "provider-http",
+    "provider-ipc",
+    "provider-ws",
     "rpc-client",
-    # "rpc-types",
+    "rpc-client-ipc",
+    "rpc-client-ws",
     "rpc-types-eth",
-    # "rpc-types-engine",
     "rpc-types-trace",
     "signers",
-    # "signer-aws",
-    # "signer-gcp",
     "signer-keystore",
     "signer-ledger",
     "signer-mnemonic",
     "signer-trezor",
     "signer-wallet",
     "signer-yubihsm",
-    "transports",
-    "transport-http",
-    "transport-ipc",
-    "transport-ws",
-    "pubsub",
 ] }
 
 # async
