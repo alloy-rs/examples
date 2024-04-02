@@ -1,10 +1,6 @@
 //! Example of using the WS provider to subscribe to new blocks.
 
-use alloy::{
-    network::Ethereum,
-    providers::{Provider, RootProvider},
-    rpc::client::{RpcClient, WsConnect},
-};
+use alloy::providers::{Provider, ProviderBuilder};
 use eyre::Result;
 use futures_util::StreamExt;
 
@@ -13,14 +9,8 @@ async fn main() -> Result<()> {
     // Set up the WS transport which is consumed by the RPC client.
     let rpc_url = "wss://eth-mainnet.g.alchemy.com/v2/your-api-key";
 
-    // Create the WS connection object.
-    let ws_transport = WsConnect::new(rpc_url);
-
-    // Connect to the WS client.
-    let rpc_client = RpcClient::connect_pubsub(ws_transport).await?;
-
     // Create the provider.
-    let provider = RootProvider::<_, Ethereum>::new(rpc_client);
+    let provider = ProviderBuilder::new().on_builtin(rpc_url).await?;
 
     // Subscribe to new blocks.
     let sub = provider.subscribe_blocks().await?;
@@ -30,13 +20,10 @@ async fn main() -> Result<()> {
 
     println!("Awaiting blocks...");
 
-    while let Some(block) = stream.next().await {
-        println!("{:?}", block.header.number);
-    }
-
+    // Take the stream and print the block number upon receiving a new block.
     let handle = tokio::spawn(async move {
         while let Some(block) = stream.next().await {
-            println!("{:?}", block.header.number);
+            println!("Latest block number: {:?}", block.header.number.unwrap().to_string());
         }
     });
 

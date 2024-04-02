@@ -1,8 +1,7 @@
 //! Example of using the WS provider with auth to subscribe to new blocks.
 
 use alloy::{
-    network::Ethereum,
-    providers::{Provider, RootProvider},
+    providers::{Provider, ProviderBuilder},
     rpc::client::{RpcClient, WsConnect},
     transports::Authorization,
 };
@@ -27,8 +26,8 @@ async fn main() -> Result<()> {
     let rpc_client_bearer = RpcClient::connect_pubsub(ws_transport_bearer).await?;
 
     // Create the provider.
-    let provider_basic = RootProvider::<_, Ethereum>::new(rpc_client_basic);
-    let provider_bearer = RootProvider::<_, Ethereum>::new(rpc_client_bearer);
+    let provider_basic = ProviderBuilder::new().on_client(rpc_client_basic);
+    let provider_bearer = ProviderBuilder::new().on_client(rpc_client_bearer);
 
     // Subscribe to new blocks.
     let sub_basic = provider_basic.subscribe_blocks();
@@ -40,17 +39,20 @@ async fn main() -> Result<()> {
 
     println!("Awaiting blocks...");
 
-    // Spawning the block processing for basic auth as a new task.
+    // Take the basic stream and print the block number upon receiving a new block.
     let basic_handle = tokio::spawn(async move {
         while let Some(block) = stream_basic.next().await {
-            println!("From basic {:?}", block.header.number);
+            println!("Latest block number (basic): {:?}", block.header.number.unwrap().to_string());
         }
     });
 
-    // Similarly for bearer auth.
+    // Take the bearer stream and print the block number upon receiving a new block.
     let bearer_handle = tokio::spawn(async move {
         while let Some(block) = stream_bearer.next().await {
-            println!("From bearer {:?}", block.header.number);
+            println!(
+                "Latest block number (bearer): {:?}",
+                block.header.number.unwrap().to_string()
+            );
         }
     });
 

@@ -1,10 +1,9 @@
 //! Example of how to get the gas price in USD using the Chainlink ETH/USD feed.
 
 use alloy::{
-    network::Ethereum,
     node_bindings::Anvil,
     primitives::{address, utils::format_units, Address, Bytes, U256},
-    providers::{Provider, ReqwestProvider},
+    providers::{Provider, ProviderBuilder},
     rpc::types::eth::TransactionRequest,
     sol,
     sol_types::SolCall,
@@ -31,7 +30,7 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = ReqwestProvider::<Ethereum>::new_http(rpc_url);
+    let provider = ProviderBuilder::new().on_reqwest_http(rpc_url)?;
 
     // Create a call to get the latest answer from the Chainlink ETH/USD feed.
     let call = latestAnswerCall {}.abi_encode();

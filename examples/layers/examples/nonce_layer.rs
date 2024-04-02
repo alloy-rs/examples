@@ -5,7 +5,7 @@ use alloy::{
     node_bindings::Anvil,
     primitives::{address, U256},
     providers::{layers::NonceManagerLayer, Provider, ProviderBuilder},
-    rpc::{client::RpcClient, types::eth::request::TransactionRequest},
+    rpc::types::eth::request::TransactionRequest,
     signers::wallet::LocalWallet,
 };
 use eyre::Result;
@@ -40,7 +40,7 @@ async fn main() -> Result<()> {
         // includes the `NonceManagerLayer`.
         .layer(NonceManagerLayer)
         .signer(EthereumSigner::from(signer))
-        .on_client(RpcClient::new_http(rpc_url));
+        .on_reqwest_http(rpc_url)?;
 
     // Create an EIP-1559 type transaction.
     let tx = TransactionRequest::default()

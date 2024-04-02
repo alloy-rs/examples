@@ -1,9 +1,8 @@
 //! Example of how to trace a transaction using `trace_call`.
 
 use alloy::{
-    network::Ethereum,
     primitives::{address, U256},
-    providers::{Provider, ReqwestProvider},
+    providers::{Provider, ProviderBuilder},
     rpc::types::{
         eth::{BlockId, BlockNumberOrTag, TransactionRequest},
         trace::parity::TraceType,
@@ -15,7 +14,7 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Create a provider.
     let rpc_url = "https://eth.merkle.io".parse()?;
-    let provider = ReqwestProvider::<Ethereum>::new_http(rpc_url);
+    let provider = ProviderBuilder::new().on_reqwest_http(rpc_url)?;
 
     // Create two users, Alice and Bob.
     let alice = address!("f39Fd6e51aad88F6F4ce6aB8827279cffFb92266");

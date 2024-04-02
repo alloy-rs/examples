@@ -5,7 +5,6 @@ use alloy::{
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
-    rpc::client::RpcClient,
     signers::wallet::LocalWallet,
     sol,
 };
@@ -40,9 +39,8 @@ async fn main() -> Result<()> {
 
     // Create a provider with a signer.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new()
-        .signer(EthereumSigner::from(signer))
-        .on_client(RpcClient::new_http(rpc_url));
+    let provider =
+        ProviderBuilder::new().signer(EthereumSigner::from(signer)).on_reqwest_http(rpc_url)?;
 
     println!("Anvil running at `{}`", anvil.endpoint());
 
