@@ -4,8 +4,8 @@ use alloy::{
     network::{EthereumSigner, TransactionBuilder},
     node_bindings::Anvil,
     primitives::U256,
-    providers::{Provider, ProviderBuilder, RootProvider},
-    rpc::{client::RpcClient, types::eth::TransactionRequest},
+    providers::{Provider, ProviderBuilder},
+    rpc::types::eth::TransactionRequest,
     signers::wallet::LocalWallet,
 };
 use eyre::Result;
@@ -23,11 +23,10 @@ async fn main() -> Result<()> {
     let alice = wallet.address();
     let bob = anvil.addresses()[1];
 
-    // Set up the HTTP transport which is consumed by the RPC client.
-    let rpc_client = RpcClient::new_http(anvil.endpoint().parse()?);
-    let provider_with_signer = ProviderBuilder::new()
-        .signer(EthereumSigner::from(wallet))
-        .provider(RootProvider::new(rpc_client));
+    // Set up the HTTP provider with the `reqwest` crate.
+    let rpc_url = anvil.endpoint().parse()?;
+    let provider =
+        ProviderBuilder::new().signer(EthereumSigner::from(wallet)).on_reqwest_http(rpc_url)?;
 
     // Create a transaction.
     let mut tx = TransactionRequest::default()
@@ -39,7 +38,7 @@ async fn main() -> Result<()> {
     tx.set_gas_price(U256::from(20e9));
 
     // Send the transaction and wait for the receipt.
-    let pending_tx = provider_with_signer.send_transaction(tx).await?;
+    let pending_tx = provider.send_transaction(tx).await?;
 
     println!("Pending transaction...{:?}", pending_tx.tx_hash());
 

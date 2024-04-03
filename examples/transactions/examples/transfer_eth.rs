@@ -1,10 +1,9 @@
 //! Example of how to transfer ETH from one account to another.
 
 use alloy::{
-    network::Ethereum,
     node_bindings::Anvil,
     primitives::U256,
-    providers::{Provider, ReqwestProvider},
+    providers::{Provider, ProviderBuilder},
     rpc::types::eth::TransactionRequest,
 };
 use eyre::Result;
@@ -17,7 +16,7 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = ReqwestProvider::<Ethereum>::new_http(rpc_url);
+    let provider = ProviderBuilder::new().on_reqwest_http(rpc_url)?;
 
     // Create two users, Alice and Bob.
     let alice = anvil.addresses()[0];

@@ -1,11 +1,8 @@
-//! Example of using the `RootProvider<N, T: BoxTransport>::connect_builtin` to create a provider
-//! from a connection string. The connection string can be a HTTP, WS or IPC endpoint.
+//! Example of using the `on_builtin` method in the provider.
 
 use alloy::{
-    network::Ethereum,
     node_bindings::Anvil,
-    providers::{Provider, RootProvider},
-    transports::BoxTransport,
+    providers::{Provider, ProviderBuilder},
 };
 use eyre::Result;
 use futures_util::StreamExt;
@@ -13,12 +10,10 @@ use futures_util::StreamExt;
 #[tokio::main]
 async fn main() -> Result<()> {
     let anvil = Anvil::new().block_time(1).try_spawn()?;
-    let http = anvil.endpoint();
-    let ws = anvil.ws_endpoint();
 
-    // Instantiate a HTTP transport provider by passing the http endpoint url
-    let http_provider =
-        RootProvider::<BoxTransport, Ethereum>::connect_builtin(http.as_str()).await?;
+    // Instantiate a HTTP transport provider by passing the HTTP endpoint url
+    let http_rpc_url = anvil.endpoint();
+    let http_provider = ProviderBuilder::new().on_builtin(&http_rpc_url).await?;
 
     // Get latest block number
     let block_number = http_provider.get_block_number().await?;
@@ -26,7 +21,8 @@ async fn main() -> Result<()> {
     println!("Latest block number: {block_number:?}");
 
     // This requires the `pubsub` and `ws` features to be enabled on alloy-provider
-    let ws_provider = RootProvider::<BoxTransport, Ethereum>::connect_builtin(ws.as_str()).await?;
+    let ws_rpc_url = anvil.ws_endpoint();
+    let ws_provider = ProviderBuilder::new().on_builtin(&ws_rpc_url).await?;
 
     let sub = ws_provider.subscribe_blocks().await?;
 
@@ -42,11 +38,10 @@ async fn main() -> Result<()> {
 
     handle.await?;
 
-    let ipc_path = "/tmp/reth.ipc";
-
     // This requires the `pubsub` and `ipc` features to be enabled on alloy-provider
     // This would throw a runtime error if the ipc does not exist
-    let ipc_provider = RootProvider::<BoxTransport, Ethereum>::connect_builtin(ipc_path).await?;
+    let ipc_path = "/tmp/reth.ipc";
+    let ipc_provider = ProviderBuilder::new().on_builtin(ipc_path).await?;
 
     let _block_number = ipc_provider.get_block_number().await?;
 

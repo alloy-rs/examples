@@ -5,7 +5,7 @@ use alloy::{
     node_bindings::Anvil,
     primitives::{address, b256, U256},
     providers::{Provider, ProviderBuilder},
-    rpc::{client::RpcClient, types::eth::request::TransactionRequest},
+    rpc::types::eth::request::TransactionRequest,
     signers::wallet::LocalWallet,
 };
 use eyre::Result;
@@ -28,7 +28,7 @@ async fn main() -> Result<()> {
     let provider = ProviderBuilder::new()
         // Add the `SignerLayer` to the provider
         .signer(EthereumSigner::from(signer))
-        .on_client(RpcClient::new_http(rpc_url));
+        .on_reqwest_http(rpc_url)?;
 
     // Create a legacy type transaction.
     let tx = TransactionRequest::default()

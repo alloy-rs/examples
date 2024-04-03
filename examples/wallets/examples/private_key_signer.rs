@@ -5,7 +5,7 @@ use alloy::{
     node_bindings::Anvil,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
-    rpc::{client::RpcClient, types::eth::request::TransactionRequest},
+    rpc::types::eth::request::TransactionRequest,
     signers::wallet::LocalWallet,
 };
 use eyre::Result;
@@ -20,9 +20,8 @@ async fn main() -> Result<()> {
 
     // Create a provider with the signer.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new()
-        .signer(EthereumSigner::from(signer))
-        .on_client(RpcClient::new_http(rpc_url));
+    let provider =
+        ProviderBuilder::new().signer(EthereumSigner::from(signer)).on_reqwest_http(rpc_url)?;
 
     // Create a transaction.
     let tx = TransactionRequest {

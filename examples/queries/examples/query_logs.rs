@@ -1,9 +1,8 @@
 //! Example of querying logs from the Ethereum network.
 
 use alloy::{
-    network::Ethereum,
     primitives::{address, b256},
-    providers::{Provider, ReqwestProvider},
+    providers::{Provider, ProviderBuilder},
     rpc::types::eth::Filter,
 };
 use eyre::Result;
@@ -12,7 +11,7 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Create a provider.
     let rpc_url = "https://eth.merkle.io".parse()?;
-    let provider = ReqwestProvider::<Ethereum>::new_http(rpc_url);
+    let provider = ProviderBuilder::new().on_reqwest_http(rpc_url)?;
 
     // Get logs from the latest block
     let latest_block = provider.get_block_number().await?;
