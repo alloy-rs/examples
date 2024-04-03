@@ -11,11 +11,8 @@ use futures_util::StreamExt;
 async fn main() -> Result<()> {
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
-    let http_rpc_url = anvil.endpoint();
-    let ws_rpc_url = anvil.ws_endpoint();
-    let ipc_path = "/tmp/reth.ipc";
-
     // Instantiate a HTTP transport provider by passing the HTTP endpoint url
+    let http_rpc_url = anvil.endpoint();
     let http_provider = ProviderBuilder::new().on_builtin(&http_rpc_url).await?;
 
     // Get latest block number
@@ -24,6 +21,7 @@ async fn main() -> Result<()> {
     println!("Latest block number: {block_number:?}");
 
     // This requires the `pubsub` and `ws` features to be enabled on alloy-provider
+    let ws_rpc_url = anvil.ws_endpoint();
     let ws_provider = ProviderBuilder::new().on_builtin(&ws_rpc_url).await?;
 
     let sub = ws_provider.subscribe_blocks().await?;
@@ -42,6 +40,7 @@ async fn main() -> Result<()> {
 
     // This requires the `pubsub` and `ipc` features to be enabled on alloy-provider
     // This would throw a runtime error if the ipc does not exist
+    let ipc_path = "/tmp/reth.ipc";
     let ipc_provider = ProviderBuilder::new().on_builtin(ipc_path).await?;
 
     let _block_number = ipc_provider.get_block_number().await?;
