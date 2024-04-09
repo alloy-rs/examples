@@ -30,7 +30,7 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new().on_reqwest_http(rpc_url)?;
+    let provider = ProviderBuilder::new().on_http(rpc_url)?;
 
     // Create a call to get the latest answer from the Chainlink ETH/USD feed.
     let call = latestAnswerCall {}.abi_encode();
@@ -54,9 +54,9 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-fn get_usd_value(amount: U256, price_usd: U256) -> Result<f64> {
+fn get_usd_value(amount: u128, price_usd: U256) -> Result<f64> {
     let base = U256::from(10).pow(U256::from(ETH_DECIMALS));
-    let value = amount * price_usd / base;
+    let value = U256::from(amount) * price_usd / base;
     let formatted = format_units(value, ETH_USD_FEED_DECIMALS)?.parse::<f64>()?;
 
     Ok(formatted)

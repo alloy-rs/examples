@@ -35,9 +35,9 @@ This repository contains the following examples:
   - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
   - [x] [Interact with ABI](./examples/contracts/examples/interact_with_abi.rs)
 - [x] Layers (Middleware)
-  - [x] [Recommended layers](./examples/layers/examples/recommended_layers.rs)
-  - [x] [Nonce manager](./examples/layers/examples/nonce_layer.rs)
-  - [x] [Signature manager](./examples/layers/examples/signer_layer.rs)
+  - [x] [Nonce management filler](./examples/layers/examples/nonce_layer.rs)
+  - [x] [Recommended filler](./examples/layers/examples/recommended_layers.rs)
+  - [x] [Signer management layer](./examples/layers/examples/signer_layer.rs)
 - [x] Subscriptions
   - [x] [Subscribe and watch blocks](./examples/subscriptions/examples/subscribe_blocks.rs)
   - [x] [Subscribe to contract events and watch logs](./examples/subscriptions/examples/watch_contract_event.rs)
