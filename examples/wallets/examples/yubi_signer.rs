@@ -5,12 +5,9 @@ use alloy::{
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::eth::request::TransactionRequest,
-    signers::{
-        wallet::{
-            yubihsm::{Connector, Credentials, UsbConfig},
-            YubiWallet,
-        },
-        Signer,
+    signers::wallet::{
+        yubihsm::{Connector, Credentials, UsbConfig},
+        YubiWallet,
     },
 };
 use eyre::Result;

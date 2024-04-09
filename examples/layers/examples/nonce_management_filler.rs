@@ -47,7 +47,7 @@ async fn main() -> Result<()> {
         .with_value(U256::from(100))
         // Notice that without the `GasFiller`, you need to set the gas related fields.
         .with_gas_limit(21_000)
-        .with_max_fee_per_gas(2_000_0000_000)
+        .with_max_fee_per_gas(20_000_000_000)
         .with_max_priority_fee_per_gas(1_000_000_000)
         // It is required to set the chain_id for EIP-1559 transactions.
         .with_chain_id(anvil.chain_id());
