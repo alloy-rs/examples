@@ -23,9 +23,9 @@ async fn main() -> Result<()> {
 
     // Build a transaction to send 100 wei from Alice to Bob.
     let tx = TransactionRequest::default()
-        .with_value(U256::from(100))
-        .with_from(alice.into())
-        .with_to(bob.into());
+        .with_from(alice)
+        .with_to(bob.into())
+        .with_value(U256::from(100));
 
     // Trace the transaction on top of the latest block.
     let trace_type = [TraceType::Trace];

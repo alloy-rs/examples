@@ -1,6 +1,7 @@
 //! Example of how to get the gas price in USD using the Chainlink ETH/USD feed.
 
 use alloy::{
+    network::TransactionBuilder,
     node_bindings::Anvil,
     primitives::{address, utils::format_units, Address, Bytes, U256},
     providers::{Provider, ProviderBuilder},
@@ -37,7 +38,8 @@ async fn main() -> Result<()> {
     let input = Bytes::from(call);
 
     // Call the Chainlink ETH/USD feed contract.
-    let tx = TransactionRequest::default().to(Some(ETH_USD_FEED)).input(Some(input).into());
+    let tx = TransactionRequest::default().with_to(ETH_USD_FEED.into()).with_input(input);
+
     let response = provider.call(&tx, None).await?;
     let result = U256::from_str(&response.to_string())?;
 
