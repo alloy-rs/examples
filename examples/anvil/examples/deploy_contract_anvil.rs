@@ -43,7 +43,9 @@ async fn main() -> Result<()> {
     println!("Anvil running at `{}`", anvil.endpoint());
 
     // Deploy the contract.
-    let contract = Counter::deploy(provider).await?;
+    let contract_builder = Counter::deploy_builder(&provider);
+    let contract_address = contract_builder.deploy().await?;
+    let contract = Counter::new(contract_address, provider);
 
     println!("Deployed contract at address: {:?}", contract.address());
 
