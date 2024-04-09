@@ -1,7 +1,7 @@
 //! Example of how to transfer ERC20 tokens from one account to another.
 
 use alloy::{
-    network::Ethereum,
+    network::{Ethereum, TransactionBuilder},
     node_bindings::Anvil,
     primitives::{Address, Bytes, U256},
     providers::{Provider, ProviderBuilder, ReqwestProvider},
@@ -97,12 +97,8 @@ async fn balance_of(
     let call = ERC20Example::balanceOfCall { account }.abi_encode();
     let input = Bytes::from(call);
 
-    // Create a transaction.
-    let tx = TransactionRequest {
-        to: Some(contract_address),
-        input: Some(input).into(),
-        ..Default::default()
-    };
+    // Build a transaction to call the contract with the input.
+    let tx = TransactionRequest::default().with_to(contract_address.into()).with_input(input);
 
     // Call the contract.
     let result = provider.call(&tx, None).await?;

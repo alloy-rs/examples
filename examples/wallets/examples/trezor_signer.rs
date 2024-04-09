@@ -21,7 +21,7 @@ async fn main() -> Result<()> {
         .signer(EthereumSigner::from(signer))
         .on_http(rpc_url)?;
 
-    // Build a transaction.
+    // Build a transaction to send 100 wei to Vitalik.
     let tx = TransactionRequest::default()
         .with_value(U256::from(100))
         .with_to(address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045").into());

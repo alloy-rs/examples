@@ -1,4 +1,4 @@
-//! Example of using the `.with_recommended_layers()` method in the provider.
+//! Example of using the `.with_recommended_fillers()` method in the provider.
 
 use alloy::{
     network::{EthereumSigner, TransactionBuilder},
@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
         .signer(EthereumSigner::from(signer))
         .on_http(rpc_url)?;
 
-    // Create an EIP-1559 type transaction.
+    // Build a EIP-1559 type transaction.
     // Notice that the `nonce` field is set by the `NonceFiller`.
     // Notice that without the `GasFiller`, you need to set the gas related fields.
     let tx = TransactionRequest::default()

@@ -30,7 +30,7 @@ async fn main() -> Result<()> {
         .signer(EthereumSigner::from(signer))
         .on_http(rpc_url)?;
 
-    // Create a legacy type transaction.
+    // Build a legacy type transaction to send 100 wei to Vitalik.
     let tx = TransactionRequest::default()
         .with_from(alice)
         // Notice that without the `NonceFiller`, you need to manually set the nonce field.
