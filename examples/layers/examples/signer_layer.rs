@@ -39,7 +39,7 @@ async fn main() -> Result<()> {
         .with_value(U256::from(100))
         // Notice that without the `GasFiller`, you need to set the gas related fields.
         .with_gas_price(20_000_000_000)
-        .with_gas_limit(1_000_000_000);
+        .with_gas_limit(21_000);
 
     let builder = provider.send_transaction(tx).await?;
     let node_hash = *builder.tx_hash();
