@@ -1,4 +1,4 @@
-//! Example of using the `SignerLayer` in the provider.
+//! Example of using the `SignerFiller` in the provider.
 
 use alloy::{
     network::{EthereumSigner, TransactionBuilder},
@@ -26,7 +26,7 @@ async fn main() -> Result<()> {
     // Create a provider with the signer.
     let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
-        // Add the `SignerLayer` to the provider
+        // Add the `SignerFiller` to the provider
         .signer(EthereumSigner::from(signer))
         .on_http(rpc_url)?;
 

@@ -1,4 +1,4 @@
-//! Example of using the `NonceFiller` in the provider.
+//! Example of using the `.with_recommended_fillers()` method in the provider.
 
 use alloy::{
     network::{EthereumSigner, TransactionBuilder},
@@ -10,15 +10,6 @@ use alloy::{
 };
 use eyre::Result;
 
-/// In Ethereum, the nonce of a transaction is a number that represents the number of transactions
-/// that have been sent from a particular account. The nonce is used to ensure that transactions are
-/// processed in the order they are intended, and to prevent the same transaction from being
-/// processed multiple times.
-///
-/// The nonce manager in Alloy is a layer that helps you manage the nonce
-/// of transactions by keeping track of the current nonce for a given account and automatically
-/// incrementing it as needed. This can be useful if you want to ensure that transactions are sent
-/// in the correct order, or if you want to avoid having to manually manage the nonce yourself.
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
@@ -35,22 +26,19 @@ async fn main() -> Result<()> {
     // Create a provider with the signer.
     let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
-        // Add the `NonceFiller` to the provider.
-        .with_nonce_management()
+        // Adds the `ChainIdFiller`, `GasFiller` and the `NonceFiller` layers.
+        .with_recommended_fillers()
         .signer(EthereumSigner::from(signer))
         .on_http(rpc_url)?;
 
-    // Create an EIP-1559 type transaction.
+    // Build a EIP-1559 type transaction.
+    // Notice that the `nonce` field is set by the `NonceFiller`.
+    // Notice that the gas related fields are set by the `GasFiller`.
+    // Notice that the `chain_id` field is set by the `ChainIdFiller`.
     let tx = TransactionRequest::default()
         .with_from(alice)
         .with_to(vitalik.into())
-        .with_value(U256::from(100))
-        // Notice that without the `GasFiller`, you need to set the gas related fields.
-        .with_gas_limit(21_000)
-        .with_max_fee_per_gas(20_000_000_000)
-        .with_max_priority_fee_per_gas(1_000_000_000)
-        // It is required to set the chain_id for EIP-1559 transactions.
-        .with_chain_id(anvil.chain_id());
+        .with_value(U256::from(100));
 
     // Send the transaction, the nonce (0) is automatically managed by the provider.
     let builder = provider.send_transaction(tx.clone()).await?;
