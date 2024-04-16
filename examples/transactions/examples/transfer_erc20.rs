@@ -5,7 +5,7 @@ use alloy::{
     node_bindings::Anvil,
     primitives::{Address, Bytes, U256},
     providers::{Provider, ProviderBuilder, ReqwestProvider},
-    rpc::types::eth::TransactionRequest,
+    rpc::types::eth::{BlockId, TransactionRequest},
     sol,
     sol_types::SolCall,
 };
@@ -101,7 +101,7 @@ async fn balance_of(
     let tx = TransactionRequest::default().with_to(contract_address.into()).with_input(input);
 
     // Call the contract.
-    let result = provider.call(&tx, None).await?;
+    let result = provider.call(&tx, BlockId::latest()).await?;
 
     // Decode the result.
     let result = ERC20Example::balanceOfCall::abi_decode_returns(&result, true)?._0;

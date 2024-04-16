@@ -5,7 +5,7 @@ use alloy::{
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::{
-        eth::{BlockId, BlockNumberOrTag, TransactionRequest},
+        eth::{BlockId, TransactionRequest},
         trace::parity::TraceType,
     },
 };
@@ -29,9 +29,7 @@ async fn main() -> Result<()> {
 
     // Trace the transaction on top of the latest block.
     let trace_type = [TraceType::Trace];
-    let result = provider
-        .trace_call(&tx, &trace_type, Some(BlockId::Number(BlockNumberOrTag::Latest)))
-        .await?;
+    let result = provider.trace_call(&tx, &trace_type, BlockId::latest()).await?;
 
     println!("{:?}", result.trace);
 
