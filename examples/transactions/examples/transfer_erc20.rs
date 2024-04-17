@@ -37,7 +37,8 @@ async fn main() -> Result<()> {
     let contract_address = contract.address();
 
     // Create the transaction input to transfer 100 tokens from Alice to Bob.
-    let input = ERC20Example::transferCall { to: bob, amount: U256::from(100) }.abi_encode();
+    let amount = U256::from(100);
+    let input = ERC20Example::transferCall { to: bob, amount }.abi_encode();
     let input = Bytes::from(input);
 
     // Create a transaction with the input.
@@ -48,17 +49,22 @@ async fn main() -> Result<()> {
         ..Default::default()
     };
 
+    // Register the balances of Alice and Bob before the transfer.
+    let alice_before_balance = contract.balanceOf(alice).call().await?._0;
+    let bob_before_balance = contract.balanceOf(bob).call().await?._0;
+
     // Send the transaction and wait for the receipt.
     let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
 
     println!("Send transaction: {:?}", receipt.transaction_hash);
 
-    // Check the balances of Alice and Bob after the transfer.
-    let alice_balance = contract.balanceOf(alice).call().await?._0;
-    let bob_balance = contract.balanceOf(bob).call().await?._0;
+    // Register the balances of Alice and Bob after the transfer.
+    let alice_after_balance = contract.balanceOf(alice).call().await?._0;
+    let bob_after_balance = contract.balanceOf(bob).call().await?._0;
 
-    assert_eq!(alice_balance, U256::from(999999999999999999900_i128));
-    assert_eq!(bob_balance, U256::from(100));
+    // Check the balances of Alice and Bob after the transfer.
+    assert_eq!(alice_before_balance - alice_after_balance, amount);
+    assert_eq!(bob_after_balance - bob_before_balance, amount);
 
     Ok(())
 }
