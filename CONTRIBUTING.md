@@ -134,6 +134,27 @@ cargo +nightly clippy \
 	-- -D warnings
 ```
 
+To run all (runnable) examples:
+
+```sh
+cargo run --example 2>&1 \
+   | grep -E '^ ' \
+   | grep -v \
+   -e 'trezor_signer' \
+   -e 'ledger_signer' \
+   -e 'yubi_signer' \
+   -e 'ipc' \
+   -e 'ws' \
+   -e 'ws_auth' \
+   -e 'connect_builtin' \
+   | xargs -I {} sh -c 'if cargo run --example {} --quiet 1>/dev/null; then \
+        echo "Successfully ran: {}"; \
+      else \
+        echo "Failed to run: {}"; \
+        cargo run --example {}; \
+      fi'
+```
+
 ### Tests
 
 If the change being proposed alters code (as opposed to only documentation for
