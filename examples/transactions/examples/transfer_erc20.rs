@@ -1,13 +1,6 @@
 //! Example of how to transfer ERC20 tokens from one account to another.
 
-use alloy::{
-    node_bindings::Anvil,
-    primitives::{Bytes, U256},
-    providers::{Provider, ProviderBuilder},
-    rpc::types::eth::TransactionRequest,
-    sol,
-    sol_types::SolCall,
-};
+use alloy::{node_bindings::Anvil, primitives::U256, providers::ProviderBuilder, sol};
 use eyre::Result;
 
 // Codegen from artifact.
@@ -33,28 +26,15 @@ async fn main() -> Result<()> {
     let bob = anvil.addresses()[1];
 
     // Deploy the `ERC20Example` contract.
-    let contract = ERC20Example::deploy(&provider).await?;
-    let contract_address = contract.address();
-
-    // Create the transaction input to transfer 100 tokens from Alice to Bob.
-    let amount = U256::from(100);
-    let input = ERC20Example::transferCall { to: bob, amount }.abi_encode();
-    let input = Bytes::from(input);
-
-    // Create a transaction with the input.
-    let tx = TransactionRequest {
-        from: Some(alice),
-        to: Some(*contract_address),
-        input: Some(input).into(),
-        ..Default::default()
-    };
+    let contract = ERC20Example::deploy(provider).await?;
 
     // Register the balances of Alice and Bob before the transfer.
     let alice_before_balance = contract.balanceOf(alice).call().await?._0;
     let bob_before_balance = contract.balanceOf(bob).call().await?._0;
 
-    // Send the transaction and wait for the receipt.
-    let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
+    // Transfer and wait for the receipt.
+    let amount = U256::from(100);
+    let receipt = contract.transfer(bob, amount).send().await?.get_receipt().await?;
 
     println!("Send transaction: {:?}", receipt.transaction_hash);
 
