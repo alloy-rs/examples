@@ -16,7 +16,7 @@ sol!(
     #[allow(missing_docs)]
     #[sol(rpc)]
     ERC20Example,
-    "examples/contracts/ERC20Example.json"
+    "examples/artifacts/ERC20Example.json"
 );
 
 #[tokio::main]
