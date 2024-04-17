@@ -1,11 +1,10 @@
 //! Example of how to transfer ERC20 tokens from one account to another.
 
 use alloy::{
-    network::{Ethereum, TransactionBuilder},
     node_bindings::Anvil,
-    primitives::{Address, Bytes, U256},
-    providers::{Provider, ProviderBuilder, ReqwestProvider},
-    rpc::types::eth::{BlockId, TransactionRequest},
+    primitives::{Bytes, U256},
+    providers::{Provider, ProviderBuilder},
+    rpc::types::eth::TransactionRequest,
     sol,
     sol_types::SolCall,
 };
@@ -55,32 +54,11 @@ async fn main() -> Result<()> {
     println!("Send transaction: {:?}", receipt.transaction_hash);
 
     // Check the balances of Alice and Bob after the transfer.
-    let alice_balance = balance_of(&provider, alice, *contract_address).await?;
-    let bob_balance = balance_of(&provider, bob, *contract_address).await?;
+    let alice_balance = contract.balanceOf(alice).call().await?._0;
+    let bob_balance = contract.balanceOf(bob).call().await?._0;
 
     assert_eq!(alice_balance, U256::from(999999999999999999900_i128));
     assert_eq!(bob_balance, U256::from(100));
 
     Ok(())
-}
-
-async fn balance_of(
-    provider: &ReqwestProvider<Ethereum>,
-    account: Address,
-    contract_address: Address,
-) -> Result<U256> {
-    // Encode the call.
-    let call = ERC20Example::balanceOfCall { account }.abi_encode();
-    let input = Bytes::from(call);
-
-    // Build a transaction to call the contract with the input.
-    let tx = TransactionRequest::default().with_to(contract_address.into()).with_input(input);
-
-    // Call the contract.
-    let result = provider.call(&tx, BlockId::latest()).await?;
-
-    // Decode the result.
-    let result = ERC20Example::balanceOfCall::abi_decode_returns(&result, true)?._0;
-
-    Ok(result)
 }
