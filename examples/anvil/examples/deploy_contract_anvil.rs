@@ -32,7 +32,6 @@ async fn main() -> Result<()> {
 
     // Set up signer from the first default Anvil account (Alice).
     let signer: LocalWallet = anvil.keys()[0].clone().into();
-    let from = signer.address();
 
     // Create a provider with a signer and the network.
     let rpc_url = anvil.endpoint().parse()?;
@@ -44,20 +43,18 @@ async fn main() -> Result<()> {
     println!("Anvil running at `{}`", anvil.endpoint());
 
     // Deploy the contract.
-    let contract_builder = Counter::deploy_builder(&provider).from(from);
-    let contract_address = contract_builder.deploy().await?;
-    let contract = Counter::new(contract_address, provider);
+    let contract = Counter::deploy(&provider).await?;
 
     println!("Deployed contract at address: {:?}", contract.address());
 
     // Set the number to 42.
-    let builder = contract.setNumber(U256::from(42)).from(from);
+    let builder = contract.setNumber(U256::from(42));
     let receipt = builder.send().await?.get_receipt().await?;
 
     println!("Set number to 42: {:?}", receipt.transaction_hash);
 
     // Increment the number to 43.
-    let builder = contract.increment().from(from);
+    let builder = contract.increment();
     let receipt = builder.send().await?.get_receipt().await?;
 
     println!("Incremented number: {:?}", receipt.transaction_hash);

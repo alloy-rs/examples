@@ -1,21 +1,14 @@
 //! Example of how to transfer ERC20 tokens from one account to another.
 
-use alloy::{
-    network::{Ethereum, TransactionBuilder},
-    node_bindings::Anvil,
-    primitives::{Address, Bytes, U256},
-    providers::{Provider, ProviderBuilder, ReqwestProvider},
-    rpc::types::eth::{BlockId, TransactionRequest},
-    sol,
-    sol_types::SolCall,
-};
+use alloy::{node_bindings::Anvil, primitives::U256, providers::ProviderBuilder, sol};
 use eyre::Result;
 
 // Codegen from artifact.
 sol!(
     #[allow(missing_docs)]
+    #[sol(rpc)]
     ERC20Example,
-    "examples/contracts/ERC20Example.json"
+    "examples/artifacts/ERC20Example.json"
 );
 
 #[tokio::main]
@@ -33,78 +26,25 @@ async fn main() -> Result<()> {
     let bob = anvil.addresses()[1];
 
     // Deploy the `ERC20Example` contract.
-    let contract_address = deploy_token_contract(&provider, alice).await?;
+    let contract = ERC20Example::deploy(provider).await?;
 
-    // Create the transaction input to transfer 100 tokens from Alice to Bob.
-    let input = ERC20Example::transferCall { to: bob, amount: U256::from(100) }.abi_encode();
-    let input = Bytes::from(input);
+    // Register the balances of Alice and Bob before the transfer.
+    let alice_before_balance = contract.balanceOf(alice).call().await?._0;
+    let bob_before_balance = contract.balanceOf(bob).call().await?._0;
 
-    // Create a transaction with the input.
-    let tx = TransactionRequest {
-        from: Some(alice),
-        to: Some(contract_address),
-        input: Some(input).into(),
-        ..Default::default()
-    };
-
-    // Send the transaction and wait for the receipt.
-    let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
+    // Transfer and wait for the receipt.
+    let amount = U256::from(100);
+    let receipt = contract.transfer(bob, amount).send().await?.get_receipt().await?;
 
     println!("Send transaction: {:?}", receipt.transaction_hash);
 
-    // Check the balances of Alice and Bob after the transfer.
-    let alice_balance = balance_of(&provider, alice, contract_address).await?;
-    let bob_balance = balance_of(&provider, bob, contract_address).await?;
+    // Register the balances of Alice and Bob after the transfer.
+    let alice_after_balance = contract.balanceOf(alice).call().await?._0;
+    let bob_after_balance = contract.balanceOf(bob).call().await?._0;
 
-    assert_eq!(alice_balance, U256::from(999999999999999999900_i128));
-    assert_eq!(bob_balance, U256::from(100));
+    // Check the balances of Alice and Bob after the transfer.
+    assert_eq!(alice_before_balance - alice_after_balance, amount);
+    assert_eq!(bob_after_balance - bob_before_balance, amount);
 
     Ok(())
-}
-
-async fn deploy_token_contract(
-    provider: &ReqwestProvider<Ethereum>,
-    from: Address,
-) -> Result<Address> {
-    // Compile the contract.
-    let bytecode = ERC20Example::BYTECODE.to_owned();
-
-    // Create a transaction.
-    let tx = TransactionRequest {
-        from: Some(from),
-        input: Some(bytecode).into(),
-        to: None,
-        ..Default::default()
-    };
-
-    // Send the transaction and wait for the receipt.
-    let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
-
-    // Get the contract address.
-    let contract_address = receipt.contract_address.expect("Contract address not found");
-
-    println!("Deployed contract at: {contract_address}");
-
-    Ok(contract_address)
-}
-
-async fn balance_of(
-    provider: &ReqwestProvider<Ethereum>,
-    account: Address,
-    contract_address: Address,
-) -> Result<U256> {
-    // Encode the call.
-    let call = ERC20Example::balanceOfCall { account }.abi_encode();
-    let input = Bytes::from(call);
-
-    // Build a transaction to call the contract with the input.
-    let tx = TransactionRequest::default().with_to(contract_address.into()).with_input(input);
-
-    // Call the contract.
-    let result = provider.call(&tx, BlockId::latest()).await?;
-
-    // Decode the result.
-    let result = ERC20Example::balanceOfCall::abi_decode_returns(&result, true)?._0;
-
-    Ok(result)
 }
