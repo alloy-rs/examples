@@ -14,6 +14,7 @@ use eyre::Result;
 // Codegen from artifact.
 sol!(
     #[allow(missing_docs)]
+    #[sol(rpc)]
     ERC20Example,
     "examples/contracts/ERC20Example.json"
 );
@@ -33,7 +34,8 @@ async fn main() -> Result<()> {
     let bob = anvil.addresses()[1];
 
     // Deploy the `ERC20Example` contract.
-    let contract_address = deploy_token_contract(&provider, alice).await?;
+    let contract = ERC20Example::deploy(&provider).await?;
+    let contract_address = contract.address();
 
     // Create the transaction input to transfer 100 tokens from Alice to Bob.
     let input = ERC20Example::transferCall { to: bob, amount: U256::from(100) }.abi_encode();
@@ -42,7 +44,7 @@ async fn main() -> Result<()> {
     // Create a transaction with the input.
     let tx = TransactionRequest {
         from: Some(alice),
-        to: Some(contract_address),
+        to: Some(*contract_address),
         input: Some(input).into(),
         ..Default::default()
     };
@@ -53,39 +55,13 @@ async fn main() -> Result<()> {
     println!("Send transaction: {:?}", receipt.transaction_hash);
 
     // Check the balances of Alice and Bob after the transfer.
-    let alice_balance = balance_of(&provider, alice, contract_address).await?;
-    let bob_balance = balance_of(&provider, bob, contract_address).await?;
+    let alice_balance = balance_of(&provider, alice, *contract_address).await?;
+    let bob_balance = balance_of(&provider, bob, *contract_address).await?;
 
     assert_eq!(alice_balance, U256::from(999999999999999999900_i128));
     assert_eq!(bob_balance, U256::from(100));
 
     Ok(())
-}
-
-async fn deploy_token_contract(
-    provider: &ReqwestProvider<Ethereum>,
-    from: Address,
-) -> Result<Address> {
-    // Compile the contract.
-    let bytecode = ERC20Example::BYTECODE.to_owned();
-
-    // Create a transaction.
-    let tx = TransactionRequest {
-        from: Some(from),
-        input: Some(bytecode).into(),
-        to: None,
-        ..Default::default()
-    };
-
-    // Send the transaction and wait for the receipt.
-    let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
-
-    // Get the contract address.
-    let contract_address = receipt.contract_address.expect("Contract address not found");
-
-    println!("Deployed contract at: {contract_address}");
-
-    Ok(contract_address)
 }
 
 async fn balance_of(
