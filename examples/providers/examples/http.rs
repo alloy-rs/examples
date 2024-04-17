@@ -9,7 +9,7 @@ async fn main() -> Result<()> {
     let rpc_url = "https://eth.merkle.io".parse()?;
 
     // Create a provider with the HTTP transport using the `reqwest` crate.
-    let provider = ProviderBuilder::new().on_reqwest_http(rpc_url)?;
+    let provider = ProviderBuilder::new().on_http(rpc_url)?;
 
     // Get latest block number.
     let latest_block = provider.get_block_number().await?;

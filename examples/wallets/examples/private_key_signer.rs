@@ -1,7 +1,7 @@
 //! Example of using a local wallet to sign and send a transaction.
 
 use alloy::{
-    network::EthereumSigner,
+    network::{EthereumSigner, TransactionBuilder},
     node_bindings::Anvil,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
@@ -17,21 +17,20 @@ async fn main() -> Result<()> {
 
     // Set up signer from the first default Anvil account (Alice).
     let signer: LocalWallet = anvil.keys()[0].clone().into();
+    let alice = signer.address();
 
     // Create a provider with the signer.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider =
-        ProviderBuilder::new().signer(EthereumSigner::from(signer)).on_reqwest_http(rpc_url)?;
+    let provider = ProviderBuilder::new()
+        .with_recommended_fillers()
+        .signer(EthereumSigner::from(signer))
+        .on_http(rpc_url)?;
 
-    // Create a transaction.
-    let tx = TransactionRequest {
-        value: Some(U256::from(100)),
-        to: address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045").into(),
-        nonce: Some(0),
-        gas_price: Some(U256::from(20e9)),
-        gas: Some(U256::from(21000)),
-        ..Default::default()
-    };
+    // Build a transaction to send 100 wei to Vitalik.
+    let tx = TransactionRequest::default()
+        .with_from(alice)
+        .with_to(address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045").into())
+        .with_value(U256::from(100));
 
     // Send the transaction and wait for the receipt.
     let receipt = provider.send_transaction(tx).await?.get_receipt().await?;

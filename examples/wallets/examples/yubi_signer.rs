@@ -1,7 +1,7 @@
 //! Example of signing and sending a transaction using a Yubi device.
 
 use alloy::{
-    network::EthereumSigner,
+    network::{EthereumSigner, TransactionBuilder},
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::eth::request::TransactionRequest,
@@ -22,20 +22,20 @@ async fn main() -> Result<()> {
     // `from_key` method to upload a key you already have, or the `new` method
     // to generate a new keypair.
     let signer = YubiWallet::connect(connector, Credentials::default(), 0);
+    let from = signer.address();
 
     // Create a provider with the signer.
     let rpc_url = "http://localhost:8545".parse()?;
-    let provider =
-        ProviderBuilder::new().signer(EthereumSigner::from(signer)).on_reqwest_http(rpc_url)?;
+    let provider = ProviderBuilder::new()
+        .with_recommended_fillers()
+        .signer(EthereumSigner::from(signer))
+        .on_http(rpc_url)?;
 
-    // Create a transaction.
-    let tx = TransactionRequest {
-        value: Some(U256::from(100)),
-        to: address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045").into(),
-        gas_price: Some(U256::from(20e9)),
-        gas: Some(U256::from(21000)),
-        ..Default::default()
-    };
+    // Build a transaction to send 100 wei to Vitalik.
+    let tx = TransactionRequest::default()
+        .with_from(from)
+        .with_to(address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045").into())
+        .with_value(U256::from(100));
 
     // Send the transaction and wait for the receipt.
     let receipt =

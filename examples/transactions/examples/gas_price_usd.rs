@@ -1,10 +1,11 @@
 //! Example of how to get the gas price in USD using the Chainlink ETH/USD feed.
 
 use alloy::{
+    network::TransactionBuilder,
     node_bindings::Anvil,
     primitives::{address, utils::format_units, Address, Bytes, U256},
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::TransactionRequest,
+    rpc::types::eth::{BlockId, TransactionRequest},
     sol,
     sol_types::SolCall,
 };
@@ -30,15 +31,16 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new().on_reqwest_http(rpc_url)?;
+    let provider = ProviderBuilder::new().on_http(rpc_url)?;
 
     // Create a call to get the latest answer from the Chainlink ETH/USD feed.
     let call = latestAnswerCall {}.abi_encode();
     let input = Bytes::from(call);
 
     // Call the Chainlink ETH/USD feed contract.
-    let tx = TransactionRequest::default().to(Some(ETH_USD_FEED)).input(Some(input).into());
-    let response = provider.call(&tx, None).await?;
+    let tx = TransactionRequest::default().with_to(ETH_USD_FEED.into()).with_input(input);
+
+    let response = provider.call(&tx, BlockId::latest()).await?;
     let result = U256::from_str(&response.to_string())?;
 
     // Get the gas price of the network.
@@ -54,9 +56,9 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-fn get_usd_value(amount: U256, price_usd: U256) -> Result<f64> {
+fn get_usd_value(amount: u128, price_usd: U256) -> Result<f64> {
     let base = U256::from(10).pow(U256::from(ETH_DECIMALS));
-    let value = amount * price_usd / base;
+    let value = U256::from(amount) * price_usd / base;
     let formatted = format_units(value, ETH_USD_FEED_DECIMALS)?.parse::<f64>()?;
 
     Ok(formatted)

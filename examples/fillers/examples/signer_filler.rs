@@ -1,4 +1,4 @@
-//! Example of using the `SignerLayer` in the provider.
+//! Example of using the `SignerFiller` in the provider.
 
 use alloy::{
     network::{EthereumSigner, TransactionBuilder},
@@ -26,20 +26,20 @@ async fn main() -> Result<()> {
     // Create a provider with the signer.
     let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
-        // Add the `SignerLayer` to the provider
+        // Add the `SignerFiller` to the provider
         .signer(EthereumSigner::from(signer))
-        .on_reqwest_http(rpc_url)?;
+        .on_http(rpc_url)?;
 
-    // Create a legacy type transaction.
+    // Build a legacy type transaction to send 100 wei to Vitalik.
     let tx = TransactionRequest::default()
         .with_from(alice)
-        // Notice that without the `NonceManagerLayer`, you need to manually set the nonce field.
+        // Notice that without the `NonceFiller`, you need to manually set the nonce field.
         .with_nonce(0)
         .with_to(vitalik.into())
         .with_value(U256::from(100))
-        // Notice that without the `GasEstimatorLayer`, you need to set the gas related fields.
-        .with_gas_price(U256::from(20e9))
-        .with_gas_limit(U256::from(21000));
+        // Notice that without the `GasFiller`, you need to set the gas related fields.
+        .with_gas_price(20_000_000_000)
+        .with_gas_limit(21_000);
 
     let builder = provider.send_transaction(tx).await?;
     let node_hash = *builder.tx_hash();

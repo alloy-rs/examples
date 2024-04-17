@@ -25,17 +25,16 @@ async fn main() -> Result<()> {
 
     // Set up the HTTP provider with the `reqwest` crate.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider =
-        ProviderBuilder::new().signer(EthereumSigner::from(wallet)).on_reqwest_http(rpc_url)?;
+    let provider = ProviderBuilder::new()
+        .with_recommended_fillers()
+        .signer(EthereumSigner::from(wallet))
+        .on_http(rpc_url)?;
 
     // Create a transaction.
-    let mut tx = TransactionRequest::default()
-        .to(Some(bob))
-        .value(U256::from(100))
-        .nonce(0)
-        .gas_limit(U256::from(21000));
-
-    tx.set_gas_price(U256::from(20e9));
+    let tx = TransactionRequest::default()
+        .with_from(alice)
+        .with_to(bob.into())
+        .with_value(U256::from(100));
 
     // Send the transaction and wait for the receipt.
     let pending_tx = provider.send_transaction(tx).await?;

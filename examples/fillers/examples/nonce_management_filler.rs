@@ -1,4 +1,4 @@
-//! Example of using the `.with_recommended_layers()` method in the provider.
+//! Example of using the `NonceFiller` in the provider.
 
 use alloy::{
     network::{EthereumSigner, TransactionBuilder},
@@ -10,6 +10,15 @@ use alloy::{
 };
 use eyre::Result;
 
+/// In Ethereum, the nonce of a transaction is a number that represents the number of transactions
+/// that have been sent from a particular account. The nonce is used to ensure that transactions are
+/// processed in the order they are intended, and to prevent the same transaction from being
+/// processed multiple times.
+///
+/// The nonce manager in Alloy is a layer that helps you manage the nonce
+/// of transactions by keeping track of the current nonce for a given account and automatically
+/// incrementing it as needed. This can be useful if you want to ensure that transactions are sent
+/// in the correct order, or if you want to avoid having to manually manage the nonce yourself.
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
@@ -26,21 +35,23 @@ async fn main() -> Result<()> {
     // Create a provider with the signer.
     let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
-        // Adds the `GasEstimatorLayer` and the `NonceManagerLayer` layers.
-        .with_recommended_layers()
-        // Alternatively, you can add the layers individually:
-        // .with_gas_estimation()
-        // .with_nonce_management()
+        // Add the `NonceFiller` to the provider.
+        // It is generally recommended to use the `.with_recommended_fillers()` method, which
+        // includes the `NonceFiller`.
+        .with_nonce_management()
         .signer(EthereumSigner::from(signer))
-        .on_reqwest_http(rpc_url)?;
+        .on_http(rpc_url)?;
 
     // Create an EIP-1559 type transaction.
-    // Notice that the `nonce` field is set by the `NonceManagerLayer`.
-    // Notice that without the `GasEstimatorLayer`, you need to set the gas related fields.
     let tx = TransactionRequest::default()
         .with_from(alice)
         .with_to(vitalik.into())
         .with_value(U256::from(100))
+        // Notice that without the `GasFiller`, you need to set the gas related fields.
+        .with_gas_limit(21_000)
+        .with_max_fee_per_gas(20_000_000_000)
+        .with_max_priority_fee_per_gas(1_000_000_000)
+        // Notice that without the `ChainIdFiller`, you need to set the `chain_id` field.
         .with_chain_id(anvil.chain_id());
 
     // Send the transaction, the nonce (0) is automatically managed by the provider.

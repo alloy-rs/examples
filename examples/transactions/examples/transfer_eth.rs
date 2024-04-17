@@ -1,6 +1,7 @@
 //! Example of how to transfer ETH from one account to another.
 
 use alloy::{
+    network::TransactionBuilder,
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
@@ -16,14 +17,17 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new().on_reqwest_http(rpc_url)?;
+    let provider = ProviderBuilder::new().on_http(rpc_url)?;
 
     // Create two users, Alice and Bob.
     let alice = anvil.addresses()[0];
     let bob = anvil.addresses()[1];
 
-    // Create a transaction to transfer 1 wei from Alice to Bob.
-    let tx = TransactionRequest::default().from(alice).value(U256::from(1)).to(Some(bob));
+    // Build a transaction to send 100 wei from Alice to Bob.
+    let tx = TransactionRequest::default()
+        .with_from(alice)
+        .with_to(bob.into())
+        .with_value(U256::from(100));
 
     // Send the transaction and wait for the receipt.
     let pending_tx = provider.send_transaction(tx).await?;
