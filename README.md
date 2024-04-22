@@ -41,7 +41,8 @@ This repository contains the following examples:
   - [x] [Signer management filler](./examples/fillers/examples/signer_filler.rs)
 - [x] Subscriptions
   - [x] [Subscribe and watch blocks](./examples/subscriptions/examples/subscribe_blocks.rs)
-  - [x] [Subscribe to contract events and watch logs](./examples/subscriptions/examples/watch_contract_event.rs)
+  - [x] [Watch and poll for contract event logs](./examples/subscriptions/examples/poll_logs.rs)
+  - [x] [Subscribe and listen for contract event logs](./examples/subscriptions/examples/subscribe_logs.rs)
   - [x] [Event multiplexer](./examples/subscriptions/examples/event_multiplexer.rs)
 - [x] Providers
   - [x] [Builder](./examples/providers/examples/builder.rs)
