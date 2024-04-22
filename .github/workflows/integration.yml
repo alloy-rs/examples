@@ -34,6 +34,7 @@ jobs:
             -e 'ws' \
             -e 'ws_auth' \
             -e 'connect_builtin' \
+            -e 'subscribe_logs' \
             | xargs -n1 echo
           )"
 

@@ -35,13 +35,14 @@ This repository contains the following examples:
   - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
   - [x] [Interact with ABI](./examples/contracts/examples/interact_with_abi.rs)
 - [x] Fillers (Middleware)
-  - [x] [Gas filler](./examples/fillers/examples/gas_filler.rs)
+  - [x] [Gas estimation filler](./examples/fillers/examples/gas_filler.rs) 
   - [x] [Nonce management filler](./examples/fillers/examples/nonce_filler.rs)
   - [x] [Recommended fillers](./examples/fillers/examples/recommended_fillers.rs)
   - [x] [Signer management filler](./examples/fillers/examples/signer_filler.rs)
 - [x] Subscriptions
   - [x] [Subscribe and watch blocks](./examples/subscriptions/examples/subscribe_blocks.rs)
-  - [x] [Subscribe to contract events and watch logs](./examples/subscriptions/examples/watch_contract_event.rs)
+  - [x] [Watch and poll for contract event logs](./examples/subscriptions/examples/poll_logs.rs)
+  - [x] [Subscribe and listen for contract event logs](./examples/subscriptions/examples/subscribe_logs.rs)
   - [x] [Event multiplexer](./examples/subscriptions/examples/event_multiplexer.rs)
 - [x] Providers
   - [x] [Builder](./examples/providers/examples/builder.rs)
