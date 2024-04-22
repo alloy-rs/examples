@@ -60,7 +60,7 @@ This repository contains the following examples:
   - [x] [Trace transaction](./examples/transactions/examples/trace_transaction.rs)
   - [x] [Transfer ERC20 token](./examples/transactions/examples/transfer_erc20.rs)
   - [x] [Transfer ETH](./examples/transactions/examples/transfer_eth.rs)
-  - [x] [Signing a transaction](./examples/transactions/examples/transaction_sign.rs)
+  - [x] [Sign and send a raw transaction](./examples/transactions/examples/sign_transaction.rs) 
 - [ ] Wallets
   - [ ] AWS signer
   - [ ] GCP signer
