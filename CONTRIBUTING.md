@@ -147,7 +147,7 @@ cargo run --example 2>&1 \
    -e 'ws' \
    -e 'ws_auth' \
    -e 'connect_builtin' \
-   | xargs -I {} sh -c 'if cargo run --example {} --quiet 1>/dev/null; then \
+   | xargs -S1024 -I {} sh -c 'if cargo run --example {} --quiet 1>/dev/null; then \
         echo "Successfully ran: {}"; \
       else \
         echo "Failed to run: {}"; \
