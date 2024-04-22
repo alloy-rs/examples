@@ -3,7 +3,7 @@
 use alloy::{
     node_bindings::Anvil,
     providers::{Provider, ProviderBuilder},
-    rpc::client::{RpcClient, WsConnect},
+    rpc::client::WsConnect,
 };
 use eyre::Result;
 use futures_util::{stream, StreamExt};
@@ -16,7 +16,7 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let ws = WsConnect::new(anvil.ws_endpoint());
-    let provider = ProviderBuilder::new().on_client(RpcClient::connect_pubsub(ws).await?);
+    let provider = ProviderBuilder::new().on_ws(ws).await?;
 
     // Subscribe to blocks.
     let subscription = provider.subscribe_blocks().await?;

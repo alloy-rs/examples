@@ -1,12 +1,8 @@
 //! Example of multiplexing the watching of event logs.
 
 use alloy::{
-    node_bindings::Anvil,
-    primitives::I256,
-    providers::ProviderBuilder,
-    rpc::client::{RpcClient, WsConnect},
-    sol,
-    sol_types::SolEvent,
+    node_bindings::Anvil, primitives::I256, providers::ProviderBuilder, rpc::client::WsConnect,
+    sol, sol_types::SolEvent,
 };
 use eyre::Result;
 use futures_util::StreamExt;
@@ -49,7 +45,7 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let ws = WsConnect::new(anvil.ws_endpoint());
-    let provider = ProviderBuilder::new().on_client(RpcClient::connect_pubsub(ws).await?);
+    let provider = ProviderBuilder::new().on_ws(ws).await?;
 
     // Deploy the `EventExample` contract.
     let contract = EventMultiplexer::deploy(provider).await?;

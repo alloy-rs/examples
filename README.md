@@ -34,13 +34,15 @@ This repository contains the following examples:
   - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
   - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
   - [x] [Interact with ABI](./examples/contracts/examples/interact_with_abi.rs)
-- [x] Layers (Middleware)
-  - [x] [Recommended layers](./examples/layers/examples/recommended_layers.rs)
-  - [x] [Nonce manager](./examples/layers/examples/nonce_layer.rs)
-  - [x] [Signature manager](./examples/layers/examples/signer_layer.rs)
+- [x] Fillers (Middleware)
+  - [x] [Gas estimation filler](./examples/fillers/examples/gas_filler.rs)
+  - [x] [Nonce management filler](./examples/fillers/examples/nonce_filler.rs)
+  - [x] [Recommended fillers](./examples/fillers/examples/recommended_fillers.rs)
+  - [x] [Signer management filler](./examples/fillers/examples/signer_filler.rs)
 - [x] Subscriptions
   - [x] [Subscribe and watch blocks](./examples/subscriptions/examples/subscribe_blocks.rs)
-  - [x] [Subscribe to contract events and watch logs](./examples/subscriptions/examples/watch_contract_event.rs)
+  - [x] [Watch and poll for contract event logs](./examples/subscriptions/examples/poll_logs.rs)
+  - [x] [Subscribe and listen for contract event logs](./examples/subscriptions/examples/subscribe_logs.rs)
   - [x] [Event multiplexer](./examples/subscriptions/examples/event_multiplexer.rs)
 - [x] Providers
   - [x] [Builder](./examples/providers/examples/builder.rs)
@@ -58,6 +60,7 @@ This repository contains the following examples:
   - [x] [Trace transaction](./examples/transactions/examples/trace_transaction.rs)
   - [x] [Transfer ERC20 token](./examples/transactions/examples/transfer_erc20.rs)
   - [x] [Transfer ETH](./examples/transactions/examples/transfer_eth.rs)
+  - [x] [Sign and send a raw transaction](./examples/transactions/examples/sign_transaction.rs) 
 - [ ] Wallets
   - [ ] AWS signer
   - [ ] GCP signer

@@ -1,11 +1,6 @@
-//! Example of subscribing to blocks and watching contract events by WebSocket subscription.
+//! Example of watching and polling for contract events by WebSocket subscription.
 
-use alloy::{
-    node_bindings::Anvil,
-    providers::ProviderBuilder,
-    rpc::client::{RpcClient, WsConnect},
-    sol,
-};
+use alloy::{node_bindings::Anvil, providers::ProviderBuilder, rpc::client::WsConnect, sol};
 use eyre::Result;
 use futures_util::StreamExt;
 
@@ -40,7 +35,7 @@ async fn main() -> Result<()> {
 
     // Create a WebSocket provider.
     let ws = WsConnect::new(anvil.ws_endpoint());
-    let provider = ProviderBuilder::new().on_client(RpcClient::connect_pubsub(ws).await?);
+    let provider = ProviderBuilder::new().on_ws(ws).await?;
 
     // Deploy the `Counter` contract.
     let contract = Counter::deploy(provider.clone()).await?;
@@ -63,7 +58,7 @@ async fn main() -> Result<()> {
         let _ = decrement_call.send().await?;
     }
 
-    // Listen for the events.
+    // Poll for logs.
     increment_filter
         .into_stream()
         .take(2)

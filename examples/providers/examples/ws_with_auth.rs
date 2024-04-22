@@ -1,9 +1,8 @@
 //! Example of using the WS provider with auth to subscribe to new blocks.
 
 use alloy::{
-    network::Ethereum,
-    providers::{Provider, RootProvider},
-    rpc::client::{RpcClient, WsConnect},
+    providers::{Provider, ProviderBuilder},
+    rpc::client::WsConnect,
     transports::Authorization,
 };
 use eyre::Result;
@@ -19,16 +18,12 @@ async fn main() -> Result<()> {
     let auth_bearer = Authorization::bearer("bearer-token");
 
     // Create the WS connection object with authentication.
-    let ws_transport_basic = WsConnect::with_auth(rpc_url, Some(auth));
-    let ws_transport_bearer = WsConnect::with_auth(rpc_url, Some(auth_bearer));
-
-    // Connect to the WS client.
-    let rpc_client_basic = RpcClient::connect_pubsub(ws_transport_basic).await?;
-    let rpc_client_bearer = RpcClient::connect_pubsub(ws_transport_bearer).await?;
+    let ws_basic = WsConnect::with_auth(rpc_url, Some(auth));
+    let ws_bearer = WsConnect::with_auth(rpc_url, Some(auth_bearer));
 
     // Create the provider.
-    let provider_basic = RootProvider::<_, Ethereum>::new(rpc_client_basic);
-    let provider_bearer = RootProvider::<_, Ethereum>::new(rpc_client_bearer);
+    let provider_basic = ProviderBuilder::new().on_ws(ws_basic).await?;
+    let provider_bearer = ProviderBuilder::new().on_ws(ws_bearer).await?;
 
     // Subscribe to new blocks.
     let sub_basic = provider_basic.subscribe_blocks();
@@ -40,17 +35,20 @@ async fn main() -> Result<()> {
 
     println!("Awaiting blocks...");
 
-    // Spawning the block processing for basic auth as a new task.
+    // Take the basic stream and print the block number upon receiving a new block.
     let basic_handle = tokio::spawn(async move {
         while let Some(block) = stream_basic.next().await {
-            println!("From basic {:?}", block.header.number);
+            println!("Latest block number (basic): {:?}", block.header.number.unwrap().to_string());
         }
     });
 
-    // Similarly for bearer auth.
+    // Take the bearer stream and print the block number upon receiving a new block.
     let bearer_handle = tokio::spawn(async move {
         while let Some(block) = stream_bearer.next().await {
-            println!("From bearer {:?}", block.header.number);
+            println!(
+                "Latest block number (bearer): {:?}",
+                block.header.number.unwrap().to_string()
+            );
         }
     });
 
