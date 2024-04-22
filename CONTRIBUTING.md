@@ -134,6 +134,12 @@ cargo +nightly clippy \
 	-- -D warnings
 ```
 
+To run a single (runnable) example:
+
+```sh
+cargo run --example $YOUR_EXAMPLE_NAME
+```
+
 To run all (runnable) examples:
 
 ```sh
