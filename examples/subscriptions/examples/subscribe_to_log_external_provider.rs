@@ -16,7 +16,7 @@ async fn main() -> Result<()> {
         .event_signature(tranfer_event_signature)
         .from_block(BlockNumberOrTag::Latest);
 
-    let rpc_url = "wss://eth.merkle.io";
+    let rpc_url = "RPC_URL"; // DON'T use wss://eth.merkle.io _> this filters wrongly, tested alchemy.io's to be working fine
 
     // Create the provider.
     let ws = WsConnect::new(rpc_url);
