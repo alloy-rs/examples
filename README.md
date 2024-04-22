@@ -35,7 +35,7 @@ This repository contains the following examples:
   - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
   - [x] [Interact with ABI](./examples/contracts/examples/interact_with_abi.rs)
 - [x] Fillers (Middleware)
-  - [x] [Gas filler](./examples/fillers/examples/gas_filler.rs) 
+  - [x] [Gas filler](./examples/fillers/examples/gas_filler.rs)
   - [x] [Nonce management filler](./examples/fillers/examples/nonce_filler.rs)
   - [x] [Recommended fillers](./examples/fillers/examples/recommended_fillers.rs)
   - [x] [Signer management filler](./examples/fillers/examples/signer_filler.rs)
@@ -59,6 +59,7 @@ This repository contains the following examples:
   - [x] [Trace transaction](./examples/transactions/examples/trace_transaction.rs)
   - [x] [Transfer ERC20 token](./examples/transactions/examples/transfer_erc20.rs)
   - [x] [Transfer ETH](./examples/transactions/examples/transfer_eth.rs)
+  - [x] [Signing a transfer](./examples/transactions/examples/transfer_sign.rs)
 - [ ] Wallets
   - [ ] AWS signer
   - [ ] GCP signer

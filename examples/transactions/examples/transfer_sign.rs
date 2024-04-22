@@ -29,7 +29,7 @@ async fn main() -> Result<()> {
         .with_from(alice)
         .with_to(bob.into())
         .with_nonce(0)
-        .with_chain_id(provider.get_chain_id().await?)
+        .with_chain_id(anvil.chain_id())
         .with_value(U256::from(100))
         .with_gas_limit(21_000)
         .with_max_priority_fee_per_gas(1_000_000_000)
