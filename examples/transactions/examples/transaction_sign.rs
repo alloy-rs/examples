@@ -1,4 +1,4 @@
-//! Example of how to create and sign a transfer with EthereumSigner.
+//! Example of how to create and sign a transaction with EthereumSigner.
 
 use alloy::{
     network::{eip2718::Encodable2718, EthereumSigner, TransactionBuilder},
