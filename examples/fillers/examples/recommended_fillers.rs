@@ -35,10 +35,8 @@ async fn main() -> Result<()> {
     // Notice that the `nonce` field is set by the `NonceFiller`.
     // Notice that the gas related fields are set by the `GasFiller`.
     // Notice that the `chain_id` field is set by the `ChainIdFiller`.
-    let tx = TransactionRequest::default()
-        .with_from(alice)
-        .with_to(vitalik.into())
-        .with_value(U256::from(100));
+    let tx =
+        TransactionRequest::default().with_from(alice).with_to(vitalik).with_value(U256::from(100));
 
     // Send the transaction, the nonce (0) is automatically managed by the provider.
     let builder = provider.send_transaction(tx.clone()).await?;

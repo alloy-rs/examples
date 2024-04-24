@@ -45,7 +45,7 @@ async fn main() -> Result<()> {
     // Create an EIP-1559 type transaction.
     let tx = TransactionRequest::default()
         .with_from(alice)
-        .with_to(vitalik.into())
+        .with_to(vitalik)
         .with_value(U256::from(100))
         // Notice that without the `GasFiller`, you need to set the gas related fields.
         .with_gas_limit(21_000)

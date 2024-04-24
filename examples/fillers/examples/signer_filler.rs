@@ -35,7 +35,7 @@ async fn main() -> Result<()> {
         .with_from(alice)
         // Notice that without the `NonceFiller`, you need to manually set the nonce field.
         .with_nonce(0)
-        .with_to(vitalik.into())
+        .with_to(vitalik)
         .with_value(U256::from(100))
         // Notice that without the `GasFiller`, you need to set the gas related fields.
         .with_gas_price(20_000_000_000)

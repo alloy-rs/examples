@@ -22,10 +22,8 @@ async fn main() -> Result<()> {
     let bob = address!("70997970C51812dc3A010C7d01b50e0d17dc79C8");
 
     // Build a transaction to send 100 wei from Alice to Bob.
-    let tx = TransactionRequest::default()
-        .with_from(alice)
-        .with_to(bob.into())
-        .with_value(U256::from(100));
+    let tx =
+        TransactionRequest::default().with_from(alice).with_to(bob).with_value(U256::from(100));
 
     // Trace the transaction on top of the latest block.
     let trace_type = [TraceType::Trace];

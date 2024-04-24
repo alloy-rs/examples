@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
     // Build a transaction to send 100 wei from Alice to Bob.
     let tx = TransactionRequest::default()
         .with_from(alice)
-        .with_to(bob.into())
+        .with_to(bob)
         .with_nonce(0)
         .with_chain_id(anvil.chain_id())
         .with_value(U256::from(100))

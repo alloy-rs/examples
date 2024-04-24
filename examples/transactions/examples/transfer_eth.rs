@@ -24,10 +24,8 @@ async fn main() -> Result<()> {
     let bob = anvil.addresses()[1];
 
     // Build a transaction to send 100 wei from Alice to Bob.
-    let tx = TransactionRequest::default()
-        .with_from(alice)
-        .with_to(bob.into())
-        .with_value(U256::from(100));
+    let tx =
+        TransactionRequest::default().with_from(alice).with_to(bob).with_value(U256::from(100));
 
     // Send the transaction and wait for the receipt.
     let pending_tx = provider.send_transaction(tx).await?;

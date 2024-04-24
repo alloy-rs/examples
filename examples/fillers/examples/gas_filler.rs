@@ -36,7 +36,7 @@ async fn main() -> Result<()> {
     // Create an EIP-1559 type transaction.
     let tx = TransactionRequest::default()
         .with_from(alice)
-        .with_to(vitalik.into())
+        .with_to(vitalik)
         .with_value(U256::from(100))
         // Notice that without the `NonceFiller`, you need to set `nonce` field.
         .with_nonce(0)
