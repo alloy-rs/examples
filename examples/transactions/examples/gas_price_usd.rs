@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new().on_http(rpc_url)?;
+    let provider = ProviderBuilder::new().on_http(rpc_url);
 
     // Create a call to get the latest answer from the Chainlink ETH/USD feed.
     let call = latestAnswerCall {}.abi_encode();

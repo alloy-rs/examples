@@ -40,7 +40,7 @@ async fn main() -> Result<()> {
         // includes the `NonceFiller`.
         .with_nonce_management()
         .signer(EthereumSigner::from(signer))
-        .on_http(rpc_url)?;
+        .on_http(rpc_url);
 
     // Create an EIP-1559 type transaction.
     let tx = TransactionRequest::default()

@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
     let provider = ProviderBuilder::new()
         .with_recommended_fillers()
         .signer(EthereumSigner::from(signer))
-        .on_http(rpc_url)?;
+        .on_http(rpc_url);
 
     // Build a transaction to send 100 wei to Vitalik from Alice.
     let tx = TransactionRequest::default()

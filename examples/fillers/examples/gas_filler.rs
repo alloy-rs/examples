@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
         // includes the `GasFiller`.
         .with_gas_estimation()
         .signer(EthereumSigner::from(signer))
-        .on_http(rpc_url)?;
+        .on_http(rpc_url);
 
     // Create an EIP-1559 type transaction.
     let tx = TransactionRequest::default()

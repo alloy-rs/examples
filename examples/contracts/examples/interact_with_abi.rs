@@ -19,7 +19,7 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new().on_http(rpc_url)?;
+    let provider = ProviderBuilder::new().on_http(rpc_url);
 
     // Create a contract instance.
     let contract = IERC20::new("0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2".parse()?, provider);

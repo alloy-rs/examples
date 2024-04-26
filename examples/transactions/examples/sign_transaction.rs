@@ -18,7 +18,7 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new().on_http(rpc_url)?;
+    let provider = ProviderBuilder::new().on_http(rpc_url);
 
     // Create a signer from the first default Anvil account (Alice).
     let wallet: LocalWallet = anvil.keys()[0].clone().into();
