@@ -18,7 +18,7 @@ sol!(
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Spin up a forked Anvil node.
+    // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().try_spawn()?;
 

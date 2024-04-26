@@ -12,7 +12,8 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Spin up an Anvil node.
+    // Spin up a local Anvil node.
+    // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
     // Set up signer from the first default Anvil account (Alice).
