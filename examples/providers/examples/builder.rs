@@ -28,7 +28,7 @@ async fn main() -> Result<()> {
     let provider = ProviderBuilder::new()
         .with_recommended_fillers()
         .signer(EthereumSigner::from(wallet))
-        .on_http(rpc_url)?;
+        .on_http(rpc_url);
 
     // Create a transaction.
     let tx =

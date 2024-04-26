@@ -40,7 +40,7 @@ async fn main() -> Result<()> {
     let provider = ProviderBuilder::new()
         .with_recommended_fillers()
         .signer(EthereumSigner::from(signer))
-        .on_http(rpc_url)?;
+        .on_http(rpc_url);
 
     println!("Anvil running at `{}`", anvil.endpoint());
 

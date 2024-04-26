@@ -15,7 +15,7 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Create a provider.
     let rpc_url = "https://eth.merkle.io".parse()?;
-    let provider = ProviderBuilder::new().on_http(rpc_url)?;
+    let provider = ProviderBuilder::new().on_http(rpc_url);
 
     // Create two users, Alice and Bob.
     let alice = address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045");

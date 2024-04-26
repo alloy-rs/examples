@@ -19,7 +19,7 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new().on_http(rpc_url)?;
+    let provider = ProviderBuilder::new().on_http(rpc_url);
 
     // Create two users, Alice and Bob.
     let alice = anvil.addresses()[0];

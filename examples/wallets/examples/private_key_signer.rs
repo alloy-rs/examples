@@ -12,7 +12,8 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Spin up an Anvil node.
+    // Spin up a local Anvil node.
+    // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
     // Set up signer from the first default Anvil account (Alice).
@@ -24,7 +25,7 @@ async fn main() -> Result<()> {
     let provider = ProviderBuilder::new()
         .with_recommended_fillers()
         .signer(EthereumSigner::from(signer))
-        .on_http(rpc_url)?;
+        .on_http(rpc_url);
 
     // Build a transaction to send 100 wei to Vitalik.
     let tx = TransactionRequest::default()

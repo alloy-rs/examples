@@ -13,7 +13,8 @@ use std::{env, path::PathBuf};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Spin up an Anvil node.
+    // Spin up a local Anvil node.
+    // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
     // Password to decrypt the keystore file with.
@@ -31,7 +32,7 @@ async fn main() -> Result<()> {
     let provider = ProviderBuilder::new()
         .with_recommended_fillers()
         .signer(EthereumSigner::from(signer))
-        .on_http(rpc_url)?;
+        .on_http(rpc_url);
 
     // Build a transaction to send 100 wei to Vitalik from Alice.
     let tx = TransactionRequest::default()

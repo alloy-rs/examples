@@ -29,7 +29,7 @@ async fn main() -> Result<()> {
         // Adds the `ChainIdFiller`, `GasFiller` and the `NonceFiller` layers.
         .with_recommended_fillers()
         .signer(EthereumSigner::from(signer))
-        .on_http(rpc_url)?;
+        .on_http(rpc_url);
 
     // Build a EIP-1559 type transaction.
     // Notice that the `nonce` field is set by the `NonceFiller`.
