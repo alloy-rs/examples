@@ -3,7 +3,7 @@
 use alloy::{
     node_bindings::Anvil,
     primitives::b256,
-    providers::{debug::DebugApi, ProviderBuilder},
+    providers::{ext::DebugApi, ProviderBuilder},
     rpc::types::trace::geth::{
         GethDebugBuiltInTracerType, GethDebugTracerType, GethDebugTracingOptions,
         GethDefaultTracingOptions,
