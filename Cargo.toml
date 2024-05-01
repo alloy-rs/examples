@@ -81,7 +81,7 @@ unnecessary_struct_initialization = "allow"
 use_self = "allow"
 
 [workspace.dependencies]
-alloy = { git = "https://github.com/alloy-rs/alloy", rev = "d4e977e", features = [
+alloy = { git = "https://github.com/alloy-rs/alloy", rev = "32f58e2", features = [
     "consensus",
     "kzg",
     "contract",
