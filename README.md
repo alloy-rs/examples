@@ -50,7 +50,7 @@ This repository contains the following examples:
   - [x] [HTTP](./examples/providers/examples/http.rs)
   - [x] [IPC](./examples/providers/examples/ipc.rs)
   - [x] [WS](./examples/providers/examples/ws.rs)
-  - [x] [WS with authorization](./examples/providers/examples/ws_with_auth.rs)
+  - [x] [WS with authentication](./examples/providers/examples/ws_with_auth.rs)
 - [x] Queries
   - [x] [Query contract storage](./examples/queries/examples/query_contract_storage.rs)
   - [x] [Query contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
