@@ -2,6 +2,7 @@
 
 use alloy::{
     consensus::{SidecarBuilder, SimpleCoder},
+    eips::eip4844::DATA_GAS_PER_BLOB,
     network::TransactionBuilder,
     node_bindings::Anvil,
     providers::{Provider, ProviderBuilder},
@@ -35,7 +36,7 @@ async fn main() -> Result<()> {
 
     let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
 
-    assert!(receipt.blob_gas_used.unwrap() > 0);
+    assert_eq!(receipt.blob_gas_used.unwrap(), DATA_GAS_PER_BLOB as u128);
 
     Ok(())
 }
