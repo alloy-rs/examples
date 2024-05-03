@@ -30,10 +30,10 @@ jobs:
             -e 'trezor_signer' \
             -e 'ledger_signer' \
             -e 'yubi_signer' \
+            -e 'builtin' \
             -e 'ipc' \
             -e 'ws' \
             -e 'ws_auth' \
-            -e 'connect_builtin' \
             -e 'subscribe_logs' \
             | xargs -n1 echo
           )"

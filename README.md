@@ -46,13 +46,15 @@ This repository contains the following examples:
   - [x] [Event multiplexer](./examples/subscriptions/examples/event_multiplexer.rs)
 - [x] Providers
   - [x] [Builder](./examples/providers/examples/builder.rs)
+  - [x] [Builtin](./examples/providers/examples/builtin.rs)
   - [x] [HTTP](./examples/providers/examples/http.rs)
   - [x] [IPC](./examples/providers/examples/ipc.rs)
   - [x] [WS](./examples/providers/examples/ws.rs)
+  - [x] [WS with authentication](./examples/providers/examples/ws_with_auth.rs)
 - [x] Queries
-  - [x] [Contract storage](./examples/queries/examples/query_contract_storage.rs)
-  - [x] [Contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
-  - [x] [Logs](./examples/queries/examples/query_logs.rs)
+  - [x] [Query contract storage](./examples/queries/examples/query_contract_storage.rs)
+  - [x] [Query contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
+  - [x] [Query logs](./examples/queries/examples/query_logs.rs)
 - [x] Transactions
   - [x] [Decode input](./examples/transactions/examples/decode_input.rs)
   - [x] [Get gas price in USD](./examples/transactions/examples/gas_price_usd.rs)
@@ -62,9 +64,8 @@ This repository contains the following examples:
   - [x] [Transfer ETH](./examples/transactions/examples/transfer_eth.rs)
   - [x] [Sign and send a raw transaction](./examples/transactions/examples/sign_transaction.rs) 
   - [x] [Send transaction with access list](./examples/transactions/examples/with_access_list.rs) 
-- [ ] Wallets
+- [x] Wallets
   - [x] [AWS signer](./examples/wallets/examples/aws_signer.rs)
-  - [ ] GCP signer
   - [x] [Ledger signer](./examples/wallets/examples/ledger_signer.rs)
   - [x] [Private key signer](./examples/wallets/examples/private_key_signer.rs)
   - [x] [Mnemonic signer](./examples/wallets/examples/mnemonic_signer.rs)
