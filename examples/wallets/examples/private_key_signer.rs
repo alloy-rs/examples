@@ -18,6 +18,8 @@ async fn main() -> Result<()> {
 
     // Set up signer from the first default Anvil account (Alice).
     let signer: LocalWallet = anvil.keys()[0].clone().into();
+    // If you want to set up signer from your own private key string, you can do so like this.
+    //let signer: LocalWallet = "<YOUR_PRIVATE_KEY>".parse().unwrap();
     let alice = signer.address();
 
     // Create a provider with the signer.
