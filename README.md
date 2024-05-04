@@ -62,8 +62,9 @@ This repository contains the following examples:
   - [x] [Trace transaction](./examples/transactions/examples/trace_transaction.rs)
   - [x] [Transfer ERC20 token](./examples/transactions/examples/transfer_erc20.rs)
   - [x] [Transfer ETH](./examples/transactions/examples/transfer_eth.rs)
-  - [x] [Sign and send a raw transaction](./examples/transactions/examples/sign_transaction.rs) 
-  - [x] [Send transaction with access list](./examples/transactions/examples/with_access_list.rs) 
+  - [x] [Sign and send a raw transaction](./examples/transactions/examples/sign_transaction.rs)
+  - [x] [Send transaction with access list](./examples/transactions/examples/with_access_list.rs)
+  - [x] [Send 4844 transaction](./examples/transactions/examples/send_4844.rs)
 - [x] Wallets
   - [x] [AWS signer](./examples/wallets/examples/aws_signer.rs)
   - [x] [Ledger signer](./examples/wallets/examples/ledger_signer.rs)
