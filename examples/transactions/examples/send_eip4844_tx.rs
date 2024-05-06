@@ -49,7 +49,7 @@ async fn main() -> Result<()> {
     let receipt = pending_tx.get_receipt().await?;
 
     println!(
-        "Transaction included in block: {}",
+        "Transaction included in block {}",
         receipt.block_number.expect("Failed to get block number")
     );
 
