@@ -49,8 +49,8 @@ async fn main() -> Result<()> {
     let receipt = pending_tx.get_receipt().await?;
 
     println!(
-        "Transaction included in block: {:?}",
-        receipt.block_number.expect("Failed to get block number").to_string()
+        "Transaction included in block: {}",
+        receipt.block_number.expect("Failed to get block number")
     );
 
     assert_eq!(receipt.from, alice);

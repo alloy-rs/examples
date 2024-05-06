@@ -43,7 +43,11 @@ async fn main() -> Result<()> {
     let receipt = pending_tx.get_receipt().await?;
 
     println!(
+<<<<<<< Updated upstream
         "Transaction included in block {}",
+=======
+        "Transaction included in block: {}",
+>>>>>>> Stashed changes
         receipt.block_number.expect("Failed to get block number")
     );
 
