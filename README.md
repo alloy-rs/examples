@@ -39,6 +39,9 @@ This repository contains the following examples:
   - [x] [Nonce management filler](./examples/fillers/examples/nonce_filler.rs)
   - [x] [Recommended fillers](./examples/fillers/examples/recommended_fillers.rs)
   - [x] [Signer management filler](./examples/fillers/examples/signer_filler.rs)
+- [x] Primitives
+  - [x] [Bytes and address types](./examples/primitives/examples/bytes_and_address_types.rs) 
+  - [x] [Hashing functions](./examples/primitives/examples/hashing_functions.rs) 
 - [x] Subscriptions
   - [x] [Subscribe and watch blocks](./examples/subscriptions/examples/subscribe_blocks.rs)
   - [x] [Watch and poll for contract event logs](./examples/subscriptions/examples/poll_logs.rs)
