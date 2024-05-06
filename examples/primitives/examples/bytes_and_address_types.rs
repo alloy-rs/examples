@@ -1,4 +1,4 @@
-//! Example of basic usage of hash and address types and macros.
+//! Example of basic usage of bytes and address types and macros.
 
 use alloy::primitives::{
     address, b128, b256, b512, b64, bytes, fixed_bytes, Address, Bytes, FixedBytes,
