@@ -36,7 +36,7 @@ async fn main() -> Result<()> {
     let amount = U256::from(100);
     let receipt = contract.transfer(bob, amount).send().await?.get_receipt().await?;
 
-    println!("Send transaction: {:?}", receipt.transaction_hash);
+    println!("Send transaction: {}", receipt.transaction_hash);
 
     // Register the balances of Alice and Bob after the transfer.
     let alice_after_balance = contract.balanceOf(alice).call().await?._0;

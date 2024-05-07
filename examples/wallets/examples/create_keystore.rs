@@ -23,13 +23,13 @@ async fn main() -> Result<()> {
 
     let keystore_file_path = dir.path().join(file_path);
 
-    println!("Wrote keystore for {:?} to {:?}", wallet.address(), keystore_file_path);
+    println!("Wrote keystore for {} to {:?}", wallet.address(), keystore_file_path);
 
     // Read the keystore file back.
     let recovered_wallet = Wallet::decrypt_keystore(keystore_file_path.clone(), password)?;
 
     println!(
-        "Read keystore from {:?}, recovered address: {:?}",
+        "Read keystore from {:?}, recovered address: {}",
         keystore_file_path,
         recovered_wallet.address()
     );

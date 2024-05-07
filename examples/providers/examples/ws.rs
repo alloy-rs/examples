@@ -27,7 +27,7 @@ async fn main() -> Result<()> {
     // Take the stream and print the block number upon receiving a new block.
     let handle = tokio::spawn(async move {
         while let Some(block) = stream.next().await {
-            println!("Latest block number: {:?}", block.header.number.unwrap().to_string());
+            println!("Latest block number: {}", block.header.number.unwrap());
         }
     });
 

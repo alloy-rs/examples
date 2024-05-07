@@ -23,7 +23,7 @@ async fn main() -> Result<()> {
     let mut stream = subscription.into_stream().take(2);
 
     while let Some(block) = stream.next().await {
-        println!("Received block number: {:?}", block.header.number.unwrap().to_string());
+        println!("Received block number: {}", block.header.number.unwrap());
     }
 
     // Poll for block headers.

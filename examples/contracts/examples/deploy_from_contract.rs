@@ -47,23 +47,23 @@ async fn main() -> Result<()> {
     // Deploy the contract.
     let contract = Counter::deploy(&provider).await?;
 
-    println!("Deployed contract at address: {:?}", contract.address());
+    println!("Deployed contract at address: {}", contract.address());
 
     let builder = contract.setNumber(U256::from(42));
     let receipt = builder.send().await?.get_receipt().await?;
 
-    println!("Set number to 42: {:?}", receipt.transaction_hash);
+    println!("Set number to 42: {}", receipt.transaction_hash);
 
     // Increment the number to 43.
     let builder = contract.increment();
     let receipt = builder.send().await?.get_receipt().await?;
 
-    println!("Incremented number: {:?}", receipt.transaction_hash);
+    println!("Incremented number: {}", receipt.transaction_hash);
 
     // Retrieve the number, which should be 43.
     let Counter::numberReturn { _0 } = contract.number().call().await?;
 
-    println!("Retrieved number: {:?}", _0.to_string());
+    println!("Retrieved number: {_0}");
 
     Ok(())
 }

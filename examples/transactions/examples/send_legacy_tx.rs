@@ -1,4 +1,4 @@
-//! Example of how to transfer ETH from one account to another.
+//! Example showing how to send a legacy transaction.
 
 use alloy::{
     network::TransactionBuilder,
@@ -11,9 +11,9 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Spin up a forked Anvil node.
+    // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
+    let anvil = Anvil::new().try_spawn()?;
 
     // Create a provider.
     let rpc_url = anvil.endpoint().parse()?;
@@ -24,8 +24,13 @@ async fn main() -> Result<()> {
     let bob = anvil.addresses()[1];
 
     // Build a transaction to send 100 wei from Alice to Bob.
-    let tx =
-        TransactionRequest::default().with_from(alice).with_to(bob).with_value(U256::from(100));
+    let tx = TransactionRequest::default()
+        .with_from(alice)
+        .with_to(bob)
+        .with_nonce(0)
+        .with_value(U256::from(100))
+        .with_gas_price(20_000_000_000)
+        .with_gas_limit(21_000);
 
     // Send the transaction and wait for the receipt.
     let pending_tx = provider.send_transaction(tx).await?;

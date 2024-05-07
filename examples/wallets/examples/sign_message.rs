@@ -18,11 +18,8 @@ async fn main() -> Result<()> {
     // Sign the message asynchronously with the signer.
     let signature = signer.sign_message(message).await?;
 
-    println!("Signature produced by {:?}: {:?}", signer.address(), signature);
-    println!(
-        "Signature recovered address: {:?}",
-        signature.recover_address_from_msg(&message[..])?
-    );
+    println!("Signature produced by {}: {:?}", signer.address(), signature);
+    println!("Signature recovered address: {}", signature.recover_address_from_msg(&message[..])?);
 
     Ok(())
 }

@@ -50,7 +50,7 @@ async fn main() -> Result<()> {
     // Deploy the `EventExample` contract.
     let contract = EventMultiplexer::deploy(provider).await?;
 
-    println!("Deployed contract at: {:?}", contract.address());
+    println!("Deployed contract at: {}", contract.address());
 
     // Create filters for each event.
     let add_filter = contract.Add_filter().watch().await?;

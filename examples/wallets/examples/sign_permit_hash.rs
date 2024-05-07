@@ -49,11 +49,11 @@ async fn main() -> Result<()> {
     let signature = signer.sign_hash(&hash).await?;
 
     println!(
-        "Recovered address matches wallet address: {:?}",
+        "Recovered address matches wallet address: {}",
         signature.recover_address_from_prehash(&hash)? == signer.address()
     );
 
-    println!("Wallet signature matches: {:?}", signer.sign_hash(&hash).await? == signature);
+    println!("Wallet signature matches: {}", signer.sign_hash(&hash).await? == signature);
 
     Ok(())
 }
