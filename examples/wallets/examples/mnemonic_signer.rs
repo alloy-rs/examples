@@ -18,7 +18,7 @@ async fn main() -> Result<()> {
         .password(password)
         .build()?;
 
-    println!("Wallet: {:?}", wallet.address());
+    println!("Wallet: {}", wallet.address());
 
     // Generate a random wallet (24 word phrase) at custom derivation path
     let wallet = MnemonicBuilder::<English>::default()
@@ -29,7 +29,7 @@ async fn main() -> Result<()> {
         // .write_to(path)
         .build_random()?;
 
-    println!("Random wallet: {:?}", wallet.address());
+    println!("Random wallet: {}", wallet.address());
 
     Ok(())
 }

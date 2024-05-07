@@ -43,7 +43,7 @@ async fn main() -> Result<()> {
     // Send the transaction and wait for the receipt.
     let pending_tx = provider.send_transaction(tx).await?;
 
-    println!("Pending transaction...{:?}", pending_tx.tx_hash());
+    println!("Pending transaction... {}", pending_tx.tx_hash());
 
     // Wait for the transaction to be included.
     let receipt = pending_tx.get_receipt().await?;

@@ -48,7 +48,7 @@ async fn main() -> Result<()> {
     // Send the raw transaction and retrieve the transaction receipt.
     let receipt = provider.send_raw_transaction(&tx_encoded).await?.get_receipt().await?;
 
-    println!("Send transaction: {:?}", receipt.transaction_hash);
+    println!("Send transaction: {}", receipt.transaction_hash);
 
     assert_eq!(receipt.from, alice);
     assert_eq!(receipt.to, Some(bob));

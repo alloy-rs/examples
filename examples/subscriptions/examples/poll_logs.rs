@@ -40,7 +40,7 @@ async fn main() -> Result<()> {
     // Deploy the `Counter` contract.
     let contract = Counter::deploy(provider.clone()).await?;
 
-    println!("Deployed contract at: {:?}", contract.address());
+    println!("Deployed contract at: {}", contract.address());
 
     // Create filters for each event.
     let increment_filter = contract.Increment_filter().watch().await?;

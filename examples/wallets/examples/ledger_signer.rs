@@ -35,7 +35,7 @@ async fn main() -> Result<()> {
     let receipt =
         provider.send_transaction(tx).await?.with_required_confirmations(3).get_receipt().await?;
 
-    println!("Send transaction: {:?}", receipt.transaction_hash);
+    println!("Send transaction: {}", receipt.transaction_hash);
 
     Ok(())
 }
