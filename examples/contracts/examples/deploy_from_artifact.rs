@@ -51,7 +51,7 @@ async fn main() -> Result<()> {
     // Retrieve the number, which should be 43.
     let Counter::numberReturn { _0 } = contract.number().call().await?;
 
-    println!("Retrieved number: {}", _0.to_string());
+    println!("Retrieved number: {_0}");
 
     Ok(())
 }
