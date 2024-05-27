@@ -3,7 +3,7 @@
 use alloy::{
     node_bindings::Anvil,
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::{BlockId, TransactionRequest},
+    rpc::types::eth::TransactionRequest,
     sol,
 };
 use eyre::Result;
@@ -50,7 +50,7 @@ async fn main() -> Result<()> {
         .max_priority_fee_per_gas(eip1559_fees.max_priority_fee_per_gas);
 
     // Create an access list for the transaction.
-    let access_list_with_gas_used = provider.create_access_list(&tx, BlockId::latest()).await?;
+    let access_list_with_gas_used = provider.create_access_list(&tx).await?;
 
     // Add the access list to the transaction.
     let tx_with_access_list = tx.access_list(access_list_with_gas_used.access_list);

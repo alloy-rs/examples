@@ -3,7 +3,6 @@
 use alloy::{
     primitives::address,
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::{BlockId, BlockNumberOrTag},
 };
 use eyre::Result;
 
@@ -15,8 +14,7 @@ async fn main() -> Result<()> {
 
     // Get the bytecode of the Uniswap V3 USDC-ETH pool on Ethereum mainnet.
     let pool_address = address!("88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640");
-    let bytecode =
-        provider.get_code_at(pool_address, BlockId::Number(BlockNumberOrTag::Latest)).await?;
+    let bytecode = provider.get_code_at(pool_address).await?;
 
     println!("Bytecode: {bytecode:?}");
 
