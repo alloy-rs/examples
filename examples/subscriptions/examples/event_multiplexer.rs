@@ -58,8 +58,8 @@ async fn main() -> Result<()> {
     let mul_filter = contract.Mul_filter().watch().await?;
     let div_filter = contract.Div_filter().watch().await?;
 
-    let a = I256::from_str("1").unwrap();
-    let b = I256::from_str("1").unwrap();
+    let a = I256::from_str("1")?;
+    let b = I256::from_str("1")?;
 
     // Build the transaction calls.
     let add_call = contract.add(a, b);
@@ -90,16 +90,16 @@ async fn main() -> Result<()> {
     for _ in 0..4 {
         let log = tokio::select! {
             Some(log) = add_stream.next() => {
-                log.unwrap().1
+                log?.1
             }
             Some(log) = sub_stream.next() => {
-                log.unwrap().1
+                log?.1
             }
             Some(log) = mul_stream.next() => {
-                log.unwrap().1
+                log?.1
             }
             Some(log) = div_stream.next() => {
-                log.unwrap().1
+                log?.1
             }
         };
 

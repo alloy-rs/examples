@@ -5,7 +5,7 @@ use alloy::{
     node_bindings::Anvil,
     primitives::{address, utils::format_units, Address, Bytes, U256},
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::{BlockId, TransactionRequest},
+    rpc::types::eth::TransactionRequest,
     sol,
     sol_types::SolCall,
 };
@@ -40,7 +40,7 @@ async fn main() -> Result<()> {
     // Call the Chainlink ETH/USD feed contract.
     let tx = TransactionRequest::default().with_to(ETH_USD_FEED).with_input(input);
 
-    let response = provider.call(&tx).block(BlockId::latest()).await?;
+    let response = provider.call(&tx).await?;
     let result = U256::from_str(&response.to_string())?;
 
     // Get the gas price of the network.
