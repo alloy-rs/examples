@@ -27,9 +27,9 @@ async fn main() -> Result<()> {
     }
 
     // Get all logs from the latest block that match the transfer event signature/topic.
-    let tranfer_event_signature =
+    let transfer_event_signature =
         b256!("ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef");
-    let filter = Filter::new().event_signature(tranfer_event_signature).from_block(latest_block);
+    let filter = Filter::new().event_signature(transfer_event_signature).from_block(latest_block);
     // You could also use the event name instead of the event signature like so:
     // .event("Transfer(address,address,uint256)")
 
@@ -40,7 +40,7 @@ async fn main() -> Result<()> {
         println!("Transfer event: {log:?}");
     }
 
-    // Get all from the latest block emitted by the UNI token address.
+    // Get all logs from the latest block emitted by the UNI token address.
     let uniswap_token_address = address!("1f9840a85d5aF5bf1D1762F925BDADdC4201F984");
     let filter = Filter::new().address(uniswap_token_address).from_block(latest_block);
 
