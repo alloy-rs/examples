@@ -77,6 +77,7 @@ This repository contains the following examples:
   - [x] [Private key signer](./examples/wallets/examples/private_key_signer.rs)
   - [x] [Mnemonic signer](./examples/wallets/examples/mnemonic_signer.rs)
   - [x] [Sign message](./examples/wallets/examples/sign_message.rs)
+  - [x] [Verify message](./examples/wallets/examples/verify_message.rs)
   - [x] [Sign permit hash](./examples/wallets/examples/sign_permit_hash.rs)
   - [x] [Trezor signer](./examples/wallets/examples/trezor_signer.rs)
   - [x] [Yubi signer](./examples/wallets/examples/yubi_signer.rs)
