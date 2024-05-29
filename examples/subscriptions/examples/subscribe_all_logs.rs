@@ -24,7 +24,7 @@ sol!(
 #[tokio::main]
 async fn main() -> Result<()> {
     // Set up the WS transport which is consumed by the RPC client.
-    let rpc_url = "wss://eth-mainnet.g.alchemy.com/v2/your-api-key";
+    let rpc_url = "wss://eth-mainnet.g.alchemy.com/v2/hau3tgjPvTd3hSMd5K8nB6vID3eQXwBP";
 
     // Create the provider.
     let ws = WsConnect::new(rpc_url);
@@ -44,14 +44,14 @@ async fn main() -> Result<()> {
 
     while let Some(log) = stream.next().await {
         // Match on topic 0, the hash of the signature of the event.
-        match log.topics()[0] {
+        match log.topics().get(0) {
             // Match the `Approval(address,address,uint256)` event.
-            IWETH9::Approval::SIGNATURE_HASH => {
+            Some(&IWETH9::Approval::SIGNATURE_HASH) => {
                 let IWETH9::Approval { src, guy, wad } = log.log_decode()?.inner.data;
                 println!("Approval from {src} to {guy} of value {wad}");
             }
             // Match the `Transfer(address,address,uint256)` event.
-            IWETH9::Transfer::SIGNATURE_HASH => {
+            Some(&IWETH9::Transfer::SIGNATURE_HASH) => {
                 let IWETH9::Transfer { src, dst, wad } = log.log_decode()?.inner.data;
                 println!("Transfer from {src} to {dst} of value {wad}");
             }
