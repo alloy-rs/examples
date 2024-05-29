@@ -24,7 +24,7 @@ sol!(
 #[tokio::main]
 async fn main() -> Result<()> {
     // Set up the WS transport which is consumed by the RPC client.
-    let rpc_url = "wss://eth-mainnet.g.alchemy.com/v2/hau3tgjPvTd3hSMd5K8nB6vID3eQXwBP";
+    let rpc_url = "wss://eth-mainnet.g.alchemy.com/v2/your-api-key";
 
     // Create the provider.
     let ws = WsConnect::new(rpc_url);
