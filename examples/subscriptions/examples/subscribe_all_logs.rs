@@ -48,12 +48,12 @@ async fn main() -> Result<()> {
             // Match the `Approval(address,address,uint256)` event.
             IWETH9::Approval::SIGNATURE_HASH => {
                 let IWETH9::Approval { src, guy, wad } = log.log_decode()?.inner.data;
-                println!("Approval from {} to {} of value {}", src, guy, wad);
+                println!("Approval from {src} to {guy} of value {wad}");
             }
             // Match the `Transfer(address,address,uint256)` event.
             IWETH9::Transfer::SIGNATURE_HASH => {
                 let IWETH9::Transfer { src, dst, wad } = log.log_decode()?.inner.data;
-                println!("Transfer from {} to {} of value {}", src, dst, wad);
+                println!("Transfer from {src} to {dst} of value {wad}");
             }
             // WETH9's `Deposit(address,uint256)` and `Withdrawal(address,uint256)` events are not
             // handled here.
