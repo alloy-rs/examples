@@ -44,7 +44,7 @@ async fn main() -> Result<()> {
 
     while let Some(log) = stream.next().await {
         // Match on topic 0, the hash of the signature of the event.
-        match log.inner.topics()[0] {
+        match log.topics()[0] {
             // Match the `Approval(address,address,uint256)` event.
             IWETH9::Approval::SIGNATURE_HASH => {
                 let IWETH9::Approval { src, guy, wad } = log.log_decode()?.inner.data;

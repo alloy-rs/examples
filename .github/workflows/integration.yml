@@ -41,6 +41,9 @@ jobs:
             | xargs -n1 echo
           )"
 
+          # Pre-build the examples
+          cargo build --examples
+
           # Run the examples with the current version of Alloy
           for example in $examples; do
             cargo run --example $example --quiet 1>/dev/null
@@ -64,6 +67,9 @@ jobs:
 
           # Update to the latest commit
           cargo update
+
+          # Pre-build the examples
+          cargo build --examples
 
           # Run the examples with the latest version of Alloy
           for example in $examples; do
