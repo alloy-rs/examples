@@ -57,7 +57,8 @@ async fn main() -> Result<()> {
 
     let deploy_result = provider.send_transaction(tx).await?.get_receipt().await?;
 
-    let contract_address = deploy_result.contract_address().unwrap();
+    let contract_address =
+        deploy_result.contract_address().expect("Failed to get contract address");
     let contract = Counter::new(contract_address, &provider);
     println!("Deployed contract at address: {}", contract.address());
 

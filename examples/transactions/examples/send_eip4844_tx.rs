@@ -55,7 +55,10 @@ async fn main() -> Result<()> {
 
     assert_eq!(receipt.from, alice);
     assert_eq!(receipt.to, Some(bob));
-    assert_eq!(receipt.blob_gas_used.unwrap(), DATA_GAS_PER_BLOB as u128);
+    assert_eq!(
+        receipt.blob_gas_used.expect("Expected to be EIP-4844 transaction"),
+        DATA_GAS_PER_BLOB as u128
+    );
 
     Ok(())
 }

@@ -53,6 +53,8 @@ jobs:
             -e 'ws' \
             -e 'ws_auth' \
             -e 'subscribe_logs' \
+            -e 'trace_call' \
+            -e 'trace_transaction' \
             | xargs -n1 echo
           )"
 
