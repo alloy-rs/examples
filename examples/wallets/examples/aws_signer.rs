@@ -15,7 +15,7 @@ async fn main() -> Result<()> {
     let signer = AwsSigner::new(client, key_id, Some(1)).await?;
 
     let message = "Hello, world!";
-    let signature = signer.sign_message(message.as_bytes()).await.unwrap();
+    let signature = signer.sign_message(message.as_bytes()).await?;
 
     assert_eq!(signature.recover_address_from_msg(message)?, signer.address());
 
