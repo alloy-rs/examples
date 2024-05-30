@@ -16,9 +16,9 @@ exclude = ["examples/"]
 [workspace.lints]
 rust.missing_debug_implementations = "warn"
 rust.missing_docs = "warn"
+rust.rust_2018_idioms = { level = "deny", priority = -1 }
 rust.unreachable_pub = "warn"
 rust.unused_must_use = "deny"
-rust.rust_2018_idioms = { level = "deny", priority = -1 }
 rustdoc.all = "warn"
 
 [workspace.lints.clippy]
@@ -37,6 +37,7 @@ iter_on_empty_collections = "warn"
 iter_with_drain = "warn"
 large_stack_frames = "warn"
 manual_clamp = "warn"
+missing_const_for_fn = "warn"
 mutex_integer = "warn"
 needless_pass_by_ref_mut = "warn"
 nonstandard_macro_braces = "warn"
@@ -54,8 +55,8 @@ tuple_array_conversions = "warn"
 uninhabited_references = "warn"
 unused_peekable = "warn"
 unused_rounding = "warn"
+use_self = "warn"
 useless_let_if_seq = "warn"
-uninlined_format_args = "warn"
 
 # These are nursery lints which have findings. Allow them for now. Some are not
 # quite mature enough for use in our codebase and some we don't really want.
@@ -68,7 +69,6 @@ empty_line_after_doc_comments = "allow"
 fallible_impl_from = "allow"
 future_not_send = "allow"
 iter_on_single_items = "allow"
-missing_const_for_fn = "allow"
 needless_collect = "allow"
 non_send_fields_in_send_ty = "allow"
 option_if_let_else = "allow"
@@ -78,26 +78,24 @@ significant_drop_tightening = "allow"
 string_lit_as_bytes = "allow"
 type_repetition_in_bounds = "allow"
 unnecessary_struct_initialization = "allow"
-use_self = "allow"
 
 [workspace.dependencies]
-alloy = { git = "https://github.com/alloy-rs/alloy", rev = "bd39117", features = [
+alloy = { git = "https://github.com/alloy-rs/alloy", rev = "3edca45", features = [
     "consensus",
-    "kzg",
-    "eips",
     "contract",
+    "eips",
+    "kzg",
     "network",
     "node-bindings",
-    "providers",
     "provider-http",
     "provider-ipc",
     "provider-ws",
-    "rpc-client",
+    "providers",
     "rpc-client-ipc",
     "rpc-client-ws",
+    "rpc-client",
     "rpc-types-eth",
     "rpc-types-trace",
-    "signers",
     "signer-aws",
     "signer-keystore",
     "signer-ledger",
@@ -105,6 +103,7 @@ alloy = { git = "https://github.com/alloy-rs/alloy", rev = "bd39117", features =
     "signer-trezor",
     "signer-wallet",
     "signer-yubihsm",
+    "signers",
 ] }
 
 # async

@@ -21,10 +21,10 @@ async fn main() -> Result<()> {
     let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new().on_http(rpc_url);
 
-    // Hash of the tx we want to trace
+    // Hash of the tx we want to trace.
     let hash = b256!("97a02abf405d36939e5b232a5d4ef5206980c5a6661845436058f30600c52df7");
 
-    // Default tracing
+    // Trace with the default tracer.
     let default_options = GethDebugTracingOptions::default();
     let result = provider.debug_trace_transaction(hash, default_options).await?;
 
@@ -49,7 +49,6 @@ async fn main() -> Result<()> {
         tracer: Some(GethDebugTracerType::JsTracer("{data: [], fault: function(log) {}, step: function(log) { if(log.op.toString() == \"DELEGATECALL\") this.data.push(log.stack.peek(0)); }, result: function() { return this.data; }}".into())),
         ..Default::default()
     };
-
     let result = provider.debug_trace_transaction(hash, js_options).await?;
 
     println!("JS_TRACER: {result:?}");
