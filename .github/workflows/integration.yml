@@ -36,6 +36,7 @@ jobs:
             -e 'ws_auth' \
             -e 'subscribe_logs' \
             -e 'subscribe_all_logs' \
+            -e 'subscribe_pending_transactions' \
             -e 'trace_call' \
             -e 'trace_transaction' \
             | xargs -n1 echo
