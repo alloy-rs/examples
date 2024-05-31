@@ -48,6 +48,7 @@ This repository contains the following examples:
   - [x] [Watch and poll for contract event logs](./examples/subscriptions/examples/poll_logs.rs)
   - [x] [Subscribe and listen for specific contract event logs](./examples/subscriptions/examples/subscribe_logs.rs)
   - [x] [Subscribe and listen for all contract event logs](./examples/subscriptions/examples/subscribe_all_logs.rs)
+  - [x] [Subscribe and listen to pending transactions in the public mempool](./examples/subscriptions/examples/subscribe_pending_transactions.rs)
   - [x] [Event multiplexer](./examples/subscriptions/examples/event_multiplexer.rs)
 - [x] Providers
   - [x] [Builder](./examples/providers/examples/builder.rs)
