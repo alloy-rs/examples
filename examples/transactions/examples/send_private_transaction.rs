@@ -53,13 +53,16 @@ async fn main() -> Result<()> {
         .with_max_priority_fee_per_gas(1_000_000_000)
         .with_max_fee_per_gas(20_000_000_000);
 
-    // Build the transaction using the EthereumSigner with the provided signer.
+    // Build the transaction using the `EthereumSigner` with the provided signer.
+    // Flashbots Protect requires the transaction to be signed locally and send using
+    // `eth_sendRawTransaction`.
     let tx_envelope = tx.build(&EthereumSigner::from(signer)).await?;
 
     // Encode the transaction using EIP-2718 encoding.
     let tx_encoded = tx_envelope.encoded_2718();
 
     // Send the raw transaction and retrieve the transaction receipt.
+    // Note that the transaction, as defined, is invalid and will not be included in the blockchain.
     let pending = provider.send_raw_transaction(&tx_encoded).await?.register().await?;
 
     println!("Send transaction: {}", pending.tx_hash());
