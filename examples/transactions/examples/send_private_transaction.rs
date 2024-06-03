@@ -61,8 +61,9 @@ async fn main() -> Result<()> {
     // Encode the transaction using EIP-2718 encoding.
     let tx_encoded = tx_envelope.encoded_2718();
 
-    // Send the raw transaction and retrieve the transaction receipt.
-    // Note that the transaction, as defined, is invalid and will not be included in the blockchain.
+    // Send the raw transaction. The transaction is sent to the Flashbots relay and, if valid, will
+    // be included in a block by a Flashbots builder. Note that the transaction request, as defined,
+    // is invalid and will not be included in the blockchain.
     let pending = provider.send_raw_transaction(&tx_encoded).await?.register().await?;
 
     println!("Send transaction: {}", pending.tx_hash());
