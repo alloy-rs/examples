@@ -17,17 +17,17 @@ async fn main() -> Result<()> {
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
     // Set up signer from the first default Anvil account (Alice).
-    let wallet: LocalWallet = anvil.keys()[0].clone().into();
+    let signer: LocalWallet = anvil.keys()[0].clone().into();
 
     // Create two users, Alice and Bob.
-    let alice = wallet.address();
+    let alice = signer.address();
     let bob = anvil.addresses()[1];
 
     // Set up the HTTP provider with the `reqwest` crate.
     let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
         .with_recommended_fillers()
-        .signer(EthereumSigner::from(wallet))
+        .signer(EthereumSigner::from(signer))
         .on_http(rpc_url);
 
     // Create a transaction.

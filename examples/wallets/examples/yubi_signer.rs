@@ -14,6 +14,9 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    // Set up the HTTP transport which is consumed by the RPC client.
+    let rpc_url = "https://eth.merkle.io".parse()?;
+
     // We use USB for the example, but you can connect over HTTP as well. Refer
     // to the [YubiHSM](https://docs.rs/yubihsm/0.34.0/yubihsm/) docs for more information.
     let connector = Connector::usb(&UsbConfig::default());
@@ -25,7 +28,6 @@ async fn main() -> Result<()> {
     let from = signer.address();
 
     // Create a provider with the signer.
-    let rpc_url = "http://localhost:8545".parse()?;
     let provider = ProviderBuilder::new()
         .with_recommended_fillers()
         .signer(EthereumSigner::from(signer))
