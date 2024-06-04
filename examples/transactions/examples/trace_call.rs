@@ -4,10 +4,7 @@ use alloy::{
     network::TransactionBuilder,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
-    rpc::types::{
-        eth::{BlockId, TransactionRequest},
-        trace::parity::TraceType,
-    },
+    rpc::types::{eth::TransactionRequest, trace::parity::TraceType},
 };
 use eyre::Result;
 
@@ -27,7 +24,7 @@ async fn main() -> Result<()> {
 
     // Trace the transaction on top of the latest block.
     let trace_type = [TraceType::Trace];
-    let result = provider.trace_call(&tx, &trace_type, BlockId::latest()).await?;
+    let result = provider.trace_call(&tx, &trace_type).await?;
 
     println!("{:?}", result.trace);
 

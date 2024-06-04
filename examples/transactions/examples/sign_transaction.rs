@@ -39,7 +39,7 @@ async fn main() -> Result<()> {
         .with_max_priority_fee_per_gas(1_000_000_000)
         .with_max_fee_per_gas(20_000_000_000);
 
-    // Build the transaction using the EthereumSigner with the provided signer.
+    // Build the transaction using the `EthereumSigner` with the provided signer.
     let tx_envelope = tx.build(&signer).await?;
 
     // Encode the transaction using EIP-2718 encoding.
