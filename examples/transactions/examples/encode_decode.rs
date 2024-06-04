@@ -1,3 +1,4 @@
+//! Encode and decode transactions
 use alloy::{
     consensus::{SignableTransaction, TxEip1559},
     eips::eip2930::AccessList,
@@ -32,6 +33,9 @@ async fn main() -> Result<()> {
 
     // Match hash
     assert_eq!(*signed_tx.hash(), hash);
-    // TODO: Recover Signer - Enable feature k256 on consensus
+
+    let recovered_signer = signed_tx.recover_signer().unwrap();
+    assert_eq!(recovered_signer, signer);
+
     Ok(())
 }
