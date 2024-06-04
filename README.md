@@ -69,9 +69,10 @@ This repository contains the following examples:
   - [x] [Transfer ERC20 token](./examples/transactions/examples/transfer_erc20.rs)
   - [x] [Transfer ETH](./examples/transactions/examples/transfer_eth.rs)
   - [x] [Sign and send a raw transaction](./examples/transactions/examples/sign_transaction.rs)
-  - [x] [Send EIP-1559 transaction](./examples/transactions/examples/send_eip1559_tx.rs) 
-  - [x] [Send legacy transaction](./examples/transactions/examples/send_legacy_tx.rs) 
-  - [x] [Send EIP-4844 transaction](./examples/transactions/examples/send_eip4844_tx.rs)
+  - [x] [Send EIP-1559 transaction](./examples/transactions/examples/send_eip1559_transaction.rs) 
+  - [x] [Send legacy transaction](./examples/transactions/examples/send_legacy_transaction.rs) 
+  - [x] [Send EIP-4844 transaction](./examples/transactions/examples/send_eip4844_transaction.rs)
+  - [x] [Send private transaction using Flashbots Protect](./examples/transactions/examples/send_private_transaction.rs)
   - [x] [Send transaction with access list](./examples/transactions/examples/with_access_list.rs)
 - [x] Wallets
   - [x] [AWS signer](./examples/wallets/examples/aws_signer.rs)
