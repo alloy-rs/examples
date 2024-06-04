@@ -7,9 +7,12 @@ use alloy::{
 use eyre::Result;
 #[tokio::main]
 async fn main() -> Result<()> {
-    // EIP1559 transaction
-    let signer = address!("DD6B8b3dC6B7AD97db52F08a275FF4483e024CEa");
+    // EIP1559 transaction: <https://etherscan.io/tx/0x0ec0b6a2df4d87424e5f6ad2a654e27aaeb7dac20ae9e8385cc09087ad532ee0>
     let hash = b256!("0ec0b6a2df4d87424e5f6ad2a654e27aaeb7dac20ae9e8385cc09087ad532ee0");
+
+    // Signer of the transaction.
+    let signer = address!("DD6B8b3dC6B7AD97db52F08a275FF4483e024CEa");
+
     let tx =  TxEip1559 {
         chain_id: 1,
         nonce: 0x42,
