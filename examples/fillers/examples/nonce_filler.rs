@@ -40,12 +40,12 @@ async fn main() -> Result<()> {
         // includes the `NonceFiller`.
         .with_nonce_management()
         .signer(EthereumSigner::from(signer))
-        .on_http(rpc_url)?;
+        .on_http(rpc_url);
 
     // Create an EIP-1559 type transaction.
     let tx = TransactionRequest::default()
         .with_from(alice)
-        .with_to(vitalik.into())
+        .with_to(vitalik)
         .with_value(U256::from(100))
         // Notice that without the `GasFiller`, you need to set the gas related fields.
         .with_gas_limit(21_000)
@@ -57,7 +57,7 @@ async fn main() -> Result<()> {
     // Send the transaction, the nonce (0) is automatically managed by the provider.
     let builder = provider.send_transaction(tx.clone()).await?;
     let node_hash = *builder.tx_hash();
-    let pending_tx = provider.get_transaction_by_hash(node_hash).await?;
+    let pending_tx = provider.get_transaction_by_hash(node_hash).await?.unwrap();
     assert_eq!(pending_tx.nonce, 0);
 
     println!("Transaction sent with nonce: {}", pending_tx.nonce);
@@ -65,7 +65,7 @@ async fn main() -> Result<()> {
     // Send the transaction, the nonce (1) is automatically managed by the provider.
     let builder = provider.send_transaction(tx).await?;
     let node_hash = *builder.tx_hash();
-    let pending_tx = provider.get_transaction_by_hash(node_hash).await?;
+    let pending_tx = provider.get_transaction_by_hash(node_hash).await?.unwrap();
     assert_eq!(pending_tx.nonce, 1);
 
     println!("Transaction sent with nonce: {}", pending_tx.nonce);

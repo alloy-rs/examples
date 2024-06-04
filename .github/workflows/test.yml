@@ -48,11 +48,15 @@ jobs:
             -e 'trezor_signer' \
             -e 'ledger_signer' \
             -e 'yubi_signer' \
+            -e 'builtin' \
             -e 'ipc' \
             -e 'ws' \
             -e 'ws_auth' \
-            -e 'connect_builtin' \
             -e 'subscribe_logs' \
+            -e 'subscribe_all_logs' \
+            -e 'subscribe_pending_transactions' \
+            -e 'trace_call' \
+            -e 'trace_transaction' \
             | xargs -n1 echo
           )"
 

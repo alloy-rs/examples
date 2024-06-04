@@ -1,12 +1,11 @@
-//! Example of using the `ProviderBuilder` to create a provider with a signer and network.
+//! Example showing how to send an [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transaction.
 
 use alloy::{
-    network::{EthereumSigner, TransactionBuilder},
+    network::TransactionBuilder,
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
     rpc::types::eth::TransactionRequest,
-    signers::wallet::LocalWallet,
 };
 use eyre::Result;
 
@@ -14,25 +13,26 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let anvil = Anvil::new().block_time(1).try_spawn()?;
+    let anvil = Anvil::new().try_spawn()?;
 
-    // Set up signer from the first default Anvil account (Alice).
-    let signer: LocalWallet = anvil.keys()[0].clone().into();
+    // Create a provider.
+    let rpc_url = anvil.endpoint().parse()?;
+    let provider = ProviderBuilder::new().on_http(rpc_url);
 
     // Create two users, Alice and Bob.
-    let alice = signer.address();
+    let alice = anvil.addresses()[0];
     let bob = anvil.addresses()[1];
 
-    // Set up the HTTP provider with the `reqwest` crate.
-    let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new()
-        .with_recommended_fillers()
-        .signer(EthereumSigner::from(signer))
-        .on_http(rpc_url);
-
-    // Create a transaction.
-    let tx =
-        TransactionRequest::default().with_from(alice).with_to(bob).with_value(U256::from(100));
+    // Build a transaction to send 100 wei from Alice to Bob.
+    let tx = TransactionRequest::default()
+        .with_from(alice)
+        .with_to(bob)
+        .with_nonce(0)
+        .with_chain_id(anvil.chain_id())
+        .with_value(U256::from(100))
+        .with_gas_limit(21_000)
+        .with_max_priority_fee_per_gas(1_000_000_000)
+        .with_max_fee_per_gas(20_000_000_000);
 
     // Send the transaction and wait for the receipt.
     let pending_tx = provider.send_transaction(tx).await?;

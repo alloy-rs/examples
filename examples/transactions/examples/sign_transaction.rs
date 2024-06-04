@@ -18,7 +18,7 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new().on_http(rpc_url)?;
+    let provider = ProviderBuilder::new().on_http(rpc_url);
 
     // Create a signer from the first default Anvil account (Alice).
     let wallet: LocalWallet = anvil.keys()[0].clone().into();
@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
     // Build a transaction to send 100 wei from Alice to Bob.
     let tx = TransactionRequest::default()
         .with_from(alice)
-        .with_to(bob.into())
+        .with_to(bob)
         .with_nonce(0)
         .with_chain_id(anvil.chain_id())
         .with_value(U256::from(100))
@@ -39,7 +39,7 @@ async fn main() -> Result<()> {
         .with_max_priority_fee_per_gas(1_000_000_000)
         .with_max_fee_per_gas(20_000_000_000);
 
-    // Build the transaction using the EthereumSigner with the provided signer.
+    // Build the transaction using the `EthereumSigner` with the provided signer.
     let tx_envelope = tx.build(&signer).await?;
 
     // Encode the transaction using EIP-2718 encoding.
@@ -48,7 +48,7 @@ async fn main() -> Result<()> {
     // Send the raw transaction and retrieve the transaction receipt.
     let receipt = provider.send_raw_transaction(&tx_encoded).await?.get_receipt().await?;
 
-    println!("Send transaction: {:?}", receipt.transaction_hash);
+    println!("Send transaction: {}", receipt.transaction_hash);
 
     assert_eq!(receipt.from, alice);
     assert_eq!(receipt.to, Some(bob));

@@ -32,6 +32,7 @@ This repository contains the following examples:
   - [x] [Math utilities](./examples/big-numbers/examples/math_utilities.rs)
 - [x] Contracts
   - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
+  - [x] [Deploy from bytecode](./examples/contracts/examples/deploy_from_bytecode.rs)
   - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
   - [x] [Interact with ABI](./examples/contracts/examples/interact_with_abi.rs)
 - [x] Fillers (Middleware)
@@ -39,20 +40,27 @@ This repository contains the following examples:
   - [x] [Nonce management filler](./examples/fillers/examples/nonce_filler.rs)
   - [x] [Recommended fillers](./examples/fillers/examples/recommended_fillers.rs)
   - [x] [Signer management filler](./examples/fillers/examples/signer_filler.rs)
+- [x] Primitives
+  - [x] [Bytes and address types](./examples/primitives/examples/bytes_and_address_types.rs) 
+  - [x] [Hashing functions](./examples/primitives/examples/hashing_functions.rs) 
 - [x] Subscriptions
   - [x] [Subscribe and watch blocks](./examples/subscriptions/examples/subscribe_blocks.rs)
   - [x] [Watch and poll for contract event logs](./examples/subscriptions/examples/poll_logs.rs)
-  - [x] [Subscribe and listen for contract event logs](./examples/subscriptions/examples/subscribe_logs.rs)
+  - [x] [Subscribe and listen for specific contract event logs](./examples/subscriptions/examples/subscribe_logs.rs)
+  - [x] [Subscribe and listen for all contract event logs](./examples/subscriptions/examples/subscribe_all_logs.rs)
+  - [x] [Subscribe and listen to pending transactions in the public mempool](./examples/subscriptions/examples/subscribe_pending_transactions.rs)
   - [x] [Event multiplexer](./examples/subscriptions/examples/event_multiplexer.rs)
 - [x] Providers
   - [x] [Builder](./examples/providers/examples/builder.rs)
+  - [x] [Builtin](./examples/providers/examples/builtin.rs)
   - [x] [HTTP](./examples/providers/examples/http.rs)
   - [x] [IPC](./examples/providers/examples/ipc.rs)
   - [x] [WS](./examples/providers/examples/ws.rs)
+  - [x] [WS with authentication](./examples/providers/examples/ws_with_auth.rs)
 - [x] Queries
-  - [x] [Contract storage](./examples/queries/examples/query_contract_storage.rs)
-  - [x] [Contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
-  - [x] [Logs](./examples/queries/examples/query_logs.rs)
+  - [x] [Query contract storage](./examples/queries/examples/query_contract_storage.rs)
+  - [x] [Query contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
+  - [x] [Query logs](./examples/queries/examples/query_logs.rs)
 - [x] Transactions
   - [x] [Decode input](./examples/transactions/examples/decode_input.rs)
   - [x] [Get gas price in USD](./examples/transactions/examples/gas_price_usd.rs)
@@ -60,14 +68,19 @@ This repository contains the following examples:
   - [x] [Trace transaction](./examples/transactions/examples/trace_transaction.rs)
   - [x] [Transfer ERC20 token](./examples/transactions/examples/transfer_erc20.rs)
   - [x] [Transfer ETH](./examples/transactions/examples/transfer_eth.rs)
-  - [x] [Sign and send a raw transaction](./examples/transactions/examples/sign_transaction.rs) 
-- [ ] Wallets
-  - [ ] AWS signer
-  - [ ] GCP signer
+  - [x] [Sign and send a raw transaction](./examples/transactions/examples/sign_transaction.rs)
+  - [x] [Send EIP-1559 transaction](./examples/transactions/examples/send_eip1559_transaction.rs) 
+  - [x] [Send legacy transaction](./examples/transactions/examples/send_legacy_transaction.rs) 
+  - [x] [Send EIP-4844 transaction](./examples/transactions/examples/send_eip4844_transaction.rs)
+  - [x] [Send private transaction using Flashbots Protect](./examples/transactions/examples/send_private_transaction.rs)
+  - [x] [Send transaction with access list](./examples/transactions/examples/with_access_list.rs)
+- [x] Wallets
+  - [x] [AWS signer](./examples/wallets/examples/aws_signer.rs)
   - [x] [Ledger signer](./examples/wallets/examples/ledger_signer.rs)
   - [x] [Private key signer](./examples/wallets/examples/private_key_signer.rs)
   - [x] [Mnemonic signer](./examples/wallets/examples/mnemonic_signer.rs)
   - [x] [Sign message](./examples/wallets/examples/sign_message.rs)
+  - [x] [Verify message](./examples/wallets/examples/verify_message.rs)
   - [x] [Sign permit hash](./examples/wallets/examples/sign_permit_hash.rs)
   - [x] [Trezor signer](./examples/wallets/examples/trezor_signer.rs)
   - [x] [Yubi signer](./examples/wallets/examples/yubi_signer.rs)

@@ -28,14 +28,14 @@ async fn main() -> Result<()> {
     let provider = ProviderBuilder::new()
         // Add the `SignerFiller` to the provider
         .signer(EthereumSigner::from(signer))
-        .on_http(rpc_url)?;
+        .on_http(rpc_url);
 
     // Build a legacy type transaction to send 100 wei to Vitalik.
     let tx = TransactionRequest::default()
         .with_from(alice)
         // Notice that without the `NonceFiller`, you need to manually set the nonce field.
         .with_nonce(0)
-        .with_to(vitalik.into())
+        .with_to(vitalik)
         .with_value(U256::from(100))
         // Notice that without the `GasFiller`, you need to set the gas related fields.
         .with_gas_price(20_000_000_000)
@@ -59,7 +59,8 @@ async fn main() -> Result<()> {
 
     println!("Transaction hash matches node hash: {}", tx_hash == node_hash);
 
-    let receipt = provider.get_transaction_receipt(tx_hash).await?.expect("Receipt not found");
+    let receipt =
+        provider.get_transaction_receipt(tx_hash).await?.expect("Transaction receipt not found");
     let receipt_hash = receipt.transaction_hash;
     assert_eq!(receipt_hash, node_hash);
 

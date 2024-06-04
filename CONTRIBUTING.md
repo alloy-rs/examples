@@ -149,11 +149,15 @@ cargo run --example 2>&1 \
    -e 'trezor_signer' \
    -e 'ledger_signer' \
    -e 'yubi_signer' \
+   -e 'builtin' \
    -e 'ipc' \
    -e 'ws' \
    -e 'ws_auth' \
-   -e 'connect_builtin' \
    -e 'subscribe_logs' \
+   -e 'subscribe_all_logs' \
+   -e 'subscribe_pending_transactions' \
+   -e 'trace_call' \
+   -e 'trace_transaction' \
    | xargs -I {} sh -c 'if cargo run --example {} --quiet 1>/dev/null; then \
         echo "Successfully ran: {}"; \
       else \
