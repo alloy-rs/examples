@@ -3,7 +3,7 @@
 use alloy::{
     network::TransactionBuilder,
     primitives::{address, U256},
-    providers::{Provider, ProviderBuilder},
+    providers::{ext::TraceApi, ProviderBuilder},
     rpc::types::{eth::TransactionRequest, trace::parity::TraceType},
 };
 use eyre::Result;
