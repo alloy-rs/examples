@@ -1,8 +1,10 @@
-//! Example showing how to use the sol macro to generate rust bindings for Solidity structs and
-//! enums
-use alloy::{primitives::U256, sol};
+//! Example showing how to use the `sol!` macro to generate Rust bindings for Solidity structs and
+//! enums.
 
-// Generates rust bindings for sol structs, enums, and type aliases.
+use alloy::{primitives::U256, sol};
+use eyre::Result;
+
+// Generates Rust bindings for Solidity structs, enums and type aliases.
 sol! {
     #[allow(missing_docs)]
     #[derive(Debug)]
@@ -13,20 +15,20 @@ sol! {
         Bar greater;
     }
 
+    #[allow(missing_docs)]
     #[derive(Debug)]
     /// Bar
     enum Bar {
-        #[allow(missing_docs)]
         A,
-        #[allow(missing_docs)]
         B,
     }
 }
 
-fn main() {
+fn main() -> Result<()> {
     // Create an instance of the struct.
-    #[allow(clippy::disallowed_names)]
     let foo = Foo { a: U256::from(1), b: 2_u64, greater: Bar::A };
 
     println!("{:?}", foo);
+
+    Ok(())
 }

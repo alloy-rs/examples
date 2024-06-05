@@ -65,6 +65,7 @@ as_ptr_cast_mut = "allow"
 cognitive_complexity = "allow"
 collection_is_never_read = "allow"
 debug_assert_with_mut_call = "allow"
+disallowed_names = "allow"
 empty_line_after_doc_comments = "allow"
 fallible_impl_from = "allow"
 future_not_send = "allow"
@@ -94,9 +95,9 @@ alloy = { git = "https://github.com/alloy-rs/alloy", rev = "dc56a76", features =
     "rpc-client-ipc",
     "rpc-client-ws",
     "rpc-client",
-    "rpc-types",
     "rpc-types-eth",
     "rpc-types-trace",
+    "rpc-types",
     "signer-aws",
     "signer-keystore",
     "signer-ledger",
