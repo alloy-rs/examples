@@ -1,5 +1,5 @@
 [package]
-name = "examples-fillers"
+name = "examples-layers"
 publish.workspace = true
 version.workspace = true
 edition.workspace = true
@@ -17,3 +17,4 @@ alloy.workspace = true
 
 eyre.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
+tower = { version = "0.4", features = ["retry"] }
