@@ -1,4 +1,4 @@
-//! Example of generating code from ABI file to interact with the contract.
+//! Example of generating code from ABI file using the `sol!` macro to interact with the contract.
 
 use alloy::{node_bindings::Anvil, providers::ProviderBuilder, sol};
 use eyre::Result;

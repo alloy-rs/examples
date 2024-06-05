@@ -1,4 +1,5 @@
-//! Example of deploying a contract at runtime from Solidity code to Anvil and interacting with it.
+//! Example of deploying a contract at runtime from Solidity bytecode to Anvil and interacting with
+//! it.
 
 use alloy::{
     hex::FromHex,

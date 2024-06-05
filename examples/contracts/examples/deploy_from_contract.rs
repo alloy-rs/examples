@@ -1,4 +1,5 @@
-//! Example of deploying a contract from Solidity code to Anvil and interacting with it.
+//! Example of deploying a contract from Solidity code using the `sol!` macro to Anvil and
+//! interacting with it.
 
 use alloy::{
     network::EthereumSigner, node_bindings::Anvil, primitives::U256, providers::ProviderBuilder,
