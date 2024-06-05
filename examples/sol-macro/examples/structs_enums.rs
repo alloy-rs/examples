@@ -25,6 +25,7 @@ sol! {
 
 fn main() {
     // Create an instance of the struct.
+    #[allow(clippy::disallowed_names)]
     let foo = Foo { a: U256::from(1), b: 2_u64, greater: Bar::A };
 
     println!("{:?}", foo);
