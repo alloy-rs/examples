@@ -61,7 +61,7 @@ This repository contains the following examples:
   - [x] [Query contract storage](./examples/queries/examples/query_contract_storage.rs)
   - [x] [Query contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
   - [x] [Query logs](./examples/queries/examples/query_logs.rs)
-- [x] `sol!` procedural macro
+- [x] `sol!` macro
   - [x] [Contracts](./examples/contracts/examples/deploy_from_contract.rs)
   - [x] [Events and errors](./examples/sol-macro/examples/events_errors.rs)
   - [x] [Structs and enums](./examples/sol-macro/examples/structs_enums.rs)
