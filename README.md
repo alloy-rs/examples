@@ -41,8 +41,8 @@ This repository contains the following examples:
   - [x] [Recommended fillers](./examples/fillers/examples/recommended_fillers.rs)
   - [x] [Signer management filler](./examples/fillers/examples/signer_filler.rs)
 - [x] Primitives
-  - [x] [Bytes and address types](./examples/primitives/examples/bytes_and_address_types.rs) 
-  - [x] [Hashing functions](./examples/primitives/examples/hashing_functions.rs) 
+  - [x] [Bytes and address types](./examples/primitives/examples/bytes_and_address_types.rs)
+  - [x] [Hashing functions](./examples/primitives/examples/hashing_functions.rs)
 - [x] Subscriptions
   - [x] [Subscribe and watch blocks](./examples/subscriptions/examples/subscribe_blocks.rs)
   - [x] [Watch and poll for contract event logs](./examples/subscriptions/examples/poll_logs.rs)
@@ -61,6 +61,11 @@ This repository contains the following examples:
   - [x] [Query contract storage](./examples/queries/examples/query_contract_storage.rs)
   - [x] [Query contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
   - [x] [Query logs](./examples/queries/examples/query_logs.rs)
+- [x] Sol Macro
+  - [x] [Contracts](./examples/sol-macro/examples/contracts.rs)
+  - [x] [Events and errors](./examples/sol-macro/examples/events_errors.rs)
+  - [x] [Structs and enums](./examples/sol-macro/examples/structs_enums.rs)
+  - [x] [User defined types](./examples/sol-macro/examples/user_defined_types.rs)
 - [x] Transactions
   - [x] [Decode input](./examples/transactions/examples/decode_input.rs)
   - [x] [Get gas price in USD](./examples/transactions/examples/gas_price_usd.rs)
@@ -69,8 +74,8 @@ This repository contains the following examples:
   - [x] [Transfer ERC20 token](./examples/transactions/examples/transfer_erc20.rs)
   - [x] [Transfer ETH](./examples/transactions/examples/transfer_eth.rs)
   - [x] [Sign and send a raw transaction](./examples/transactions/examples/sign_transaction.rs)
-  - [x] [Send EIP-1559 transaction](./examples/transactions/examples/send_eip1559_transaction.rs) 
-  - [x] [Send legacy transaction](./examples/transactions/examples/send_legacy_transaction.rs) 
+  - [x] [Send EIP-1559 transaction](./examples/transactions/examples/send_eip1559_transaction.rs)
+  - [x] [Send legacy transaction](./examples/transactions/examples/send_legacy_transaction.rs)
   - [x] [Send EIP-4844 transaction](./examples/transactions/examples/send_eip4844_transaction.rs)
   - [x] [Send private transaction using Flashbots Protect](./examples/transactions/examples/send_private_transaction.rs)
   - [x] [Send transaction with access list](./examples/transactions/examples/with_access_list.rs)
