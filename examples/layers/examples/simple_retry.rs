@@ -14,18 +14,19 @@ use std::{
     sync::atomic::{AtomicU64, Ordering},
     task::{Context, Poll},
 };
+use tokio::time::Duration;
 use tower::{retry::Policy, Layer, Service};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let url = "https://mainnet.infura.io/v3/your-api-key".parse()?; // Infura reqs/s set to 1, for testing.
-    let client = ClientBuilder::default().layer(RetryLayer::new(RetryPolicy::new(3))).http(url);
+    let url = "https://mainnet.infura.io/v3/c031c7bf5e244ab3b53118f8ae987749".parse()?; // Infura reqs/s set to 1, for testing.
+    let client =
+        ClientBuilder::default().layer(RetryLayer::new(RetryPolicy::new(3, 2000))).http(url);
 
     let provider = ProviderBuilder::new().on_client(client);
 
     for _ in 0..10 {
-        let block_number = provider.get_block_number().into_future().await?;
-        println!("block_number: {:?}", block_number);
+        let _block_number = provider.get_block_number().into_future().await?;
     }
 
     Ok(())
@@ -35,18 +36,22 @@ async fn main() -> Result<()> {
 #[derive(Debug)]
 struct RetryPolicy {
     max_retries: AtomicU64,
+    backoff_interval: Duration,
 }
 
 impl RetryPolicy {
-    const fn new(max_retries: u64) -> Self {
-        Self { max_retries: AtomicU64::new(max_retries) }
+    const fn new(max_retries: u64, backoff_interval: u64) -> Self {
+        Self {
+            max_retries: AtomicU64::new(max_retries),
+            backoff_interval: Duration::from_millis(backoff_interval),
+        }
     }
 }
 
 impl Clone for RetryPolicy {
     fn clone(&self) -> Self {
         let max_retries = self.max_retries.load(Ordering::Relaxed);
-        Self { max_retries: AtomicU64::new(max_retries) }
+        Self { max_retries: AtomicU64::new(max_retries), backoff_interval: self.backoff_interval }
     }
 }
 
@@ -61,8 +66,6 @@ impl Policy<RequestPacket, ResponsePacket, TransportError> for RetryPolicy {
         // Retry on any error for testing.
         // TODO: Use rate-limit specific errors/codes and retry accordingly.
         if result.is_err() {
-            println!("error: {:#?}", result.unwrap_err());
-            // Retry: Return Some()
             let max_retries = self.max_retries.load(Ordering::Relaxed);
             if max_retries > 0 {
                 self.max_retries.store(max_retries - 1, Ordering::Relaxed);
@@ -71,9 +74,12 @@ impl Policy<RequestPacket, ResponsePacket, TransportError> for RetryPolicy {
                 }
                 Some(Box::pin(future::ready(self.clone())))
             } else {
-                println!("max_retries exhausted, giving up retrying request: {:#?}", req);
-                // TODO: Add backoff interval here.
-                None
+                println!(
+                    "max_retries exhausted, sleeping for: {:?}ms",
+                    self.backoff_interval.as_millis()
+                );
+                std::thread::sleep(self.backoff_interval);
+                Some(Box::pin(future::ready(self.clone())))
             }
         } else {
             println!("success, no retry");
@@ -128,8 +134,6 @@ where
     }
 
     fn call(&mut self, req: RequestPacket) -> Self::Future {
-        // TODO: Implement retry logic
-
         let inner = self.inner.clone();
         let policy = self.policy.clone();
 
