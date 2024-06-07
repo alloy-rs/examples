@@ -49,16 +49,17 @@ async fn main() -> Result<()> {
         node_hash == b256!("eb56033eab0279c6e9b685a5ec55ea0ff8d06056b62b7f36974898d4fbb57e64")
     );
 
+    // Send the transaction and wait for the broadcast.
     let pending_tx = builder.register().await?;
-    let pending_tx_hash = *pending_tx.tx_hash();
 
-    println!("Pending transaction hash matches node hash: {}", pending_tx_hash == node_hash);
+    println!("Pending transaction hash matches node hash: {}", *pending_tx.tx_hash() == node_hash);
 
     let tx_hash = pending_tx.await?;
     assert_eq!(tx_hash, node_hash);
 
     println!("Transaction hash matches node hash: {}", tx_hash == node_hash);
 
+    // Wait for the transaction to be included and get the receipt.
     let receipt =
         provider.get_transaction_receipt(tx_hash).await?.expect("Transaction receipt not found");
     let receipt_hash = receipt.transaction_hash;

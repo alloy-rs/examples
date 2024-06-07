@@ -81,7 +81,7 @@ type_repetition_in_bounds = "allow"
 unnecessary_struct_initialization = "allow"
 
 [workspace.dependencies]
-alloy = { git = "https://github.com/alloy-rs/alloy", rev = "cc68b93", features = [
+alloy = { git = "https://github.com/alloy-rs/alloy", rev = "f6ebef2", features = [
     "consensus",
     "contract",
     "eips",

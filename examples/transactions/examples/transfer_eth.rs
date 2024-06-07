@@ -27,12 +27,12 @@ async fn main() -> Result<()> {
     let tx =
         TransactionRequest::default().with_from(alice).with_to(bob).with_value(U256::from(100));
 
-    // Send the transaction and wait for the receipt.
+    // Send the transaction and wait for the broadcast.
     let pending_tx = provider.send_transaction(tx).await?;
 
     println!("Pending transaction... {}", pending_tx.tx_hash());
 
-    // Wait for the transaction to be included.
+    // Wait for the transaction to be included and get the receipt.
     let receipt = pending_tx.get_receipt().await?;
 
     println!(
