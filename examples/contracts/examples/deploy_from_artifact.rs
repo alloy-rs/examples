@@ -1,4 +1,5 @@
-//! Example of deploying a contract from an artifact to Anvil and interacting with it.
+//! Example of deploying a contract from an artifact using the `sol!` macro to Anvil and interacting
+//! with it.
 
 use alloy::{
     network::EthereumSigner, node_bindings::Anvil, primitives::U256, providers::ProviderBuilder,
