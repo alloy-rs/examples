@@ -59,7 +59,7 @@ async fn main() -> Result<()> {
 
     println!("Transaction hash matches node hash: {}", tx_hash == node_hash);
 
-    // Wait for the transaction to be included.
+    // Wait for the transaction to be included and get the receipt.
     let receipt =
         provider.get_transaction_receipt(tx_hash).await?.expect("Transaction receipt not found");
     let receipt_hash = receipt.transaction_hash;

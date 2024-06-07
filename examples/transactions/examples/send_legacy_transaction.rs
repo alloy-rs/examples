@@ -37,7 +37,7 @@ async fn main() -> Result<()> {
 
     println!("Pending transaction... {}", pending_tx.tx_hash());
 
-    // Wait for the transaction to be included.
+    // Wait for the transaction to be included and get the receipt.
     let receipt = pending_tx.get_receipt().await?;
 
     println!(
