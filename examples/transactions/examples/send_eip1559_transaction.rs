@@ -34,7 +34,7 @@ async fn main() -> Result<()> {
         .with_max_priority_fee_per_gas(1_000_000_000)
         .with_max_fee_per_gas(20_000_000_000);
 
-    // Send the transaction and wait for the receipt.
+    // Send the transaction and wait for the broadcast.
     let pending_tx = provider.send_transaction(tx).await?;
 
     println!("Pending transaction... {}", pending_tx.tx_hash());

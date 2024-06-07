@@ -58,17 +58,17 @@ async fn main() -> Result<()> {
     let increment_filter = contract.Increment_filter().watch().await?;
     let decrement_filter = contract.Decrement_filter().watch().await?;
 
+    // Convert to streams
+    let mut increment_stream = increment_filter.into_stream();
+    let mut decrement_stream = decrement_filter.into_stream();
+
     // Call the increment and decrement functions
     let increment_call = contract.increment();
     let decrement_call = contract.decrement();
 
-    // Wait for the calls to be mined
+    // Wait for the calls to be included.
     let _increment_res = increment_call.send().await?;
     let _decrement_res = decrement_call.send().await?;
-
-    // Convert to streams
-    let mut increment_stream = increment_filter.into_stream();
-    let mut decrement_stream = decrement_filter.into_stream();
 
     // Catch the events
     for _ in 0..2 {
