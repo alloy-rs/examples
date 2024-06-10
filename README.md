@@ -68,6 +68,7 @@ This repository contains the following examples:
   - [x] [User defined types](./examples/sol-macro/examples/user_defined_types.rs)
 - [x] Transactions
   - [x] [Decode input](./examples/transactions/examples/decode_input.rs)
+  - [x] [Encode and decode EIP-1559 transaction](./examples/transactions/examples/encode_decode_eip1559.rs)
   - [x] [Get gas price in USD](./examples/transactions/examples/gas_price_usd.rs)
   - [x] [Trace call](./examples/transactions/examples/trace_call.rs)
   - [x] [Trace transaction](./examples/transactions/examples/trace_transaction.rs)
