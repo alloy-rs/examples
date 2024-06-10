@@ -33,7 +33,7 @@ async fn main() -> Result<()> {
         .with_to(address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045"))
         .with_value(U256::from(100));
 
-    // Send the transaction and wait for inclusion.
+    // Send the transaction and wait for inclusion with 3 confirmations.
     let tx_hash =
         provider.send_transaction(tx).await?.with_required_confirmations(3).watch().await?;
 
