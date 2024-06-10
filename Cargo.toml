@@ -84,6 +84,7 @@ unnecessary_struct_initialization = "allow"
 alloy = { git = "https://github.com/alloy-rs/alloy", rev = "f6ebef2", features = [
     "consensus",
     "contract",
+    "k256",
     "eips",
     "kzg",
     "network",
