@@ -56,24 +56,24 @@ async fn main() -> Result<()> {
     let data: Vec<u8> = FromHex::from_hex(contract_bytecode)?;
     let tx = TransactionRequest::default().with_deploy_code(data);
 
-    let deploy_result = provider.send_transaction(tx).await?.get_receipt().await?;
+    // Deploy the contract.
+    let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
 
-    let contract_address =
-        deploy_result.contract_address().expect("Failed to get contract address");
+    let contract_address = receipt.contract_address().expect("Failed to get contract address");
     let contract = Counter::new(contract_address, &provider);
     println!("Deployed contract at address: {}", contract.address());
 
     // Set number
     let builder = contract.setNumber(U256::from(42));
-    let receipt = builder.send().await?.get_receipt().await?;
+    let tx_hash = builder.send().await?.watch().await?;
 
-    println!("Set number to 42: {}", receipt.transaction_hash);
+    println!("Set number to 42: {}", tx_hash);
 
     // Increment the number to 43.
     let builder = contract.increment();
-    let receipt = builder.send().await?.get_receipt().await?;
+    let tx_hash = builder.send().await?.watch().await?;
 
-    println!("Incremented number: {}", receipt.transaction_hash);
+    println!("Incremented number: {}", tx_hash);
 
     // Retrieve the number, which should be 43.
     let Counter::numberReturn { _0 } = contract.number().call().await?;

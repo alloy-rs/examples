@@ -40,10 +40,10 @@ async fn main() -> Result<()> {
         .with_to(address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045"))
         .with_value(U256::from(100));
 
-    // Send the transaction and wait for the receipt.
-    let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
+    // Send the transaction and wait for inclusion.
+    let tx_hash = provider.send_transaction(tx).await?.watch().await?;
 
-    println!("Send transaction: {}", receipt.transaction_hash);
+    println!("Send transaction: {}", tx_hash);
 
     Ok(())
 }
