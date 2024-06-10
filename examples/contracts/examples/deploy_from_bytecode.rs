@@ -56,10 +56,10 @@ async fn main() -> Result<()> {
     let data: Vec<u8> = FromHex::from_hex(contract_bytecode)?;
     let tx = TransactionRequest::default().with_deploy_code(data);
 
-    let deploy_result = provider.send_transaction(tx).await?.get_receipt().await?;
+    // Deploy the contract.
+    let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
 
-    let contract_address =
-        deploy_result.contract_address().expect("Failed to get contract address");
+    let contract_address = receipt.contract_address().expect("Failed to get contract address");
     let contract = Counter::new(contract_address, &provider);
     println!("Deployed contract at address: {}", contract.address());
 
