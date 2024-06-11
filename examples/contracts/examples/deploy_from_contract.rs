@@ -53,13 +53,13 @@ async fn main() -> Result<()> {
     let builder = contract.setNumber(U256::from(42));
     let tx_hash = builder.send().await?.watch().await?;
 
-    println!("Set number to 42: {}", tx_hash);
+    println!("Set number to 42: {tx_hash}");
 
     // Increment the number to 43.
     let builder = contract.increment();
     let tx_hash = builder.send().await?.watch().await?;
 
-    println!("Incremented number: {}", tx_hash);
+    println!("Incremented number: {tx_hash}");
 
     // Retrieve the number, which should be 43.
     let builder = contract.number();

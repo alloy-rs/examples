@@ -58,7 +58,7 @@ async fn main() -> Result<()> {
     // Send the transaction with the access list.
     let tx_hash = provider.send_transaction(tx_with_access_list).await?.watch().await?;
 
-    println!("Transaction hash: {}", tx_hash);
+    println!("Transaction hash: {tx_hash}");
 
     // Check the value of the contract.
     let value = contract.getValue().call().await?;

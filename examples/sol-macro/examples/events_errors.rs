@@ -74,17 +74,17 @@ async fn main() -> Result<()> {
     for _ in 0..2 {
         let log = tokio::select! {
             Some(Ok((incr, log))) = increment_stream.next() => {
-                println!("Increment: {:#?}", incr);
+                println!("Increment: {incr:#?}");
                 // Return raw log
                 log
             }
             Some(Ok((decr, log))) = decrement_stream.next() => {
-                println!("Decrement: {:#?}", decr);
+                println!("Decrement: {decr:#?}");
                 // Return raw log
                 log
             }
         };
-        println!("Log: {:#?}", log);
+        println!("Log: {log:#?}");
     }
 
     // Call the `revertA` function
@@ -92,7 +92,7 @@ async fn main() -> Result<()> {
     let err_result = err_call.send().await;
 
     if let Err(err) = err_result {
-        println!("Error A: {:#?}", err);
+        println!("Error A: {err:#?}");
     }
 
     // Call the `revertB` function
@@ -100,7 +100,7 @@ async fn main() -> Result<()> {
     let err_result = err_call.send().await;
 
     if let Err(err) = err_result {
-        println!("Error B: {:#?}", err);
+        println!("Error B: {err:#?}");
     }
 
     Ok(())
