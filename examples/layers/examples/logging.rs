@@ -62,11 +62,11 @@ where
     }
 
     fn call(&mut self, req: RequestPacket) -> Self::Future {
-        println!("Request: {:?}", req);
+        println!("Request: {req:?}");
         let fut = self.inner.call(req);
         Box::pin(async move {
             let res = fut.await;
-            println!("Response: {:?}", res);
+            println!("Response: {res:?}");
             res
         })
     }

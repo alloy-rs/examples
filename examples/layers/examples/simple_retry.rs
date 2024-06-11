@@ -74,15 +74,14 @@ impl Policy<RequestPacket, ResponsePacket, TransportError> for RetryPolicy {
                 if let RequestPacket::Single(req) = req {
                     println!("retrying request {:?}", req.meta().method);
                 }
-                Some(Box::pin(future::ready(self.clone())))
             } else {
                 println!(
                     "max_retries exhausted, sleeping for: {:?}ms",
                     self.backoff_interval.as_millis()
                 );
                 std::thread::sleep(self.backoff_interval);
-                Some(Box::pin(future::ready(self.clone())))
             }
+            Some(Box::pin(future::ready(self.clone())))
         } else {
             println!("success, no retry");
             None
@@ -151,7 +150,7 @@ where
 
             while let Some(_policy) = policy.retry(&req, res.as_ref()) {
                 retries += 1;
-                println!("Retry attempt: {}", retries);
+                println!("Retry attempt: {retries}");
                 res = inner.call(req.clone()).await;
             }
             res
