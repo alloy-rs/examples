@@ -39,7 +39,7 @@ async fn main() -> Result<()> {
     // Send the transaction and listen for the transaction to be included.
     let tx_hash = provider.send_transaction(tx).await?.watch().await?;
 
-    println!("Send transaction... {}", tx_hash);
+    println!("Sent transaction: {tx_hash}");
 
     Ok(())
 }
