@@ -32,7 +32,7 @@ async fn main() -> Result<()> {
         while let Some(tx_hash) = stream.next().await {
             // Get the transaction details.
             if let Ok(tx) = provider.get_transaction_by_hash(tx_hash).await {
-                println!("Transaction details: {:#?}", tx);
+                println!("Transaction details: {tx:#?}");
             }
         }
     });
