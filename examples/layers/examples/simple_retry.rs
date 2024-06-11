@@ -19,7 +19,7 @@ use tower::{retry::Policy, Layer, Service};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let url = "https://mainnet.infura.io/v3/c031c7bf5e244ab3b53118f8ae987749".parse()?; // Infura reqs/s set to 1, for testing.
+    let url = "https://mainnet.infura.io/v3/a1f588bc100b495e881b38e9ce5e8224".parse()?; // Infura reqs/s set to 1, for testing.
     let client =
         ClientBuilder::default().layer(RetryLayer::new(RetryPolicy::new(3, 2000))).http(url);
 
@@ -65,12 +65,12 @@ impl Policy<RequestPacket, ResponsePacket, TransportError> for RetryPolicy {
         req: &RequestPacket,
         result: Result<&ResponsePacket, &TransportError>,
     ) -> Option<Self::Future> {
-        // Retry on any error for testing.
-        // TODO: Use rate-limit specific errors/codes and retry accordingly.
+        // Note: This retries on any error, an ideal RetryLayer should retry on specific error
+        // responses such as 429 rate-limit errors.
         if result.is_err() {
             let max_retries = self.max_retries.load(Ordering::Relaxed);
             if max_retries > 0 {
-                self.max_retries.store(max_retries - 1, Ordering::Relaxed);
+                self.max_retries.fetch_sub(1, Ordering::Relaxed);
                 if let RequestPacket::Single(req) = req {
                     println!("retrying request {:?}", req.meta().method);
                 }
@@ -80,6 +80,7 @@ impl Policy<RequestPacket, ResponsePacket, TransportError> for RetryPolicy {
                     self.backoff_interval.as_millis()
                 );
                 std::thread::sleep(self.backoff_interval);
+                self.max_retries.swap(1, Ordering::Relaxed);
             }
             Some(Box::pin(future::ready(self.clone())))
         } else {
@@ -140,7 +141,7 @@ where
 
     fn call(&mut self, req: RequestPacket) -> Self::Future {
         let inner = self.inner.clone();
-        let policy = self.policy.clone();
+        let mut policy = self.policy.clone();
 
         let mut inner = std::mem::replace(&mut self.inner, inner);
         Box::pin(async move {
@@ -148,7 +149,8 @@ where
 
             let mut res = inner.call(req.clone()).await;
 
-            while let Some(_policy) = policy.retry(&req, res.as_ref()) {
+            while let Some(new_policy) = policy.retry(&req, res.as_ref()) {
+                policy = new_policy.await;
                 retries += 1;
                 println!("Retry attempt: {retries}");
                 res = inner.call(req.clone()).await;
