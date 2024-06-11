@@ -5,7 +5,7 @@ use alloy::{
     providers::{Provider, ProviderBuilder},
     rpc::{
         client::WsConnect,
-        types::eth::{BlockNumberOrTag, Filter},
+        types::{BlockNumberOrTag, Filter},
     },
 };
 use eyre::Result;

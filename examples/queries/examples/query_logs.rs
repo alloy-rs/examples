@@ -3,7 +3,7 @@
 use alloy::{
     primitives::{address, b256},
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::Filter,
+    rpc::types::Filter,
 };
 use eyre::Result;
 

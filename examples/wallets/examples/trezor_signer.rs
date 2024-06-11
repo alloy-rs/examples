@@ -4,7 +4,7 @@ use alloy::{
     network::{EthereumSigner, TransactionBuilder},
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::request::TransactionRequest,
+    rpc::types::TransactionRequest,
     signers::{
         trezor::{HDPath, TrezorSigner},
         Signer,
@@ -37,7 +37,7 @@ async fn main() -> Result<()> {
     let tx_hash =
         provider.send_transaction(tx).await?.with_required_confirmations(3).watch().await?;
 
-    println!("Send transaction: {}", tx_hash);
+    println!("Sent transaction: {tx_hash}");
 
     Ok(())
 }

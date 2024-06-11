@@ -4,7 +4,7 @@ use alloy::{
     network::{eip2718::Encodable2718, EthereumSigner, TransactionBuilder},
     primitives::U256,
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::TransactionRequest,
+    rpc::types::TransactionRequest,
     signers::wallet::LocalWallet,
 };
 use eyre::Result;
@@ -66,7 +66,7 @@ async fn main() -> Result<()> {
     // is invalid and will not be included in the blockchain.
     let pending = provider.send_raw_transaction(&tx_encoded).await?.register().await?;
 
-    println!("Send transaction: {}", pending.tx_hash());
+    println!("Sent transaction: {}", pending.tx_hash());
 
     Ok(())
 }

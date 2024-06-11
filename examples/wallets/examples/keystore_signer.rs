@@ -5,7 +5,7 @@ use alloy::{
     node_bindings::Anvil,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::request::TransactionRequest,
+    rpc::types::TransactionRequest,
     signers::wallet::Wallet,
 };
 use eyre::Result;
@@ -43,7 +43,7 @@ async fn main() -> Result<()> {
     // Send the transaction and wait for inclusion.
     let tx_hash = provider.send_transaction(tx).await?.watch().await?;
 
-    println!("Send transaction: {}", tx_hash);
+    println!("Sent transaction: {tx_hash}");
 
     Ok(())
 }

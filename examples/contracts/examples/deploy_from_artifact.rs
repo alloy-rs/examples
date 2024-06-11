@@ -50,9 +50,10 @@ async fn main() -> Result<()> {
     println!("Incremented number: {}", tx_hash);
 
     // Retrieve the number, which should be 43.
-    let Counter::numberReturn { _0 } = contract.number().call().await?;
+    let builder = contract.number();
+    let number = builder.call().await?._0;
 
-    println!("Retrieved number: {_0}");
+    println!("Retrieved number: {number}");
 
     Ok(())
 }
