@@ -56,7 +56,7 @@ async fn main() -> Result<()> {
     // not possible to derive the return value name `number` from the artifact. This means that the
     // return value must be accessed by index - as if it is an unnamed value.
     // If you prefer to use named return values, it is recommended to embed the Solidity code
-    // directly in the `sol!` macro as shown in deploy_from_contract.rs`.
+    // directly in the `sol!` macro as shown in `deploy_from_contract.rs`.
     let number = builder.call().await?._0;
 
     println!("Retrieved number: {number}");
