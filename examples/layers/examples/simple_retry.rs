@@ -32,7 +32,8 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-/// RetryPolicy
+/// RetryPolicy handles whether to retry a request dependent on the error and number of retries
+/// available.
 #[derive(Debug)]
 struct RetryPolicy {
     max_retries: AtomicU64,
@@ -55,6 +56,7 @@ impl Clone for RetryPolicy {
     }
 }
 
+/// A tower [Policy] implementation for [RetryPolicy]
 impl Policy<RequestPacket, ResponsePacket, TransportError> for RetryPolicy {
     type Future = Pin<Box<dyn Future<Output = Self> + Send + 'static>>;
 
@@ -111,7 +113,11 @@ impl<S> Layer<S> for RetryLayer {
     }
 }
 
-/// RetryService
+/// [RetryService] for managing the retry logic for requests.
+/// This service wraps an inner service and applies the retry policy
+/// defined by [RetryPolicy] to determine if a request should be retried
+/// upon failure. It handles the retry attempts and backoff intervals
+/// as specified by the policy.
 #[derive(Debug, Clone)]
 struct RetryService<S> {
     inner: S,
