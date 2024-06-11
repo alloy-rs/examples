@@ -44,7 +44,7 @@ async fn main() -> Result<()> {
 
     // Send the raw transaction and retrieve the transaction receipt.
     // [Provider::send_tx_envelope] is a convenience method that encodes the transaction using
-    // EIP-2718 encoding and broadcasting it to the network using [Provider::send_raw_transaction].
+    // EIP-2718 encoding and broadcasts it to the network using [Provider::send_raw_transaction].
     let receipt = provider.send_tx_envelope(tx_envelope).await?.get_receipt().await?;
 
     println!("Sent transaction: {}", receipt.transaction_hash);
