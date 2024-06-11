@@ -66,7 +66,7 @@ async fn main() -> Result<()> {
     // is invalid and will not be included in the blockchain.
     let pending = provider.send_raw_transaction(&tx_encoded).await?.register().await?;
 
-    println!("Send transaction: {}", pending.tx_hash());
+    println!("Sent transaction: {}", pending.tx_hash());
 
     Ok(())
 }

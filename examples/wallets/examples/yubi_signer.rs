@@ -43,7 +43,7 @@ async fn main() -> Result<()> {
     let tx_hash =
         provider.send_transaction(tx).await?.with_required_confirmations(3).watch().await?;
 
-    println!("Send transaction: {}", tx_hash);
+    println!("Sent transaction: {tx_hash}");
 
     Ok(())
 }
