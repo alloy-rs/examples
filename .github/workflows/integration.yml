@@ -39,6 +39,7 @@ jobs:
             -e 'subscribe_pending_transactions' \
             -e 'trace_call' \
             -e 'trace_transaction' \
+            -e 'simple_retry' \
             | xargs -n1 echo
           )"
 
