@@ -4,7 +4,7 @@ use alloy::{
     network::{EthereumSigner, TransactionBuilder},
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::request::TransactionRequest,
+    rpc::types::TransactionRequest,
     signers::wallet::{
         yubihsm::{Connector, Credentials, UsbConfig},
         YubiWallet,

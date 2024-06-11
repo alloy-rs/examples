@@ -5,7 +5,7 @@ use alloy::{
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::TransactionRequest,
+    rpc::types::TransactionRequest,
 };
 use eyre::Result;
 

@@ -5,7 +5,7 @@ use alloy::{
     node_bindings::Anvil,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::request::TransactionRequest,
+    rpc::types::TransactionRequest,
     signers::wallet::Wallet,
 };
 use eyre::Result;

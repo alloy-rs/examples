@@ -3,7 +3,7 @@
 use alloy::{
     node_bindings::Anvil,
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::TransactionRequest,
+    rpc::types::TransactionRequest,
     sol,
 };
 use eyre::Result;

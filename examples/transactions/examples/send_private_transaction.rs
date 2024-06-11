@@ -4,7 +4,7 @@ use alloy::{
     network::{eip2718::Encodable2718, EthereumSigner, TransactionBuilder},
     primitives::U256,
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::TransactionRequest,
+    rpc::types::TransactionRequest,
     signers::wallet::LocalWallet,
 };
 use eyre::Result;
