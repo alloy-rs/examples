@@ -1,7 +1,7 @@
 //! Example of signing, encoding and sending a raw transaction using a wallet.
 
 use alloy::{
-    network::{eip2718::Encodable2718, EthereumSigner, TransactionBuilder},
+    network::{EthereumSigner, TransactionBuilder},
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
@@ -39,14 +39,13 @@ async fn main() -> Result<()> {
         .with_max_priority_fee_per_gas(1_000_000_000)
         .with_max_fee_per_gas(20_000_000_000);
 
-    // Build the transaction using the `EthereumSigner` with the provided signer.
+    // Build and sign the transaction using the `EthereumSigner` with the provided signer.
     let tx_envelope = tx.build(&signer).await?;
 
-    // Encode the transaction using EIP-2718 encoding.
-    let tx_encoded = tx_envelope.encoded_2718();
-
     // Send the raw transaction and retrieve the transaction receipt.
-    let receipt = provider.send_raw_transaction(&tx_encoded).await?.get_receipt().await?;
+    // [Provider::send_tx_envelope] is a convenience method that encodes the transaction using
+    // EIP-2718 encoding and broadcasts it to the network using [Provider::send_raw_transaction].
+    let receipt = provider.send_tx_envelope(tx_envelope).await?.get_receipt().await?;
 
     println!("Sent transaction: {}", receipt.transaction_hash);
 
