@@ -40,6 +40,9 @@ This repository contains the following examples:
   - [x] [Nonce management filler](./examples/fillers/examples/nonce_filler.rs)
   - [x] [Recommended fillers](./examples/fillers/examples/recommended_fillers.rs)
   - [x] [Signer management filler](./examples/fillers/examples/signer_filler.rs)
+- [x] Layers
+  - [x] [Req/Res Logging Layer](./examples/layers/examples/logging.rs)
+  - [x] [Simple Retry Layer](./examples/layers/examples/simple_retry.rs)
 - [x] Primitives
   - [x] [Bytes and address types](./examples/primitives/examples/bytes_and_address_types.rs)
   - [x] [Hashing functions](./examples/primitives/examples/hashing_functions.rs)
