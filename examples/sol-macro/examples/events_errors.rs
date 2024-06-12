@@ -47,7 +47,7 @@ async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     let anvil = Anvil::new().try_spawn()?;
 
-    // Create a provider with gas estimation
+    // Create a provider with gas estimation.
     let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new().with_gas_estimation().on_http(rpc_url);
 
@@ -58,11 +58,11 @@ async fn main() -> Result<()> {
     let increment_filter = contract.Increment_filter().watch().await?;
     let decrement_filter = contract.Decrement_filter().watch().await?;
 
-    // Convert to streams
+    // Convert to streams.
     let mut increment_stream = increment_filter.into_stream();
     let mut decrement_stream = decrement_filter.into_stream();
 
-    // Call the increment and decrement functions
+    // Call the increment and decrement functions.
     let increment_call = contract.increment();
     let decrement_call = contract.decrement();
 
@@ -70,7 +70,7 @@ async fn main() -> Result<()> {
     let _increment_res = increment_call.send().await?;
     let _decrement_res = decrement_call.send().await?;
 
-    // Catch the events
+    // Catch the events.
     for _ in 0..2 {
         let log = tokio::select! {
             Some(Ok((incr, log))) = increment_stream.next() => {
@@ -87,7 +87,7 @@ async fn main() -> Result<()> {
         println!("Log: {log:#?}");
     }
 
-    // Call the `revertA` function
+    // Call the `revertA` function.
     let err_call = contract.revertA();
     let err_result = err_call.send().await;
 
@@ -95,7 +95,7 @@ async fn main() -> Result<()> {
         println!("Error A: {err:#?}");
     }
 
-    // Call the `revertB` function
+    // Call the `revertB` function.
     let err_call = contract.revertB();
     let err_result = err_call.send().await;
 
