@@ -29,10 +29,10 @@ async fn main() -> Result<()> {
     let sidecar = sidecar.build()?;
 
     // Build a transaction to send the sidecar from Alice to Bob.
+    // The `from` field is automatically filled to the first signer's address (Alice).
     let gas_price = provider.get_gas_price().await?;
     let eip1559_est = provider.estimate_eip1559_fees(None).await?;
     let tx = TransactionRequest::default()
-        .with_from(alice)
         .with_to(bob)
         .with_nonce(0)
         .with_max_fee_per_blob_gas(gas_price)

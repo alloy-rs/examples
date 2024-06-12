@@ -18,10 +18,10 @@ async fn main() -> Result<()> {
 
     // Set up signer from the first default Anvil account (Alice).
     let signer: LocalWallet = anvil.keys()[0].clone().into();
+
     // [RISK WARNING! Writing a private key in the code file is insecure behavior.]
     // The following code is for testing only. Set up signer from private key, be aware of danger.
     // let signer: LocalWallet = "<THE_PRIVATE_KEY>".parse().expect("Failed to parse private key");
-    let alice = signer.address();
 
     // Create a provider with the signer.
     let rpc_url = anvil.endpoint().parse()?;
@@ -30,9 +30,9 @@ async fn main() -> Result<()> {
         .signer(EthereumSigner::from(signer))
         .on_http(rpc_url);
 
-    // Build a transaction to send 100 wei to Vitalik.
+    // Build a transaction to send 100 wei from Alice to Vitalik.
+    // The `from` field is automatically filled to the first signer's address (Alice).
     let tx = TransactionRequest::default()
-        .with_from(alice)
         .with_to(address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045"))
         .with_value(U256::from(100));
 

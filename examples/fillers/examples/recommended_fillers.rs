@@ -19,10 +19,6 @@ async fn main() -> Result<()> {
     // Set up signer from the first default Anvil account (Alice).
     let signer: LocalWallet = anvil.keys()[0].clone().into();
 
-    // Create two users, Alice and Vitalik.
-    let alice = signer.address();
-    let vitalik = address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045");
-
     // Create a provider with the signer.
     let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
@@ -31,12 +27,12 @@ async fn main() -> Result<()> {
         .signer(EthereumSigner::from(signer))
         .on_http(rpc_url);
 
-    // Build a EIP-1559 type transaction.
+    // Build an EIP-1559 type transaction to send 100 wei to Vitalik.
     // Notice that the `nonce` field is set by the `NonceFiller`.
     // Notice that the gas related fields are set by the `GasFiller`.
     // Notice that the `chain_id` field is set by the `ChainIdFiller`.
-    let tx =
-        TransactionRequest::default().with_from(alice).with_to(vitalik).with_value(U256::from(100));
+    let vitalik = address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045");
+    let tx = TransactionRequest::default().with_to(vitalik).with_value(U256::from(100));
 
     // Send the transaction, the nonce (0) is automatically managed by the provider.
     let builder = provider.send_transaction(tx.clone()).await?;

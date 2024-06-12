@@ -38,13 +38,10 @@ async fn main() -> Result<()> {
     // Create a signer from a random wallet.
     let signer = LocalWallet::random();
 
-    // Create two users, Alice and Bob.
-    let alice = signer.address();
-    let bob = LocalWallet::random().address();
-
     // Build a transaction to send 100 wei from Alice to Bob.
+    // The `from` field is automatically filled to the first signer's address (Alice).
+    let bob = LocalWallet::random().address();
     let tx = TransactionRequest::default()
-        .with_from(alice)
         .with_to(bob)
         .with_nonce(0)
         .with_chain_id(1)
