@@ -12,7 +12,7 @@ use eyre::Result;
 // See: https://etherscan.io/address/0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419#code
 sol!(
     #[allow(missing_docs)]
-    #[derive(Debug, PartialEq)]
+    #[derive(Debug, PartialEq, Eq)]
     function getRoundData(uint80 _roundId) external view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound);
 );
 
