@@ -1,9 +1,6 @@
 //! Example of using the IPC provider to get the latest block number.
 
-use alloy::{
-    providers::{Provider, ProviderBuilder},
-    rpc::client::IpcConnect,
-};
+use alloy::providers::{IpcConnect, Provider, ProviderBuilder};
 use eyre::Result;
 
 #[tokio::main]

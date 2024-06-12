@@ -2,11 +2,8 @@
 
 use alloy::{
     primitives::address,
-    providers::{Provider, ProviderBuilder},
-    rpc::{
-        client::WsConnect,
-        types::{BlockNumberOrTag, Filter},
-    },
+    providers::{Provider, ProviderBuilder, WsConnect},
+    rpc::types::{BlockNumberOrTag, Filter},
     sol,
     sol_types::SolEvent,
 };

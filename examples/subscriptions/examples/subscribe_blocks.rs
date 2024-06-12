@@ -2,8 +2,7 @@
 
 use alloy::{
     node_bindings::Anvil,
-    providers::{Provider, ProviderBuilder},
-    rpc::client::WsConnect,
+    providers::{Provider, ProviderBuilder, WsConnect},
 };
 use eyre::Result;
 use futures_util::{stream, StreamExt};

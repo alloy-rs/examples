@@ -1,9 +1,6 @@
 //! Example of using the WS provider to subscribe to new blocks.
 
-use alloy::{
-    providers::{Provider, ProviderBuilder},
-    rpc::client::WsConnect,
-};
+use alloy::providers::{Provider, ProviderBuilder, WsConnect};
 use eyre::Result;
 use futures_util::StreamExt;
 

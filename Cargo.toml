@@ -82,22 +82,17 @@ type_repetition_in_bounds = "allow"
 unnecessary_struct_initialization = "allow"
 
 [workspace.dependencies]
-alloy = { git = "https://github.com/alloy-rs/alloy", rev = "14ed25d", features = [
+alloy = { git = "https://github.com/alloy-rs/alloy", branch = "zerosnacks/alloy-metacrate-full-feature-flag", features = [
     "consensus",
     "contract",
-    "k256",
     "eips",
+    "k256",
     "kzg",
     "network",
     "node-bindings",
     "provider-http",
     "provider-ipc",
     "provider-ws",
-    "providers",
-    "rpc-client-ipc",
-    "rpc-client-ws",
-    "rpc-client",
-    "rpc-types-eth",
     "rpc-types-trace",
     "rpc-types",
     "signer-aws",
@@ -107,7 +102,6 @@ alloy = { git = "https://github.com/alloy-rs/alloy", rev = "14ed25d", features =
     "signer-trezor",
     "signer-wallet",
     "signer-yubihsm",
-    "signers",
 ] }
 
 # async

@@ -1,6 +1,10 @@
 //! Example of watching and polling for contract events by WebSocket subscription.
 
-use alloy::{node_bindings::Anvil, providers::ProviderBuilder, rpc::client::WsConnect, sol};
+use alloy::{
+    node_bindings::Anvil,
+    providers::{ProviderBuilder, WsConnect},
+    sol,
+};
 use eyre::Result;
 use futures_util::StreamExt;
 
