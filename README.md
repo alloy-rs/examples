@@ -64,6 +64,7 @@ This repository contains the following examples:
 - [x] `sol!` macro
   - [x] [Contracts](./examples/contracts/examples/deploy_from_contract.rs)
   - [x] [Events and errors](./examples/sol-macro/examples/events_errors.rs)
+  - [x] [Decode returns](./examples/sol-macro/examples/decode_returns.rs)
   - [x] [Structs and enums](./examples/sol-macro/examples/structs_enums.rs)
   - [x] [User defined types](./examples/sol-macro/examples/user_defined_types.rs)
 - [x] Transactions
