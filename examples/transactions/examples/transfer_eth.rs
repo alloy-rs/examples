@@ -22,10 +22,6 @@ async fn main() -> Result<()> {
     // Set up wallet from the first default Anvil account (Alice).
     let wallet: LocalWallet = anvil.keys()[0].clone().into();
 
-    // Create two users, Alice and Bob.
-    let alice = wallet.address();
-    let bob = anvil.addresses()[1];
-
     // Create a provider with a signer and the network.
     let provider = ProviderBuilder::new()
         .with_recommended_fillers()
@@ -33,8 +29,9 @@ async fn main() -> Result<()> {
         .on_http(rpc_url);
 
     // Build a transaction to send 100 wei from Alice to Bob.
-    let tx =
-        TransactionRequest::default().with_from(alice).with_to(bob).with_value(U256::from(100));
+    // The `from` field is automatically filled to the first signer's address (Alice).
+    let bob = anvil.addresses()[1];
+    let tx = TransactionRequest::default().with_to(bob).with_value(U256::from(100));
 
     // Send the transaction and listen for the transaction to be included.
     let tx_hash = provider.send_transaction(tx).await?.watch().await?;

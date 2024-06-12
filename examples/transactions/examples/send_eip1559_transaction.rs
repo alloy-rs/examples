@@ -24,8 +24,8 @@ async fn main() -> Result<()> {
     let bob = anvil.addresses()[1];
 
     // Build a transaction to send 100 wei from Alice to Bob.
+    // The `from` field is automatically filled to the first signer's address (Alice).
     let tx = TransactionRequest::default()
-        .with_from(alice)
         .with_to(bob)
         .with_nonce(0)
         .with_chain_id(anvil.chain_id())

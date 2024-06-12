@@ -31,8 +31,7 @@ async fn main() -> Result<()> {
         .on_http(rpc_url);
 
     // Create a transaction.
-    let tx =
-        TransactionRequest::default().with_from(alice).with_to(bob).with_value(U256::from(100));
+    let tx = TransactionRequest::default().with_to(bob).with_value(U256::from(100));
 
     // Send the transaction and wait for the broadcast.
     let pending_tx = provider.send_transaction(tx).await?;
