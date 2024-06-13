@@ -1,4 +1,4 @@
-//! Example of using the `SignerFiller` in the provider.
+//! Example of using the `WalletFiller` in the provider.
 
 use alloy::{
     network::{EthereumWallet, TransactionBuilder},
