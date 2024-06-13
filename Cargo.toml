@@ -82,7 +82,7 @@ type_repetition_in_bounds = "allow"
 unnecessary_struct_initialization = "allow"
 
 [workspace.dependencies]
-alloy = { git = "https://github.com/alloy-rs/alloy", rev = "fb875f2", features = [
+alloy = { git = "https://github.com/alloy-rs/alloy", rev = "b000e16", features = [
     "full",
     "node-bindings",
     "rpc-types-trace",

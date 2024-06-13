@@ -1,12 +1,12 @@
 //! Example of signing, encoding and sending a raw transaction using a wallet.
 
 use alloy::{
-    network::{EthereumSigner, TransactionBuilder},
+    network::{EthereumWallet, TransactionBuilder},
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
-    signers::wallet::LocalWallet,
+    signers::local::PrivateKeySigner,
 };
 use eyre::Result;
 
@@ -20,9 +20,9 @@ async fn main() -> Result<()> {
     let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new().on_http(rpc_url);
 
-    // Create a signer from the first default Anvil account (Alice).
-    let wallet: LocalWallet = anvil.keys()[0].clone().into();
-    let signer: EthereumSigner = wallet.into();
+    // Set up signer from the first default Anvil account (Alice).
+    let signer: PrivateKeySigner = anvil.keys()[0].clone().into();
+    let wallet = EthereumWallet::from(signer);
 
     // Create two users, Alice and Bob.
     let alice = anvil.addresses()[0];
@@ -39,8 +39,8 @@ async fn main() -> Result<()> {
         .with_max_priority_fee_per_gas(1_000_000_000)
         .with_max_fee_per_gas(20_000_000_000);
 
-    // Build and sign the transaction using the `EthereumSigner` with the provided signer.
-    let tx_envelope = tx.build(&signer).await?;
+    // Build and sign the transaction using the `EthereumWallet` with the provided wallet.
+    let tx_envelope = tx.build(&wallet).await?;
 
     // Send the raw transaction and retrieve the transaction receipt.
     // [Provider::send_tx_envelope] is a convenience method that encodes the transaction using

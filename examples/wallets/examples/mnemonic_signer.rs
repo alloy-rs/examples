@@ -1,6 +1,6 @@
 //! Example of using `MnemonicBuilder` to access a wallet from a mnemonic phrase.
 
-use alloy::signers::wallet::{coins_bip39::English, MnemonicBuilder};
+use alloy::signers::local::{coins_bip39::English, MnemonicBuilder};
 use eyre::Result;
 
 #[tokio::main]

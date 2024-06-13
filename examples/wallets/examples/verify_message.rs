@@ -1,12 +1,12 @@
 //! Example of verifying that a message was signed by the provided address.
 
-use alloy::signers::{wallet::LocalWallet, SignerSync};
+use alloy::signers::{local::PrivateKeySigner, SignerSync};
 use eyre::{Ok, Result};
 
 #[tokio::main]
 async fn main() -> Result<()> {
     // Instantiate a signer.
-    let signer = LocalWallet::random();
+    let signer = PrivateKeySigner::random();
 
     // Sign a message.
     let message = "Some data";

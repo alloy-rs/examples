@@ -2,7 +2,7 @@
 
 use alloy::{
     primitives::{address, keccak256, U256},
-    signers::{wallet::LocalWallet, Signer},
+    signers::{local::PrivateKeySigner, Signer},
     sol,
     sol_types::{eip712_domain, SolStruct},
 };
@@ -24,7 +24,7 @@ sol! {
 #[tokio::main]
 async fn main() -> Result<()> {
     // Set up a random signer.
-    let signer = LocalWallet::random();
+    let signer = PrivateKeySigner::random();
 
     let domain = eip712_domain! {
         name: "Uniswap V2",
