@@ -5,7 +5,7 @@ use alloy::{
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
-    signers::trezor::{HDPath, TrezorWallet},
+    signers::trezor::{HDPath, TrezorSigner},
 };
 use eyre::Result;
 
@@ -15,7 +15,7 @@ async fn main() -> Result<()> {
     let rpc_url = "https://eth.merkle.io".parse()?;
 
     // Instantiate the application by acquiring a lock on the Trezor device.
-    let signer = TrezorWallet::new(HDPath::TrezorLive(0), Some(1)).await?;
+    let signer = TrezorSigner::new(HDPath::TrezorLive(0), Some(1)).await?;
     let wallet = EthereumWallet::from(signer);
 
     // Create a provider with the wallet.
