@@ -1,8 +1,7 @@
 //! Example of using the WS provider with auth to subscribe to new blocks.
 
 use alloy::{
-    providers::{Provider, ProviderBuilder},
-    rpc::client::WsConnect,
+    providers::{Provider, ProviderBuilder, WsConnect},
     transports::Authorization,
 };
 use eyre::Result;

@@ -1,10 +1,7 @@
 //! Example of subscribing and listening for pending transactions in the public mempool by WebSocket
 //! subscription.
 
-use alloy::{
-    providers::{Provider, ProviderBuilder},
-    rpc::client::WsConnect,
-};
+use alloy::providers::{Provider, ProviderBuilder, WsConnect};
 use eyre::Result;
 use futures_util::StreamExt;
 
