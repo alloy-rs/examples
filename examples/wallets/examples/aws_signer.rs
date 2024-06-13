@@ -1,6 +1,6 @@
 //! Example showing how to use the AWS KMS signer.
 
-use alloy::signers::{aws::AwsSigner, Signer};
+use alloy::signers::{aws::AwsWallet, Signer};
 use aws_config::BehaviorVersion;
 use eyre::Result;
 
@@ -12,7 +12,7 @@ async fn main() -> Result<()> {
 
     let config = aws_config::load_defaults(BehaviorVersion::latest()).await;
     let client = aws_sdk_kms::Client::new(&config);
-    let signer = AwsSigner::new(client, key_id, Some(1)).await?;
+    let signer = AwsWallet::new(client, key_id, Some(1)).await?;
 
     let message = "Hello, world!";
     let signature = signer.sign_message(message.as_bytes()).await?;

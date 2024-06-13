@@ -1,6 +1,6 @@
 //! Example of creating a keystore file from a private key and password, and then reading it back.
 
-use alloy::{primitives::hex, signers::wallet::Wallet};
+use alloy::{primitives::hex, signers::local::LocalSigner};
 use eyre::Result;
 use rand::thread_rng;
 use std::fs::read_to_string;
@@ -19,14 +19,14 @@ async fn main() -> Result<()> {
 
     // Create a keystore file from the private key of Alice, returning a [Wallet] instance.
     let (wallet, file_path) =
-        Wallet::encrypt_keystore(&dir, &mut rng, private_key, password, None)?;
+        LocalSigner::encrypt_keystore(&dir, &mut rng, private_key, password, None)?;
 
     let keystore_file_path = dir.path().join(file_path);
 
     println!("Wrote keystore for {} to {:?}", wallet.address(), keystore_file_path);
 
     // Read the keystore file back.
-    let recovered_wallet = Wallet::decrypt_keystore(keystore_file_path.clone(), password)?;
+    let recovered_wallet = LocalSigner::decrypt_keystore(keystore_file_path.clone(), password)?;
 
     println!(
         "Read keystore from {:?}, recovered address: {}",

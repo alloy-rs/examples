@@ -1,12 +1,12 @@
 //! Example of how to transfer ETH from one account to another.
 
 use alloy::{
-    network::{EthereumSigner, TransactionBuilder},
+    network::{EthereumWallet, TransactionBuilder},
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
-    signers::wallet::LocalWallet,
+    signers::local::PrivateKeySigner,
 };
 use eyre::Result;
 
@@ -19,14 +19,13 @@ async fn main() -> Result<()> {
     // Get the RPC URL.
     let rpc_url = anvil.endpoint().parse()?;
 
-    // Set up wallet from the first default Anvil account (Alice).
-    let wallet: LocalWallet = anvil.keys()[0].clone().into();
+    // Set up signer from the first default Anvil account (Alice).
+    let signer: PrivateKeySigner = anvil.keys()[0].clone().into();
+    let wallet = EthereumWallet::from(signer);
 
-    // Create a provider with a signer and the network.
-    let provider = ProviderBuilder::new()
-        .with_recommended_fillers()
-        .signer(EthereumSigner::from(wallet))
-        .on_http(rpc_url);
+    // Create a provider with the wallet.
+    let provider =
+        ProviderBuilder::new().with_recommended_fillers().wallet(wallet).on_http(rpc_url);
 
     // Build a transaction to send 100 wei from Alice to Bob.
     // The `from` field is automatically filled to the first signer's address (Alice).

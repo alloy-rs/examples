@@ -1,12 +1,12 @@
 //! Example of using a keystore wallet to sign and send a transaction.
 
 use alloy::{
-    network::{EthereumSigner, TransactionBuilder},
+    network::{EthereumWallet, TransactionBuilder},
     node_bindings::Anvil,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
-    signers::wallet::Wallet,
+    signers::local::LocalSigner,
 };
 use eyre::Result;
 use std::{env, path::PathBuf};
@@ -24,14 +24,13 @@ async fn main() -> Result<()> {
     // The private key belongs to Alice, the first default Anvil account.
     let keystore_file_path =
         PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("examples/keystore/alice.json");
-    let signer = Wallet::decrypt_keystore(keystore_file_path, password)?;
+    let signer = LocalSigner::decrypt_keystore(keystore_file_path, password)?;
+    let wallet = EthereumWallet::from(signer);
 
-    // Create a provider with the signer.
+    // Create a provider with the wallet.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new()
-        .with_recommended_fillers()
-        .signer(EthereumSigner::from(signer))
-        .on_http(rpc_url);
+    let provider =
+        ProviderBuilder::new().with_recommended_fillers().wallet(wallet).on_http(rpc_url);
 
     // Build a transaction to send 100 wei from Alice to Vitalik.
     // The `from` field is automatically filled to the first signer's address (Alice).

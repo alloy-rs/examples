@@ -2,8 +2,8 @@
 //! with it.
 
 use alloy::{
-    network::EthereumSigner, node_bindings::Anvil, primitives::U256, providers::ProviderBuilder,
-    signers::wallet::LocalWallet, sol,
+    network::EthereumWallet, node_bindings::Anvil, primitives::U256, providers::ProviderBuilder,
+    signers::local::PrivateKeySigner, sol,
 };
 use eyre::Result;
 
@@ -22,14 +22,13 @@ async fn main() -> Result<()> {
     let anvil = Anvil::new().try_spawn()?;
 
     // Set up signer from the first default Anvil account (Alice).
-    let signer: LocalWallet = anvil.keys()[0].clone().into();
+    let signer: PrivateKeySigner = anvil.keys()[0].clone().into();
+    let wallet = EthereumWallet::from(signer);
 
-    // Create a provider with a signer.
+    // Create a provider with the wallet.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new()
-        .with_recommended_fillers()
-        .signer(EthereumSigner::from(signer))
-        .on_http(rpc_url);
+    let provider =
+        ProviderBuilder::new().with_recommended_fillers().wallet(wallet).on_http(rpc_url);
 
     println!("Anvil running at `{}`", anvil.endpoint());
 

@@ -1,11 +1,11 @@
 //! Example of signing and sending a transaction using a Ledger device.
 
 use alloy::{
-    network::{EthereumSigner, TransactionBuilder},
+    network::{EthereumWallet, TransactionBuilder},
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
-    signers::ledger::{HDPath, LedgerSigner},
+    signers::ledger::{HDPath, LedgerWallet},
 };
 use eyre::Result;
 
@@ -15,13 +15,12 @@ async fn main() -> Result<()> {
     let rpc_url = "https://eth.merkle.io".parse()?;
 
     // Instantiate the application by acquiring a lock on the Ledger device.
-    let signer = LedgerSigner::new(HDPath::LedgerLive(0), Some(1)).await?;
+    let signer = LedgerWallet::new(HDPath::LedgerLive(0), Some(1)).await?;
+    let wallet = EthereumWallet::from(signer);
 
-    // Create a provider with the signer.
-    let provider = ProviderBuilder::new()
-        .with_recommended_fillers()
-        .signer(EthereumSigner::from(signer))
-        .on_http(rpc_url);
+    // Create a provider with the wallet.
+    let provider =
+        ProviderBuilder::new().with_recommended_fillers().wallet(wallet).on_http(rpc_url);
 
     // Build a transaction to send 100 wei from Alice to Vitalik.
     // The `from` field is automatically filled to the first signer's address (Alice).
