@@ -73,6 +73,7 @@ future_not_send = "allow"
 iter_on_single_items = "allow"
 needless_collect = "allow"
 non_send_fields_in_send_ty = "allow"
+octal_escapes = "allow"
 option_if_let_else = "allow"
 redundant_pub_crate = "allow"
 significant_drop_in_scrutinee = "allow"
@@ -82,9 +83,10 @@ type_repetition_in_bounds = "allow"
 unnecessary_struct_initialization = "allow"
 
 [workspace.dependencies]
-alloy = { git = "https://github.com/alloy-rs/alloy", rev = "b000e16", features = [
+alloy = { git = "https://github.com/alloy-rs/alloy", rev = "ebad059", features = [
     "full",
     "node-bindings",
+    "rpc-types-debug",
     "rpc-types-trace",
     "signer-aws",
     "signer-keystore",
