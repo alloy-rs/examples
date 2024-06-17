@@ -60,7 +60,7 @@ async fn main() -> Result<()> {
     let init_val = counter_instance.function("number", &[])?.call().await?;
 
     // Get the Uint value from the result
-    let init_val = init_val.get(0).unwrap().as_uint().unwrap().0;
+    let init_val = init_val.first().unwrap().as_uint().unwrap().0;
 
     assert_eq!(U256::from(0), init_val);
 
@@ -72,7 +72,7 @@ async fn main() -> Result<()> {
 
     let incremented_val = counter_instance.function("number", &[])?.call().await?;
 
-    let incremented_val = incremented_val.get(0).unwrap().as_uint().unwrap().0;
+    let incremented_val = incremented_val.first().unwrap().as_uint().unwrap().0;
 
     assert_eq!(U256::from(1), incremented_val);
 
@@ -86,7 +86,7 @@ async fn main() -> Result<()> {
 
     let set_val = counter_instance.function("number", &[])?.call().await?;
 
-    let set_val = set_val.get(0).unwrap().as_uint().unwrap().0;
+    let set_val = set_val.first().unwrap().as_uint().unwrap().0;
 
     assert_eq!(U256::from(100), set_val);
 
