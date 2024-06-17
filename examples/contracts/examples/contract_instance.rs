@@ -9,7 +9,7 @@ use alloy::{
     rpc::types::TransactionRequest,
     transports::http::{Client, Http},
 };
-use const_hex as hex;
+use alloy::primitives::hex;
 use eyre::Result;
 
 /**
