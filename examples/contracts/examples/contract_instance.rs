@@ -4,12 +4,11 @@ use alloy::{
     contract::{ContractInstance, Interface},
     dyn_abi::DynSolValue,
     network::{Ethereum, TransactionBuilder},
-    primitives::U256,
+    primitives::{hex, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
     transports::http::{Client, Http},
 };
-use alloy::primitives::hex;
 use eyre::Result;
 
 /**
