@@ -1,12 +1,12 @@
 //! Example of using the `ProviderBuilder` to create a provider with a signer and network.
 
 use alloy::{
-    network::{EthereumSigner, TransactionBuilder},
+    network::{EthereumWallet, TransactionBuilder},
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::TransactionRequest,
-    signers::wallet::LocalWallet,
+    rpc::types::TransactionRequest,
+    signers::local::PrivateKeySigner,
 };
 use eyre::Result;
 
@@ -17,7 +17,8 @@ async fn main() -> Result<()> {
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
     // Set up signer from the first default Anvil account (Alice).
-    let signer: LocalWallet = anvil.keys()[0].clone().into();
+    let signer: PrivateKeySigner = anvil.keys()[0].clone().into();
+    let wallet = EthereumWallet::from(signer.clone());
 
     // Create two users, Alice and Bob.
     let alice = signer.address();
@@ -25,21 +26,18 @@ async fn main() -> Result<()> {
 
     // Set up the HTTP provider with the `reqwest` crate.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new()
-        .with_recommended_fillers()
-        .signer(EthereumSigner::from(signer))
-        .on_http(rpc_url);
+    let provider =
+        ProviderBuilder::new().with_recommended_fillers().wallet(wallet).on_http(rpc_url);
 
     // Create a transaction.
-    let tx =
-        TransactionRequest::default().with_from(alice).with_to(bob).with_value(U256::from(100));
+    let tx = TransactionRequest::default().with_to(bob).with_value(U256::from(100));
 
-    // Send the transaction and wait for the receipt.
+    // Send the transaction and wait for the broadcast.
     let pending_tx = provider.send_transaction(tx).await?;
 
     println!("Pending transaction... {}", pending_tx.tx_hash());
 
-    // Wait for the transaction to be included.
+    // Wait for the transaction to be included and get the receipt.
     let receipt = pending_tx.get_receipt().await?;
 
     println!(

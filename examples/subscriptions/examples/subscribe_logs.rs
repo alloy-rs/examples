@@ -2,11 +2,8 @@
 
 use alloy::{
     primitives::address,
-    providers::{Provider, ProviderBuilder},
-    rpc::{
-        client::WsConnect,
-        types::eth::{BlockNumberOrTag, Filter},
-    },
+    providers::{Provider, ProviderBuilder, WsConnect},
+    rpc::types::{BlockNumberOrTag, Filter},
 };
 use eyre::Result;
 use futures_util::stream::StreamExt;

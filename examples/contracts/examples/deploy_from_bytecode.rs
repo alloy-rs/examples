@@ -3,12 +3,12 @@
 
 use alloy::{
     hex::FromHex,
-    network::{EthereumSigner, ReceiptResponse, TransactionBuilder},
+    network::{EthereumWallet, ReceiptResponse, TransactionBuilder},
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::TransactionRequest,
-    signers::wallet::LocalWallet,
+    rpc::types::TransactionRequest,
+    signers::local::PrivateKeySigner,
     sol,
 };
 use eyre::Result;
@@ -39,46 +39,46 @@ async fn main() -> Result<()> {
     let anvil = Anvil::new().try_spawn()?;
 
     // Set up signer from the first default Anvil account (Alice).
-    let signer: LocalWallet = anvil.keys()[0].clone().into();
+    let signer: PrivateKeySigner = anvil.keys()[0].clone().into();
+    let wallet = EthereumWallet::from(signer);
 
     println!("Anvil running at `{}`", anvil.endpoint());
 
-    // Create a provider with a signer.
+    // Create a provider with the wallet.
     let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new()
-        .with_recommended_fillers()
-        .signer(EthereumSigner::from(signer))
-        .on_http(rpc_url);
+    let provider =
+        ProviderBuilder::new().with_recommended_fillers().wallet(wallet).on_http(rpc_url);
 
     // We deploy the contract at run time from bytecode
-    // solc v0.8.24; solc a.sol --via-ir --optimize --bin
-    let contract_bytecode = "608080604052346100155760d2908161001a8239f35b5f80fdfe60808060405260043610156011575f80fd5b5f3560e01c9081633fb5c1cb1460865781638381f58a14606f575063d09de08a146039575f80fd5b34606b575f366003190112606b575f545f1981146057576001015f55005b634e487b7160e01b5f52601160045260245ffd5b5f80fd5b34606b575f366003190112606b576020905f548152f35b34606b576020366003190112606b576004355f5500fea2646970667358221220bdecd3c1dd631eb40587cafcd6e8297479db76db6a328e18ad1ea5b340852e3864736f6c63430008180033";
+    // solc v0.8.26; solc a.sol --via-ir --optimize --bin
+    let contract_bytecode = "6080806040523460135760df908160198239f35b600080fdfe6080806040526004361015601257600080fd5b60003560e01c9081633fb5c1cb1460925781638381f58a146079575063d09de08a14603c57600080fd5b3460745760003660031901126074576000546000198114605e57600101600055005b634e487b7160e01b600052601160045260246000fd5b600080fd5b3460745760003660031901126074576020906000548152f35b34607457602036600319011260745760043560005500fea2646970667358221220e978270883b7baed10810c4079c941512e93a7ba1cd1108c781d4bc738d9090564736f6c634300081a0033";
     let data: Vec<u8> = FromHex::from_hex(contract_bytecode)?;
     let tx = TransactionRequest::default().with_deploy_code(data);
 
-    let deploy_result = provider.send_transaction(tx).await?.get_receipt().await?;
+    // Deploy the contract.
+    let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
 
-    let contract_address =
-        deploy_result.contract_address().expect("Failed to get contract address");
+    let contract_address = receipt.contract_address().expect("Failed to get contract address");
     let contract = Counter::new(contract_address, &provider);
     println!("Deployed contract at address: {}", contract.address());
 
     // Set number
     let builder = contract.setNumber(U256::from(42));
-    let receipt = builder.send().await?.get_receipt().await?;
+    let tx_hash = builder.send().await?.watch().await?;
 
-    println!("Set number to 42: {}", receipt.transaction_hash);
+    println!("Set number to 42: {tx_hash}");
 
     // Increment the number to 43.
     let builder = contract.increment();
-    let receipt = builder.send().await?.get_receipt().await?;
+    let tx_hash = builder.send().await?.watch().await?;
 
-    println!("Incremented number: {}", receipt.transaction_hash);
+    println!("Incremented number: {tx_hash}");
 
     // Retrieve the number, which should be 43.
-    let Counter::numberReturn { _0 } = contract.number().call().await?;
+    let builder = contract.number();
+    let number = builder.call().await?.number.to_string();
 
-    println!("Retrieved number: {_0}");
+    println!("Retrieved number: {number}");
 
     Ok(())
 }

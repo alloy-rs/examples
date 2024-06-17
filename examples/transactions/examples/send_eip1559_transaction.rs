@@ -5,7 +5,7 @@ use alloy::{
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::TransactionRequest,
+    rpc::types::TransactionRequest,
 };
 use eyre::Result;
 
@@ -24,8 +24,8 @@ async fn main() -> Result<()> {
     let bob = anvil.addresses()[1];
 
     // Build a transaction to send 100 wei from Alice to Bob.
+    // The `from` field is automatically filled to the first signer's address (Alice).
     let tx = TransactionRequest::default()
-        .with_from(alice)
         .with_to(bob)
         .with_nonce(0)
         .with_chain_id(anvil.chain_id())
@@ -34,12 +34,12 @@ async fn main() -> Result<()> {
         .with_max_priority_fee_per_gas(1_000_000_000)
         .with_max_fee_per_gas(20_000_000_000);
 
-    // Send the transaction and wait for the receipt.
+    // Send the transaction and wait for the broadcast.
     let pending_tx = provider.send_transaction(tx).await?;
 
     println!("Pending transaction... {}", pending_tx.tx_hash());
 
-    // Wait for the transaction to be included.
+    // Wait for the transaction to be included and get the receipt.
     let receipt = pending_tx.get_receipt().await?;
 
     println!(

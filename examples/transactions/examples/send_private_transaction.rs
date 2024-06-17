@@ -1,11 +1,11 @@
 //! Example of sending a private transaction using Flashbots Protect.
 
 use alloy::{
-    network::{eip2718::Encodable2718, EthereumSigner, TransactionBuilder},
+    network::{eip2718::Encodable2718, EthereumWallet, TransactionBuilder},
     primitives::U256,
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::TransactionRequest,
-    signers::wallet::LocalWallet,
+    rpc::types::TransactionRequest,
+    signers::local::PrivateKeySigner,
 };
 use eyre::Result;
 
@@ -35,16 +35,14 @@ async fn main() -> Result<()> {
     // Create a provider.
     let provider = ProviderBuilder::new().on_http(flashbots_url);
 
-    // Create a signer from a random wallet.
-    let signer = LocalWallet::random();
-
-    // Create two users, Alice and Bob.
-    let alice = signer.address();
-    let bob = LocalWallet::random().address();
+    // Create a signer from a random private key.
+    let signer = PrivateKeySigner::random();
+    let wallet = EthereumWallet::from(signer);
 
     // Build a transaction to send 100 wei from Alice to Bob.
+    // The `from` field is automatically filled to the first signer's address (Alice).
+    let bob = PrivateKeySigner::random().address();
     let tx = TransactionRequest::default()
-        .with_from(alice)
         .with_to(bob)
         .with_nonce(0)
         .with_chain_id(1)
@@ -53,10 +51,9 @@ async fn main() -> Result<()> {
         .with_max_priority_fee_per_gas(1_000_000_000)
         .with_max_fee_per_gas(20_000_000_000);
 
-    // Build the transaction using the `EthereumSigner` with the provided signer.
-    // Flashbots Protect requires the transaction to be signed locally and send using
-    // `eth_sendRawTransaction`.
-    let tx_envelope = tx.build(&EthereumSigner::from(signer)).await?;
+    // Build the transaction with the provided wallet. Flashbots Protect requires the transaction to
+    // be signed locally and send using `eth_sendRawTransaction`.
+    let tx_envelope = tx.build(&wallet).await?;
 
     // Encode the transaction using EIP-2718 encoding.
     let tx_encoded = tx_envelope.encoded_2718();
@@ -66,7 +63,7 @@ async fn main() -> Result<()> {
     // is invalid and will not be included in the blockchain.
     let pending = provider.send_raw_transaction(&tx_encoded).await?.register().await?;
 
-    println!("Send transaction: {}", pending.tx_hash());
+    println!("Sent transaction: {}", pending.tx_hash());
 
     Ok(())
 }

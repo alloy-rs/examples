@@ -28,7 +28,7 @@ fn main() -> Result<()> {
     // Create an instance of the struct.
     let foo = Foo { a: U256::from(1), b: 2_u64, greater: Bar::A };
 
-    println!("{:?}", foo);
+    println!("{foo:?}");
 
     Ok(())
 }

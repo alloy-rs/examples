@@ -1,10 +1,7 @@
 //! Example of subscribing and listening for pending transactions in the public mempool by WebSocket
 //! subscription.
 
-use alloy::{
-    providers::{Provider, ProviderBuilder},
-    rpc::client::WsConnect,
-};
+use alloy::providers::{Provider, ProviderBuilder, WsConnect};
 use eyre::Result;
 use futures_util::StreamExt;
 
@@ -32,7 +29,7 @@ async fn main() -> Result<()> {
         while let Some(tx_hash) = stream.next().await {
             // Get the transaction details.
             if let Ok(tx) = provider.get_transaction_by_hash(tx_hash).await {
-                println!("Transaction details: {:#?}", tx);
+                println!("Transaction details: {tx:#?}");
             }
         }
     });

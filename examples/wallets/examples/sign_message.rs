@@ -1,12 +1,12 @@
-//! Example of signing a message with a wallet.
+//! Example of signing a message with a signer.
 
-use alloy::signers::{wallet::LocalWallet, Signer};
+use alloy::signers::{local::PrivateKeySigner, Signer};
 use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
     // Set up a random signer.
-    let signer = LocalWallet::random();
+    let signer = PrivateKeySigner::random();
 
     // Optionally, the wallet's chain id can be set, in order to use EIP-155
     // replay protection with different chains.

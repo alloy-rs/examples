@@ -5,7 +5,7 @@ use alloy::{
     node_bindings::Anvil,
     primitives::{address, utils::format_units, Address, Bytes, U256},
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::TransactionRequest,
+    rpc::types::TransactionRequest,
     sol,
     sol_types::SolCall,
 };

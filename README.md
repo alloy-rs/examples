@@ -40,6 +40,7 @@ This repository contains the following examples:
   - [x] [Nonce management filler](./examples/fillers/examples/nonce_filler.rs)
   - [x] [Recommended fillers](./examples/fillers/examples/recommended_fillers.rs)
   - [x] [Signer management filler](./examples/fillers/examples/signer_filler.rs)
+  - [x] [Wallet management filler](./examples/fillers/examples/wallet_filler.rs)
 - [x] Layers
   - [x] [Request/Response Logging Layer](./examples/layers/examples/logging.rs)
   - [x] [Simple Retry Layer](./examples/layers/examples/simple_retry.rs)
@@ -67,16 +68,18 @@ This repository contains the following examples:
 - [x] `sol!` macro
   - [x] [Contracts](./examples/contracts/examples/deploy_from_contract.rs)
   - [x] [Events and errors](./examples/sol-macro/examples/events_errors.rs)
+  - [x] [Decode returns](./examples/sol-macro/examples/decode_returns.rs)
   - [x] [Structs and enums](./examples/sol-macro/examples/structs_enums.rs)
   - [x] [User defined types](./examples/sol-macro/examples/user_defined_types.rs)
 - [x] Transactions
   - [x] [Decode input](./examples/transactions/examples/decode_input.rs)
+  - [x] [Encode and decode EIP-1559 transaction](./examples/transactions/examples/encode_decode_eip1559.rs)
   - [x] [Get gas price in USD](./examples/transactions/examples/gas_price_usd.rs)
   - [x] [Trace call](./examples/transactions/examples/trace_call.rs)
   - [x] [Trace transaction](./examples/transactions/examples/trace_transaction.rs)
   - [x] [Transfer ERC20 token](./examples/transactions/examples/transfer_erc20.rs)
   - [x] [Transfer ETH](./examples/transactions/examples/transfer_eth.rs)
-  - [x] [Sign and send a raw transaction](./examples/transactions/examples/sign_transaction.rs)
+  - [x] [Sign and send a raw transaction](./examples/transactions/examples/send_raw_transaction.rs)
   - [x] [Send EIP-1559 transaction](./examples/transactions/examples/send_eip1559_transaction.rs)
   - [x] [Send legacy transaction](./examples/transactions/examples/send_legacy_transaction.rs)
   - [x] [Send EIP-4844 transaction](./examples/transactions/examples/send_eip4844_transaction.rs)

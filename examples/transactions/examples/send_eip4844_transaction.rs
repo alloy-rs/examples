@@ -6,7 +6,7 @@ use alloy::{
     network::TransactionBuilder,
     node_bindings::Anvil,
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::TransactionRequest,
+    rpc::types::TransactionRequest,
 };
 use eyre::Result;
 
@@ -29,10 +29,10 @@ async fn main() -> Result<()> {
     let sidecar = sidecar.build()?;
 
     // Build a transaction to send the sidecar from Alice to Bob.
+    // The `from` field is automatically filled to the first signer's address (Alice).
     let gas_price = provider.get_gas_price().await?;
     let eip1559_est = provider.estimate_eip1559_fees(None).await?;
     let tx = TransactionRequest::default()
-        .with_from(alice)
         .with_to(bob)
         .with_nonce(0)
         .with_max_fee_per_blob_gas(gas_price)
@@ -40,12 +40,12 @@ async fn main() -> Result<()> {
         .with_max_priority_fee_per_gas(eip1559_est.max_priority_fee_per_gas)
         .with_blob_sidecar(sidecar);
 
-    // Send the transaction and wait for the receipt.
+    // Send the transaction and wait for the broadcast.
     let pending_tx = provider.send_transaction(tx).await?;
 
     println!("Pending transaction... {}", pending_tx.tx_hash());
 
-    // Wait for the transaction to be included.
+    // Wait for the transaction to be included and get the receipt.
     let receipt = pending_tx.get_receipt().await?;
 
     println!(

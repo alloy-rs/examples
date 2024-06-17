@@ -1,12 +1,12 @@
 //! Example of signing, encoding and sending a raw transaction using a wallet.
 
 use alloy::{
-    network::{eip2718::Encodable2718, EthereumSigner, TransactionBuilder},
+    network::{EthereumWallet, TransactionBuilder},
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
-    rpc::types::eth::TransactionRequest,
-    signers::wallet::LocalWallet,
+    rpc::types::TransactionRequest,
+    signers::local::PrivateKeySigner,
 };
 use eyre::Result;
 
@@ -20,17 +20,17 @@ async fn main() -> Result<()> {
     let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new().on_http(rpc_url);
 
-    // Create a signer from the first default Anvil account (Alice).
-    let wallet: LocalWallet = anvil.keys()[0].clone().into();
-    let signer: EthereumSigner = wallet.into();
+    // Set up signer from the first default Anvil account (Alice).
+    let signer: PrivateKeySigner = anvil.keys()[0].clone().into();
+    let wallet = EthereumWallet::from(signer);
 
     // Create two users, Alice and Bob.
     let alice = anvil.addresses()[0];
     let bob = anvil.addresses()[1];
 
     // Build a transaction to send 100 wei from Alice to Bob.
+    // The `from` field is automatically filled to the first signer's address (Alice).
     let tx = TransactionRequest::default()
-        .with_from(alice)
         .with_to(bob)
         .with_nonce(0)
         .with_chain_id(anvil.chain_id())
@@ -39,16 +39,15 @@ async fn main() -> Result<()> {
         .with_max_priority_fee_per_gas(1_000_000_000)
         .with_max_fee_per_gas(20_000_000_000);
 
-    // Build the transaction using the `EthereumSigner` with the provided signer.
-    let tx_envelope = tx.build(&signer).await?;
-
-    // Encode the transaction using EIP-2718 encoding.
-    let tx_encoded = tx_envelope.encoded_2718();
+    // Build and sign the transaction using the `EthereumWallet` with the provided wallet.
+    let tx_envelope = tx.build(&wallet).await?;
 
     // Send the raw transaction and retrieve the transaction receipt.
-    let receipt = provider.send_raw_transaction(&tx_encoded).await?.get_receipt().await?;
+    // [Provider::send_tx_envelope] is a convenience method that encodes the transaction using
+    // EIP-2718 encoding and broadcasts it to the network using [Provider::send_raw_transaction].
+    let receipt = provider.send_tx_envelope(tx_envelope).await?.get_receipt().await?;
 
-    println!("Send transaction: {}", receipt.transaction_hash);
+    println!("Sent transaction: {}", receipt.transaction_hash);
 
     assert_eq!(receipt.from, alice);
     assert_eq!(receipt.to, Some(bob));

@@ -32,11 +32,11 @@ async fn main() -> Result<()> {
     let alice_before_balance = contract.balanceOf(alice).call().await?._0;
     let bob_before_balance = contract.balanceOf(bob).call().await?._0;
 
-    // Transfer and wait for the receipt.
+    // Transfer and wait for inclusion.
     let amount = U256::from(100);
-    let receipt = contract.transfer(bob, amount).send().await?.get_receipt().await?;
+    let tx_hash = contract.transfer(bob, amount).send().await?.watch().await?;
 
-    println!("Send transaction: {}", receipt.transaction_hash);
+    println!("Sent transaction: {tx_hash}");
 
     // Register the balances of Alice and Bob after the transfer.
     let alice_after_balance = contract.balanceOf(alice).call().await?._0;

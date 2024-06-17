@@ -1,6 +1,6 @@
 //! Example of using `MnemonicBuilder` to access a wallet from a mnemonic phrase.
 
-use alloy::signers::wallet::{coins_bip39::English, MnemonicBuilder};
+use alloy::signers::local::{coins_bip39::English, MnemonicBuilder};
 use eyre::Result;
 
 #[tokio::main]
@@ -9,24 +9,23 @@ async fn main() -> Result<()> {
     let index = 0u32;
     let password = "TREZOR123";
 
-    // Access mnemonic phrase with password
-    // Child key at derivation path: m/44'/60'/0'/0/{index}
+    // Access mnemonic phrase with password.
+    // Child key at derivation path: m/44'/60'/0'/0/{index}.
     let wallet = MnemonicBuilder::<English>::default()
         .phrase(phrase)
         .index(index)?
-        // Use this if your mnemonic is encrypted
+        // Use this if your mnemonic is encrypted.
         .password(password)
         .build()?;
 
     println!("Wallet: {}", wallet.address());
 
-    // Generate a random wallet (24 word phrase) at custom derivation path
+    // Generate a random wallet (24 word phrase) at custom derivation path.
     let wallet = MnemonicBuilder::<English>::default()
         .word_count(24)
         .derivation_path("m/44'/60'/0'/2/1")?
         // Optionally add this if you want the generated mnemonic to be written
-        // to a file
-        // .write_to(path)
+        // to a file `.write_to(path)`.
         .build_random()?;
 
     println!("Random wallet: {}", wallet.address());

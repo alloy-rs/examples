@@ -53,6 +53,7 @@ transmute_undefined_repr = "warn"
 trivial_regex = "warn"
 tuple_array_conversions = "warn"
 uninhabited_references = "warn"
+uninlined_format_args = "warn"
 unused_peekable = "warn"
 unused_rounding = "warn"
 use_self = "warn"
@@ -72,6 +73,7 @@ future_not_send = "allow"
 iter_on_single_items = "allow"
 needless_collect = "allow"
 non_send_fields_in_send_ty = "allow"
+octal_escapes = "allow"
 option_if_let_else = "allow"
 redundant_pub_crate = "allow"
 significant_drop_in_scrutinee = "allow"
@@ -81,21 +83,10 @@ type_repetition_in_bounds = "allow"
 unnecessary_struct_initialization = "allow"
 
 [workspace.dependencies]
-alloy = { git = "https://github.com/alloy-rs/alloy", rev = "cc68b93", features = [
-    "consensus",
-    "contract",
-    "eips",
-    "kzg",
-    "network",
+alloy = { version = "0.1", features = [
+    "full",
     "node-bindings",
-    "provider-http",
-    "provider-ipc",
-    "provider-ws",
-    "providers",
-    "rpc-client-ipc",
-    "rpc-client-ws",
-    "rpc-client",
-    "rpc-types-eth",
+    "rpc-types-debug",
     "rpc-types-trace",
     "rpc-types",
     "json-rpc",
@@ -104,9 +95,7 @@ alloy = { git = "https://github.com/alloy-rs/alloy", rev = "cc68b93", features =
     "signer-ledger",
     "signer-mnemonic",
     "signer-trezor",
-    "signer-wallet",
     "signer-yubihsm",
-    "signers",
 ] }
 
 # async
