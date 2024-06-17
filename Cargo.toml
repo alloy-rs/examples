@@ -90,6 +90,7 @@ alloy = { version = "0.1", features = [
     "rpc-types-trace",
     "rpc-types",
     "json-rpc",
+    "rpc-client",
     "signer-aws",
     "signer-keystore",
     "signer-ledger",

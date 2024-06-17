@@ -1,4 +1,5 @@
-//! A custom transport layer prints the request being sent.
+//! This examples demonstrates how to implement your own custom transport layer. For this example,
+//! we implement a simple request/response logging layer.
 use alloy::{
     node_bindings::Anvil,
     providers::{Provider, ProviderBuilder},
@@ -33,6 +34,7 @@ async fn main() -> Result<()> {
 
 struct LoggingLayer;
 
+// Implement tower::Layer for LoggingLayer.
 impl<S> Layer<S> for LoggingLayer {
     type Service = LoggingService<S>;
 
@@ -41,13 +43,16 @@ impl<S> Layer<S> for LoggingLayer {
     }
 }
 
+// A logging service that wraps an inner service.
 #[derive(Debug, Clone)]
 struct LoggingService<S> {
     inner: S,
 }
 
+// Implement tower::Service for LoggingService.
 impl<S> Service<RequestPacket> for LoggingService<S>
 where
+    // Constraints on the service.
     S: Service<RequestPacket, Response = ResponsePacket, Error = TransportError>,
     S::Future: Send + 'static,
     S::Response: Send + 'static + Debug,
