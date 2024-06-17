@@ -89,5 +89,10 @@ async fn main() -> Result<()> {
 
     assert_eq!(U256::from(100), set_val);
 
+    // Try calling a function that does not exist
+    let decr_call = counter_instance.function("decrement", &[]).unwrap_err();
+
+    assert!(decr_call.to_string().contains("function decrement does not exist"));
+
     Ok(())
 }
