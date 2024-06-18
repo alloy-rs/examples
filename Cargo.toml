@@ -88,7 +88,6 @@ alloy = { version = "0.1", features = [
     "node-bindings",
     "rpc-types-debug",
     "rpc-types-trace",
-    "rpc-types",
     "json-rpc",
     "rpc-client",
     "signer-aws",
