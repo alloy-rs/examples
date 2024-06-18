@@ -1,5 +1,6 @@
-//! This examples demonstrates how to implement your own custom transport layer. For this example,
-//! we implement a simple request/response logging layer.
+//! This examples demonstrates how to implement your own custom transport layer.
+//! As a demonstration we implement a simple request / response logging layer.
+
 use alloy::{
     node_bindings::Anvil,
     providers::{Provider, ProviderBuilder},
@@ -17,20 +18,6 @@ use std::{
     task::{Context, Poll},
 };
 use tower::{Layer, Service};
-
-#[tokio::main]
-async fn main() -> Result<()> {
-    let anvil = Anvil::new().spawn();
-    let client = ClientBuilder::default().layer(LoggingLayer).http(anvil.endpoint_url());
-
-    let provider = ProviderBuilder::new().on_client(client);
-
-    for _ in 0..10 {
-        let _block_number = provider.get_block_number().into_future().await?;
-    }
-
-    Ok(())
-}
 
 struct LoggingLayer;
 
@@ -68,11 +55,29 @@ where
 
     fn call(&mut self, req: RequestPacket) -> Self::Future {
         println!("Request: {req:?}");
+
         let fut = self.inner.call(req);
+
         Box::pin(async move {
             let res = fut.await;
+
             println!("Response: {res:?}");
+
             res
         })
     }
+}
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    let anvil = Anvil::new().spawn();
+    let client = ClientBuilder::default().layer(LoggingLayer).http(anvil.endpoint_url());
+
+    let provider = ProviderBuilder::new().on_client(client);
+
+    for _ in 0..10 {
+        let _block_number = provider.get_block_number().into_future().await?;
+    }
+
+    Ok(())
 }
