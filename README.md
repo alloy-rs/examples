@@ -41,7 +41,7 @@ This repository contains the following examples:
   - [x] [Recommended fillers](./examples/fillers/examples/recommended_fillers.rs)
   - [x] [Wallet management filler](./examples/fillers/examples/wallet_filler.rs)
 - [x] Layers
-  - [x] [Request/Response Logging Layer](./examples/layers/examples/logging.rs)
+  - [x] [Request / response logging layer](./examples/layers/examples/logging_layer.rs)
 - [x] Primitives
   - [x] [Bytes and address types](./examples/primitives/examples/bytes_and_address_types.rs)
   - [x] [Hashing functions](./examples/primitives/examples/hashing_functions.rs)
