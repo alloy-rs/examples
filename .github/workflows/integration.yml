@@ -60,7 +60,7 @@ jobs:
             | cut -f 1)
 
           # Use the commit hash to update the rev in Cargo.toml
-          sed -i '/alloy = { version = "0.1", features = \[/,/\] }/s/alloy = { version = "0.1",/alloy = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "'"$latest_alloy_commit"'",/' \
+          sed -i '/alloy = { version = "0.1.2", features = \[/,/\] }/s/alloy = { version = "0.1.2",/alloy = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "'"$latest_alloy_commit"'",/' \
           Cargo.toml
 
           # Update to the latest commit
