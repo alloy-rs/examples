@@ -19,7 +19,7 @@ async fn main() -> Result<()> {
     // Set up signer from the first default Anvil account (Alice).
     // [RISK WARNING! Writing a private key in the code file is insecure behavior.]
     // The following code is for testing only. Set up signer from private key, be aware of danger.
-    // let signer: PrivateKeySigner = "<THE_PRIVATE_KEY>".parse().expect("Failed to parse private key");
+    // let signer: PrivateKeySigner = "<PRIVATE_KEY>".parse().expect("should parse private key");
     let signer: PrivateKeySigner = anvil.keys()[0].clone().into();
     let wallet = EthereumWallet::from(signer);
 
