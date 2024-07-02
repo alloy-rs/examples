@@ -76,7 +76,7 @@ async fn main() -> Result<()> {
     assert!(get_color_result.len() == 1);
     for value in get_color_result {
         if let DynSolValue::Tuple(struct_as_tuple) = value {
-            println!("{:?}", struct_as_tuple);
+            println!("{struct_as_tuple:?}");
         }
     }
 
@@ -89,7 +89,7 @@ async fn main() -> Result<()> {
     // `DynSolValue::Uint`
     assert!(get_color_tuple_result.len() == 3);
     for value in get_color_tuple_result {
-        println!("{:?}", value);
+        println!("{value:?}");
     }
 
     Ok(())
