@@ -31,6 +31,7 @@ This repository contains the following examples:
   - [x] [Math operations](./examples/big-numbers/examples/math_operations.rs)
   - [x] [Math utilities](./examples/big-numbers/examples/math_utilities.rs)
 - [x] Contracts
+  - [x] [Interact using contract instance](./examples/contracts/examples/contract_instance.rs)
   - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
   - [x] [Deploy from bytecode](./examples/contracts/examples/deploy_from_bytecode.rs)
   - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
