@@ -31,10 +31,12 @@ This repository contains the following examples:
   - [x] [Math operations](./examples/big-numbers/examples/math_operations.rs)
   - [x] [Math utilities](./examples/big-numbers/examples/math_utilities.rs)
 - [x] Contracts
+  - [x] [Interact using contract instance](./examples/contracts/examples/contract_instance.rs)
   - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
   - [x] [Deploy from bytecode](./examples/contracts/examples/deploy_from_bytecode.rs)
   - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
   - [x] [Interact with ABI](./examples/contracts/examples/interact_with_abi.rs)
+  - [x] [DynSol return values](./examples/contracts/examples/dyn_sol_struct_tuples.rs)
 - [x] Fillers (Middleware)
   - [x] [Gas estimation filler](./examples/fillers/examples/gas_filler.rs)
   - [x] [Nonce management filler](./examples/fillers/examples/nonce_filler.rs)

@@ -1,0 +1,119 @@
+[
+    {
+        "type": "function",
+        "name": "colors",
+        "inputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "r",
+                "type": "uint8",
+                "internalType": "uint8"
+            },
+            {
+                "name": "g",
+                "type": "uint8",
+                "internalType": "uint8"
+            },
+            {
+                "name": "b",
+                "type": "uint8",
+                "internalType": "uint8"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "getColor",
+        "inputs": [
+            {
+                "name": "user",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "tuple",
+                "internalType": "struct Colors.Color",
+                "components": [
+                    {
+                        "name": "r",
+                        "type": "uint8",
+                        "internalType": "uint8"
+                    },
+                    {
+                        "name": "g",
+                        "type": "uint8",
+                        "internalType": "uint8"
+                    },
+                    {
+                        "name": "b",
+                        "type": "uint8",
+                        "internalType": "uint8"
+                    }
+                ]
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "getColorAsTuple",
+        "inputs": [
+            {
+                "name": "user",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint8",
+                "internalType": "uint8"
+            },
+            {
+                "name": "",
+                "type": "uint8",
+                "internalType": "uint8"
+            },
+            {
+                "name": "",
+                "type": "uint8",
+                "internalType": "uint8"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "setColor",
+        "inputs": [
+            {
+                "name": "r",
+                "type": "uint8",
+                "internalType": "uint8"
+            },
+            {
+                "name": "g",
+                "type": "uint8",
+                "internalType": "uint8"
+            },
+            {
+                "name": "b",
+                "type": "uint8",
+                "internalType": "uint8"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    }
+]
