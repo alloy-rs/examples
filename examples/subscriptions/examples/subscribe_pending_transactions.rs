@@ -1,5 +1,5 @@
-//! Example of subscribing and listening for pending transactions in the public mempool by WebSocket
-//! subscription.
+//! Example of subscribing and listening for pending transactions in the public mempool by
+//! `WebSocket` subscription.
 
 use alloy::providers::{Provider, ProviderBuilder, WsConnect};
 use eyre::Result;

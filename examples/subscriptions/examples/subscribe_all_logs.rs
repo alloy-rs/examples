@@ -1,4 +1,4 @@
-//! Example of subscribing and listening for all contract events by WebSocket subscription.
+//! Example of subscribing and listening for all contract events by `WebSocket` subscription.
 
 use alloy::{
     primitives::address,

@@ -24,8 +24,7 @@ async fn main() -> Result<()> {
     let bob = anvil.addresses()[1];
 
     // Create a sidecar with some data.
-    let sidecar: SidecarBuilder<SimpleCoder> =
-        SidecarBuilder::from_slice("Blobs are fun!".as_bytes());
+    let sidecar: SidecarBuilder<SimpleCoder> = SidecarBuilder::from_slice(b"Blobs are fun!");
     let sidecar = sidecar.build()?;
 
     // Build a transaction to send the sidecar from Alice to Bob.
