@@ -36,6 +36,7 @@ This repository contains the following examples:
   - [x] [Deploy from bytecode](./examples/contracts/examples/deploy_from_bytecode.rs)
   - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
   - [x] [Interact with ABI](./examples/contracts/examples/interact_with_abi.rs)
+  - [x] [DynSol return values](./examples/contracts/examples/dyn_sol_struct_tuples.rs)
 - [x] Fillers (Middleware)
   - [x] [Gas estimation filler](./examples/fillers/examples/gas_filler.rs)
   - [x] [Nonce management filler](./examples/fillers/examples/nonce_filler.rs)
