@@ -32,11 +32,12 @@ async fn main() -> Result<()> {
 
     println!("Anvil running at `{}`", anvil.endpoint());
 
-    // Deploy the contract.
+    // Deploy the `Counter` contract.
     let contract = Counter::deploy(&provider).await?;
 
     println!("Deployed contract at address: {}", contract.address());
 
+    // Set the number to 42.
     let builder = contract.setNumber(U256::from(42));
     let tx_hash = builder.send().await?.watch().await?;
 
