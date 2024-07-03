@@ -46,8 +46,13 @@ async fn main() -> Result<()> {
     )?;
     let deploy_tx = TransactionRequest::default().from(from).with_deploy_code(bytecode);
 
-    let contract_address =
-        provider.send_transaction(deploy_tx).await?.get_receipt().await?.contract_address.unwrap();
+    let contract_address = provider
+        .send_transaction(deploy_tx)
+        .await?
+        .get_receipt()
+        .await?
+        .contract_address
+        .expect("Failed to get contract address");
 
     // Get the contract abi.
     let path = std::env::current_dir()?.join("examples/contracts/examples/abi/Colors.json");

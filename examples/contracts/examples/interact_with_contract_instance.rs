@@ -35,27 +35,32 @@ async fn main() -> Result<()> {
     )?;
     let tx = TransactionRequest::default().with_deploy_code(bytecode);
 
-    let contract_address =
-        provider.send_transaction(tx).await?.get_receipt().await?.contract_address.unwrap();
+    let contract_address = provider
+        .send_transaction(tx)
+        .await?
+        .get_receipt()
+        .await?
+        .contract_address
+        .expect("Failed to get contract address");
 
     // Get the contract ABI.
     let path = std::env::current_dir()?.join("examples/contracts/examples/artifacts/Counter.json");
 
     // Read the artifact which contains `abi`, `bytecode`, `deployedBytecode` and `metadata`.
-    let artifact = std::fs::read(path).unwrap();
+    let artifact = std::fs::read(path).expect("Failed to read artifact");
     let json: serde_json::Value = serde_json::from_slice(&artifact)?;
 
     // Get `abi` from the artifact.
-    let abi_val = json.get("abi").unwrap();
-    let abi = serde_json::from_str(&abi_val.to_string())?;
+    let abi_value = json.get("abi").expect("Failed to get ABI from artifact");
+    let abi = serde_json::from_str(&abi_value.to_string())?;
 
     // Create a new `ContractInstance` of the `Counter` contract from the abi
     let contract: ContractInstance<Http<Client>, _, Ethereum> =
         ContractInstance::new(contract_address, provider.clone(), Interface::new(abi));
 
     // Set the number to 42.
-    let number = DynSolValue::from(U256::from(42));
-    let tx_hash = contract.function("setNumber", &[number])?.send().await?.watch().await?;
+    let number_value = DynSolValue::from(U256::from(42));
+    let tx_hash = contract.function("setNumber", &[number_value])?.send().await?.watch().await?;
 
     println!("Set number to 42: {tx_hash}");
 
@@ -65,8 +70,8 @@ async fn main() -> Result<()> {
     println!("Incremented number: {tx_hash}");
 
     // Retrieve the number, which should be 43.
-    let number = contract.function("number", &[])?.call().await?;
-    let number = number.first().unwrap().as_uint().unwrap().0;
+    let number_value = contract.function("number", &[])?.call().await?;
+    let number = number_value.first().unwrap().as_uint().unwrap().0;
     assert_eq!(U256::from(43), number);
 
     println!("Retrieved number: {number}");
