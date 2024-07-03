@@ -1,4 +1,4 @@
-//! Example of watching and polling for contract events by WebSocket subscription.
+//! Example of watching and polling for contract events by `WebSocket` subscription.
 
 use alloy::{
     node_bindings::Anvil,
