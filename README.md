@@ -100,7 +100,7 @@ This repository contains the following examples:
 - [ ] Advanced
   - [x] [AnyNetwork](./examples/advanced/examples/any_network.rs)
   - [ ] Tx types / RLP serialization
-  - [ ] Showcase json and dyn ABI encoding + sol_types static encoding
+  - [ ] Showcase json and [dyn](./examples/advanced/examples/encoding_dyn_abi.rs) ABI encoding + sol_types static encoding
 
 ## Contributing
 
