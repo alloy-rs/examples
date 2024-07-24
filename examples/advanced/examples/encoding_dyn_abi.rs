@@ -1,64 +1,93 @@
-//! Example of using `DynSolType` to encode and decode calldata
+//! EIP712 encoding and decoding via `dyn_abi`
 
 use alloy::{
     dyn_abi::{DynSolType, DynSolValue},
     hex,
-    primitives::{keccak256, Address, U256},
+    primitives::{keccak256, Address, FixedBytes, U256},
+    signers::{local::PrivateKeySigner, Signer},
 };
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // Function signature
-    let function_signature = "sampleMethod(address,uint256[],bytes,bool,(address,uint256),string)";
-
-    // Calculate function selector (first 4 bytes of the Keccak256 hash of the function signature)
-    let selector = &keccak256(function_signature.as_bytes())[0..4];
-
-    // Example input params
-    let recipient = Address::from([0x42; 20]);
-    let amounts = vec![U256::from(1e18 as u64), U256::from(2e18 as u64)];
-    let data = vec![0x13, 0x37];
-    let active = true;
-    let addr = Address::from([0x24; 20]);
-    let nonce = U256::from(42);
-    let some_metadata = "Alloy Gud".to_string();
-
-    let param_types = DynSolType::Tuple(vec![
-        DynSolType::Address,
-        DynSolType::Array(Box::new(DynSolType::Uint(256))),
-        DynSolType::Bytes,
-        DynSolType::Bool,
-        DynSolType::Tuple(vec![DynSolType::Address, DynSolType::Uint(256)]),
-        DynSolType::String,
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Define the EIP-712 domain
+    let domain_type = DynSolType::Tuple(vec![
+        DynSolType::String,    // name
+        DynSolType::String,    // version
+        DynSolType::Uint(256), // chainId
+        DynSolType::Address,   // verifyingContract
     ]);
 
-    let param_values = DynSolValue::Tuple(vec![
-        DynSolValue::Address(recipient),
-        DynSolValue::Array(amounts.into_iter().map(|a| DynSolValue::Uint(a, 256)).collect()),
-        DynSolValue::Bytes(data),
-        DynSolValue::Bool(active),
-        DynSolValue::Tuple(vec![DynSolValue::Address(addr), DynSolValue::Uint(nonce, 256)]),
-        DynSolValue::String(some_metadata),
+    let domain_value = DynSolValue::Tuple(vec![
+        DynSolValue::String("Alloy Gud".to_string()),
+        DynSolValue::String("1.0.1".to_string()),
+        DynSolValue::Uint(U256::from(1), 256),
+        DynSolValue::Address(Address::from([0x42; 20])),
     ]);
 
-    // Encode parameters via `abi_encode()`
-    let encoded_params = param_values.abi_encode();
+    // Define the Message type
+    let message_type = DynSolType::Tuple(vec![
+        DynSolType::Address, // from
+        DynSolType::Address, // to
+        DynSolType::String,  // contents
+    ]);
 
-    // Prepend function selector with encoded parameters to get full calldata
-    let mut full_calldata = selector.to_vec();
-    full_calldata.extend_from_slice(&encoded_params);
+    let message_value = DynSolValue::Tuple(vec![
+        DynSolValue::Address(Address::from([0x11; 20])),
+        DynSolValue::Address(Address::from([0x22; 20])),
+        DynSolValue::String("EIP-712 encoding".to_string()),
+    ]);
 
-    println!("Function Signature: {}", function_signature);
-    println!("Function Selector: 0x{}", hex::encode(selector));
-    println!("Calldata: 0x{}", hex::encode(&full_calldata));
+    // Encode the domain and message
+    let encoded_domain = domain_value.abi_encode();
+    let encoded_message = message_value.abi_encode();
 
-    // Decode parameters (excluding the function selector)
-    let decoded = param_types.abi_decode(&encoded_params)?;
-    println!("\nDecoded Parameters:");
-    if let DynSolValue::Tuple(values) = decoded {
-        for (i, value) in values.iter().enumerate() {
-            println!("Param {}: {:?}", i, value);
-        }
-    }
+    println!("Encoded Domain: 0x{}", hex::encode(&encoded_domain));
+    println!("Encoded Message: 0x{}", hex::encode(&encoded_message));
+
+    // Decode the domain and message
+    let decoded_domain = domain_type.abi_decode(&encoded_domain)?;
+    let decoded_message = message_type.abi_decode(&encoded_message)?;
+
+    println!("\nDecoded Domain:");
+    print_tuple(&decoded_domain, &["name", "version", "chainId", "verifyingContract"]);
+
+    println!("\nDecoded Message:");
+    print_tuple(&decoded_message, &["from", "to", "contents"]);
+
+    // Calculate EIP-712 hash
+    let domain_separator = keccak256(&encoded_domain);
+    let message_hash = keccak256(&encoded_message);
+    let eip712_hash =
+        keccak256(&[&[0x19, 0x01], &domain_separator[..], &message_hash[..]].concat());
+
+    println!("\nEIP-712 Hash: 0x{}", hex::encode(eip712_hash));
+
+    // Signing the hash via random signer
+    // Ref: examples/wallets/examples/sign_message.rs
+
+    // Create a signer
+    let wallet = PrivateKeySigner::random();
+    println!("\nSigner address: {}", wallet.address());
+
+    // Sign the EIP-712 hash
+    let signature = wallet.sign_hash(&FixedBytes::from(eip712_hash)).await?;
+    println!("Signature: 0x{}", hex::encode(signature.as_bytes().to_vec()));
+
+    // Verify the signature
+    let recovered_address =
+        signature.recover_address_from_prehash(&FixedBytes::from(eip712_hash))?;
+    println!("Recovered address: {}", recovered_address);
+
+    assert_eq!(recovered_address, wallet.address(), "Signature verification failed");
+    println!("Signature verified successfully!");
 
     Ok(())
+}
+
+fn print_tuple(value: &DynSolValue, field_names: &[&str]) {
+    if let DynSolValue::Tuple(values) = value {
+        for (value, name) in values.iter().zip(field_names.iter()) {
+            println!("  {}: {:?}", name, value);
+        }
+    }
 }
