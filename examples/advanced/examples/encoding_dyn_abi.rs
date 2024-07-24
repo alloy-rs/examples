@@ -1,4 +1,5 @@
 //! EIP712 encoding and decoding via `dyn_abi`
+//! https://eips.ethereum.org/EIPS/eip-712
 
 use alloy::{
     dyn_abi::{DynSolType, DynSolValue},
@@ -9,7 +10,7 @@ use alloy::{
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // Define the EIP-712 domain
+    // EIP-712 domain
     let domain_type = DynSolType::Tuple(vec![
         DynSolType::String,    // name
         DynSolType::String,    // version
@@ -24,13 +25,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         DynSolValue::Address(Address::from([0x42; 20])),
     ]);
 
-    // Define the Message type
+    // Message type (sample message)
     let message_type = DynSolType::Tuple(vec![
         DynSolType::Address, // from
         DynSolType::Address, // to
         DynSolType::String,  // contents
     ]);
 
+    // Random values
     let message_value = DynSolValue::Tuple(vec![
         DynSolValue::Address(Address::from([0x11; 20])),
         DynSolValue::Address(Address::from([0x22; 20])),
@@ -84,6 +86,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
+/// Utility function to print the decoded data.
 fn print_tuple(value: &DynSolValue, field_names: &[&str]) {
     if let DynSolValue::Tuple(values) = value {
         for (value, name) in values.iter().zip(field_names.iter()) {
