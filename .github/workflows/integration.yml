@@ -28,7 +28,6 @@ jobs:
             | grep -E '^ ' \
             | grep -v \
             -e 'any_network' \
-            -e 'encoding_dyn_abi' \
             -e 'trezor_signer' \
             -e 'ledger_signer' \
             -e 'yubi_signer' \
