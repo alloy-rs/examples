@@ -4,7 +4,7 @@
 use alloy::{
     dyn_abi::{DynSolType, DynSolValue},
     hex,
-    primitives::{keccak256, Address, FixedBytes, U256},
+    primitives::{keccak256, Address, U256},
     signers::{local::PrivateKeySigner, Signer},
 };
 
@@ -72,12 +72,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("\nSigner address: {}", wallet.address());
 
     // Sign the EIP-712 hash
-    let signature = wallet.sign_hash(&FixedBytes::from(eip712_hash)).await?;
-    println!("Signature: 0x{}", hex::encode(signature.as_bytes().to_vec()));
+    let signature = wallet.sign_hash(&eip712_hash).await?;
+    println!("Signature: 0x{}", hex::encode(signature.as_bytes()));
 
     // Verify the signature
-    let recovered_address =
-        signature.recover_address_from_prehash(&FixedBytes::from(eip712_hash))?;
+    let recovered_address = signature.recover_address_from_prehash(&eip712_hash)?;
     println!("Recovered address: {}", recovered_address);
 
     assert_eq!(recovered_address, wallet.address(), "Signature verification failed");
