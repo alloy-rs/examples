@@ -14,7 +14,7 @@ sol! {
 }
 
 // Type aliases
-type B32 = sol! { bytes32 };
+type Bytes32 = sol! { bytes32 };
 
 // This is equivalent to the following:
 // type B32 = alloy_sol_types::sol_data::FixedBytes<32>;
@@ -24,7 +24,7 @@ type CustomArrayOf<T> = sol! { T[] };
 type CustomTuple = sol! { tuple(address, bytes, string) };
 
 fn main() -> Result<()> {
-    let _b32_type = B32::abi_encode(&[0; 32]);
+    let _b32_type = Bytes32::abi_encode(&[0; 32]);
 
     let _custom_type = CustomType(U256::from(1));
 

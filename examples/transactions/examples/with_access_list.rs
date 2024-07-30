@@ -53,9 +53,9 @@ async fn main() -> Result<()> {
     println!("Transaction hash: {tx_hash}");
 
     // Check the value of the contract.
-    let value = contract.getValue().call().await?;
+    let value = contract.getValue().call().await?._0;
 
-    assert_eq!(value._0, "hello".to_string());
+    assert_eq!(value, "hello");
 
     Ok(())
 }
