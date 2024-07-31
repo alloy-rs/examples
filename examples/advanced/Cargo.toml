@@ -18,3 +18,4 @@ alloy.workspace = true
 eyre.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
 serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
