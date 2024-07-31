@@ -1,6 +1,6 @@
 //! Example of generating code from ABI file using the `sol!` macro to interact with the contract.
 
-use alloy::{node_bindings::Anvil, providers::ProviderBuilder, sol};
+use alloy::{node_bindings::Anvil, primitives::address, providers::ProviderBuilder, sol};
 use eyre::Result;
 
 // Codegen from ABI file to interact with the contract.
@@ -22,12 +22,12 @@ async fn main() -> Result<()> {
     let provider = ProviderBuilder::new().on_http(rpc_url);
 
     // Create a contract instance.
-    let contract = IWETH9::new("0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2".parse()?, provider);
+    let contract = IWETH9::new(address!("C02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"), provider);
 
     // Call the contract, retrieve the total supply.
-    let IWETH9::totalSupplyReturn { _0 } = contract.totalSupply().call().await?;
+    let total_supply = contract.totalSupply().call().await?._0;
 
-    println!("WETH total supply is {_0}");
+    println!("WETH total supply is {total_supply}");
 
     Ok(())
 }
