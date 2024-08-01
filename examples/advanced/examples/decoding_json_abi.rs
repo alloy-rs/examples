@@ -15,7 +15,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if let Some(constructor) = &abi.constructor {
         println!("\n>> Constructor:");
         println!("  Inputs: {:?}", constructor.inputs);
-        println!("  State Mutability: {:?}", constructor.state_mutability);
+        println!("  State mutability: {:?}", constructor.state_mutability);
     }
 
     println!("\n=========\n");
@@ -27,7 +27,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         for function in functions {
             println!("    Inputs: {:?}", function.inputs);
             println!("    Outputs: {:?}", function.outputs);
-            println!("    State Mutability: {:?}", function.state_mutability);
+            println!("    State mutability: {:?}", function.state_mutability);
         }
     }
 

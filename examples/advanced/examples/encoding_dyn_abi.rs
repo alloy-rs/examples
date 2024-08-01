@@ -18,7 +18,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     ]);
 
     let domain_value = DynSolValue::Tuple(vec![
-        DynSolValue::String("Alloy Gud".to_string()),
+        DynSolValue::String("Alloy".to_string()),
         DynSolValue::String("1.0.1".to_string()),
         DynSolValue::Uint(U256::from(1), 256),
         DynSolValue::Address(Address::from([0x42; 20])),
@@ -42,17 +42,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let encoded_domain = domain_value.abi_encode();
     let encoded_message = message_value.abi_encode();
 
-    println!("Encoded Domain: 0x{}", hex::encode(&encoded_domain));
-    println!("Encoded Message: 0x{}", hex::encode(&encoded_message));
+    println!("Encoded domain: 0x{}", hex::encode(&encoded_domain));
+    println!("Encoded message: 0x{}", hex::encode(&encoded_message));
 
     // Decode the domain and message
     let decoded_domain = domain_type.abi_decode(&encoded_domain)?;
     let decoded_message = message_type.abi_decode(&encoded_message)?;
 
-    println!("\nDecoded Domain:");
+    println!("\nDecoded domain:");
     print_tuple(&decoded_domain, &["name", "version", "chainId", "verifyingContract"]);
 
-    println!("\nDecoded Message:");
+    println!("\nDecoded message:");
     print_tuple(&decoded_message, &["from", "to", "contents"]);
 
     // Calculate EIP-712 hash
@@ -60,7 +60,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let message_hash = keccak256(&encoded_message);
     let eip712_hash = keccak256([&[0x19, 0x01], &domain_separator[..], &message_hash[..]].concat());
 
-    println!("\nEIP-712 Hash: 0x{}", hex::encode(eip712_hash));
+    println!("\nEIP-712 hash: 0x{}", hex::encode(eip712_hash));
 
     // Signing the hash via random signer
     // Ref: examples/wallets/examples/sign_message.rs
