@@ -1,4 +1,4 @@
-//! Example for deserializing ABI using JsonAbi
+//! Example for deserializing ABI using `json_abi`.
 
 use alloy::json_abi::JsonAbi;
 
@@ -18,9 +18,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         println!("  State Mutability: {:?}", constructor.state_mutability);
     }
 
-    println!("");
-    println!("=========");
-    println!("");
+    println!("\n=========\n");
 
     // Functions
     println!("Functions:");
@@ -33,9 +31,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
-    println!("");
-    println!("=========");
-    println!("");
+    println!("\n=========\n");
 
     // Events
     println!("Events:");
@@ -47,9 +43,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
-    println!("");
-    println!("=========");
-    println!("");
+    println!("\n=========\n");
 
     // Errors
     println!("Errors:");
@@ -60,9 +54,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
-    println!("");
-    println!("=========");
-    println!("");
+    println!("\n=========\n");
 
     // Example of working with a specific function
     if let Some(add_collateral) = abi.functions.get("addCollateral").and_then(|f| f.first()) {

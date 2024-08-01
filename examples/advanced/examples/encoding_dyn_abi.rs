@@ -58,8 +58,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Calculate EIP-712 hash
     let domain_separator = keccak256(&encoded_domain);
     let message_hash = keccak256(&encoded_message);
-    let eip712_hash =
-        keccak256(&[&[0x19, 0x01], &domain_separator[..], &message_hash[..]].concat());
+    let eip712_hash = keccak256([&[0x19, 0x01], &domain_separator[..], &message_hash[..]].concat());
 
     println!("\nEIP-712 Hash: 0x{}", hex::encode(eip712_hash));
 

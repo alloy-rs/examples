@@ -1,4 +1,4 @@
-//! Example for encoding calldata via sol!
+//! Example for static encoding calldata via `sol!`
 
 use std::str::FromStr;
 
@@ -42,7 +42,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let swap_data =
         swapExactTokensForTokensCall::new((amount_in, amount_out_min, path, to, deadline));
 
-    let encoded = hex::encode(&swapExactTokensForTokensCall::abi_encode(&swap_data));
+    let encoded = hex::encode(swapExactTokensForTokensCall::abi_encode(&swap_data));
 
     println!("Encoded: 0x{}", encoded);
 
