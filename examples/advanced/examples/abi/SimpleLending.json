@@ -1,0 +1,165 @@
+[
+    {
+        "type": "constructor",
+        "inputs": [
+            {
+                "name": "owner",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "_collaterals",
+                "type": "tuple[]",
+                "internalType": "struct ALP.CollateralInput[]",
+                "components": [
+                    {
+                        "name": "asset",
+                        "type": "address",
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ]
+            },
+            {
+                "name": "_debtAsset",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "_leverageFactor",
+                "type": "uint256",
+                "internalType": "uint256"
+            },
+            {
+                "name": "degenMode",
+                "type": "bool",
+                "internalType": "bool"
+            }
+        ],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "addCollateral",
+        "inputs": [
+            {
+                "name": "asset",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "amount",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "closePosition",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "getRate",
+        "inputs": [
+            {
+                "name": "_assetBase",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "_assetQuote",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "_amount",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "event",
+        "name": "PositionCreated",
+        "inputs": [
+            {
+                "name": "owner",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "collateralAssets",
+                "type": "address[]",
+                "indexed": false,
+                "internalType": "address[]"
+            },
+            {
+                "name": "collateralAmounts",
+                "type": "uint256[]",
+                "indexed": false,
+                "internalType": "uint256[]"
+            },
+            {
+                "name": "debtAsset",
+                "type": "address",
+                "indexed": false,
+                "internalType": "address"
+            },
+            {
+                "name": "debtAmount",
+                "type": "uint256",
+                "indexed": false,
+                "internalType": "uint256"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "CollateralAdded",
+        "inputs": [
+            {
+                "name": "asset",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "amount",
+                "type": "uint256",
+                "indexed": false,
+                "internalType": "uint256"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "error",
+        "name": "CannotRepay",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InsufficientCollateral",
+        "inputs": []
+    }
+]

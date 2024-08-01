@@ -97,10 +97,11 @@ This repository contains the following examples:
   - [x] [Yubi signer](./examples/wallets/examples/yubi_signer.rs)
   - [x] [Keystore signer](./examples/wallets/examples/keystore_signer.rs)
   - [x] [Create keystore](./examples/wallets/examples/create_keystore.rs)
-- [ ] Advanced
+- [x] Advanced
   - [x] [AnyNetwork](./examples/advanced/examples/any_network.rs)
-  - [ ] Tx types / RLP serialization
-  - [ ] Showcase json and dyn ABI encoding + sol_types static encoding
+  - [x] [Decoding with `json_abi`](./examples/advanced/examples/decoding_json_abi.rs)
+  - [x] [Encoding with `dyn_abi`](./examples/advanced/examples/encoding_dyn_abi.rs)
+  - [x] [Static encoding with `sol!`](./examples/advanced/examples/encoding_sol_static.rs)
 
 ## Contributing
 
