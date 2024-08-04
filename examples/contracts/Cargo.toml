@@ -14,7 +14,9 @@ workspace = true
 
 [dev-dependencies]
 alloy.workspace = true
+alloy-json-rpc = "0.2.1"
 
 eyre.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
 serde_json.workspace = true
+
