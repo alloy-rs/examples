@@ -1,9 +1,8 @@
 //! This example demonstrates how to decode a custom JSON RPC error.
 
 use alloy::{primitives::U256, rpc::json_rpc::ErrorPayload, sol};
-use serde_json;
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn main() -> eyre::Result<()> {
     // Define a custom error using the sol! macro
     sol! {
         library Errors {
