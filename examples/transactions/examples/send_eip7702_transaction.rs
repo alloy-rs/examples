@@ -81,9 +81,9 @@ async fn main() -> Result<()> {
     tx.tx().encode_with_signature(tx.signature(), &mut encoded, false);
     let receipt = provider.send_raw_transaction(&encoded).await?.get_receipt().await?;
 
-    assert!(receipt.status());
-    assert!(receipt.inner.logs().len() == 1);
-    assert!(receipt.inner.logs()[0].address() == authority.address());
+    assert_eq!(receipt.status(), true);
+    assert_eq!(receipt.inner.logs().len(), 1);
+    assert_eq!(receipt.inner.logs()[0].address(), authority.address());
 
     Ok(())
 }
