@@ -32,7 +32,7 @@ async fn main() -> Result<()> {
 
     let handle = tokio::spawn(async move {
         while let Some(block) = stream.next().await {
-            println!("{}", block.header.number.expect("Failed to get block number"));
+            println!("{}", block.header.number);
         }
     });
 

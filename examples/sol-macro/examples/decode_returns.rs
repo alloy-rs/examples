@@ -2,7 +2,7 @@
 
 use alloy::{
     hex,
-    primitives::{I256, U256},
+    primitives::{Uint, I256, U256},
     sol,
     sol_types::SolCall,
 };
@@ -31,11 +31,11 @@ fn main() -> Result<()> {
     assert_eq!(
         result,
         Ok(getRoundDataReturn {
-            roundId: 110680464442257327894_u128,
+            roundId: Uint::<80, 2>::from(110680464442257327894_u128),
             answer: I256::from_dec_str("352098000000")?,
             startedAt: U256::from(1718182523),
             updatedAt: U256::from(1718182523),
-            answeredInRound: 110680464442257327894_u128,
+            answeredInRound: Uint::<80, 2>::from(110680464442257327894_u128),
         })
     );
 
