@@ -94,7 +94,7 @@ significant_drop_in_scrutinee = "allow"
 significant_drop_tightening = "allow"
 
 [workspace.dependencies]
-alloy = { version = "0.2.1", features = [
+alloy = { version = "0.3.0", features = [
     "full",
     "node-bindings",
     "rpc-types-debug",
@@ -117,6 +117,3 @@ tokio = "1.38"
 eyre = "0.6"
 serde = "1.0"
 serde_json = "1.0"
-
-[patch.crates-io]
-alloy = { git = "https://github.com/alloy-rs/alloy", rev = "f5eaddf" }

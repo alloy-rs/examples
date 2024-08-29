@@ -84,6 +84,7 @@ This repository contains the following examples:
   - [x] [Send EIP-1559 transaction](./examples/transactions/examples/send_eip1559_transaction.rs)
   - [x] [Send legacy transaction](./examples/transactions/examples/send_legacy_transaction.rs)
   - [x] [Send EIP-4844 transaction](./examples/transactions/examples/send_eip4844_transaction.rs)
+  - [x] [Send EIP-7702 transaction](./examples/transactions/examples/send_eip7702_transaction.rs)
   - [x] [Send private transaction using Flashbots Protect](./examples/transactions/examples/send_private_transaction.rs)
   - [x] [Send transaction with access list](./examples/transactions/examples/with_access_list.rs)
 - [x] Wallets

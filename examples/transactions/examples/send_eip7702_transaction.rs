@@ -41,9 +41,6 @@ async fn main() -> Result<()> {
 
     let contract = Log::deploy(&provider).await?;
 
-    println!("Deployed contract address: {}", contract.address());
-    println!("Setting code for address: {}", authority.address());
-
     let auth_7702 = Authorization {
         chain_id: U256::from(31337),
         address: *contract.address(), /* Reference to the contract that will be set as code for
