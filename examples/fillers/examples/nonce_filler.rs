@@ -35,7 +35,13 @@ async fn main() -> Result<()> {
         // Add the `NonceFiller` to the provider.
         // It is generally recommended to use the `.with_recommended_fillers()` method, which
         // includes the `NonceFiller`.
-        .with_nonce_management()
+        //
+        // The `NonceFiller` has two types: `Cached` and `Simple`.
+        // Unlike `Cached`, `Simple` does not store the transaction count locally,
+        // which results in more frequent calls to the provider, but it is more resilient to chain
+        // reorganizations.
+        .with_cached_nonce_management()
+        // .with_simple_nonce_management()
         .wallet(wallet)
         .on_http(rpc_url);
 
