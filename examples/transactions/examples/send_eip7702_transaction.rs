@@ -4,7 +4,7 @@ use alloy::{
     eips::eip7702::Authorization,
     network::TxSignerSync,
     node_bindings::Anvil,
-    primitives::{TxKind, U256},
+    primitives::U256,
     providers::{Provider, ProviderBuilder},
     signers::{local::LocalSigner, SignerSync},
     sol,
@@ -61,7 +61,7 @@ async fn main() -> Result<()> {
 
     // Build the transaction
     let mut tx = TxEip7702 {
-        to: TxKind::Call(authority.address()),
+        to: authority.address(),
         authorization_list: vec![auth],
         input: emit_hello_calldata.to_owned(),
         nonce: provider.get_transaction_count(sender.address()).await?,
