@@ -3,7 +3,7 @@
 use alloy::{
     consensus::{SidecarBuilder, SimpleCoder},
     eips::eip4844::DATA_GAS_PER_BLOB,
-    network::TransactionBuilder,
+    network::{TransactionBuilder, TransactionBuilder4844},
     node_bindings::Anvil,
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,

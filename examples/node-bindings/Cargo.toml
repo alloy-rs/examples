@@ -1,5 +1,5 @@
 [package]
-name = "examples-anvil"
+name = "examples-node-bindings"
 publish.workspace = true
 version.workspace = true
 edition.workspace = true

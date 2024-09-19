@@ -20,10 +20,6 @@ cargo run --example mnemonic_signer
 
 This repository contains the following examples:
 
-- [x] Anvil
-  - [x] [Deploy contract](./examples/anvil/examples/deploy_contract_anvil.rs)
-  - [x] [Fork](./examples/anvil/examples/fork_anvil.rs)
-  - [x] [Local](./examples/anvil/examples/local_anvil.rs)
 - [x] Big numbers
   - [x] [Comparison and equivalence](./examples/big-numbers/examples/comparison_equivalence.rs)
   - [x] [Conversion](./examples/big-numbers/examples/conversion.rs)
@@ -45,6 +41,14 @@ This repository contains the following examples:
   - [x] [Wallet management filler](./examples/fillers/examples/wallet_filler.rs)
 - [x] Layers
   - [x] [Request / response logging layer](./examples/layers/examples/logging_layer.rs)
+- [x] Node Bindings
+  - [x] [Deploy contract on local Anvil instance](./examples/node-bindings/examples/anvil_deploy_contract.rs)
+  - [x] [Fork instance on Anvil](./examples/node-bindings/examples/anvil_fork_instance.rs)
+  - [x] [Fork provider on Anvil](./examples/node-bindings/examples/anvil_fork_provider.rs)
+  - [x] [Local instance on Anvil](./examples/node-bindings/examples/anvil_local_instance.rs)
+  - [x] [Local provider on Anvil](./examples/node-bindings/examples/anvil_local_provider.rs)
+  - [x] [Local provider on Geth](./examples/node-bindings/examples/geth_local_instance.rs)
+  - [x] [Local provider on Reth](./examples/node-bindings/examples/reth_local_instance.rs)
 - [x] Primitives
   - [x] [Bytes and address types](./examples/primitives/examples/bytes_and_address_types.rs)
   - [x] [Hashing functions](./examples/primitives/examples/hashing_functions.rs)
