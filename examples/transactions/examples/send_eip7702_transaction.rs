@@ -1,4 +1,5 @@
-//! This example demonstrates how to send an EIP7702 transaction.
+//! Example showing how to send an [EIP-7702](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7702.md) transaction.
+
 use alloy::{
     eips::eip7702::Authorization,
     network::{EthereumWallet, TransactionBuilder, TransactionBuilder7702},
@@ -90,8 +91,6 @@ async fn main() -> Result<()> {
         "Transaction included in block {}",
         receipt.block_number.expect("Failed to get block number")
     );
-
-    println!("{:#?}", receipt);
 
     assert!(receipt.status());
     assert_eq!(receipt.from, bob.address());
