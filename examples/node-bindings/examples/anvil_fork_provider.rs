@@ -1,4 +1,4 @@
-//! Example of spinning up a forked Anvil node using the [ProviderBuilder].
+//! Example of spinning up a forked Anvil node using the [`ProviderBuilder`].
 
 use alloy::providers::{ext::AnvilApi, ProviderBuilder};
 use eyre::Result;

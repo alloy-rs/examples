@@ -10,7 +10,7 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Spin up a local Geth node.
     // Ensure `geth` is available in $PATH.
-    let geth = Geth::new().chain_id(1337).port(8545 as u16).authrpc_port(8551).spawn();
+    let geth = Geth::new().chain_id(1337).port(8545_u16).authrpc_port(8551).spawn();
     let provider = ProviderBuilder::new().on_http(geth.endpoint().parse()?);
 
     let chain_id = provider.get_chain_id().await?;

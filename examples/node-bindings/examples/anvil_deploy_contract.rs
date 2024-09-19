@@ -1,4 +1,4 @@
-//! Example of deploying a contract to a local Anvil node using the [ProviderBuilder].
+//! Example of deploying a contract to a local Anvil node using the [`ProviderBuilder`].
 
 use alloy::{primitives::U256, providers::ProviderBuilder, sol};
 use eyre::Result;
