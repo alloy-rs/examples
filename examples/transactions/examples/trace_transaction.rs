@@ -1,7 +1,6 @@
 //! Example of how to trace a transaction using `trace_transaction`.
 
 use alloy::{
-    node_bindings::Anvil,
     primitives::b256,
     providers::{ext::DebugApi, ProviderBuilder},
     rpc::types::trace::geth::{
@@ -15,11 +14,8 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
-
-    // Create a provider.
-    let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new().on_http(rpc_url);
+    let rpc_url = "https://eth.merkle.io";
+    let provider = ProviderBuilder::new().on_anvil_with_config(|anvil| anvil.fork(rpc_url));
 
     // Hash of the tx we want to trace.
     let hash = b256!("97a02abf405d36939e5b232a5d4ef5206980c5a6661845436058f30600c52df7");

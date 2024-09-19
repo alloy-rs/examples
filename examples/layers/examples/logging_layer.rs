@@ -60,9 +60,7 @@ where
 
         Box::pin(async move {
             let res = fut.await;
-
             println!("Response: {res:?}");
-
             res
         })
     }
@@ -70,9 +68,15 @@ where
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    // Spin up a local Anvil node.
+    // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().spawn();
-    let client = ClientBuilder::default().layer(LoggingLayer).http(anvil.endpoint_url());
 
+    // Create a new client with the logging layer.
+    let rpc_url = anvil.endpoint_url();
+    let client = ClientBuilder::default().layer(LoggingLayer).http(rpc_url);
+
+    // Create a new provider with the client.
     let provider = ProviderBuilder::new().on_client(client);
 
     for _ in 0..10 {

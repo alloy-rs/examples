@@ -24,7 +24,7 @@ async fn main() -> Result<()> {
     let wallet = EthereumWallet::from(signer);
 
     // Create a provider with the wallet.
-    let rpc_url = anvil.endpoint().parse()?;
+    let rpc_url = anvil.endpoint_url();
     let provider =
         ProviderBuilder::new().with_recommended_fillers().wallet(wallet).on_http(rpc_url);
 

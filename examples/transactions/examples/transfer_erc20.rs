@@ -1,6 +1,10 @@
 //! Example of how to transfer ERC20 tokens from one account to another.
 
-use alloy::{node_bindings::Anvil, primitives::U256, providers::ProviderBuilder, sol};
+use alloy::{
+    primitives::U256,
+    providers::{Provider, ProviderBuilder},
+    sol,
+};
 use eyre::Result;
 
 // Codegen from artifact.
@@ -15,15 +19,15 @@ sol!(
 async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
-
-    // Create a provider.
-    let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new().on_http(rpc_url);
+    let rpc_url = "https://eth.merkle.io";
+    let provider = ProviderBuilder::new()
+        .with_recommended_fillers()
+        .on_anvil_with_wallet_and_config(|anvil| anvil.fork(rpc_url));
 
     // Create two users, Alice and Bob.
-    let alice = anvil.addresses()[0];
-    let bob = anvil.addresses()[1];
+    let accounts = provider.get_accounts().await?;
+    let alice = accounts[0];
+    let bob = accounts[1];
 
     // Deploy the `ERC20Example` contract.
     let contract = ERC20Example::deploy(provider).await?;

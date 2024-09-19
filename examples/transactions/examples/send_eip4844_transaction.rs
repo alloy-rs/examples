@@ -4,7 +4,6 @@ use alloy::{
     consensus::{SidecarBuilder, SimpleCoder},
     eips::eip4844::DATA_GAS_PER_BLOB,
     network::{TransactionBuilder, TransactionBuilder4844},
-    node_bindings::Anvil,
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
 };
@@ -14,14 +13,13 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Spin up a local Anvil node with the Cancun hardfork enabled.
     // Ensure `anvil` is available in $PATH.
-    let anvil = Anvil::new().args(["--hardfork", "cancun"]).try_spawn()?;
-
-    // Create a provider.
-    let provider = ProviderBuilder::new().on_builtin(&anvil.endpoint()).await?;
+    let provider =
+        ProviderBuilder::new().on_anvil_with_config(|anvil| anvil.args(["--hardfork", "cancun"]));
 
     // Create two users, Alice and Bob.
-    let alice = anvil.addresses()[0];
-    let bob = anvil.addresses()[1];
+    let accounts = provider.get_accounts().await?;
+    let alice = accounts[0];
+    let bob = accounts[1];
 
     // Create a sidecar with some data.
     let sidecar: SidecarBuilder<SimpleCoder> = SidecarBuilder::from_slice(b"Blobs are fun!");

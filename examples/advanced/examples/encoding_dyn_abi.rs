@@ -1,4 +1,4 @@
-//! [EIP712](https://eips.ethereum.org/EIPS/eip-712) encoding and decoding via `dyn_abi`
+//! Example of [EIP712](https://eips.ethereum.org/EIPS/eip-712) encoding and decoding via `dyn_abi`.
 
 use alloy::{
     dyn_abi::{DynSolType, DynSolValue},

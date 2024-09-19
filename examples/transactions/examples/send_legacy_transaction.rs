@@ -2,7 +2,6 @@
 
 use alloy::{
     network::TransactionBuilder,
-    node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
@@ -11,17 +10,14 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Spin up a local Anvil node.
-    // Ensure `anvil` is available in $PATH.
-    let anvil = Anvil::new().try_spawn()?;
-
-    // Create a provider.
-    let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new().on_http(rpc_url);
+    // // Spin up a local Anvil node.
+    // // Ensure `anvil` is available in $PATH.
+    let provider = ProviderBuilder::new().on_anvil_with_wallet();
 
     // Create two users, Alice and Bob.
-    let alice = anvil.addresses()[0];
-    let bob = anvil.addresses()[1];
+    let accounts = provider.get_accounts().await?;
+    let alice = accounts[0];
+    let bob = accounts[1];
 
     // Build a transaction to send 100 wei from Alice to Bob.
     // The `from` field is automatically filled to the first signer's address (Alice).

@@ -1,6 +1,6 @@
 //! Example showing how to decode events and errors from a contract using the `sol!` macro.
 
-use alloy::{node_bindings::Anvil, providers::ProviderBuilder, sol};
+use alloy::{providers::ProviderBuilder, sol};
 use eyre::Result;
 use futures_util::StreamExt;
 
@@ -45,11 +45,8 @@ sol!(
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
-    let anvil = Anvil::new().try_spawn()?;
-
-    // Create a provider with gas estimation.
-    let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new().with_gas_estimation().on_http(rpc_url);
+    // Ensure `anvil` is available in $PATH.
+    let provider = ProviderBuilder::new().with_gas_estimation().on_anvil();
 
     // Deploy the `Counter` contract.
     let contract = CounterWithError::deploy(provider.clone()).await?;

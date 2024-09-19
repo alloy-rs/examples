@@ -14,6 +14,8 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    // Spin up a local Anvil node.
+    // Ensure `anvil` is available in $PATH.
     let provider = ProviderBuilder::new().with_recommended_fillers().on_anvil_with_wallet();
 
     // Deploy the `Counter` contract from bytecode at runtime.
@@ -76,7 +78,7 @@ async fn main() -> Result<()> {
 
     println!("Retrieved number: {number}");
 
-    // Try calling a function that does not exist
+    // Try calling a function that does not exist.
     let unknown_function = contract.function("decrement", &[]).unwrap_err();
     assert!(unknown_function.to_string().contains("function decrement does not exist"));
 

@@ -11,14 +11,12 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Set up the HTTP transport which is consumed by the RPC client.
-    let rpc_url = "https://eth.merkle.io".parse()?;
-
     // Instantiate the application by acquiring a lock on the Trezor device.
     let signer = TrezorSigner::new(HDPath::TrezorLive(0), Some(1)).await?;
     let wallet = EthereumWallet::from(signer);
 
     // Create a provider with the wallet.
+    let rpc_url = "https://eth.merkle.io".parse()?;
     let provider =
         ProviderBuilder::new().with_recommended_fillers().wallet(wallet).on_http(rpc_url);
 
