@@ -47,6 +47,8 @@ This repository contains the following examples:
   - [x] [Fork provider on Anvil](./examples/node-bindings/examples/anvil_fork_provider.rs)
   - [x] [Local instance on Anvil](./examples/node-bindings/examples/anvil_local_instance.rs)
   - [x] [Local provider on Anvil](./examples/node-bindings/examples/anvil_local_provider.rs)
+  - [x] [Local provider on Geth](./examples/node-bindings/examples/geth_local_instance.rs)
+  - [x] [Local provider on Reth](./examples/node-bindings/examples/reth_local_instance.rs)
 - [x] Primitives
   - [x] [Bytes and address types](./examples/primitives/examples/bytes_and_address_types.rs)
   - [x] [Hashing functions](./examples/primitives/examples/hashing_functions.rs)
