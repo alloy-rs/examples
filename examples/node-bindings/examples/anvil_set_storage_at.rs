@@ -32,7 +32,7 @@ async fn main() -> Result<()> {
 
     let iweth = IERC20::new(WETH_ADDR, provider.clone());
 
-    // random empty account
+    // Random empty account.
     let account = address!("F605F9d1cB055E87E30bcAEe4CB9389a35aBe8Ff");
 
     let balance_before = iweth.balanceOf(account).call().await?._0;
