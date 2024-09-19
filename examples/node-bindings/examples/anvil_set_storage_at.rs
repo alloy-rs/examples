@@ -37,6 +37,7 @@ async fn main() -> Result<()> {
 
     let balance_before = iweth.balanceOf(account).call().await?._0;
     println!("WETH balance before: {}", balance_before);
+    assert_eq!(balance_before, U256::ZERO);
 
     // Mock WETH balance using the Anvil API.
     let hashed_slot = keccak256((account, U256::from(3)).abi_encode());
@@ -45,6 +46,7 @@ async fn main() -> Result<()> {
 
     let balance_after = iweth.balanceOf(account).call().await?._0;
     println!("WETH balance after: {}", balance_after);
+    assert_eq!(balance_after, one_ether);
 
     Ok(())
 }
