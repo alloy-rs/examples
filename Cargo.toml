@@ -94,7 +94,7 @@ significant_drop_in_scrutinee = "allow"
 significant_drop_tightening = "allow"
 
 [workspace.dependencies]
-alloy = { version = "0.3.5", features = [
+alloy = { version = "0.3.6", features = [
     "full",
     "node-bindings",
     "rpc-types-debug",
