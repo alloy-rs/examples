@@ -58,7 +58,7 @@ async fn main() -> Result<()> {
 
     // Create an authorization object for Alice to sign.
     let authorization = Authorization {
-        chain_id: U256::from(31337),
+        chain_id: U256::from(anvil.chain_id()),
         // Reference to the contract that will be set as code for the authority.
         address: *contract.address(),
         nonce: provider.get_transaction_count(alice.address()).await?,
