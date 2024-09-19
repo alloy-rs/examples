@@ -17,11 +17,14 @@ sol!(
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    // The RPC URL of the node to fork.
+    let rpc_url = "https://eth.merkle.io";
+
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH.
     let provider = ProviderBuilder::new()
         .with_recommended_fillers()
-        .on_anvil_with_wallet_and_config(|anvil| anvil.fork("https://eth.merkle.io"));
+        .on_anvil_with_wallet_and_config(|anvil| anvil.fork(rpc_url));
 
     // Create two users, Alice and Bob.
     let accounts = provider.get_accounts().await?;
