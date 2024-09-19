@@ -3,12 +3,10 @@
 
 use alloy::{
     hex,
-    network::{EthereumWallet, ReceiptResponse, TransactionBuilder},
-    node_bindings::Anvil,
+    network::{ReceiptResponse, TransactionBuilder},
     primitives::U256,
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
-    signers::local::PrivateKeySigner,
     sol,
 };
 use eyre::Result;
@@ -36,18 +34,7 @@ sol! {
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let anvil = Anvil::new().try_spawn()?;
-
-    // Set up signer from the first default Anvil account (Alice).
-    let signer: PrivateKeySigner = anvil.keys()[0].clone().into();
-    let wallet = EthereumWallet::from(signer);
-
-    println!("Anvil running at `{}`", anvil.endpoint());
-
-    // Create a provider with the wallet.
-    let rpc_url = anvil.endpoint().parse()?;
-    let provider =
-        ProviderBuilder::new().with_recommended_fillers().wallet(wallet).on_http(rpc_url);
+    let provider = ProviderBuilder::new().with_recommended_fillers().on_anvil_with_wallet();
 
     // Deploy the `Counter` contract from bytecode at runtime.
     let bytecode = hex::decode(

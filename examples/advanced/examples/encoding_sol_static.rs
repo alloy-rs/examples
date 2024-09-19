@@ -1,4 +1,4 @@
-//! Example for static encoding calldata via `sol!`
+//! Example for static encoding calldata via `sol!`.
 
 use std::str::FromStr;
 
@@ -9,7 +9,7 @@ use alloy::{
     sol_types::SolCall,
 };
 
-// Using UniswapV2 `swapExactTokensForTokens()` method for this example
+// Using UniswapV2 `swapExactTokensForTokens()` method for this example.
 // See: https://docs.uniswap.org/contracts/v2/reference/smart-contracts/router-02#swapexacttokensfortokens
 sol!(
     #[allow(missing_docs)]
@@ -37,7 +37,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let to = Address::from_str("0x742d35Cc6634C0532925a3b844Bc454e4438f44e")?;
 
     // Unix timestamp after which the transaction will revert.
-    let deadline = U256::from(1690000000u64); // random timestamp
+    let deadline = U256::from(1690000000u64); // Random timestamp
 
     let swap_data =
         swapExactTokensForTokensCall::new((amount_in, amount_out_min, path, to, deadline));

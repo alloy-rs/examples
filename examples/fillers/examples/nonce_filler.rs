@@ -1,12 +1,10 @@
 //! Example of using the `NonceFiller` in the provider.
 
 use alloy::{
-    network::{EthereumWallet, TransactionBuilder},
-    node_bindings::Anvil,
+    network::TransactionBuilder,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::request::TransactionRequest,
-    signers::local::PrivateKeySigner,
 };
 use eyre::Result;
 
@@ -23,14 +21,6 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let anvil = Anvil::new().try_spawn()?;
-
-    // Set up signer from the first default Anvil account (Alice).
-    let signer: PrivateKeySigner = anvil.keys()[0].clone().into();
-    let wallet = EthereumWallet::from(signer);
-
-    // Create a provider with the wallet.
-    let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
         // Add the `NonceFiller` to the provider.
         // It is generally recommended to use the `.with_recommended_fillers()` method, which
@@ -42,8 +32,7 @@ async fn main() -> Result<()> {
         // reorganizations.
         .with_cached_nonce_management()
         // .with_simple_nonce_management()
-        .wallet(wallet)
-        .on_http(rpc_url);
+        .on_anvil_with_wallet();
 
     // Build an EIP-1559 type transaction to send 100 wei to Vitalik.
     let vitalik = address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045");
@@ -55,7 +44,7 @@ async fn main() -> Result<()> {
         .with_max_fee_per_gas(20_000_000_000)
         .with_max_priority_fee_per_gas(1_000_000_000)
         // Notice that without the `ChainIdFiller`, you need to set the `chain_id` field.
-        .with_chain_id(anvil.chain_id());
+        .with_chain_id(provider.get_chain_id().await?);
 
     // Send the transaction, the nonce (0) is automatically managed by the provider.
     let builder = provider.send_transaction(tx.clone()).await?;

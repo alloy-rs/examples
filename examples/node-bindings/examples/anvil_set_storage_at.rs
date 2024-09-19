@@ -1,4 +1,4 @@
-//! Example of mocking WETH balance of a target account using `anvil_set_storage_at`.
+//! Example of mocking WETH balance of a target account using [`AnvilApi::anvil_set_storage_at`].
 
 use alloy::{
     node_bindings::Anvil,
@@ -22,11 +22,11 @@ static WETH_ADDR: Address = address!("C02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2")
 #[tokio::main]
 async fn main() -> Result<()> {
     // The RPC URL of the node to fork.
-    let fork_url = "https://eth.merkle.io";
+    let rpc_url = "https://eth.merkle.io";
 
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let anvil = Anvil::new().fork(fork_url).try_spawn()?;
+    let anvil = Anvil::new().fork(rpc_url).try_spawn()?;
     let provider =
         ProviderBuilder::new().with_recommended_fillers().on_http(anvil.endpoint().parse()?);
 

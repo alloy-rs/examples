@@ -1,10 +1,7 @@
 //! Example of deploying a contract from Solidity code using the `sol!` macro to Anvil and
 //! interacting with it.
 
-use alloy::{
-    network::EthereumWallet, node_bindings::Anvil, primitives::U256, providers::ProviderBuilder,
-    signers::local::PrivateKeySigner, sol,
-};
+use alloy::{primitives::U256, providers::ProviderBuilder, sol};
 use eyre::Result;
 
 // Codegen from embedded Solidity code and precompiled bytecode.
@@ -29,18 +26,7 @@ sol! {
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let anvil = Anvil::new().try_spawn()?;
-
-    // Set up signer from the first default Anvil account (Alice).
-    let signer: PrivateKeySigner = anvil.keys()[0].clone().into();
-    let wallet = EthereumWallet::from(signer);
-
-    // Create a provider with the wallet.
-    let rpc_url = anvil.endpoint().parse()?;
-    let provider =
-        ProviderBuilder::new().with_recommended_fillers().wallet(wallet).on_http(rpc_url);
-
-    println!("Anvil running at `{}`", anvil.endpoint());
+    let provider = ProviderBuilder::new().with_recommended_fillers().on_anvil_with_wallet();
 
     // Deploy the `Counter` contract.
     let contract = Counter::deploy(&provider).await?;

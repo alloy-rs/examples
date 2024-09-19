@@ -1,6 +1,6 @@
 //! Example of generating code from ABI file using the `sol!` macro to interact with the contract.
 
-use alloy::{node_bindings::Anvil, primitives::address, providers::ProviderBuilder, sol};
+use alloy::{primitives::address, providers::ProviderBuilder, sol};
 use eyre::Result;
 
 // Codegen from ABI file to interact with the contract.
@@ -15,11 +15,9 @@ sol!(
 async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let anvil = Anvil::new().fork("https://eth.merkle.io").try_spawn()?;
-
-    // Create a provider.
-    let rpc_url = anvil.endpoint().parse()?;
-    let provider = ProviderBuilder::new().on_http(rpc_url);
+    let rpc_url = "https://eth.merkle.io";
+    let provider =
+        ProviderBuilder::new().on_anvil_with_wallet_and_config(|anvil| anvil.fork(rpc_url));
 
     // Create a contract instance.
     let contract = IWETH9::new(address!("C02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"), provider);

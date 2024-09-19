@@ -1,12 +1,10 @@
 //! Example of using the `.with_recommended_fillers()` method in the provider.
 
 use alloy::{
-    network::{EthereumWallet, TransactionBuilder},
-    node_bindings::Anvil,
+    network::TransactionBuilder,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::request::TransactionRequest,
-    signers::local::PrivateKeySigner,
 };
 use eyre::Result;
 
@@ -14,19 +12,11 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let anvil = Anvil::new().try_spawn()?;
-
-    // Set up signer from the first default Anvil account (Alice).
-    let signer: PrivateKeySigner = anvil.keys()[0].clone().into();
-    let wallet = EthereumWallet::from(signer);
-
-    // Create a provider with the wallet.
-    let rpc_url = anvil.endpoint().parse()?;
     let provider = ProviderBuilder::new()
         // Adds the `ChainIdFiller`, `GasFiller` and the `NonceFiller` layers.
+        // This is the recommended way to set up the provider.
         .with_recommended_fillers()
-        .wallet(wallet)
-        .on_http(rpc_url);
+        .on_anvil_with_wallet();
 
     // Build an EIP-1559 type transaction to send 100 wei to Vitalik.
     // Notice that the `nonce` field is set by the `NonceFiller`.
