@@ -2,7 +2,7 @@
 
 use alloy::{
     node_bindings::Anvil,
-    primitives::{address, keccak256, Address, U256},
+    primitives::{address, keccak256, utils::parse_units, Address, U256},
     providers::{ext::AnvilApi, ProviderBuilder},
     sol,
     sol_types::SolValue,
@@ -41,7 +41,7 @@ async fn main() -> Result<()> {
 
     // Mock WETH balance using the Anvil API.
     let hashed_slot = keccak256((account, U256::from(3)).abi_encode());
-    let one_ether = U256::from(1_000_000_000_000_000_000u128);
+    let one_ether: U256 = parse_units("1.0", "ether")?.into();
     provider.anvil_set_storage_at(WETH_ADDR, hashed_slot.into(), one_ether.into()).await?;
 
     let balance_after = iweth.balanceOf(account).call().await?._0;
