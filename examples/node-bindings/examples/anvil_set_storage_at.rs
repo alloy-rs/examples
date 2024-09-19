@@ -1,4 +1,4 @@
-//! Example of mocking WETH balance of a target account
+//! Example of mocking WETH balance of a target account using `anvil_set_storage_at`.
 
 use alloy::{
     node_bindings::Anvil,
