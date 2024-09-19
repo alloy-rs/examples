@@ -1,12 +1,16 @@
-//! This example demonstrates how to send an EIP7702 transaction.
+//! Example showing how to send an [EIP-7702](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7702.md) transaction.
+
 use alloy::{
-    consensus::{SignableTransaction, TxEip7702},
     eips::eip7702::Authorization,
-    network::TxSignerSync,
+    network::{EthereumWallet, TransactionBuilder, TransactionBuilder7702},
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
-    signers::{local::LocalSigner, SignerSync},
+    rpc::types::TransactionRequest,
+    signers::{
+        local::{LocalSigner, PrivateKeySigner},
+        SignerSync,
+    },
     sol,
 };
 use eyre::Result;
@@ -33,55 +37,65 @@ sol!(
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    // Spin up a local Anvil node.
+    // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().arg("--hardfork").arg("prague").try_spawn()?;
 
-    let authority = LocalSigner::from_signing_key(anvil.keys()[0].clone().into()); // 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
-    let sender = LocalSigner::from_signing_key(anvil.keys()[1].clone().into());
-    let provider = ProviderBuilder::new().on_http(anvil.endpoint_url());
+    // Create two users, Alice and Bob.
+    // Alice will sign the authorization and Bob will send the transaction.
+    let alice = LocalSigner::from_signing_key(anvil.keys()[0].clone().into());
+    let bob: PrivateKeySigner = anvil.keys()[1].clone().into();
 
+    // Create a provider with the wallet for Bob.
+    let wallet = EthereumWallet::from(bob.clone());
+    let provider = ProviderBuilder::new()
+        .with_recommended_fillers()
+        .wallet(wallet)
+        .on_http(anvil.endpoint_url());
+
+    // Deploy the contract Alice will authorize.
     let contract = Log::deploy(&provider).await?;
 
-    let auth_7702 = Authorization {
-        chain_id: U256::from(31337),
-        address: *contract.address(), /* Reference to the contract that will be set as code for
-                                       * the authority */
-        nonce: provider.get_transaction_count(authority.address()).await?,
+    // Create an authorization object for Alice to sign.
+    let authorization = Authorization {
+        chain_id: U256::from(anvil.chain_id()),
+        // Reference to the contract that will be set as code for the authority.
+        address: *contract.address(),
+        nonce: provider.get_transaction_count(alice.address()).await?,
     };
 
-    // Sign the authorization
-    let sig = authority.sign_hash_sync(&auth_7702.signature_hash())?;
-    let auth = auth_7702.into_signed(sig);
+    // Alice signs the authorization.
+    let signature = alice.sign_hash_sync(&authorization.signature_hash())?;
+    let signed_authorization = authorization.into_signed(signature);
 
-    // Collect the calldata required for the tx
+    // Collect the calldata required for the transaction.
     let call = contract.emitHello();
     let emit_hello_calldata = call.calldata().to_owned();
 
-    // Estimate the EIP1559 fees
-    let eip1559_est = provider.estimate_eip1559_fees(None).await?;
+    // Build the transaction.
+    let tx = TransactionRequest::default()
+        .with_to(alice.address())
+        .with_authorization_list(vec![signed_authorization])
+        .with_input(emit_hello_calldata);
 
-    // Build the transaction
-    let mut tx = TxEip7702 {
-        to: authority.address(),
-        authorization_list: vec![auth],
-        input: emit_hello_calldata.to_owned(),
-        nonce: provider.get_transaction_count(sender.address()).await?,
-        chain_id: 31337,
-        gas_limit: 1000000,
-        max_fee_per_gas: eip1559_est.max_fee_per_gas,
-        max_priority_fee_per_gas: eip1559_est.max_priority_fee_per_gas,
-        ..Default::default()
-    };
+    // Send the transaction and wait for the broadcast.
+    let pending_tx = provider.send_transaction(tx).await?;
 
-    // Sign and Encode the transaction
-    let sig = sender.sign_transaction_sync(&mut tx)?;
-    let tx = tx.into_signed(sig);
-    let mut encoded = Vec::new();
-    tx.tx().encode_with_signature(tx.signature(), &mut encoded, false);
-    let receipt = provider.send_raw_transaction(&encoded).await?.get_receipt().await?;
+    println!("Pending transaction... {}", pending_tx.tx_hash());
+
+    // Wait for the transaction to be included and get the receipt.
+    let receipt = pending_tx.get_receipt().await?;
+
+    println!(
+        "Transaction included in block {}",
+        receipt.block_number.expect("Failed to get block number")
+    );
 
     assert!(receipt.status());
+    assert_eq!(receipt.from, bob.address());
+    assert_eq!(receipt.to, Some(alice.address()));
     assert_eq!(receipt.inner.logs().len(), 1);
-    assert_eq!(receipt.inner.logs()[0].address(), authority.address());
+    assert_eq!(receipt.inner.logs()[0].address(), alice.address());
 
     Ok(())
 }
