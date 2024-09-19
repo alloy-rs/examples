@@ -76,8 +76,7 @@ async fn main() -> Result<()> {
     let tx = TransactionRequest::default()
         .with_to(alice.address())
         .with_authorization_list(vec![signed_authorization])
-        .with_input(emit_hello_calldata)
-        .with_gas_limit(1000000);
+        .with_input(emit_hello_calldata);
 
     // Send the transaction and wait for the broadcast.
     let pending_tx = provider.send_transaction(tx).await?;
