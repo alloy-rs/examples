@@ -70,6 +70,8 @@ where
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    
+
     let anvil = Anvil::new().spawn();
     let client = ClientBuilder::default().layer(LoggingLayer).http(anvil.endpoint_url());
 

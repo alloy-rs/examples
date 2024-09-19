@@ -2,7 +2,6 @@
 
 use alloy::{
     network::{EthereumWallet, TransactionBuilder},
-    node_bindings::Anvil,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
@@ -13,10 +12,6 @@ use std::{env, path::PathBuf};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Spin up a local Anvil node.
-    // Ensure `anvil` is available in $PATH.
-    let anvil = Anvil::new().block_time(1).try_spawn()?;
-
     // Password to decrypt the keystore file with.
     let password = "test";
 
@@ -28,9 +23,10 @@ async fn main() -> Result<()> {
     let wallet = EthereumWallet::from(signer);
 
     // Create a provider with the wallet.
-    let rpc_url = anvil.endpoint().parse()?;
-    let provider =
-        ProviderBuilder::new().with_recommended_fillers().wallet(wallet).on_http(rpc_url);
+    let provider = ProviderBuilder::new()
+        .with_recommended_fillers()
+        .wallet(wallet)
+        .on_anvil_with_config(|anvil| anvil.block_time(1));
 
     // Build a transaction to send 100 wei from Alice to Vitalik.
     // The `from` field is automatically filled to the first signer's address (Alice).
