@@ -5,11 +5,9 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // The RPC URL of the node to fork.
-    let rpc_url = "https://eth.merkle.io";
-
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH.
+    let rpc_url = "https://eth.merkle.io";
     let provider = ProviderBuilder::new()
         .with_recommended_fillers()
         .on_anvil_with_config(|anvil| anvil.fork(rpc_url));

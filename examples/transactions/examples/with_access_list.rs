@@ -1,7 +1,6 @@
 //! Example of sending a EIP-1559 transaction with access list.
 
 use alloy::{
-    node_bindings::Anvil,
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
     sol,
@@ -20,14 +19,14 @@ sol!(
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let anvil = Anvil::new().try_spawn()?;
+    let provider = ProviderBuilder::new().with_recommended_fillers().on_anvil();
 
-    // Create a provider.
-    let provider =
-        ProviderBuilder::new().with_recommended_fillers().on_builtin(&anvil.endpoint()).await?;
+    // Create two users, Alice and Bob.
+    let accounts = provider.get_accounts().await?;
+    let alice = accounts[0];
+    let bob = accounts[1];
 
     // Deploy the `SimpleStorage` contract.
-    let alice = anvil.addresses()[0];
     let contract_address = SimpleStorage::deploy_builder(provider.clone(), "initial".to_string())
         .from(alice)
         .deploy()
@@ -38,7 +37,6 @@ async fn main() -> Result<()> {
     // The `from` field is automatically filled to the first signer's address (Alice).
     let set_value_call = contract.setValues("hello".to_string(), "world".to_string());
     let calldata = set_value_call.calldata().to_owned();
-    let bob = anvil.addresses()[1];
     let tx = TransactionRequest::default().from(bob).to(contract_address).input(calldata.into());
 
     // Create an access list for the transaction.

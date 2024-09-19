@@ -14,9 +14,6 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Set up the HTTP transport which is consumed by the RPC client.
-    let rpc_url = "https://eth.merkle.io".parse()?;
-
     // We use USB for the example, but you can connect over HTTP as well. Refer
     // to the [YubiHSM](https://docs.rs/yubihsm/0.34.0/yubihsm/) docs for more information.
     let connector = Connector::usb(&UsbConfig::default());
@@ -28,6 +25,7 @@ async fn main() -> Result<()> {
     let wallet = EthereumWallet::from(signer);
 
     // Create a provider with the wallet.
+    let rpc_url = "https://eth.merkle.io".parse()?;
     let provider =
         ProviderBuilder::new().with_recommended_fillers().wallet(wallet).on_http(rpc_url);
 

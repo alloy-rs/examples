@@ -73,7 +73,8 @@ async fn main() -> Result<()> {
     let anvil = Anvil::new().spawn();
 
     // Create a new client with the logging layer.
-    let client = ClientBuilder::default().layer(LoggingLayer).http(anvil.endpoint_url());
+    let rpc_url = anvil.endpoint_url();
+    let client = ClientBuilder::default().layer(LoggingLayer).http(rpc_url);
 
     // Create a new provider with the client.
     let provider = ProviderBuilder::new().on_client(client);

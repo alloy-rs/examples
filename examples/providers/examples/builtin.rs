@@ -9,18 +9,20 @@ use futures_util::StreamExt;
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    // Spin up a local Anvil node.
+    // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
-    // Instantiate a HTTP transport provider by passing the HTTP endpoint url
+    // Instantiate a HTTP transport provider by passing the HTTP endpoint url.
     let http_rpc_url = anvil.endpoint();
     let http_provider = ProviderBuilder::new().on_builtin(&http_rpc_url).await?;
 
-    // Get latest block number
+    // Get latest block number.
     let block_number = http_provider.get_block_number().await?;
 
     println!("Latest block number: {block_number:?}");
 
-    // This requires the `pubsub` and `ws` features to be enabled on alloy-provider
+    // This requires the `pubsub` and `ws` features to be enabled.
     let ws_rpc_url = anvil.ws_endpoint();
     let ws_provider = ProviderBuilder::new().on_builtin(&ws_rpc_url).await?;
 
@@ -38,8 +40,8 @@ async fn main() -> Result<()> {
 
     handle.await?;
 
-    // This requires the `pubsub` and `ipc` features to be enabled on alloy-provider
-    // This would throw a runtime error if the ipc does not exist
+    // This requires the `pubsub` and `ipc` features to be enabled.
+    // This would throw a runtime error if the ipc does not exist.
     let ipc_path = "/tmp/reth.ipc";
     let ipc_provider = ProviderBuilder::new().on_builtin(ipc_path).await?;
 

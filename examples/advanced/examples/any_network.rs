@@ -47,6 +47,7 @@ async fn main() -> Result<()> {
     let signer: PrivateKeySigner = "<PRIVATE_KEY>".parse().expect("should parse private key");
     let wallet = EthereumWallet::from(signer);
 
+    // Create a provider with the Arbitrum Sepolia network and the wallet.
     let rpc_url = "https://sepolia-rollup.arbitrum.io/rpc".parse()?;
     let provider = ProviderBuilder::new()
         .with_recommended_fillers()
@@ -54,11 +55,14 @@ async fn main() -> Result<()> {
         .wallet(wallet)
         .on_http(rpc_url);
 
+    // Create a contract instance.
     let contract = Counter::new(COUNTER_CONTRACT_ADDRESS, &provider);
 
+    // Set the number to 42.
     let builder = contract.setNumber(U256::from(42));
     let receipt = builder.send().await?.get_receipt().await?;
 
+    // Fetch the `gasUsedForL1` and `l1BlockNumber` fields from the receipt.
     let arb_fields: ArbOtherFields = receipt.other.deserialize_into()?;
     let l1_gas = arb_fields.gas_used_for_l1.to::<u128>();
     let l1_block_number = arb_fields.l1_block_number.to::<u64>();

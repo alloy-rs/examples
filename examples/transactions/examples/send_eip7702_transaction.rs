@@ -7,10 +7,7 @@ use alloy::{
     primitives::U256,
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
-    signers::{
-        local::{LocalSigner, PrivateKeySigner},
-        SignerSync,
-    },
+    signers::{local::PrivateKeySigner, SignerSync},
     sol,
 };
 use eyre::Result;
@@ -37,21 +34,20 @@ sol!(
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Spin up a local Anvil node.
+    // Spin up a local Anvil node with the Prague hardfork enabled.
     // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().arg("--hardfork").arg("prague").try_spawn()?;
 
     // Create two users, Alice and Bob.
     // Alice will sign the authorization and Bob will send the transaction.
-    let alice = LocalSigner::from_signing_key(anvil.keys()[0].clone().into());
+    let alice: PrivateKeySigner = anvil.keys()[0].clone().into();
     let bob: PrivateKeySigner = anvil.keys()[1].clone().into();
 
-    // Create a provider with the wallet for Bob.
+    // Create a provider with the wallet for only Bob (not Alice).
+    let rpc_url = anvil.endpoint_url();
     let wallet = EthereumWallet::from(bob.clone());
-    let provider = ProviderBuilder::new()
-        .with_recommended_fillers()
-        .wallet(wallet)
-        .on_http(anvil.endpoint_url());
+    let provider =
+        ProviderBuilder::new().with_recommended_fillers().wallet(wallet).on_http(rpc_url);
 
     // Deploy the contract Alice will authorize.
     let contract = Log::deploy(&provider).await?;

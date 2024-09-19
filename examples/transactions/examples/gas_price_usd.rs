@@ -2,7 +2,6 @@
 
 use alloy::{
     network::TransactionBuilder,
-    node_bindings::Anvil,
     primitives::{address, utils::format_units, Address, Bytes, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
@@ -25,11 +24,9 @@ sol!(
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // The RPC URL of the node to fork.
-    let rpc_url = "https://eth.merkle.io";
-
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH.
+    let rpc_url = "https://eth.merkle.io";
     let provider = ProviderBuilder::new().on_anvil_with_config(|anvil| anvil.fork(rpc_url));
 
     // Create a call to get the latest answer from the Chainlink ETH/USD feed.

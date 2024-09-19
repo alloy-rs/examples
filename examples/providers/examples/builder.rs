@@ -25,7 +25,7 @@ async fn main() -> Result<()> {
     let bob = anvil.addresses()[1];
 
     // Set up the HTTP provider with the `reqwest` crate.
-    let rpc_url = anvil.endpoint().parse()?;
+    let rpc_url = anvil.endpoint_url();
     let provider =
         ProviderBuilder::new().with_recommended_fillers().wallet(wallet).on_http(rpc_url);
 

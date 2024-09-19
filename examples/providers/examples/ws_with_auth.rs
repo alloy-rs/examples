@@ -9,14 +9,12 @@ use futures_util::StreamExt;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Set up the WS transport which is consumed by the RPC client.
-    let rpc_url = "wss://your-ws-endpoint.com/";
-
     // Create authorization methods.
     let auth = Authorization::basic("username", "password");
     let auth_bearer = Authorization::bearer("bearer-token");
 
     // Create the WS connection object with authentication.
+    let rpc_url = "wss://your-ws-endpoint.com/";
     let ws_basic = WsConnect::with_auth(rpc_url, Some(auth));
     let ws_bearer = WsConnect::with_auth(rpc_url, Some(auth_bearer));
 
