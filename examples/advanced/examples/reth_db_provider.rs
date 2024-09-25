@@ -125,7 +125,7 @@ impl<P, T> RethDBProvider<P, T> {
         }
     }
 
-    fn factory(&self) -> &WrapProviderFactory {
+    const fn factory(&self) -> &WrapProviderFactory {
         &self.provider_factory
     }
 
@@ -177,7 +177,7 @@ struct WrapProviderFactory {
 }
 
 impl WrapProviderFactory {
-    fn new(
+    const fn new(
         inner: Arc<ProviderFactory<NodeTypesWithDBAdapter<EthereumNode, Arc<DatabaseEnv>>>>,
     ) -> Self {
         Self { inner }
