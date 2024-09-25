@@ -12,7 +12,7 @@ use eyre::Result;
 use reth_chainspec::{ChainSpec, ChainSpecBuilder};
 use reth_db::{
     mdbx::{tx::Tx, RO},
-    DatabaseEnv,
+    open_db_read_only, DatabaseEnv,
 };
 use reth_node_ethereum::EthereumNode;
 use reth_node_types::NodeTypesWithDBAdapter;
@@ -56,15 +56,13 @@ pub struct RethDBProvider<P, T> {
 impl<P, T> RethDBProvider<P, T> {
     /// Create a new `RethDBProvider` instance.
     pub fn new(inner: P, db_path: PathBuf) -> Self {
+        let db = open_db_read_only(&db_path, Default::default()).unwrap();
         let chain_spec = ChainSpecBuilder::mainnet().build();
+        let static_file_provider =
+            StaticFileProvider::read_only(db_path.join("static_files"), false).unwrap();
+
         let provider_factory =
-            ProviderFactory::<NodeTypesWithDBAdapter<EthereumNode, _>>::new_with_database_path(
-                db_path.clone(),
-                chain_spec.into(),
-                Default::default(),
-                StaticFileProvider::read_only(db_path.join("static_files"), false).unwrap(),
-            )
-            .unwrap();
+            ProviderFactory::new(db.into(), chain_spec.into(), static_file_provider);
 
         Self { inner, db_path, provider_factory, _pd: PhantomData }
     }
