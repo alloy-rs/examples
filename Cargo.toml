@@ -107,6 +107,7 @@ alloy = { version = "0.3.6", features = [
     "signer-mnemonic",
     "signer-trezor",
     "signer-yubihsm",
+    "eips",
 ] }
 
 # async
@@ -117,3 +118,6 @@ tokio = "1.40"
 eyre = "0.6"
 serde = "1.0"
 serde_json = "1.0"
+
+# [patch.crates-io]
+# alloy = { git = "https://github.com/alloy-rs/alloy", rev = "65dfbe" }

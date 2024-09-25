@@ -19,3 +19,8 @@ eyre.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
 serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true }
+reth-db = { git = "https://github.com/paradigmxyz/reth", package = "reth-db" }
+reth-provider = { git = "https://github.com/paradigmxyz/reth", package = "reth-provider" }
+reth-node-types = { git = "https://github.com/paradigmxyz/reth", package = "reth-node-types" }
+reth-chainspec = { git = "https://github.com/paradigmxyz/reth", package = "reth-chainspec" }
+reth-node-ethereum = { git = "https://github.com/paradigmxyz/reth", package = "reth-node-ethereum" }
