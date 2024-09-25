@@ -197,10 +197,7 @@ impl WrapProviderFactory {
             BlockId::Number(BlockNumberOrTag::Number(num)) => {
                 self.inner.history_by_block_number(num)
             }
-            BlockId::Number(tag) => match tag {
-                BlockNumberOrTag::Latest => self.inner.latest(),
-                _ => self.inner.latest(),
-            },
+            _ => self.inner.latest(),
         }
     }
 }
