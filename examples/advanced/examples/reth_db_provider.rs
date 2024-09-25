@@ -26,6 +26,53 @@ use reth_provider::{
     ProviderFactory, StateProvider,
 };
 
+#[tokio::main]
+async fn main() -> Result<()> {
+    run_with_tempdir("provider-call-reth-db", |data_dir| async move {
+        let reth = Reth::new()
+            .dev()
+            .disable_discovery()
+            .block_time("1s")
+            .data_dir(data_dir.clone())
+            .spawn();
+
+        let db_path = data_dir.join("db");
+
+        let provider =
+            ProviderBuilder::new().layer(RethDBLayer::new(db_path)).on_http(reth.endpoint_url());
+
+        let rpc_provider = ProviderBuilder::new().on_http(reth.endpoint_url());
+
+        let start_t = std::time::Instant::now();
+        let latest_block = provider.get_block_number().await.unwrap();
+        println!("Latest block from DB={latest_block} | Time Taken: {:?}", start_t.elapsed());
+
+        let start_t = std::time::Instant::now();
+        let latest_block = rpc_provider.get_block_number().await.unwrap();
+        println!("Latest block from RPC={latest_block} | Time Taken: {:?}", start_t.elapsed());
+
+        let alice = address!("14dC79964da2C08b23698B3D3cc7Ca32193d9955");
+
+        let start_t = std::time::Instant::now();
+        let nonce = provider.get_transaction_count(alice).await.unwrap();
+        println!("Nonce from DB={nonce} | Time Taken: {:?}", start_t.elapsed());
+
+        let start_t = std::time::Instant::now();
+        let nonce = rpc_provider.get_transaction_count(alice).await.unwrap();
+        println!("Nonce from RPC={nonce} | Time Taken: {:?}", start_t.elapsed());
+
+        let nonce_at_block = provider
+            .get_transaction_count(alice)
+            .block_id(BlockId::Number(BlockNumberOrTag::Number(1)))
+            .await
+            .unwrap();
+        println!("Nonce from DB at block 1={nonce_at_block}");
+    })
+    .await;
+
+    Ok(())
+}
+
 /// A `ProviderLayer` that wraps the `Provider` trait over reth-db.
 struct RethDBLayer {
     db_path: PathBuf,
@@ -122,53 +169,6 @@ where
             ProviderCall::<T, ParamsWithBlock<Address>, U64, u64>::ready(Ok(nonce))
         })
     }
-}
-
-#[tokio::main]
-async fn main() -> Result<()> {
-    run_with_tempdir("provider-call-reth-db", |data_dir| async move {
-        let reth = Reth::new()
-            .dev()
-            .disable_discovery()
-            .block_time("1s")
-            .data_dir(data_dir.clone())
-            .spawn();
-
-        let db_path = data_dir.join("db");
-
-        let provider =
-            ProviderBuilder::new().layer(RethDBLayer::new(db_path)).on_http(reth.endpoint_url());
-
-        let rpc_provider = ProviderBuilder::new().on_http(reth.endpoint_url());
-
-        let start_t = std::time::Instant::now();
-        let latest_block = provider.get_block_number().await.unwrap();
-        println!("Latest block from DB={latest_block} | Time Taken: {:?}", start_t.elapsed());
-
-        let start_t = std::time::Instant::now();
-        let latest_block = rpc_provider.get_block_number().await.unwrap();
-        println!("Latest block from RPC={latest_block} | Time Taken: {:?}", start_t.elapsed());
-
-        let alice = address!("14dC79964da2C08b23698B3D3cc7Ca32193d9955");
-
-        let start_t = std::time::Instant::now();
-        let nonce = provider.get_transaction_count(alice).await.unwrap();
-        println!("Nonce from DB={nonce} | Time Taken: {:?}", start_t.elapsed());
-
-        let start_t = std::time::Instant::now();
-        let nonce = rpc_provider.get_transaction_count(alice).await.unwrap();
-        println!("Nonce from RPC={nonce} | Time Taken: {:?}", start_t.elapsed());
-
-        let nonce_at_block = provider
-            .get_transaction_count(alice)
-            .block_id(BlockId::Number(BlockNumberOrTag::Number(1)))
-            .await
-            .unwrap();
-        println!("Nonce from DB at block 1={nonce_at_block}");
-    })
-    .await;
-
-    Ok(())
 }
 
 #[derive(Clone, Debug)]
