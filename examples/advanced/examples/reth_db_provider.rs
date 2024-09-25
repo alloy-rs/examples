@@ -1,11 +1,13 @@
 //! Demonstrates how to leverage `ProviderCall` to wrap the `Provider` trait over reth-db.
-use std::{env::temp_dir, marker::PhantomData, path::PathBuf, str::FromStr, sync::Arc};
+use std::{marker::PhantomData, path::PathBuf, sync::Arc};
 
 use alloy::{
+    eips::{BlockId, BlockNumberOrTag},
     node_bindings::{utils::run_with_tempdir, Reth},
-    primitives::{Address, U64},
+    primitives::{address, Address, U64},
     providers::{
-        Provider, ProviderBuilder, ProviderCall, ProviderLayer, RootProvider, RpcWithBlock,
+        ParamsWithBlock, Provider, ProviderBuilder, ProviderCall, ProviderLayer, RootProvider,
+        RpcWithBlock,
     },
     rpc::client::NoParams,
     transports::{Transport, TransportErrorKind},
@@ -20,7 +22,8 @@ use reth_db::{
 use reth_node_ethereum::EthereumNode;
 use reth_node_types::NodeTypesWithDBAdapter;
 use reth_provider::{
-    providers::StaticFileProvider, BlockNumReader, DatabaseProvider, ProviderError, ProviderFactory,
+    providers::StaticFileProvider, BlockNumReader, DatabaseProvider, ProviderError,
+    ProviderFactory, StateProvider,
 };
 
 /// A `ProviderLayer` that wraps the `Provider` trait over reth-db.
@@ -52,7 +55,7 @@ where
 pub struct RethDBProvider<P, T> {
     inner: P,
     db_path: PathBuf,
-    provider_factory: ProviderFactory<NodeTypesWithDBAdapter<EthereumNode, Arc<DatabaseEnv>>>,
+    provider_factory: WrapProviderFactory,
     _pd: PhantomData<T>,
 }
 
@@ -67,12 +70,16 @@ impl<P, T> RethDBProvider<P, T> {
         let provider_factory =
             ProviderFactory::new(db.into(), chain_spec.into(), static_file_provider);
 
-        Self { inner, db_path, provider_factory, _pd: PhantomData }
+        Self {
+            inner,
+            db_path,
+            provider_factory: WrapProviderFactory::new(Arc::new(provider_factory)),
+            _pd: PhantomData,
+        }
     }
 
-    /// Get the DB provider.
-    fn provider(&self) -> Result<DatabaseProvider<Tx<RO>, ChainSpec>, ProviderError> {
-        self.provider_factory.provider()
+    fn factory(&self) -> &WrapProviderFactory {
+        &self.provider_factory
     }
 
     /// Get the DB Path
@@ -91,13 +98,29 @@ where
     }
 
     fn get_block_number(&self) -> ProviderCall<T, NoParams, U64, u64> {
-        let provider = self.provider().map_err(TransportErrorKind::custom).unwrap();
+        let provider = self.factory().provider().map_err(TransportErrorKind::custom).unwrap();
 
         let best = provider.best_block_number().map_err(TransportErrorKind::custom);
 
         drop(provider);
 
         ProviderCall::<T, NoParams, U64, u64>::ready(best)
+    }
+
+    fn get_transaction_count(&self, address: Address) -> RpcWithBlock<T, Address, U64, u64> {
+        let this = self.factory().clone();
+        RpcWithBlock::new_provider(move |block_id| {
+            let provider = this.provider_at(block_id).map_err(TransportErrorKind::custom).unwrap();
+
+            let maybe_acc =
+                provider.basic_account(address).map_err(TransportErrorKind::custom).unwrap();
+
+            let nonce = maybe_acc.map(|acc| acc.nonce).unwrap_or_default();
+
+            drop(provider);
+
+            ProviderCall::<T, ParamsWithBlock<Address>, U64, u64>::ready(Ok(nonce))
+        })
     }
 }
 
@@ -125,8 +148,59 @@ async fn main() -> Result<()> {
         let start_t = std::time::Instant::now();
         let latest_block = rpc_provider.get_block_number().await.unwrap();
         println!("Latest block from RPC={latest_block} | Time Taken: {:?}", start_t.elapsed());
+
+        let alice = address!("14dC79964da2C08b23698B3D3cc7Ca32193d9955");
+
+        let start_t = std::time::Instant::now();
+        let nonce = provider.get_transaction_count(alice).await.unwrap();
+        println!("Nonce from DB={nonce} | Time Taken: {:?}", start_t.elapsed());
+
+        let start_t = std::time::Instant::now();
+        let nonce = rpc_provider.get_transaction_count(alice).await.unwrap();
+        println!("Nonce from RPC={nonce} | Time Taken: {:?}", start_t.elapsed());
+
+        let nonce_at_block = provider
+            .get_transaction_count(alice)
+            .block_id(BlockId::Number(BlockNumberOrTag::Number(1)))
+            .await
+            .unwrap();
+        println!("Nonce from DB at block 1={nonce_at_block}");
     })
     .await;
 
     Ok(())
+}
+
+#[derive(Clone, Debug)]
+struct WrapProviderFactory {
+    inner: Arc<ProviderFactory<NodeTypesWithDBAdapter<EthereumNode, Arc<DatabaseEnv>>>>,
+}
+
+impl WrapProviderFactory {
+    fn new(
+        inner: Arc<ProviderFactory<NodeTypesWithDBAdapter<EthereumNode, Arc<DatabaseEnv>>>>,
+    ) -> Self {
+        Self { inner }
+    }
+
+    /// Get the DB provider.
+    fn provider(&self) -> Result<DatabaseProvider<Tx<RO>, ChainSpec>, ProviderError> {
+        self.inner.provider()
+    }
+
+    fn provider_at(
+        &self,
+        block_id: BlockId,
+    ) -> Result<Box<(dyn StateProvider + 'static)>, ProviderError> {
+        match block_id {
+            BlockId::Hash(hash) => self.inner.history_by_block_hash(hash.block_hash),
+            BlockId::Number(BlockNumberOrTag::Number(num)) => {
+                self.inner.history_by_block_number(num)
+            }
+            BlockId::Number(tag) => match tag {
+                BlockNumberOrTag::Latest => self.inner.latest(),
+                _ => self.inner.latest(),
+            },
+        }
+    }
 }
