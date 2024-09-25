@@ -1,9 +1,12 @@
 //! Demonstrates how to leverage `ProviderCall` to wrap the `Provider` trait over reth-db.
-use std::{marker::PhantomData, path::PathBuf, str::FromStr, sync::Arc};
+use std::{env::temp_dir, marker::PhantomData, path::PathBuf, str::FromStr, sync::Arc};
 
 use alloy::{
-    primitives::U64,
-    providers::{Provider, ProviderBuilder, ProviderCall, ProviderLayer, RootProvider},
+    node_bindings::{utils::run_with_tempdir, Reth},
+    primitives::{Address, U64},
+    providers::{
+        Provider, ProviderBuilder, ProviderCall, ProviderLayer, RootProvider, RpcWithBlock,
+    },
     rpc::client::NoParams,
     transports::{Transport, TransportErrorKind},
 };
@@ -88,11 +91,11 @@ where
     }
 
     fn get_block_number(&self) -> ProviderCall<T, NoParams, U64, u64> {
-        println!("Getting best block number from db");
-
-        let provider = self.provider().unwrap();
+        let provider = self.provider().map_err(TransportErrorKind::custom).unwrap();
 
         let best = provider.best_block_number().map_err(TransportErrorKind::custom);
+
+        drop(provider);
 
         ProviderCall::<T, NoParams, U64, u64>::ready(best)
     }
@@ -100,20 +103,30 @@ where
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let db_path = PathBuf::from_str("DB_PATH")?;
-    let provider = ProviderBuilder::new()
-        .layer(RethDBLayer::new(db_path))
-        .on_http("http://127.0.0.1:8545".parse().unwrap());
+    run_with_tempdir("provider-call-reth-db", |data_dir| async move {
+        let reth = Reth::new()
+            .dev()
+            .disable_discovery()
+            .block_time("1s")
+            .data_dir(data_dir.clone())
+            .spawn();
 
-    let rpc_provider = ProviderBuilder::new().on_http("http://127.0.0.1:8545".parse().unwrap());
+        let db_path = data_dir.join("db");
 
-    let start_t = std::time::Instant::now();
-    let latest_block = provider.get_block_number().await?;
-    println!("Latest block from DB {latest_block} | Time Taken: {:?}", start_t.elapsed());
+        let provider =
+            ProviderBuilder::new().layer(RethDBLayer::new(db_path)).on_http(reth.endpoint_url());
 
-    let start_t = std::time::Instant::now();
-    let latest_block = rpc_provider.get_block_number().await?;
-    println!("Latest block from RPC {latest_block} | Time Taken: {:?}", start_t.elapsed());
+        let rpc_provider = ProviderBuilder::new().on_http(reth.endpoint_url());
+
+        let start_t = std::time::Instant::now();
+        let latest_block = provider.get_block_number().await.unwrap();
+        println!("Latest block from DB={latest_block} | Time Taken: {:?}", start_t.elapsed());
+
+        let start_t = std::time::Instant::now();
+        let latest_block = rpc_provider.get_block_number().await.unwrap();
+        println!("Latest block from RPC={latest_block} | Time Taken: {:?}", start_t.elapsed());
+    })
+    .await;
 
     Ok(())
 }
