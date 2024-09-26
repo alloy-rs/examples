@@ -93,18 +93,8 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-/// We use the tower-like layering functionality that has been baked into the alloy-provider to
-/// intercept the requests and redirect to the `RethDbProvider`.
-struct RethDBLayer {
-    db_path: PathBuf,
-}
-
-/// Initialize the `RethDBLayer` with the path to the reth datadir.
-impl RethDBLayer {
-    const fn new(db_path: PathBuf) -> Self {
-        Self { db_path }
-    }
-}
+mod reth_db_layer;
+use reth_db_layer::RethDBLayer;
 
 /// Implement the `ProviderLayer` trait for the `RethDBLayer` struct.
 impl<P, T> ProviderLayer<P, T> for RethDBLayer
@@ -115,7 +105,7 @@ where
     type Provider = RethDbProvider<P, T>;
 
     fn layer(&self, inner: P) -> Self::Provider {
-        RethDbProvider::new(inner, self.db_path.clone())
+        RethDbProvider::new(inner, self.db_path().clone())
     }
 }
 
