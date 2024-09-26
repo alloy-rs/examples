@@ -1,3 +1,6 @@
+//! In this example, we demonstrate how we wrap the `Provider` trait over reth-db by
+//! leveraging `ProviderCall`.
+//!
 //! `ProviderCall` enables the alloy-provider to fetch results of a rpc request from arbitrary
 //! sources. These arbitray sources could be a RPC call over the network, a local database, or even
 //! a synchronous function call.
@@ -5,9 +8,6 @@
 //! `ProviderCall` is the final future in the flow of an rpc request and is used by the
 //! `RpcWithBlock` and `EthCall` types under the hood to give flexibility to the user to use
 //! their own implementation of the `Provider` trait and fetch results from any source.
-//!
-//! In this minimal example, we demonstrate how we wrap the `Provider` trait over reth-db and
-//! leverage `ProviderCall`.
 //!
 //! Learn more about `ProviderCall` [here](https://github.com/alloy-rs/alloy/pull/788).
 use std::{marker::PhantomData, path::PathBuf, sync::Arc};
@@ -52,7 +52,7 @@ async fn main() -> Result<()> {
 
         // Initialize the provider with the reth-db layer. The reth-db layer intercepts the rpc
         // requests and returns the results from the reth-db database.
-        // Any RPC method that is not implemented in the RethDBProvider gracefully falls back to the
+        // Any RPC method that is not implemented in the RethDbProvider gracefully falls back to the
         // RPC provider specified in the `on_http` method.
         let provider =
             ProviderBuilder::new().layer(RethDBLayer::new(db_path)).on_http(reth.endpoint_url());
@@ -94,7 +94,7 @@ async fn main() -> Result<()> {
 }
 
 /// We use the tower-like layering functionality that has been baked into the alloy-provider to
-/// intercept the requests and redirect to the `RethDBProvider`.
+/// intercept the requests and redirect to the `RethDbProvider`.
 struct RethDBLayer {
     db_path: PathBuf,
 }
@@ -112,10 +112,10 @@ where
     P: Provider<T>,
     T: Transport + Clone,
 {
-    type Provider = RethDBProvider<P, T>;
+    type Provider = RethDbProvider<P, T>;
 
     fn layer(&self, inner: P) -> Self::Provider {
-        RethDBProvider::new(inner, self.db_path.clone())
+        RethDbProvider::new(inner, self.db_path.clone())
     }
 }
 
@@ -124,15 +124,15 @@ where
 /// It holds the `reth_provider::ProviderFactory` that enables read-only access to the database
 /// tables and static files.
 #[derive(Clone, Debug)]
-pub struct RethDBProvider<P, T> {
+pub struct RethDbProvider<P, T> {
     inner: P,
     db_path: PathBuf,
     provider_factory: WrapProviderFactory,
     _pd: PhantomData<T>,
 }
 
-impl<P, T> RethDBProvider<P, T> {
-    /// Create a new `RethDBProvider` instance.
+impl<P, T> RethDbProvider<P, T> {
+    /// Create a new `RethDbProvider` instance.
     pub fn new(inner: P, db_path: PathBuf) -> Self {
         let db = open_db_read_only(&db_path, Default::default()).unwrap();
         let chain_spec = ChainSpecBuilder::mainnet().build();
@@ -145,7 +145,7 @@ impl<P, T> RethDBProvider<P, T> {
         Self {
             inner,
             db_path,
-            provider_factory: WrapProviderFactory::new(Arc::new(provider_factory)),
+            provider_factory: WrapProviderFactory::new(provider_factory),
             _pd: PhantomData,
         }
     }
@@ -160,10 +160,10 @@ impl<P, T> RethDBProvider<P, T> {
     }
 }
 
-/// Implement the `Provider` trait for the `RethDBProvider` struct.
+/// Implement the `Provider` trait for the `RethDbProvider` struct.
 ///
 /// This is where we override specific RPC methods to fetch from the reth-db.
-impl<P, T> Provider<T> for RethDBProvider<P, T>
+impl<P, T> Provider<T> for RethDbProvider<P, T>
 where
     P: Provider<T>,
     T: Transport + Clone,
@@ -177,8 +177,6 @@ where
         let provider = self.factory().provider().map_err(TransportErrorKind::custom).unwrap();
 
         let best = provider.best_block_number().map_err(TransportErrorKind::custom);
-
-        drop(provider);
 
         ProviderCall::<T, NoParams, U64, u64>::ready(best)
     }
@@ -196,8 +194,6 @@ where
 
             let nonce = maybe_acc.map(|acc| acc.nonce).unwrap_or_default();
 
-            drop(provider);
-
             ProviderCall::<T, ParamsWithBlock<Address>, U64, u64>::ready(Ok(nonce))
         })
     }
@@ -211,9 +207,9 @@ struct WrapProviderFactory {
 
 impl WrapProviderFactory {
     const fn new(
-        inner: Arc<ProviderFactory<NodeTypesWithDBAdapter<EthereumNode, Arc<DatabaseEnv>>>>,
+        inner: ProviderFactory<NodeTypesWithDBAdapter<EthereumNode, Arc<DatabaseEnv>>>,
     ) -> Self {
-        Self { inner }
+        Self { inner: Arc::new(inner) }
     }
 
     /// Get a read-only `DatabaseProvider`
