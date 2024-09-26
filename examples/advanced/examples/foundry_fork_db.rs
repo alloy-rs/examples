@@ -7,12 +7,10 @@ use alloy::{
     eips::BlockId,
     network::AnyNetwork,
     node_bindings::Anvil,
-    primitives::U256,
     providers::{Provider, ProviderBuilder},
     rpc::types::BlockTransactionsKind,
 };
 use foundry_fork_db::{cache::BlockchainDbMeta, BlockchainDb, SharedBackend};
-use revm_primitives::{BlockEnv, CfgEnv, Env};
 
 // TODO: Add docs and explanation of the workflow.
 // TODO: Depict how the backend handler can smartly manages duplicate requests.
