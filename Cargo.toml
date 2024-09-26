@@ -120,3 +120,6 @@ tokio = "1.40"
 eyre = "0.6"
 serde = "1.0"
 serde_json = "1.0"
+
+[patch.crates-io]
+foundry-fork-db = { git = "https://github.com/foundry-rs/foundry-fork-db", rev = "4c205d3" }

@@ -22,26 +22,15 @@ async fn main() -> Result<()> {
     let anvil = Anvil::new().spawn();
     let provider = ProviderBuilder::new().network::<AnyNetwork>().on_http(anvil.endpoint_url());
 
-    let cfg = CfgEnv::default().with_chain_id(31337);
-
     let block =
         provider.get_block(BlockId::latest(), BlockTransactionsKind::Hashes).await?.unwrap();
 
     let pin_block = BlockId::number(block.header.number);
-    let block = BlockEnv {
-        number: U256::from(block.header.number),
-        coinbase: block.header.miner,
-        timestamp: U256::from(block.header.timestamp),
-        gas_limit: U256::from(block.header.gas_limit),
-        blob_excess_gas_and_price: None,
-        difficulty: U256::from(block.header.difficulty),
-        prevrandao: None,
-        basefee: U256::from(block.header.base_fee_per_gas.unwrap()),
-    };
 
-    let env = Env { cfg, block, ..Default::default() };
-
-    let meta = BlockchainDbMeta::new(env, anvil.endpoint());
+    let meta = BlockchainDbMeta::default()
+        .with_chain_id(31337)
+        .with_block(&block.inner)
+        .with_url(&anvil.endpoint());
 
     let db = BlockchainDb::new(meta, None);
 
