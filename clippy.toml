@@ -1,1 +1,2 @@
 msrv = "1.76"
+allow = ["clippy::needless_return"]
