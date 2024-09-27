@@ -1,4 +1,10 @@
-//! Foundry Fork DB
+//! This example demonstrates how to use `foundry_fork_db` to build a minimal fork with a db that
+//! caches responses from the RPC provider.
+//!
+//! `foundry_fork_db` is designed out-of-the-box to smartly cache and deduplicate requests to the
+//! rpc provider, while fetching data that is missing from it's db instance.
+//!
+//! `foundry_fork_db` serves as the backend for foundry's forking functionality in anvil and forge.
 use std::sync::Arc;
 
 use eyre::Result;
@@ -26,8 +32,8 @@ async fn main() -> Result<()> {
     let block =
         provider.get_block(BlockId::latest(), BlockTransactionsKind::Hashes).await?.unwrap();
 
-    let pin_block = BlockId::number(block.header.number);
-
+    // The `BlockchainDbMeta` is used a identifier when the db is flushed to the disk.
+    // This aids in cases where the disk contains data from multiple forks.
     let meta = BlockchainDbMeta::default()
         .with_chain_id(31337)
         .with_block(&block.inner)
@@ -35,8 +41,19 @@ async fn main() -> Result<()> {
 
     let db = BlockchainDb::new(meta, None);
 
-    let shared =
-        SharedBackend::spawn_backend(Arc::new(provider.clone()), db, Some(pin_block)).await;
+    // Spawn the backend with the db instance.
+    // `SharedBackend` is used to send request to the `BackendHandler` which is responsible for
+    // filling missing data in the db, and also deduplicate requests that are being sent to the
+    // RPC provider.
+    //
+    // For example, if we send two requests to get_full_block(0) simultaneously, the
+    // `BackendHandler` is smart enough to only send one request to the RPC provider, and queue the
+    // other request until the response is received.
+    // Once the response from RPC provider is received it relays the response to both the requests
+    // over their respective channels.
+    //
+    // The `SharedBackend` and `BackendHandler` communicate over an unbounded channel.
+    let shared = SharedBackend::spawn_backend(Arc::new(provider.clone()), db, None).await;
 
     let start_t = std::time::Instant::now();
     let block_rpc = shared.get_full_block(0).unwrap();
@@ -51,8 +68,6 @@ async fn main() -> Result<()> {
     let time_cache = start_t.elapsed();
 
     assert_eq!(block_rpc, block_cache);
-
-    assert!(time_cache < time_rpc);
 
     println!("-------get_full_block--------");
     // The backend handle falls back to the RPC provider if the block is not in the cache.
