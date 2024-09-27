@@ -60,6 +60,7 @@ async fn main() -> Result<()> {
     let time_rpc = start_t.elapsed();
 
     // `SharedBackend` is cloneable and holds the channel to the same `BackendHandler`.
+    #[allow(clippy::redundant_clone)]
     let cloned_backend = shared.clone();
 
     // Block gets cached in the db
