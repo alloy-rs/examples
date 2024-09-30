@@ -168,7 +168,7 @@ where
 
         let best = provider.best_block_number().map_err(TransportErrorKind::custom);
 
-        ProviderCall::<T, NoParams, U64, u64>::ready(best)
+        ProviderCall::ready(best)
     }
 
     /// Override the `get_transaction_count` method to fetch the transaction count of an address.
@@ -184,7 +184,7 @@ where
 
             let nonce = maybe_acc.map(|acc| acc.nonce).unwrap_or_default();
 
-            ProviderCall::<T, ParamsWithBlock<Address>, U64, u64>::ready(Ok(nonce))
+            ProviderCall::ready(Ok(nonce))
         })
     }
 }
