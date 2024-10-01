@@ -85,8 +85,8 @@ async fn main() -> Result<()> {
         .with_from(alice)
         .with_to(bob)
         .with_value(U256::from(100))
-        .with_max_fee_per_gas(basefee)
-        .with_max_priority_fee_per_gas(basefee + 1)
+        .with_max_fee_per_gas(basefee as u128)
+        .with_max_priority_fee_per_gas(basefee as u128 + 1)
         .with_gas_limit(21000)
         .with_nonce(0);
 
@@ -135,7 +135,7 @@ fn configure_evm_env(
         prevrandao: block.header.mix_hash,
         difficulty: block.header.difficulty,
         blob_excess_gas_and_price: Some(BlobExcessGasAndPrice::new(
-            block.header.excess_blob_gas.map(|g| g as u64).unwrap_or_default(),
+            block.header.excess_blob_gas.unwrap_or_default(),
         )),
     };
 
@@ -152,7 +152,7 @@ fn configure_tx_env(tx_req: TransactionRequest) -> TxEnv {
         transact_to: tx_req.to.unwrap(),
         value: tx_req.value.unwrap(),
         gas_price: U256::from(tx_req.max_fee_per_gas.unwrap()),
-        gas_limit: tx_req.gas.map(|g| g as u64).unwrap_or_default(),
+        gas_limit: tx_req.gas.unwrap_or_default(),
         ..Default::default()
     }
 }
