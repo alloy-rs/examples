@@ -17,24 +17,20 @@ use alloy::{
     node_bindings::{utils::run_with_tempdir, Reth},
     primitives::{address, Address, U64},
     providers::{
-        ParamsWithBlock, Provider, ProviderBuilder, ProviderCall, ProviderLayer, RootProvider,
-        RpcWithBlock,
+        Provider, ProviderBuilder, ProviderCall, ProviderLayer, RootProvider, RpcWithBlock,
     },
     rpc::client::NoParams,
     transports::{Transport, TransportErrorKind},
 };
 use eyre::Result;
 
-use reth_chainspec::{ChainSpec, ChainSpecBuilder};
-use reth_db::{
-    mdbx::{tx::Tx, RO},
-    open_db_read_only, DatabaseEnv,
-};
+use reth_chainspec::ChainSpecBuilder;
+use reth_db::{open_db_read_only, DatabaseEnv};
 use reth_node_ethereum::EthereumNode;
 use reth_node_types::NodeTypesWithDBAdapter;
 use reth_provider::{
-    providers::StaticFileProvider, BlockNumReader, DatabaseProvider, ProviderError,
-    ProviderFactory, StateProvider,
+    providers::StaticFileProvider, BlockNumReader, DatabaseProviderFactory, ProviderError,
+    ProviderFactory, StateProvider, TryIntoHistoricalStateProvider,
 };
 
 #[tokio::main]
@@ -117,7 +113,7 @@ where
 pub struct RethDbProvider<P, T> {
     inner: P,
     db_path: PathBuf,
-    provider_factory: WrapProviderFactory,
+    provider_factory: DbAccessor,
     _pd: PhantomData<T>,
 }
 
@@ -132,15 +128,13 @@ impl<P, T> RethDbProvider<P, T> {
         let provider_factory =
             ProviderFactory::new(db.into(), chain_spec.into(), static_file_provider);
 
-        Self {
-            inner,
-            db_path,
-            provider_factory: WrapProviderFactory::new(provider_factory),
-            _pd: PhantomData,
-        }
+        let db_accessor: DbAccessor<
+            ProviderFactory<NodeTypesWithDBAdapter<EthereumNode, Arc<DatabaseEnv>>>,
+        > = DbAccessor::new(provider_factory);
+        Self { inner, db_path, provider_factory: db_accessor, _pd: PhantomData }
     }
 
-    const fn factory(&self) -> &WrapProviderFactory {
+    const fn factory(&self) -> &DbAccessor {
         &self.provider_factory
     }
 
@@ -189,35 +183,42 @@ where
     }
 }
 
-/// A helper type to get the appropriate DB provider from `reth_provider::ProviderFactory`.
-#[derive(Clone, Debug)]
-struct WrapProviderFactory {
-    inner: Arc<ProviderFactory<NodeTypesWithDBAdapter<EthereumNode, Arc<DatabaseEnv>>>>,
+/// A helper type to get the appropriate DB provider.
+#[derive(Debug, Clone)]
+struct DbAccessor<DB = ProviderFactory<NodeTypesWithDBAdapter<EthereumNode, Arc<DatabaseEnv>>>>
+where
+    DB: DatabaseProviderFactory<Provider: TryIntoHistoricalStateProvider + BlockNumReader>,
+{
+    inner: DB,
 }
 
-impl WrapProviderFactory {
-    const fn new(
-        inner: ProviderFactory<NodeTypesWithDBAdapter<EthereumNode, Arc<DatabaseEnv>>>,
-    ) -> Self {
-        Self { inner: Arc::new(inner) }
+impl<DB> DbAccessor<DB>
+where
+    DB: DatabaseProviderFactory<Provider: TryIntoHistoricalStateProvider + BlockNumReader>,
+{
+    const fn new(inner: DB) -> Self {
+        Self { inner }
     }
 
-    /// Get a read-only `DatabaseProvider`
-    fn provider(&self) -> Result<DatabaseProvider<Tx<RO>, ChainSpec>, ProviderError> {
-        self.inner.provider()
+    fn provider(&self) -> Result<DB::Provider, ProviderError> {
+        self.inner.database_provider_ro()
     }
 
-    /// Get a read-only `DatabaseProvider` at a specific block
-    fn provider_at(
-        &self,
-        block_id: BlockId,
-    ) -> Result<Box<(dyn StateProvider + 'static)>, ProviderError> {
-        match block_id {
-            BlockId::Hash(hash) => self.inner.history_by_block_hash(hash.block_hash),
-            BlockId::Number(BlockNumberOrTag::Number(num)) => {
-                self.inner.history_by_block_number(num)
+    fn provider_at(&self, block_id: BlockId) -> Result<Box<dyn StateProvider>, ProviderError> {
+        let provider = self.inner.database_provider_ro()?;
+
+        let block_number = match block_id {
+            BlockId::Hash(hash) => {
+                if let Some(num) = provider.block_number(hash.into())? {
+                    num
+                } else {
+                    return Err(ProviderError::BlockHashNotFound(hash.into()));
+                }
             }
-            _ => self.inner.latest(),
-        }
+            BlockId::Number(BlockNumberOrTag::Number(num)) => num,
+            _ => provider.best_block_number()?,
+        };
+
+        provider.try_into_history_at_block(block_number)
     }
 }
