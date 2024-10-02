@@ -92,9 +92,10 @@ non_send_fields_in_send_ty = "allow"
 redundant_pub_crate = "allow"
 significant_drop_in_scrutinee = "allow"
 significant_drop_tightening = "allow"
+needless_return = "allow"
 
 [workspace.dependencies]
-alloy = { version = "0.3.6", features = [
+alloy = { version = "0.4.0", features = [
     "full",
     "node-bindings",
     "rpc-types-debug",
@@ -109,6 +110,10 @@ alloy = { version = "0.3.6", features = [
     "signer-yubihsm",
     "eips",
 ] }
+
+foundry-fork-db = "0.4.0"
+revm-primitives = "10.0.0"
+revm = "14.0.3"
 
 # async
 futures-util = "0.3"

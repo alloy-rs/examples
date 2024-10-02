@@ -14,13 +14,18 @@ workspace = true
 
 [dev-dependencies]
 alloy.workspace = true
+foundry-fork-db.workspace = true
+revm-primitives.workspace = true
+revm.workspace = true
 
-eyre.workspace = true
-tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
-serde = { workspace = true, features = ["derive"] }
-serde_json = { workspace = true }
+# reth
 reth-db = { git = "https://github.com/paradigmxyz/reth", package = "reth-db", tag = "v1.0.7" }
 reth-provider = { git = "https://github.com/paradigmxyz/reth", package = "reth-provider", tag = "v1.0.7" }
 reth-node-types = { git = "https://github.com/paradigmxyz/reth", package = "reth-node-types", tag = "v1.0.7" }
 reth-chainspec = { git = "https://github.com/paradigmxyz/reth", package = "reth-chainspec", tag = "v1.0.7" }
 reth-node-ethereum = { git = "https://github.com/paradigmxyz/reth", package = "reth-node-ethereum", tag = "v1.0.7" }
+
+eyre.workspace = true
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
