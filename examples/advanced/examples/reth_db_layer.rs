@@ -1,19 +1,23 @@
-#![allow(unreachable_pub)]
+//! `RethDbLayer` implementation to be used with `RethDbProvider` to wrap the Provider trait over
+//! reth-db.
+#![allow(dead_code)]
 use std::path::PathBuf;
 
 /// We use the tower-like layering functionality that has been baked into the alloy-provider to
 /// intercept the requests and redirect to the `RethDbProvider`.
-pub struct RethDBLayer {
+pub(crate) struct RethDBLayer {
     db_path: PathBuf,
 }
 
 /// Initialize the `RethDBLayer` with the path to the reth datadir.
 impl RethDBLayer {
-    pub const fn new(db_path: PathBuf) -> Self {
+    pub(crate) const fn new(db_path: PathBuf) -> Self {
         Self { db_path }
     }
 
-    pub const fn db_path(&self) -> &PathBuf {
+    pub(crate) const fn db_path(&self) -> &PathBuf {
         &self.db_path
     }
 }
+
+const fn main() {}

@@ -32,6 +32,8 @@ use reth_provider::{
     providers::StaticFileProvider, BlockNumReader, DatabaseProviderFactory, ProviderError,
     ProviderFactory, StateProvider, TryIntoHistoricalStateProvider,
 };
+mod reth_db_layer;
+use reth_db_layer::RethDBLayer;
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -88,9 +90,6 @@ async fn main() -> Result<()> {
 
     Ok(())
 }
-
-mod reth_db_layer;
-use reth_db_layer::RethDBLayer;
 
 /// Implement the `ProviderLayer` trait for the `RethDBLayer` struct.
 impl<P, T> ProviderLayer<P, T> for RethDBLayer
