@@ -1,3 +1,4 @@
+#![allow(unreachable_pub)]
 use std::path::PathBuf;
 
 /// We use the tower-like layering functionality that has been baked into the alloy-provider to
