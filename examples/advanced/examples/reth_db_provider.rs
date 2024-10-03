@@ -23,7 +23,7 @@ use reth_alloy::RethDbLayer;
 async fn main() -> Result<()> {
     run_with_tempdir("provider-call-reth-db", |data_dir| async move {
         // Initializing reth with a tmp data directory.
-        // We use a tmp directory for the purposes of this example.
+        // We use a tmp directory for the purpose of this example.
         // This would actually use an existing reth datadir specified by `--datadir` when starting
         // your reth node.
         let reth = Reth::new()
