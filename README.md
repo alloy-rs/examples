@@ -109,6 +109,7 @@ This repository contains the following examples:
   - [x] [Decoding with `json_abi`](./examples/advanced/examples/decoding_json_abi.rs)
   - [x] [Encoding with `dyn_abi`](./examples/advanced/examples/encoding_dyn_abi.rs)
   - [x] [Static encoding with `sol!`](./examples/advanced/examples/encoding_sol_static.rs)
+  - [x] [Using `foundry-fork-db`](./examples/advanced/examples/foundry_fork_db.rs)
 
 ## Contributing
 

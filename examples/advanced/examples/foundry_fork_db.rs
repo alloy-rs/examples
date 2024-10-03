@@ -4,10 +4,9 @@
 //! `foundry_fork_db` is designed out-of-the-box to smartly cache and deduplicate requests to the
 //! rpc provider, while fetching data that is missing from it's db instance.
 //!
-//! `foundry_fork_db` serves as the backend for foundry's forking functionality in anvil and forge.
-use std::sync::Arc;
+//! `foundry_fork_db` serves as the backend for Foundry's forking functionality in Anvil and Forge.
 
-use eyre::Result;
+use std::sync::Arc;
 
 use alloy::{
     eips::BlockId,
@@ -20,6 +19,7 @@ use alloy::{
         TransactionRequest,
     },
 };
+use eyre::Result;
 use foundry_fork_db::{cache::BlockchainDbMeta, BlockchainDb, SharedBackend};
 use revm::{db::CacheDB, DatabaseRef, Evm};
 use revm_primitives::{BlobExcessGasAndPrice, BlockEnv, TxEnv};
