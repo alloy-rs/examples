@@ -33,12 +33,15 @@ use reth_provider::{
     ProviderFactory, StateProvider, TryIntoHistoricalStateProvider,
 };
 mod reth_db_layer;
-use reth_db_layer::RethDBLayer;
+use reth_db_layer::RethDbLayer;
 
 #[tokio::main]
 async fn main() -> Result<()> {
     run_with_tempdir("provider-call-reth-db", |data_dir| async move {
-        // Initialize reth node with a specific data directory
+        // Initializing reth with a tmp data directory.
+        // We use a tmp directory for the purposes of this example.
+        // This would actually use an existing reth datadir specified by `--datadir` when starting
+        // your reth node.
         let reth = Reth::new()
             .dev()
             .disable_discovery()
@@ -53,7 +56,7 @@ async fn main() -> Result<()> {
         // Any RPC method that is not implemented in the RethDbProvider gracefully falls back to the
         // RPC provider specified in the `on_http` method.
         let provider =
-            ProviderBuilder::new().layer(RethDBLayer::new(db_path)).on_http(reth.endpoint_url());
+            ProviderBuilder::new().layer(RethDbLayer::new(db_path)).on_http(reth.endpoint_url());
 
         // Initialize the RPC provider to compare the time taken to fetch the results.
         let rpc_provider = ProviderBuilder::new().on_http(reth.endpoint_url());
@@ -92,7 +95,7 @@ async fn main() -> Result<()> {
 }
 
 /// Implement the `ProviderLayer` trait for the `RethDBLayer` struct.
-impl<P, T> ProviderLayer<P, T> for RethDBLayer
+impl<P, T> ProviderLayer<P, T> for RethDbLayer
 where
     P: Provider<T>,
     T: Transport + Clone,
