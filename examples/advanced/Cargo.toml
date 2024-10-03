@@ -19,11 +19,7 @@ revm-primitives.workspace = true
 revm.workspace = true
 
 # reth
-reth-db = { git = "https://github.com/paradigmxyz/reth", package = "reth-db", rev = "b66e4f5" }
-reth-provider = { git = "https://github.com/paradigmxyz/reth", package = "reth-provider", rev = "b66e4f5" }
-reth-node-types = { git = "https://github.com/paradigmxyz/reth", package = "reth-node-types", rev = "b66e4f5" }
-reth-chainspec = { git = "https://github.com/paradigmxyz/reth", package = "reth-chainspec", rev = "b66e4f5" }
-reth-node-ethereum = { git = "https://github.com/paradigmxyz/reth", package = "reth-node-ethereum", rev = "b66e4f5" }
+reth-alloy = { git = "https://github.com/paradigmxyz/reth", package = "reth-alloy", rev = "327d072" }
 
 eyre.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
