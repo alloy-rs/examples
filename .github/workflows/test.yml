@@ -60,7 +60,7 @@ jobs:
             -e 'ws_auth' \
             -e 'ws' \
             -e 'yubi_signer' \
-            -e 'reth_db_provider' \ 
+            -e 'reth_db_provider' \
             | xargs -n1 echo
           )"
 
