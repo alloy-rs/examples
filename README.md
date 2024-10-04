@@ -110,6 +110,7 @@ This repository contains the following examples:
   - [x] [Encoding with `dyn_abi`](./examples/advanced/examples/encoding_dyn_abi.rs)
   - [x] [Static encoding with `sol!`](./examples/advanced/examples/encoding_sol_static.rs)
   - [x] [Using `foundry-fork-db`](./examples/advanced/examples/foundry_fork_db.rs)
+  - [x] [Wrapping `Provider` trait over reth-db](./examples/advanced/examples/reth_db_provider.rs)
 
 ## Contributing
 
