@@ -108,6 +108,7 @@ alloy = { version = "0.4.0", features = [
     "signer-mnemonic",
     "signer-trezor",
     "signer-yubihsm",
+    "eips",
 ] }
 
 foundry-fork-db = "0.4.0"
@@ -122,3 +123,6 @@ tokio = "1.40"
 eyre = "0.6"
 serde = "1.0"
 serde_json = "1.0"
+
+# [patch.crates-io]
+# alloy = { git = "https://github.com/alloy-rs/alloy", rev = "65dfbe" }
