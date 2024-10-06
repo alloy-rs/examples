@@ -31,6 +31,7 @@ async fn main() -> Result<()> {
     }
 
     let mut total_streams = 0;
+    let mut tasks = vec![];
     let (sx, mut rx) = mpsc::unbounded_channel();
     for (name, url) in rpcs.iter() {
         let sx = sx.clone();
@@ -46,7 +47,7 @@ async fn main() -> Result<()> {
         };
 
         let mut stream = match provider.subscribe_pending_transactions().await {
-            Ok(stream) => stream.into_stream(),
+            Ok(stream) => stream.into_stream().take(50),
             Err(e) => {
                 eprintln!("skipping {} at {} because of error: {}", name, url, e);
                 continue;
@@ -55,48 +56,57 @@ async fn main() -> Result<()> {
 
         total_streams += 1;
 
-        tokio::spawn(async move {
+        tasks.push(tokio::spawn(async move {
             let _p = provider; // keep provider alive
             while let Some(tx_hash) = stream.next().await {
                 if let Err(e) = sx.send((name.clone(), tx_hash, Utc::now())) {
                     eprintln!("sending to channel failed: {}", e);
                 }
             }
-        });
+        }));
     }
 
-    #[derive(Debug)]
-    struct TxTrack {
-        first_seen: chrono::DateTime<Utc>,
-        seen_by: Vec<(Arc<String>, chrono::DateTime<Utc>)>,
-    }
-
-    let mut tracker = HashMap::new();
-    while let Some((name, tx_hash, timestamp)) = rx.recv().await {
-        let track = tracker
-            .entry(tx_hash)
-            .and_modify(|t: &mut TxTrack| {
-                t.seen_by.push((name.clone(), timestamp));
-            })
-            .or_insert(TxTrack { first_seen: timestamp, seen_by: vec![(name.clone(), timestamp)] });
-
-        if track.seen_by.len() == total_streams {
-            let mut msg = String::new();
-            for (name, timestamp) in track.seen_by.iter() {
-                msg.push_str(&format!(
-                    "{} +{}ms ",
-                    name,
-                    (*timestamp - track.first_seen).num_milliseconds()
-                ));
-            }
-            println!(
-                "pending tx #{} at {} - {}",
-                tx_hash,
-                track.first_seen.timestamp_millis(),
-                msg
-            );
-            tracker.remove(&tx_hash);
+    tokio::spawn(async move {
+        #[derive(Debug)]
+        struct TxTrack {
+            first_seen: chrono::DateTime<Utc>,
+            seen_by: Vec<(Arc<String>, chrono::DateTime<Utc>)>,
         }
+
+        let mut tracker = HashMap::new();
+        while let Some((name, tx_hash, timestamp)) = rx.recv().await {
+            let track = tracker
+                .entry(tx_hash)
+                .and_modify(|t: &mut TxTrack| {
+                    t.seen_by.push((name.clone(), timestamp));
+                })
+                .or_insert(TxTrack {
+                    first_seen: timestamp,
+                    seen_by: vec![(name.clone(), timestamp)],
+                });
+
+            if track.seen_by.len() == total_streams {
+                let mut msg = String::new();
+                for (name, timestamp) in track.seen_by.iter() {
+                    msg.push_str(&format!(
+                        "{} +{}ms ",
+                        name,
+                        (*timestamp - track.first_seen).num_milliseconds()
+                    ));
+                }
+                println!(
+                    "pending tx #{} at {} - {}",
+                    tx_hash,
+                    track.first_seen.timestamp_millis(),
+                    msg
+                );
+                tracker.remove(&tx_hash);
+            }
+        }
+    });
+
+    for task in tasks {
+        task.await?;
     }
 
     Ok(())
