@@ -95,7 +95,7 @@ significant_drop_tightening = "allow"
 needless_return = "allow"
 
 [workspace.dependencies]
-alloy = { version = "0.3.6", features = [
+alloy = { version = "0.4.0", features = [
     "full",
     "node-bindings",
     "rpc-types-debug",
@@ -108,7 +108,12 @@ alloy = { version = "0.3.6", features = [
     "signer-mnemonic",
     "signer-trezor",
     "signer-yubihsm",
+    "eips",
 ] }
+
+foundry-fork-db = "0.4.0"
+revm-primitives = "10.0.0"
+revm = "14.0.3"
 
 # async
 futures-util = "0.3"
@@ -118,3 +123,6 @@ tokio = "1.40"
 eyre = "0.6"
 serde = "1.0"
 serde_json = "1.0"
+
+# [patch.crates-io]
+# alloy = { git = "https://github.com/alloy-rs/alloy", rev = "65dfbe" }
