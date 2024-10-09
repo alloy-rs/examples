@@ -73,14 +73,14 @@ async fn main() -> Result<()> {
                 .and_modify(|t: &mut TxTrack| {
                     t.seen_by.push((name.clone(), timestamp));
                 })
-                .or_insert(TxTrack {
+                .or_insert_with(|| TxTrack {
                     first_seen: timestamp,
                     seen_by: vec![(name.clone(), timestamp)],
                 });
 
             if track.seen_by.len() == total_streams {
                 let mut msg = String::new();
-                for (name, timestamp) in track.seen_by.iter() {
+                for (name, timestamp) in &track.seen_by {
                     msg.push_str(&format!(
                         "{} +{}ms ",
                         name,

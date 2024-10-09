@@ -92,6 +92,7 @@ non_send_fields_in_send_ty = "allow"
 redundant_pub_crate = "allow"
 significant_drop_in_scrutinee = "allow"
 significant_drop_tightening = "allow"
+needless_return = "allow"
 
 [workspace.dependencies]
 alloy = { version = "0.3.6", features = [
