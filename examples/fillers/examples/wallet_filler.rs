@@ -27,15 +27,18 @@ async fn main() -> Result<()> {
         .wallet(wallet)
         .on_http(rpc_url);
 
-    // Build a legacy type transaction to send 100 wei to Vitalik.
+    // Build an EIP-1559 type transaction to send 100 wei to Vitalik.
     let vitalik = address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045");
     let tx = TransactionRequest::default()
         .with_to(vitalik)
         .with_value(U256::from(100))
+        // Notice that without the `ChainIdFiller`, you need to set the `chain_id` field.
+        .with_chain_id(provider.get_chain_id().await?)
         // Notice that without the `NonceFiller`, you need to manually set the nonce field.
         .with_nonce(0)
         // Notice that without the `GasFiller`, you need to set the gas related fields.
-        .with_gas_price(20_000_000_000)
+        .max_fee_per_gas(20_000_000_000)
+        .max_priority_fee_per_gas(1_000_000_000)
         .with_gas_limit(21_000);
 
     let builder = provider.send_transaction(tx).await?;
