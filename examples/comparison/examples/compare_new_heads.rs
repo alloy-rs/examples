@@ -1,4 +1,4 @@
-//! Example of comparing new heads from multiple providers.
+//! Example of comparing new block headers from multiple providers.
 
 use alloy::{
     network::AnyNetwork,
