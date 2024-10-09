@@ -33,6 +33,8 @@ jobs:
             -e 'ipc' \
             -e 'ledger_signer' \
             -e 'reth_local_instance' \
+            -e 'reth_db_layer' \
+            -e 'reth_db_provider' \
             -e 'subscribe_all_logs' \
             -e 'subscribe_logs' \
             -e 'subscribe_pending_transactions' \
