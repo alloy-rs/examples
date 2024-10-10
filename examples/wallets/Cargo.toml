@@ -16,7 +16,7 @@ workspace = true
 alloy.workspace = true
 
 aws-config = { version = "1.5", default-features = false }
-aws-sdk-kms = { version = "1.36", default-features = false }
+aws-sdk-kms = { version = "1.46", default-features = false }
 eyre.workspace = true
 rand = "0.8"
 serde = { workspace = true, features = ["derive"] }
