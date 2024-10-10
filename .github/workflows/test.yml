@@ -66,6 +66,9 @@ jobs:
             | xargs -n1 echo
           )"
 
+          # Build the examples
+          cargo build --examples --quiet
+
           # Run the examples
           for example in $examples; do
             cargo run --example $example --quiet 1>/dev/null

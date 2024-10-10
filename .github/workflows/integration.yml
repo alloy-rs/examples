@@ -12,7 +12,7 @@ on:
 jobs:
   integration:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -22,7 +22,7 @@ jobs:
           cache-on-failure: true
       - name: Run examples
         run: |
-          # Get the list of runable examples
+          # Get the list of runnable examples
           export examples="$(
             cargo run --example 2>&1 \
             | grep -E '^ ' \
@@ -32,9 +32,9 @@ jobs:
             -e 'geth_local_instance' \
             -e 'ipc' \
             -e 'ledger_signer' \
-            -e 'reth_local_instance' \
             -e 'reth_db_layer' \
             -e 'reth_db_provider' \
+            -e 'reth_local_instance' \
             -e 'subscribe_all_logs' \
             -e 'subscribe_logs' \
             -e 'subscribe_pending_transactions' \
@@ -46,6 +46,9 @@ jobs:
             -e 'yubi_signer' \
             | xargs -n1 echo
           )"
+
+          # Build the examples
+          cargo build --examples --quiet
 
           # Run the examples with the current version of Alloy
           for example in $examples; do
