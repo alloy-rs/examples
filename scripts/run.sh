@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
-# Exit if anything fails
+# Exit if anything fails.
 set -eo pipefail
 
 # This script will do the following:
 #
-# 1. Run all examples with some exceptions.
+# 1. Gather all the examples from the output of `cargo run --example` command.
+# 2. Filter out the examples that have external dependencies or are not meant to be run.
+# 1. Run all examples that are left after filtering.
 function main () {
     export examples="$(
         cargo run --example 2>&1 \
@@ -31,7 +33,6 @@ function main () {
             | xargs -n1 echo
     )"
 
-    # Run the examples with the current version of Alloy
     for example in $examples; do
         cargo run --example $example --quiet 1>/dev/null
 
@@ -44,6 +45,6 @@ function main () {
     done
 }
 
-# Run the main function
-# This prevents partial execution in case of incomplete downloads
+# Run the main function.
+# This prevents partial execution in case of incomplete downloads.
 main
