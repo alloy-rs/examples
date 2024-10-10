@@ -12,7 +12,7 @@ on:
 jobs:
   integration:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -22,42 +22,8 @@ jobs:
           cache-on-failure: true
       - name: Run examples
         run: |
-          # Get the list of runable examples
-          export examples="$(
-            cargo run --example 2>&1 \
-            | grep -E '^ ' \
-            | grep -v \
-            -e 'any_network' \
-            -e 'builtin' \
-            -e 'geth_local_instance' \
-            -e 'ipc' \
-            -e 'ledger_signer' \
-            -e 'reth_local_instance' \
-            -e 'reth_db_layer' \
-            -e 'reth_db_provider' \
-            -e 'subscribe_all_logs' \
-            -e 'subscribe_logs' \
-            -e 'subscribe_pending_transactions' \
-            -e 'trace_call' \
-            -e 'trace_transaction' \
-            -e 'trezor_signer' \
-            -e 'ws_auth' \
-            -e 'ws' \
-            -e 'yubi_signer' \
-            | xargs -n1 echo
-          )"
-
-          # Run the examples with the current version of Alloy
-          for example in $examples; do
-            cargo run --example $example --quiet 1>/dev/null
-
-            if [ $? -ne 0 ]; then
-              echo "Failed to run: $example"
-              exit 1
-            else
-              echo "Successfully ran: $example"
-            fi
-          done
+          # Run examples with the current version of Alloy
+          ./scripts/run.sh
 
           # Fetch the latest commit hash of the `main` branch from the Alloy repository
           export latest_alloy_commit=$(git ls-remote https://github.com/alloy-rs/alloy.git \
@@ -65,20 +31,11 @@ jobs:
             | cut -f 1)
 
           # Use the commit hash to update the rev in Cargo.toml
-          sed -i '/alloy = { version = "0.1.2", features = \[/,/\] }/s/alloy = { version = "0.1.2",/alloy = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "'"$latest_alloy_commit"'",/' \
+          sed -i '/alloy = { version = "[^"]*", features = \[/,/\] }/s/alloy = { version = "[^"]*",/alloy = { git = "https:\/\/github.com\/alloy-rs\/alloy", rev = "'"$latest_alloy_commit"'",/' \
           Cargo.toml
 
           # Update to the latest commit
           cargo update
 
           # Run the examples with the latest version of Alloy
-          for example in $examples; do
-            cargo run --example $example --quiet 1>/dev/null
-
-            if [ $? -ne 0 ]; then
-              echo "Failed to run: $example"
-              exit 1
-            else
-              echo "Successfully ran: $example"
-            fi
-          done
+          ./scripts/run.sh
