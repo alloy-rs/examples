@@ -15,8 +15,8 @@ async fn main() -> Result<()> {
 
     // Create the WS connection object with authentication.
     let rpc_url = "wss://your-ws-endpoint.com/";
-    let ws_basic = WsConnect::with_auth(rpc_url, Some(auth));
-    let ws_bearer = WsConnect::with_auth(rpc_url, Some(auth_bearer));
+    let ws_basic = WsConnect::new(rpc_url).with_auth(auth);
+    let ws_bearer = WsConnect::new(rpc_url).with_auth(auth_bearer);
 
     // Create the provider.
     let provider_basic = ProviderBuilder::new().on_ws(ws_basic).await?;
