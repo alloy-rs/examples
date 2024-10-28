@@ -1,4 +1,4 @@
-//! Example of using the reqwest HTTP client with an AUTHORIZATION header to get the latest block
+//! Example of using the reqwest HTTP client with an `Authorization` header to get the latest block
 //! number.
 
 use alloy::{
