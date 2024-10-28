@@ -63,6 +63,7 @@ This repository contains the following examples:
 - [x] Providers
   - [x] [Builder](./examples/providers/examples/builder.rs)
   - [x] [Builtin](./examples/providers/examples/builtin.rs)
+  - [x] [HTTP with authentication](./examples/providers/examples/http_with_auth.rs)
   - [x] [HTTP](./examples/providers/examples/http.rs)
   - [x] [IPC](./examples/providers/examples/ipc.rs)
   - [x] [WS](./examples/providers/examples/ws.rs)
