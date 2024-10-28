@@ -16,7 +16,7 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Set the AUTHORIZATION header.
+    // Set the Authorization header.
     let mut headers = HeaderMap::new();
     headers.insert(AUTHORIZATION, HeaderValue::from_static("deadbeef"));
 
