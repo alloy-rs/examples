@@ -5,7 +5,7 @@ resolver = "2"
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
-rust-version = "1.76"
+rust-version = "1.79"
 authors = ["Alloy Contributors"]
 license = "MIT OR Apache-2.0"
 homepage = "https://github.com/alloy-rs/examples"
@@ -95,7 +95,7 @@ significant_drop_tightening = "allow"
 needless_return = "allow"
 
 [workspace.dependencies]
-alloy = { version = "0.5.2", features = [
+alloy = { version = "0.5.3", features = [
     "full",
     "node-bindings",
     "rpc-types-debug",
@@ -111,13 +111,13 @@ alloy = { version = "0.5.2", features = [
     "eips",
 ] }
 
-foundry-fork-db = "0.5"
-revm-primitives = "12.0"
-revm = "16.0"
+foundry-fork-db = "0.6"
+revm-primitives = "13.0"
+revm = "17.1"
 
 # async
 futures-util = "0.3"
-tokio = "1.40"
+tokio = "1.41"
 
 # misc
 eyre = "0.6"
