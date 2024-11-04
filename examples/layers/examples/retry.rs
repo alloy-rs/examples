@@ -1,4 +1,4 @@
-//! This example demonstrates how to use the RetryBackoff layer in the provider.
+//! This example demonstrates how to use the `RetryBackoffLayer` in the provider.
 use alloy::{
     node_bindings::Anvil,
     providers::{Provider, ProviderBuilder},
