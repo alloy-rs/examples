@@ -41,7 +41,7 @@ This repository contains the following examples:
   - [x] [Wallet management filler](./examples/fillers/examples/wallet_filler.rs)
 - [x] Layers
   - [x] [Request / response logging layer](./examples/layers/examples/logging_layer.rs)
-  - [x] [RetryBackoff Layer](./examples/layers/examples/retry.rs)
+  - [x] [Retry-backoff layer](./examples/layers/examples/retry_layer.rs)
 - [x] Node Bindings
   - [x] [Deploy contract on local Anvil instance](./examples/node-bindings/examples/anvil_deploy_contract.rs)
   - [x] [Fork instance on Anvil](./examples/node-bindings/examples/anvil_fork_instance.rs)
