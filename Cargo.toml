@@ -112,8 +112,8 @@ alloy = { version = "0.6.1", features = [
 ] }
 
 foundry-fork-db = "0.6"
-revm-primitives = "13.0"
-revm = "17.1"
+revm-primitives = "14.0"
+revm = "18.0"
 
 # async
 futures-util = "0.3"
