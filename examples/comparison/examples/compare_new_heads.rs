@@ -66,8 +66,8 @@ async fn main() -> Result<()> {
         }
 
         let mut tracker = HashMap::new();
-        while let Some((name, block, timestamp)) = rx.recv().await {
-            let block_number = block.header.number;
+        while let Some((name, block_header, timestamp)) = rx.recv().await {
+            let block_number = block_header.number;
             let track = tracker
                 .entry(block_number)
                 .and_modify(|t: &mut TxTrack| {

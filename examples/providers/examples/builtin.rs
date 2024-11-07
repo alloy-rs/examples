@@ -33,8 +33,8 @@ async fn main() -> Result<()> {
     println!("Awaiting blocks...");
 
     let handle = tokio::spawn(async move {
-        while let Some(block) = stream.next().await {
-            println!("{}", block.header.number);
+        while let Some(block_header) = stream.next().await {
+            println!("{}", block_header.number);
         }
     });
 

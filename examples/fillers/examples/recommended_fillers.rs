@@ -1,6 +1,7 @@
 //! Example of using the `.with_recommended_fillers()` method in the provider.
 
 use alloy::{
+    consensus::Transaction,
     network::TransactionBuilder,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
@@ -30,18 +31,18 @@ async fn main() -> Result<()> {
     let node_hash = *builder.tx_hash();
     let pending_tx =
         provider.get_transaction_by_hash(node_hash).await?.expect("Pending transaction not found");
-    assert_eq!(pending_tx.nonce, 0);
+    assert_eq!(pending_tx.nonce(), 0);
 
-    println!("Transaction sent with nonce: {}", pending_tx.nonce);
+    println!("Transaction sent with nonce: {}", pending_tx.nonce());
 
     // Send the transaction, the nonce (1) is automatically managed by the provider.
     let builder = provider.send_transaction(tx).await?;
     let node_hash = *builder.tx_hash();
     let pending_tx =
         provider.get_transaction_by_hash(node_hash).await?.expect("Pending transaction not found");
-    assert_eq!(pending_tx.nonce, 1);
+    assert_eq!(pending_tx.nonce(), 1);
 
-    println!("Transaction sent with nonce: {}", pending_tx.nonce);
+    println!("Transaction sent with nonce: {}", pending_tx.nonce());
 
     Ok(())
 }

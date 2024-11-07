@@ -3,7 +3,7 @@
 use alloy::{
     consensus::{SignableTransaction, TxEip1559},
     eips::eip2930::AccessList,
-    primitives::{address, b256, hex, Signature, TxKind, U256},
+    primitives::{address, b256, hex, PrimitiveSignature, TxKind, U256},
 };
 use eyre::Result;
 
@@ -29,11 +29,11 @@ async fn main() -> Result<()> {
     };
 
     // Construct the signature of the transaction.
-    let signature = Signature::from_scalars_and_parity(
+    let signature = PrimitiveSignature::from_scalars_and_parity(
         b256!("840cfc572845f5786e702984c2a582528cad4b49b2a10b9db1be7fca90058565"),
         b256!("25e7109ceb98168d95b09b18bbf6b685130e0562f233877d492b94eee0c5b6d1"),
         false,
-    )?;
+    );
 
     // Convert the transaction into a signed transaction.
     let signed_tx = tx.into_signed(signature);
