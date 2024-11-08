@@ -16,9 +16,9 @@ workspace = true
 alloy.workspace = true
 
 aws-config = { version = "1.5", default-features = false }
-aws-sdk-kms = { version = "1.47", default-features = false }
+aws-sdk-kms = { version = "1.50", default-features = false }
 eyre.workspace = true
 rand = "0.8"
 serde = { workspace = true, features = ["derive"] }
-tempfile = "3.13"
+tempfile = "3.14"
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
