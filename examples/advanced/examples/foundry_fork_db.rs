@@ -10,12 +10,12 @@ use std::sync::Arc;
 
 use alloy::{
     eips::BlockId,
-    network::{AnyNetwork, TransactionBuilder},
+    network::{AnyHeader, AnyNetwork, AnyTxEnvelope, TransactionBuilder},
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
     rpc::types::{
-        serde_helpers::WithOtherFields, Block, BlockTransactionsKind, Transaction,
+        serde_helpers::WithOtherFields, Block, BlockTransactionsKind, Header, Transaction,
         TransactionRequest,
     },
 };
@@ -121,7 +121,7 @@ async fn main() -> Result<()> {
 }
 
 fn configure_evm_env(
-    block: WithOtherFields<Block<WithOtherFields<Transaction>>>,
+    block: WithOtherFields<Block<WithOtherFields<Transaction<AnyTxEnvelope>>, Header<AnyHeader>>>,
     shared: SharedBackend,
     tx_env: TxEnv,
 ) -> Evm<'static, (), CacheDB<SharedBackend>> {
@@ -132,7 +132,7 @@ fn configure_evm_env(
         timestamp: U256::from(block.header.timestamp),
         gas_limit: U256::from(block.header.gas_limit),
         basefee,
-        prevrandao: Some(block.header.mix_hash),
+        prevrandao: block.header.mix_hash,
         difficulty: block.header.difficulty,
         blob_excess_gas_and_price: Some(BlobExcessGasAndPrice::new(
             block.header.excess_blob_gas.unwrap_or_default(),
