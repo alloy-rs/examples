@@ -50,8 +50,8 @@ async fn main() -> Result<()> {
 
         tasks.push(tokio::spawn(async move {
             let _p = provider; // keep provider alive
-            while let Some(block) = stream.next().await {
-                if let Err(e) = sx.send((name.clone(), block, Utc::now())) {
+            while let Some(header) = stream.next().await {
+                if let Err(e) = sx.send((name.clone(), header, Utc::now())) {
                     eprintln!("sending to channel failed: {}", e);
                 }
             }
@@ -66,8 +66,8 @@ async fn main() -> Result<()> {
         }
 
         let mut tracker = HashMap::new();
-        while let Some((name, block, timestamp)) = rx.recv().await {
-            let block_number = block.header.number;
+        while let Some((name, header, timestamp)) = rx.recv().await {
+            let block_number = header.number;
             let track = tracker
                 .entry(block_number)
                 .and_modify(|t: &mut TxTrack| {

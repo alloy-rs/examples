@@ -22,27 +22,27 @@ async fn main() -> Result<()> {
     let provider_basic = ProviderBuilder::new().on_ws(ws_basic).await?;
     let provider_bearer = ProviderBuilder::new().on_ws(ws_bearer).await?;
 
-    // Subscribe to new blocks.
+    // Subscribe to new block headers.
     let sub_basic = provider_basic.subscribe_blocks();
     let sub_bearer = provider_bearer.subscribe_blocks();
 
-    // Wait and take the next 4 blocks.
+    // Wait and take the next 4 block headers
     let mut stream_basic = sub_basic.await?.into_stream().take(4);
     let mut stream_bearer = sub_bearer.await?.into_stream().take(4);
 
-    println!("Awaiting blocks...");
+    println!("Awaiting block headers...");
 
-    // Take the basic stream and print the block number upon receiving a new block.
+    // Take the basic stream and print the block number upon receiving a new block header.
     let basic_handle = tokio::spawn(async move {
-        while let Some(block) = stream_basic.next().await {
-            println!("Latest block number (basic): {}", block.header.number);
+        while let Some(header) = stream_basic.next().await {
+            println!("Latest block number (basic): {}", header.number);
         }
     });
 
-    // Take the bearer stream and print the block number upon receiving a new block.
+    // Take the bearer stream and print the block number upon receiving a new block header.
     let bearer_handle = tokio::spawn(async move {
-        while let Some(block) = stream_bearer.next().await {
-            println!("Latest block number (bearer): {}", block.header.number);
+        while let Some(header) = stream_bearer.next().await {
+            println!("Latest block number (bearer): {}", header.number);
         }
     });
 
