@@ -9,14 +9,14 @@
 use std::sync::Arc;
 
 use alloy::{
+    consensus::BlockHeader,
     eips::BlockId,
-    network::{AnyNetwork, TransactionBuilder},
+    network::{AnyNetwork, TransactionBuilder, TransactionResponse},
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
     rpc::types::{
-        serde_helpers::WithOtherFields, Block, BlockTransactionsKind, Transaction,
-        TransactionRequest,
+        serde_helpers::WithOtherFields, Block, BlockTransactionsKind, TransactionRequest,
     },
 };
 use eyre::Result;
@@ -120,22 +120,22 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-fn configure_evm_env(
-    block: WithOtherFields<Block<WithOtherFields<Transaction>>>,
+fn configure_evm_env<T: TransactionResponse, H: BlockHeader>(
+    block: WithOtherFields<Block<T, H>>,
     shared: SharedBackend,
     tx_env: TxEnv,
 ) -> Evm<'static, (), CacheDB<SharedBackend>> {
-    let basefee = block.header.base_fee_per_gas.map(U256::from).unwrap_or_default();
+    let basefee = block.header.base_fee_per_gas().map(U256::from).unwrap_or_default();
     let block_env = BlockEnv {
-        number: U256::from(block.header.number),
-        coinbase: block.header.miner,
-        timestamp: U256::from(block.header.timestamp),
-        gas_limit: U256::from(block.header.gas_limit),
+        number: U256::from(block.header.number()),
+        coinbase: block.header.beneficiary(),
+        timestamp: U256::from(block.header.timestamp()),
+        gas_limit: U256::from(block.header.gas_limit()),
         basefee,
-        prevrandao: block.header.mix_hash,
-        difficulty: block.header.difficulty,
+        prevrandao: block.header.mix_hash(),
+        difficulty: block.header.difficulty(),
         blob_excess_gas_and_price: Some(BlobExcessGasAndPrice::new(
-            block.header.excess_blob_gas.unwrap_or_default(),
+            block.header.excess_blob_gas().unwrap_or_default(),
         )),
     };
 

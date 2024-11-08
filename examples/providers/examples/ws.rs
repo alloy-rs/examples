@@ -17,12 +17,12 @@ async fn main() -> Result<()> {
     // Wait and take the next 4 blocks.
     let mut stream = sub.into_stream().take(4);
 
-    println!("Awaiting blocks...");
+    println!("Awaiting block headers...");
 
     // Take the stream and print the block number upon receiving a new block.
     let handle = tokio::spawn(async move {
-        while let Some(block) = stream.next().await {
-            println!("Latest block number: {}", block.header.number);
+        while let Some(header) = stream.next().await {
+            println!("Latest block number: {}", header.number);
         }
     });
 

@@ -30,11 +30,11 @@ async fn main() -> Result<()> {
 
     let mut stream = sub.into_stream().take(2);
 
-    println!("Awaiting blocks...");
+    println!("Awaiting block headers...");
 
     let handle = tokio::spawn(async move {
-        while let Some(block) = stream.next().await {
-            println!("{}", block.header.number);
+        while let Some(header) = stream.next().await {
+            println!("{}", header.number);
         }
     });
 

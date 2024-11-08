@@ -17,12 +17,12 @@ async fn main() -> Result<()> {
     let ws = WsConnect::new(anvil.ws_endpoint());
     let provider = ProviderBuilder::new().on_ws(ws).await?;
 
-    // Subscribe to blocks.
+    // Subscribe to block headers.
     let subscription = provider.subscribe_blocks().await?;
     let mut stream = subscription.into_stream().take(2);
 
-    while let Some(block) = stream.next().await {
-        println!("Received block number: {}", block.header.number);
+    while let Some(header) = stream.next().await {
+        println!("Received block number: {}", header.number);
     }
 
     // Poll for block headers.
