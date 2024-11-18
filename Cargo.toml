@@ -109,6 +109,7 @@ alloy = { version = "0.6.2", features = [
     "signer-trezor",
     "signer-yubihsm",
     "eips",
+    "hyper",
 ] }
 
 foundry-fork-db = "0.7"

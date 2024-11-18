@@ -18,3 +18,4 @@ alloy.workspace = true
 eyre.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
 tower = { version = "0.5", features = ["retry"] }
+http-body-util = "0.1"
