@@ -40,6 +40,7 @@ This repository contains the following examples:
   - [x] [Recommended fillers](./examples/fillers/examples/recommended_fillers.rs)
   - [x] [Wallet management filler](./examples/fillers/examples/wallet_filler.rs)
 - [x] Layers
+  - [x] [Hyper layer transport](./examples/layers/examples/hyper_http_layer.rs)
   - [x] [Request / response logging layer](./examples/layers/examples/logging_layer.rs)
   - [x] [Retry-backoff layer](./examples/layers/examples/retry_layer.rs)
 - [x] Node Bindings
