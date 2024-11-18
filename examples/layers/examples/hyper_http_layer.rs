@@ -1,5 +1,6 @@
-//! This example demonstrates how to write a custom layer for the `hyper` HTTP client that can
-//! modify the underlying http request before it is sent.
+//! This example demonstrates how to write a custom layer for the [`hyper`] HTTP client that can
+//! modify the underlying HTTP request before it is sent.
+
 use alloy::{
     node_bindings::Anvil,
     providers::{Provider, ProviderBuilder},

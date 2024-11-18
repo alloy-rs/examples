@@ -95,21 +95,21 @@ significant_drop_tightening = "allow"
 needless_return = "allow"
 
 [workspace.dependencies]
-alloy = { version = "0.6.2", features = [
+alloy = { version = "0.6.4", features = [
     "full",
+    "eips",
+    "hyper",
+    "json-rpc",
     "node-bindings",
+    "rpc-client",
     "rpc-types-debug",
     "rpc-types-trace",
-    "json-rpc",
-    "rpc-client",
     "signer-aws",
     "signer-keystore",
     "signer-ledger",
     "signer-mnemonic",
     "signer-trezor",
     "signer-yubihsm",
-    "eips",
-    "hyper",
 ] }
 
 foundry-fork-db = "0.7"
