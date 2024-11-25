@@ -63,6 +63,7 @@ This repository contains the following examples:
   - [x] [Subscribe and listen to pending transactions in the public mempool](./examples/subscriptions/examples/subscribe_pending_transactions.rs)
   - [x] [Event multiplexer](./examples/subscriptions/examples/event_multiplexer.rs)
 - [x] Providers
+  - [x] [JSON-RPC Batch Request](./examples/providers/examples/batch_rpc.rs)
   - [x] [Builder](./examples/providers/examples/builder.rs)
   - [x] [Builtin](./examples/providers/examples/builtin.rs)
   - [x] [HTTP with authentication](./examples/providers/examples/http_with_auth.rs)
