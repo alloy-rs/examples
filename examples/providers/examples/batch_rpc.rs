@@ -37,9 +37,8 @@ async fn main() -> Result<()> {
     batch.send().await?;
 
     // Get the results.
-    let latest_block = blobk_number_fut.await?;
-    let gas_price = gas_price_fut.await?;
-    let vitalik_nonce = vitalik_nonce_fut.await?;
+    let (latest_block, gas_price, vitalik_nonce) =
+        tokio::try_join!(blobk_number_fut, gas_price_fut, vitalik_nonce_fut)?;
 
     println!("Latest block number: {latest_block}");
     println!("Gas price: {gas_price}");
