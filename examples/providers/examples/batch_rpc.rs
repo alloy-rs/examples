@@ -1,6 +1,7 @@
 //! Example depicting how to make a Batch RPC request using the HTTP provider.
 
 use alloy::{
+    node_bindings::Anvil,
     primitives::{address, U128, U64},
     rpc::client::ClientBuilder,
 };
@@ -8,7 +9,10 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let rpc_url = "https://eth.merkle.io".parse()?;
+    let anvil = Anvil::new().spawn();
+
+    // Swap this out with a RPC_URL provider that supports JSON-RPC batch requests. e.g. https://eth.merkle.io
+    let rpc_url = anvil.endpoint_url();
 
     // Create a HTTP transport.
     let client = ClientBuilder::default().http(rpc_url);
