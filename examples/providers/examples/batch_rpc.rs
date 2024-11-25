@@ -21,7 +21,7 @@ async fn main() -> Result<()> {
     let mut batch = client.new_batch();
 
     // Add calls to the batch.
-    let blobk_number_fut =
+    let block_number_fut =
         batch.add_call("eth_blockNumber", &())?.map_resp(|resp: U64| resp.to::<u64>());
 
     let gas_price_fut =
@@ -38,7 +38,7 @@ async fn main() -> Result<()> {
 
     // Get the results.
     let (latest_block, gas_price, vitalik_nonce) =
-        tokio::try_join!(blobk_number_fut, gas_price_fut, vitalik_nonce_fut)?;
+        tokio::try_join!(block_number_fut, gas_price_fut, vitalik_nonce_fut)?;
 
     println!("Latest block number: {latest_block}");
     println!("Gas price: {gas_price}");
