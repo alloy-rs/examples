@@ -95,7 +95,7 @@ significant_drop_tightening = "allow"
 needless_return = "allow"
 
 [workspace.dependencies]
-alloy = { version = "0.6.4", features = [
+alloy = { version = "0.7", features = [
     "full",
     "eips",
     "hyper",
@@ -112,7 +112,7 @@ alloy = { version = "0.6.4", features = [
     "signer-yubihsm",
 ] }
 
-foundry-fork-db = "0.7"
+foundry-fork-db = "0.8"
 
 revm-primitives = "14.0"
 revm = "18.0"
@@ -128,4 +128,4 @@ serde_json = "1.0"
 
 [patch.crates-io]
 # alloy = { git = "https://github.com/alloy-rs/alloy", rev = "65dfbe" }
-foundry-fork-db = { git = "https://github.com/foundry-rs/foundry-fork-db", rev = "d113d6e" }
+# foundry-fork-db = { git = "https://github.com/foundry-rs/foundry-fork-db", rev = "d113d6e" }

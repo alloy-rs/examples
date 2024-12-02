@@ -4,11 +4,10 @@ use alloy::{
     contract::{ContractInstance, Interface},
     dyn_abi::DynSolValue,
     json_abi::JsonAbi,
-    network::{Ethereum, TransactionBuilder},
+    network::TransactionBuilder,
     primitives::{hex, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
-    transports::http::{Client, Http},
 };
 use eyre::Result;
 
@@ -63,7 +62,7 @@ async fn main() -> Result<()> {
     let abi: JsonAbi = serde_json::from_slice(&contents)?;
 
     // Create a new `ContractInstance` of the Counter contract from the abi.
-    let counter_instance: ContractInstance<Http<Client>, _, Ethereum> =
+    let counter_instance =
         ContractInstance::new(contract_address, provider.clone(), Interface::new(abi));
 
     // Interact with the contract.
