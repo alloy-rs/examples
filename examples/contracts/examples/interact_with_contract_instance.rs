@@ -4,11 +4,10 @@
 use alloy::{
     contract::{ContractInstance, Interface},
     dyn_abi::DynSolValue,
-    network::{Ethereum, TransactionBuilder},
+    network::TransactionBuilder,
     primitives::{hex, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
-    transports::http::{Client, Http},
 };
 use eyre::Result;
 
@@ -57,8 +56,7 @@ async fn main() -> Result<()> {
     let abi = serde_json::from_str(&abi_value.to_string())?;
 
     // Create a new `ContractInstance` of the `Counter` contract from the abi
-    let contract: ContractInstance<Http<Client>, _, Ethereum> =
-        ContractInstance::new(contract_address, provider.clone(), Interface::new(abi));
+    let contract = ContractInstance::new(contract_address, provider.clone(), Interface::new(abi));
 
     // Set the number to 42.
     let number_value = DynSolValue::from(U256::from(42));
