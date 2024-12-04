@@ -23,13 +23,13 @@ async fn main() -> Result<()> {
     let charlie = address!("90F79bf6EB2c4f870365E785982E1f101E93b906");
     let dan = address!("15d34AAf54267DB7D7c367839AAf71A00a2C6A65");
 
-    // Define transactions
+    // Define transactions.
     let tx1 =
         TransactionRequest::default().with_from(alice).with_to(bob).with_value(U256::from(150));
     let tx2 =
         TransactionRequest::default().with_from(charlie).with_to(dan).with_value(U256::from(250));
 
-    // Define the trace for the trace_list
+    // Define the trace type for the trace call list.
     let trace_type: &[TraceType] = &[TraceType::Trace];
 
     // Trace the transaction on top of the latest block.

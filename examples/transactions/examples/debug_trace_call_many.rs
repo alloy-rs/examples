@@ -24,7 +24,7 @@ async fn main() -> Result<()> {
     let charlie = address!("90F79bf6EB2c4f870365E785982E1f101E93b906");
     let dan = address!("15d34AAf54267DB7D7c367839AAf71A00a2C6A65");
 
-    // Define transactions
+    // Define transactions.
     let tx1 =
         TransactionRequest::default().with_from(alice).with_to(bob).with_value(U256::from(150));
     let tx2 =
@@ -33,13 +33,14 @@ async fn main() -> Result<()> {
     // Create the bundle of transactions.
     let bundles = vec![Bundle { transactions: vec![tx1, tx2], block_override: None }];
 
-    // Define the State context and trace option
+    // Define the state context and trace option.
     let state_context = StateContext::default();
     let trace_options = GethDebugTracingCallOptions::default();
 
-    //Call `debug_trace_call_many` on the provider.
+    // Call `debug_trace_call_many` on the provider.
     let result = provider.debug_trace_call_many(bundles, state_context, trace_options).await;
 
+    // Print the trace results.
     match result {
         Ok(traces) => {
             println!("Traces:\n{:?}", traces);
