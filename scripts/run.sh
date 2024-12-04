@@ -15,6 +15,7 @@ function main () {
             | grep -v \
             -e 'any_network' \
             -e 'builtin' \
+            -e 'debug_trace_call_many' \
             -e 'geth_local_instance' \
             -e 'ipc' \
             -e 'ledger_signer' \
@@ -24,6 +25,7 @@ function main () {
             -e 'subscribe_all_logs' \
             -e 'subscribe_logs' \
             -e 'subscribe_pending_transactions' \
+            -e 'trace_call_many' \
             -e 'trace_call' \
             -e 'trace_transaction' \
             -e 'trezor_signer' \

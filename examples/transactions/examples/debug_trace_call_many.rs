@@ -2,6 +2,7 @@
 
 use alloy::{
     network::TransactionBuilder,
+    node_bindings::Reth,
     primitives::{address, U256},
     providers::{ext::DebugApi, ProviderBuilder},
     rpc::types::{
@@ -12,21 +13,22 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // create a provider
-    let rpc_url = "https://eth.merkle.io".parse()?;
-    let provider = ProviderBuilder::new().on_http(rpc_url);
+    // Spin up a local Reth node.
+    // Ensure `reth` is available in $PATH.
+    let reth = Reth::new().dev().disable_discovery().instance(1).spawn();
+    let provider = ProviderBuilder::new().on_http(reth.endpoint().parse()?);
 
-    let alice = address!("f39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
-    let bob = address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045");
-
-    let jon = address!("f29Fd6e51aad88F6F4ce6aB8827279cffFb92377");
-    let vitalik = address!("f9dA6BF26964aF9D7eEd9e03E53415D37aA96033");
+    // Get users, these have allocated balances in the dev genesis block.
+    let alice = address!("70997970C51812dc3A010C7d01b50e0d17dc79C8");
+    let bob = address!("3C44CdDdB6a900fa2b585dd299e03d12FA4293BC");
+    let charlie = address!("90F79bf6EB2c4f870365E785982E1f101E93b906");
+    let dan = address!("15d34AAf54267DB7D7c367839AAf71A00a2C6A65");
 
     // Define transactions
     let tx1 =
         TransactionRequest::default().with_from(alice).with_to(bob).with_value(U256::from(150));
     let tx2 =
-        TransactionRequest::default().with_from(jon).with_to(vitalik).with_value(U256::from(250));
+        TransactionRequest::default().with_from(charlie).with_to(dan).with_value(U256::from(250));
 
     // Create the bundle of transactions.
     let bundles = vec![Bundle { transactions: vec![tx1, tx2], block_override: None }];
