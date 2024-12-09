@@ -100,6 +100,7 @@ This repository contains the following examples:
   - [x] [Send transaction with access list](./examples/transactions/examples/with_access_list.rs)
 - [x] Wallets
   - [x] [AWS signer](./examples/wallets/examples/aws_signer.rs)
+  - [x] [GCP signer](./examples/wallets/examples/gcp_signer.rs)
   - [x] [Ledger signer](./examples/wallets/examples/ledger_signer.rs)
   - [x] [Private key signer](./examples/wallets/examples/private_key_signer.rs)
   - [x] [Mnemonic signer](./examples/wallets/examples/mnemonic_signer.rs)

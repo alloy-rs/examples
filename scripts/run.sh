@@ -14,8 +14,10 @@ function main () {
             | grep -E '^ ' \
             | grep -v \
             -e 'any_network' \
+            -e 'aws_signer' \
             -e 'builtin' \
             -e 'debug_trace_call_many' \
+            -e 'gcp_signer' \
             -e 'geth_local_instance' \
             -e 'ipc' \
             -e 'ledger_signer' \
