@@ -1,4 +1,7 @@
-//! Example of how to use the GCP KMS Signer.
+//! Example showing how to use the GCP KMS signer.
+
+use std::env;
+
 use alloy::signers::{
     gcp::{GcpKeyRingRef, GcpSigner, KeySpecifier},
     Signer,
@@ -10,11 +13,10 @@ use gcloud_sdk::{
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // environment variable, preferably to be set in a dotenv file
-    let project_id = "GOOGLE_PROJECT_ID";
-    let location = "GOOGLE_LOCATION";
-    let keyring = "GOOGLE_KEYRING";
-    let key_name = "GOOGLE_KEY_NAME";
+    let project_id = env::var("GOOGLE_PROJECT_ID").expect("GOOGLE_PROJECT_ID not set in .env file");
+    let location = env::var("GOOGLE_LOCATION").expect("GOOGLE_LOCATION not set in .env file");
+    let keyring = env::var("GOOGLE_KEYRING").expect("GOOGLE_KEYRING not set in .env file");
+    let key_name = env::var("GOOGLE_KEY_NAME").expect("GOOGLE_KEY_NAME not set in .env file");
 
     let keyring = GcpKeyRingRef::new(&project_id, &location, &keyring);
     let client = GoogleApi::from_function(
@@ -22,15 +24,16 @@ async fn main() -> Result<()> {
         "https://cloudkms.googleapis.com",
         None,
     )
-    .await
-    .unwrap();
+    .await?;
 
     let key_version = 1;
-
     let specifier = KeySpecifier::new(keyring, &key_name, key_version);
-    let signer = GcpSigner::new(client, specifier, Some(key_version)).await.unwrap();
+    let signer = GcpSigner::new(client, specifier, Some(key_version)).await?;
+
     let message = "Hello, world!";
-    let signature = signer.sign_message(message.as_bytes()).await.unwrap();
+    let signature = signer.sign_message(message.as_bytes()).await?;
+
     assert_eq!(signature.recover_address_from_msg(message)?, signer.address());
+
     Ok(())
 }
