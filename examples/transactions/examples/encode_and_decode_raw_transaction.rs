@@ -19,16 +19,16 @@ use alloy::{
 use eyre::Result;
 
 fn build_unsigned_tx(chain_id: u64, to_address: Address) -> TxEip1559 {
-    let mut tx = TxEip1559::default();
-    tx.chain_id = chain_id;
-    tx.nonce = 0;
-    tx.gas_limit = 21_000;
-    tx.max_fee_per_gas = 20_000_000_000;
-    tx.max_priority_fee_per_gas = 1_000_000_000;
-    tx.to = TxKind::Call(to_address); // Change this to `TxKind::Create` if you'd like to deploy a contract instead
-    tx.value = U256::from(100);
-
-    tx
+    TxEip1559 {
+        chain_id,
+        nonce: 0,
+        gas_limit: 21_000,
+        max_fee_per_gas: 20_000_000_000,
+        max_priority_fee_per_gas: 1_000_000_000,
+        to: TxKind::Call(to_address), // Change this to `TxKind::Create` if you'd like to deploy a contract instead
+        value: U256::from(100),
+        ..Default::default()
+    }
 }
 
 fn unsigned_tx_to_bytes(tx: TxEip1559) -> Vec<u8> {
@@ -59,9 +59,7 @@ fn bytes_to_signed_tx(bytes: Vec<u8>) -> TxEnvelope {
 }
 
 fn get_tx_hash_from_signed_tx_bytes(signed_tx_bytes: Vec<u8>) -> FixedBytes<32> {
-    format!("0x{}", hex::encode(keccak256(signed_tx_bytes.clone())))
-        .parse::<FixedBytes<32>>()
-        .unwrap()
+    format!("0x{}", hex::encode(keccak256(signed_tx_bytes))).parse::<FixedBytes<32>>().unwrap()
 }
 
 #[tokio::main]
