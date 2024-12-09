@@ -1,11 +1,15 @@
-//! Example of how to use GCP Ethereum Signer.
-use alloy::signers::{gcp::{GcpKeyRingRef, GcpSigner, KeySpecifier},Signer};
+//! Example of how to use the GCP KMS Signer.
+use alloy::signers::{
+    gcp::{GcpKeyRingRef, GcpSigner, KeySpecifier},
+    Signer,
+};
+use eyre::{Ok, Result};
 use gcloud_sdk::{
     google::cloud::kms::v1::key_management_service_client::KeyManagementServiceClient, GoogleApi,
 };
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<()> {
     // environment variable, preferably to be set in a dotenv file
     let project_id = "GOOGLE_PROJECT_ID";
     let location = "GOOGLE_LOCATION";
@@ -19,13 +23,14 @@ async fn main() {
         None,
     )
     .await
-    .expect("Failed to create GCP KMS Client");
+    .unwrap();
 
     let key_version = 1;
 
     let specifier = KeySpecifier::new(keyring, &key_name, key_version);
-    let signer = GcpSigner::new(client, specifier, Some(key_version)).await.expect("get_key");
-    let message = vec![0, 1, 2, 3];
-    let sig = signer.sign_message(&message).await.unwrap();
-    assert_eq!(sig.recover_address_from_msg(message).unwrap(), signer.address());
+    let signer = GcpSigner::new(client, specifier, Some(key_version)).await.unwrap();
+    let message = "Hello, world!";
+    let signature = signer.sign_message(message.as_bytes()).await.unwrap();
+    assert_eq!(signature.recover_address_from_msg(message)?, signer.address());
+    Ok(())
 }

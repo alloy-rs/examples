@@ -14,7 +14,7 @@ workspace = true
 
 [dev-dependencies]
 alloy.workspace = true
-gcloud-sdk = {version = "0.25.0", features = [
+gcloud-sdk = {version = "0.25", features = [
     "google-cloud-kms-v1",
     "google-longrunning"
 ]}
