@@ -1,6 +1,5 @@
 //! Example of how to use GCP Ethereum Signer.
-use alloy::signers::gcp::{GcpKeyRingRef, GcpSigner, KeySpecifier};
-use alloy::signers::Signer;
+use alloy::signers::{gcp::{GcpKeyRingRef, GcpSigner, KeySpecifier},Signer};
 use gcloud_sdk::{
     google::cloud::kms::v1::key_management_service_client::KeyManagementServiceClient, GoogleApi,
 };
