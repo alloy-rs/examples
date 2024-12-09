@@ -110,6 +110,7 @@ alloy = { version = "0.7", features = [
     "signer-mnemonic",
     "signer-trezor",
     "signer-yubihsm",
+    "signer-gcp"
 ] }
 
 foundry-fork-db = "0.8"
