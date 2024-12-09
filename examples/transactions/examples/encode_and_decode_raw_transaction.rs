@@ -2,12 +2,11 @@
 
 use alloy::{
     consensus::{SignableTransaction, TxEip1559, TxEnvelope},
-    hex,
     network::{EthereumWallet, TransactionBuilder},
     primitives::{
         keccak256,
         private::alloy_rlp::{Decodable, Encodable},
-        Address, FixedBytes, TxKind, U256,
+        Address, TxKind, U256,
     },
     providers::{Provider, ProviderBuilder, WalletProvider},
     rpc::types::TransactionRequest,
@@ -54,10 +53,6 @@ fn bytes_to_signed_tx(bytes: Vec<u8>) -> TxEnvelope {
     TxEnvelope::decode(&mut slice).unwrap()
 }
 
-fn get_tx_hash_from_signed_tx_bytes(signed_tx_bytes: Vec<u8>) -> FixedBytes<32> {
-    format!("0x{}", hex::encode(keccak256(signed_tx_bytes))).parse::<FixedBytes<32>>().unwrap()
-}
-
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
@@ -89,7 +84,7 @@ async fn main() -> Result<()> {
     assert_eq!(receipt.to, Some(bob));
 
     // 6. Comapre the transaction hash from the signed transaction with the receipt's transaction hash.
-    let tx_hash = get_tx_hash_from_signed_tx_bytes(signed_tx_bytes.clone());
+    let tx_hash = keccak256(signed_tx_bytes);
     assert_eq!(tx_hash, receipt.transaction_hash);
 
     Ok(())
