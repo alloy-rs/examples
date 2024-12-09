@@ -1,19 +1,15 @@
 //! Example of encoding and decoding raw transactions.
 
-use alloy::primitives::keccak256;
-use alloy::primitives::private::alloy_rlp::Decodable;
-use alloy::primitives::private::alloy_rlp::Encodable;
-use alloy::primitives::FixedBytes;
-use alloy::primitives::TxKind;
-use alloy::primitives::U256;
-use alloy::providers::WalletProvider;
 use alloy::{
-    consensus::TxEnvelope,
-    consensus::{SignableTransaction, TxEip1559},
+    consensus::{SignableTransaction, TxEip1559, TxEnvelope},
     hex,
     network::{EthereumWallet, TransactionBuilder},
-    primitives::Address,
-    providers::{Provider, ProviderBuilder},
+    primitives::{
+        keccak256,
+        private::alloy_rlp::{Decodable, Encodable},
+        Address, FixedBytes, TxKind, U256,
+    },
+    providers::{Provider, ProviderBuilder, WalletProvider},
     rpc::types::TransactionRequest,
 };
 use eyre::Result;
