@@ -1,7 +1,5 @@
 //! Example showing how to use the GCP KMS signer.
 
-use std::env;
-
 use alloy::signers::{
     gcp::{GcpKeyRingRef, GcpSigner, KeySpecifier},
     Signer,
@@ -13,10 +11,11 @@ use gcloud_sdk::{
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let project_id = env::var("GOOGLE_PROJECT_ID").expect("GOOGLE_PROJECT_ID not set in .env file");
-    let location = env::var("GOOGLE_LOCATION").expect("GOOGLE_LOCATION not set in .env file");
-    let keyring = env::var("GOOGLE_KEYRING").expect("GOOGLE_KEYRING not set in .env file");
-    let key_name = env::var("GOOGLE_KEY_NAME").expect("GOOGLE_KEY_NAME not set in .env file");
+    let project_id =
+        std::env::var("GOOGLE_PROJECT_ID").expect("GOOGLE_PROJECT_ID not set in .env file");
+    let location = std::env::var("GOOGLE_LOCATION").expect("GOOGLE_LOCATION not set in .env file");
+    let keyring = std::env::var("GOOGLE_KEYRING").expect("GOOGLE_KEYRING not set in .env file");
+    let key_name = std::env::var("GOOGLE_KEY_NAME").expect("GOOGLE_KEY_NAME not set in .env file");
 
     let keyring = GcpKeyRingRef::new(&project_id, &location, &keyring);
     let client = GoogleApi::from_function(

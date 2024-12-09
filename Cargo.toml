@@ -96,8 +96,8 @@ needless_return = "allow"
 
 [workspace.dependencies]
 alloy = { version = "0.7", features = [
-    "full",
     "eips",
+    "full",
     "hyper",
     "json-rpc",
     "node-bindings",
@@ -105,12 +105,12 @@ alloy = { version = "0.7", features = [
     "rpc-types-debug",
     "rpc-types-trace",
     "signer-aws",
+    "signer-gcp",
     "signer-keystore",
     "signer-ledger",
     "signer-mnemonic",
     "signer-trezor",
     "signer-yubihsm",
-    "signer-gcp"
 ] }
 
 foundry-fork-db = "0.8"

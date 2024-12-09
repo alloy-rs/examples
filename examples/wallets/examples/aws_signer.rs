@@ -1,14 +1,12 @@
 //! Example showing how to use the AWS KMS signer.
 
-use std::env;
-
 use alloy::signers::{aws::AwsSigner, Signer};
 use aws_config::BehaviorVersion;
 use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let key_id = env::var("AWS_KEY_ID").expect("AWS_KEY_ID not set in .env file");
+    let key_id = std::env::var("AWS_KEY_ID").expect("AWS_KEY_ID not set in .env file");
 
     let config = aws_config::load_defaults(BehaviorVersion::latest()).await;
     let client = aws_sdk_kms::Client::new(&config);
