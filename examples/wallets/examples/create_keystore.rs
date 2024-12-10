@@ -1,9 +1,10 @@
 //! Example of creating a keystore file from a private key and password, and then reading it back.
 
+use std::fs::read_to_string;
+
 use alloy::{primitives::hex, signers::local::LocalSigner};
 use eyre::Result;
 use rand::thread_rng;
-use std::fs::read_to_string;
 use tempfile::tempdir;
 
 #[tokio::main]

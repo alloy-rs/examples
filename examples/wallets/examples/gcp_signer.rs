@@ -4,7 +4,7 @@ use alloy::signers::{
     gcp::{GcpKeyRingRef, GcpSigner, KeySpecifier},
     Signer,
 };
-use eyre::{Ok, Result};
+use eyre::Result;
 use gcloud_sdk::{
     google::cloud::kms::v1::key_management_service_client::KeyManagementServiceClient, GoogleApi,
 };

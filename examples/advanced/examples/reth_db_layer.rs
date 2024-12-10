@@ -1,5 +1,6 @@
 //! `RethDbLayer` implementation to be used with `RethDbProvider` to wrap the Provider trait over
 //! reth-db.
+
 #![allow(dead_code)]
 use std::path::PathBuf;
 

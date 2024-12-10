@@ -1,6 +1,13 @@
 //! This examples demonstrates how to implement your own custom transport layer.
 //! As a demonstration we implement a simple request / response logging layer.
 
+use std::{
+    fmt::Debug,
+    future::{Future, IntoFuture},
+    pin::Pin,
+    task::{Context, Poll},
+};
+
 use alloy::{
     node_bindings::Anvil,
     providers::{Provider, ProviderBuilder},
@@ -11,12 +18,6 @@ use alloy::{
     transports::TransportError,
 };
 use eyre::Result;
-use std::{
-    fmt::Debug,
-    future::{Future, IntoFuture},
-    pin::Pin,
-    task::{Context, Poll},
-};
 use tower::{Layer, Service};
 
 struct LoggingLayer;

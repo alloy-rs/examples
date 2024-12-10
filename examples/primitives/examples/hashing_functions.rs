@@ -1,7 +1,7 @@
 //! Example of basic usage of hashing functions.
 
 use alloy::primitives::{eip191_hash_message, keccak256};
-use eyre::{Ok, Result};
+use eyre::Result;
 
 fn main() -> Result<()> {
     // [`Keccak-256`]: https://en.wikipedia.org/wiki/SHA-3

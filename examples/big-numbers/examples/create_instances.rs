@@ -1,11 +1,12 @@
 //! Example of creating instances of `U256` from strings and numbers.
 
+use std::str::FromStr;
+
 use alloy::primitives::{
     utils::{parse_units, ParseUnits},
     U256,
 };
 use eyre::Result;
-use std::str::FromStr;
 
 fn main() -> Result<()> {
     // From strings

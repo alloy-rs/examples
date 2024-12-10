@@ -10,6 +10,7 @@
 //! their own implementation of the `Provider` trait and fetch results from any source.
 //!
 //! Learn more about `ProviderCall` [here](https://github.com/alloy-rs/alloy/pull/788).
+
 use std::{marker::PhantomData, path::PathBuf, sync::Arc};
 
 use alloy::{

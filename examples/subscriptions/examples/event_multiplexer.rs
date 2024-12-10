@@ -1,5 +1,7 @@
 //! Example of multiplexing the watching of event logs.
 
+use std::str::FromStr;
+
 use alloy::{
     node_bindings::Anvil,
     primitives::I256,
@@ -9,7 +11,6 @@ use alloy::{
 };
 use eyre::Result;
 use futures_util::StreamExt;
-use std::str::FromStr;
 
 // Codegen from embedded Solidity code and precompiled bytecode.
 // solc v0.8.26; solc EventMultiplexer.sol --via-ir --optimize --bin
