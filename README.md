@@ -63,7 +63,6 @@ This repository contains the following examples:
   - [x] [Subscribe and listen to pending transactions in the public mempool](./examples/subscriptions/examples/subscribe_pending_transactions.rs)
   - [x] [Event multiplexer](./examples/subscriptions/examples/event_multiplexer.rs)
 - [x] Providers
-  - [x] [JSON-RPC Batch Request](./examples/providers/examples/batch_rpc.rs)
   - [x] [Builder](./examples/providers/examples/builder.rs)
   - [x] [Builtin](./examples/providers/examples/builtin.rs)
   - [x] [HTTP with authentication](./examples/providers/examples/http_with_auth.rs)
@@ -71,6 +70,7 @@ This repository contains the following examples:
   - [x] [IPC](./examples/providers/examples/ipc.rs)
   - [x] [WS](./examples/providers/examples/ws.rs)
   - [x] [WS with authentication](./examples/providers/examples/ws_with_auth.rs)
+  - [x] [JSON-RPC Batch Request](./examples/providers/examples/batch_rpc.rs)
 - [x] Queries
   - [x] [Query contract storage](./examples/queries/examples/query_contract_storage.rs)
   - [x] [Query contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
