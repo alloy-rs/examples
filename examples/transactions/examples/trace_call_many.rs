@@ -7,8 +7,7 @@ use alloy::{
     providers::{ext::TraceApi, ProviderBuilder},
     rpc::types::{trace::parity::TraceType, TransactionRequest},
 };
-
-use eyre::{Ok, Result};
+use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {

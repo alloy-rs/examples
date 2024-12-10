@@ -1,5 +1,7 @@
 //! Example of using a keystore wallet to sign and send a transaction.
 
+use std::path::PathBuf;
+
 use alloy::{
     network::{EthereumWallet, TransactionBuilder},
     primitives::{address, U256},
@@ -8,7 +10,6 @@ use alloy::{
     signers::local::LocalSigner,
 };
 use eyre::Result;
-use std::{env, path::PathBuf};
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -18,7 +19,7 @@ async fn main() -> Result<()> {
     // Set up signer using Alice's keystore file.
     // The private key belongs to Alice, the first default Anvil account.
     let keystore_file_path =
-        PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("examples/keystore/alice.json");
+        PathBuf::from(std::env::var("CARGO_MANIFEST_DIR")?).join("examples/keystore/alice.json");
     let signer = LocalSigner::decrypt_keystore(keystore_file_path, password)?;
     let wallet = EthereumWallet::from(signer);
 

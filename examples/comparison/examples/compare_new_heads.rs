@@ -1,5 +1,7 @@
 //! Example of comparing new block headers from multiple providers.
 
+use std::{collections::HashMap, sync::Arc};
+
 use alloy::{
     network::AnyNetwork,
     providers::{Provider, ProviderBuilder},
@@ -8,7 +10,6 @@ use chrono::Utc;
 use clap::Parser;
 use eyre::Result;
 use futures_util::StreamExt;
-use std::{collections::HashMap, sync::Arc};
 use tokio::sync::mpsc;
 
 #[derive(Debug, Parser)]

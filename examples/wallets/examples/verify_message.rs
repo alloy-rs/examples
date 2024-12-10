@@ -1,7 +1,7 @@
 //! Example of verifying that a message was signed by the provided address.
 
 use alloy::signers::{local::PrivateKeySigner, SignerSync};
-use eyre::{Ok, Result};
+use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {

@@ -1,8 +1,9 @@
 //! Example of performing arithmetic operations with `U256`.
 
+use std::ops::{Div, Mul};
+
 use alloy::primitives::{utils::format_units, U256};
 use eyre::Result;
-use std::ops::{Div, Mul};
 
 /// `U256` implements traits in `std::ops`, that means it supports arithmetic operations
 /// using standard Rust operators `+`, `-`. `*`, `/`, `%`, along with additional utilities to

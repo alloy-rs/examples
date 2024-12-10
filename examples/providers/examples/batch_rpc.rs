@@ -9,6 +9,8 @@ use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    // Spin up a local Anvil node.
+    // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().spawn();
 
     // Swap this out with a RPC_URL provider that supports JSON-RPC batch requests. e.g. https://eth.merkle.io
@@ -28,7 +30,6 @@ async fn main() -> Result<()> {
         batch.add_call("eth_gasPrice", &())?.map_resp(|resp: U128| resp.to::<u128>());
 
     let vitalik = address!("d8da6bf26964af9d7eed9e03e53415d37aa96045");
-
     let vitalik_nonce_fut = batch
         .add_call("eth_getTransactionCount", &(vitalik, "latest"))? // Vitalik's nonce at BlockId::Latest
         .map_resp(|resp: U128| resp.to::<u128>());
