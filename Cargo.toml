@@ -128,5 +128,13 @@ serde = "1.0"
 serde_json = "1.0"
 
 [patch.crates-io]
-# alloy = { git = "https://github.com/alloy-rs/alloy", rev = "65dfbe" }
-# foundry-fork-db = { git = "https://github.com/foundry-rs/foundry-fork-db", rev = "d113d6e" }
+alloy = { git = "https://github.com/alloy-rs/alloy", branch = "dani/rm-T-transport" }
+alloy-consensus = { git = "https://github.com/alloy-rs/alloy", branch = "dani/rm-T-transport" }
+alloy-provider = { git = "https://github.com/alloy-rs/alloy", branch = "dani/rm-T-transport" }
+alloy-rpc-client = { git = "https://github.com/alloy-rs/alloy", branch = "dani/rm-T-transport" }
+alloy-rpc-types = { git = "https://github.com/alloy-rs/alloy", branch = "dani/rm-T-transport" }
+alloy-serde = { git = "https://github.com/alloy-rs/alloy", branch = "dani/rm-T-transport" }
+alloy-transport = { git = "https://github.com/alloy-rs/alloy", branch = "dani/rm-T-transport" }
+alloy-transport-http = { git = "https://github.com/alloy-rs/alloy", branch = "dani/rm-T-transport" }
+
+foundry-fork-db = { git = "https://github.com/foundry-rs/foundry-fork-db", branch = "dani/alloy-0.10" }
