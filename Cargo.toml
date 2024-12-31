@@ -95,7 +95,7 @@ significant_drop_tightening = "allow"
 needless_return = "allow"
 
 [workspace.dependencies]
-alloy = { version = "0.8", features = [
+alloy = { version = "0.9", features = [
     "eips",
     "full",
     "hyper",
@@ -113,10 +113,10 @@ alloy = { version = "0.8", features = [
     "signer-yubihsm",
 ] }
 
-foundry-fork-db = "0.9"
+foundry-fork-db = "0.10"
 
-revm-primitives = "14.0"
-revm = "18.0"
+revm-primitives = "15.0"
+revm = "19.0"
 
 # async
 futures-util = "0.3"
