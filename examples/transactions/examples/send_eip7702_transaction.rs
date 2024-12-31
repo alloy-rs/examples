@@ -4,6 +4,7 @@ use alloy::{
     eips::eip7702::Authorization,
     network::{EthereumWallet, TransactionBuilder, TransactionBuilder7702},
     node_bindings::Anvil,
+    primitives::U256,
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
     signers::{local::PrivateKeySigner, SignerSync},
@@ -53,7 +54,7 @@ async fn main() -> Result<()> {
 
     // Create an authorization object for Alice to sign.
     let authorization = Authorization {
-        chain_id: anvil.chain_id(),
+        chain_id: U256::from(anvil.chain_id()),
         // Reference to the contract that will be set as code for the authority.
         address: *contract.address(),
         nonce: provider.get_transaction_count(alice.address()).await?,

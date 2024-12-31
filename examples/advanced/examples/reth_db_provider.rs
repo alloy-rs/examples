@@ -177,7 +177,7 @@ where
             let provider = this.provider_at(block_id).map_err(TransportErrorKind::custom).unwrap();
 
             let maybe_acc =
-                provider.basic_account(address).map_err(TransportErrorKind::custom).unwrap();
+                provider.basic_account(&address).map_err(TransportErrorKind::custom).unwrap();
 
             let nonce = maybe_acc.map(|acc| acc.nonce).unwrap_or_default();
 
