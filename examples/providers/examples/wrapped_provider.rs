@@ -29,14 +29,13 @@ struct Deployer<P: Provider> {
 }
 
 impl<P: Provider> Deployer<P> {
-    /// Create a new instance of `MyProvider`.
+    /// Create a new instance of [`Deployer`].
     fn new(provider: P, private_key: PrivateKeySigner) -> Self {
         let wallet = EthereumWallet::new(private_key);
         Self { provider, wallet }
     }
 
-    /// Deploys [`Counter`] using the given [`EthereumWallet`] and returns the address it was
-    /// deployed at.
+    /// Deploys [`Counter`] using the given [`EthereumWallet`] and returns [`CounterInstance`]
     async fn deploy(&self) -> Result<CounterInstance<BoxTransport, &P>> {
         let addr = CounterInstance::deploy_builder(&self.provider)
             .from(self.wallet.default_signer().address())
