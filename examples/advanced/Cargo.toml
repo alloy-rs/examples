@@ -19,11 +19,11 @@ revm-primitives.workspace = true
 revm.workspace = true
 
 # reth
-reth-db = { git = "https://github.com/paradigmxyz/reth", package = "reth-db", rev = "c0a8a7b" }
-reth-provider = { git = "https://github.com/paradigmxyz/reth", package = "reth-provider", rev = "c0a8a7b" }
-reth-node-types = { git = "https://github.com/paradigmxyz/reth", package = "reth-node-types", rev = "c0a8a7b" }
-reth-chainspec = { git = "https://github.com/paradigmxyz/reth", package = "reth-chainspec", rev = "c0a8a7b" }
-reth-node-ethereum = { git = "https://github.com/paradigmxyz/reth", package = "reth-node-ethereum", rev = "c0a8a7b" }
+# reth-db = { git = "https://github.com/paradigmxyz/reth", package = "reth-db", rev = "c0a8a7b" }
+# reth-provider = { git = "https://github.com/paradigmxyz/reth", package = "reth-provider", rev = "c0a8a7b" }
+# reth-node-types = { git = "https://github.com/paradigmxyz/reth", package = "reth-node-types", rev = "c0a8a7b" }
+# reth-chainspec = { git = "https://github.com/paradigmxyz/reth", package = "reth-chainspec", rev = "c0a8a7b" }
+# reth-node-ethereum = { git = "https://github.com/paradigmxyz/reth", package = "reth-node-ethereum", rev = "c0a8a7b" }
 
 eyre.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
