@@ -4,11 +4,10 @@
 use alloy::{
     network::EthereumWallet,
     node_bindings::Anvil,
-    primitives::Address,
     providers::{Provider, ProviderBuilder},
     signers::local::PrivateKeySigner,
     sol,
-    transports::TransportResult,
+    transports::{BoxTransport, TransportResult},
 };
 use eyre::Result;
 use Counter::CounterInstance;
@@ -38,12 +37,13 @@ impl<P: Provider> Deployer<P> {
 
     /// Deploys [`Counter`] using the given [`EthereumWallet`] and returns the address it was
     /// deployed at.
-    async fn deploy(&self) -> Result<Address> {
-        CounterInstance::deploy_builder(&self.provider)
+    async fn deploy(&self) -> Result<CounterInstance<BoxTransport, &P>> {
+        let addr = CounterInstance::deploy_builder(&self.provider)
             .from(self.wallet.default_signer().address())
             .deploy()
-            .await
-            .map_err(Into::into)
+            .await?;
+
+        Ok(CounterInstance::new(addr, &self.provider))
     }
 }
 
@@ -57,11 +57,11 @@ async fn main() -> Result<()> {
     println!("Latest block number: {latest_block}");
 
     let signer_pk = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80".parse()?;
-    let counter_address = Deployer::new(&provider, signer_pk).deploy().await?;
+    let deployer = Deployer::new(&provider, signer_pk);
+    let counter = deployer.deploy().await?;
 
-    println!("Deployed `Counter` at {counter_address}");
+    println!("Deployed `Counter` at {}", counter.address());
 
-    let counter = CounterInstance::new(counter_address, provider);
     let num = counter.number().call().await?.number.to::<u64>();
 
     println!("Current Number {num}");
