@@ -126,6 +126,7 @@ tokio = "1.42"
 eyre = "0.6"
 serde = "1.0"
 serde_json = "1.0"
+rand = "0.8"
 
 [patch.crates-io]
 # alloy = { git = "https://github.com/alloy-rs/alloy", rev = "65dfbe" }
