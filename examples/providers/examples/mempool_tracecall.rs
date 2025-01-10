@@ -1,8 +1,7 @@
-//! Example of using trace_call on pending transactions. 
-
+//! Example of using `trace_call` on pending transactions.
 use alloy::{
-    providers::{ext::TraceApi, ProviderBuilder, Provider, WsConnect},
-    rpc::types::{trace::parity::TraceType},
+    providers::{ext::TraceApi, Provider, ProviderBuilder, WsConnect},
+    rpc::types::trace::parity::TraceType,
 };
 
 use eyre::Result;
@@ -23,13 +22,12 @@ async fn main() -> Result<()> {
 
     let handle = tokio::spawn(async move {
         while let Some(tx) = stream.next().await {
-	    let trace_type = [TraceType::Trace];
+            let trace_type = [TraceType::Trace];
             let result = provider.trace_call(&tx.into(), &trace_type).await;
             println!("{:?}", result.unwrap().trace);
-      }
+        }
     });
 
     handle.await?;
     Ok(())
 }
-

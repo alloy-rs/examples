@@ -1,21 +1,14 @@
-//! Example of mining a vanity Transaction hash using the max_priority_fee_per_gas field.
-
+//! Example of mining a vanity Transaction hash using the `max_priority_fee_per_gas` field.
 use alloy::{
+    consensus::TxEnvelope,
+    hex,
     network::{EthereumWallet, TransactionBuilder},
     primitives::U256,
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
-    signers::local::PrivateKeySigner,
-    consensus::TxEnvelope,
-    hex,
-    signers::local::{
-        coins_bip39::English,
-        MnemonicBuilder, LocalSignerError,
-    },
-
+    signers::local::{coins_bip39::English, LocalSignerError, MnemonicBuilder, PrivateKeySigner},
 };
 use eyre::Result;
-use tokio;
 
 async fn create_wallet() -> Result<PrivateKeySigner, LocalSignerError> {
     let wallet = MnemonicBuilder::<English>::default()
@@ -29,16 +22,12 @@ async fn create_wallet() -> Result<PrivateKeySigner, LocalSignerError> {
 async fn main() -> Result<()> {
     let rpc_url = "https://eth.merkle.io".parse()?;
 
-    let new_wallet = create_wallet()
-        .await
-        .unwrap();
+    let new_wallet = create_wallet().await.unwrap();
 
     let wallet = EthereumWallet::from(new_wallet.clone());
 
-    let provider = ProviderBuilder::new()
-        .with_recommended_fillers()
-        .wallet(wallet.clone())
-        .on_http(rpc_url);
+    let provider =
+        ProviderBuilder::new().with_recommended_fillers().wallet(wallet.clone()).on_http(rpc_url);
 
     let nonce = provider.get_transaction_count(new_wallet.address()).await?;
     let eip1559_est = provider.estimate_eip1559_fees(None).await?;
@@ -72,4 +61,3 @@ async fn main() -> Result<()> {
     }
     Ok(())
 }
-
