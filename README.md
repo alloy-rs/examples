@@ -71,6 +71,8 @@ This repository contains the following examples:
   - [x] [WS](./examples/providers/examples/ws.rs)
   - [x] [WS with authentication](./examples/providers/examples/ws_with_auth.rs)
   - [x] [JSON-RPC Batch Request](./examples/providers/examples/batch_rpc.rs)
+  - [x] [Trace block](./examples/providers/examples/trace_block.rs)
+  - [x] [Mempool trace call](./examples/providers/examples/mempool_tracecall.rs)
 - [x] Queries
   - [x] [Query contract storage](./examples/queries/examples/query_contract_storage.rs)
   - [x] [Query contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
