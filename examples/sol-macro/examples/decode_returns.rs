@@ -17,27 +17,23 @@ sol!(
 );
 
 fn main() -> Result<()> {
-    let result = getRoundDataCall::abi_decode_returns(
-        &hex!(
-            "0000000000000000000000000000000000000000000000060000000000004716
+    let (round_id, answer, started_at, updated_at, answered_in_round) =
+        getRoundDataCall::abi_decode_returns(
+            &hex!(
+                "0000000000000000000000000000000000000000000000060000000000004716
              00000000000000000000000000000000000000000000000000000051faad1c80
              000000000000000000000000000000000000000000000000000000006669627b
              000000000000000000000000000000000000000000000000000000006669627b
              0000000000000000000000000000000000000000000000060000000000004716"
-        ),
-        true,
-    );
+            ),
+            true,
+        )?;
 
-    assert_eq!(
-        result,
-        Ok(getRoundDataReturn {
-            roundId: Uint::<80, 2>::from(110680464442257327894_u128),
-            answer: I256::from_dec_str("352098000000")?,
-            startedAt: U256::from(1718182523),
-            updatedAt: U256::from(1718182523),
-            answeredInRound: Uint::<80, 2>::from(110680464442257327894_u128),
-        })
-    );
+    assert_eq!(round_id, Uint::<80, 2>::from(110680464442257327894_u128));
+    assert_eq!(answer, I256::from_dec_str("352098000000")?);
+    assert_eq!(started_at, U256::from(1718182523));
+    assert_eq!(updated_at, U256::from(1718182523));
+    assert_eq!(answered_in_round, Uint::<80, 2>::from(110680464442257327894_u128));
 
     Ok(())
 }
