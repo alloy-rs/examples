@@ -1,5 +1,5 @@
-//! Example showing how complex return values such as tuple, structs, etc. are returned from a call
-//! to a contract using the `sol!` macro.
+//! Example showing how to deconstruct complex return values such as tuple, structs, etc. are
+//! returned from a call to a contract using the `sol!` macro.
 
 use alloy::{
     hex,
@@ -9,9 +9,6 @@ use alloy::{
 };
 use eyre::Result;
 
-// Complex return demonstrating the new API that directly yields the values, enabling rust pattern
-// matching and result destructuring.
-// Note: The names of return are now ignored.
 sol! {
     function getNamedTuple() external view returns (uint256 a, uint256 b, uint256 c);
     function getUnamedTuple() external view returns (uint256, uint256, uint256);
@@ -29,40 +26,25 @@ sol! {
 
 fn main() -> Result<()> {
     let data = vec![1, 2, 3].abi_encode_sequence();
-    // Previously, the return struct would be of the form
-    // struct getNamedTupleReturn {
-    //   a: U256,
-    //   b: U256,
-    //   c: U256
-    // }
-    // Now the names are ignored, and results are yielded in the form of a tuple akin to the
-    // Solidity return param structure.
-    let (a, b, c) = getNamedTupleCall::abi_decode_returns(&data, true)?;
+
+    // Return param names are retained as field names in the struct.
+    let getNamedTupleReturn { a, b, c } = getNamedTupleCall::abi_decode_returns(&data, true)?;
 
     assert_eq!(a, U256::from(1));
     assert_eq!(b, U256::from(2));
     assert_eq!(c, U256::from(3));
 
-    // Previous return struct:
-    // struct getUnamedTupleReturn {
-    //   _0: U256,
-    //   _1: U256,
-    //   _2: U256
-    // }
-    let (a, b, c) = getUnamedTupleCall::abi_decode_returns(&data, true)?;
+    // Struct fields are named `_{index}` in case a return param is left unnamed.
+    let getUnamedTupleReturn { _0: a, _1: b, _2: c } =
+        getUnamedTupleCall::abi_decode_returns(&data, true)?;
 
     assert_eq!(a, U256::from(1));
     assert_eq!(b, U256::from(2));
     assert_eq!(c, U256::from(3));
 
-    // Previous return struct:
-    // struct getPartialNamedTupleReturn {
-    //   _0: U256,
-    //   b: U256,
-    //   _2: U256
-    // }
-    // Now, the names are ignored and tuple yielded directly.
-    let (a, b, c) = getPartialNamedTupleCall::abi_decode_returns(&data, true)?;
+    // Indicates a case where only one of the return param  is named and the rest are unnamed.
+    let getPartialNamedTupleReturn { _0: a, b, _2: c } =
+        getPartialNamedTupleCall::abi_decode_returns(&data, true)?;
 
     assert_eq!(a, U256::from(1));
     assert_eq!(b, U256::from(2));
@@ -79,16 +61,9 @@ fn main() -> Result<()> {
         "0102030400000000000000000000000000000000000000000000000000000000"
     );
 
-    // Previously, you the return struct would be of the of form:
-    // struct getStructWithBytesReturn {
-    //   my_struct: MyStruct,
-    //   _1: FixedBytes<32>,
-    // }
-    // Accessing the result would have the following DevX.
-    // let res = getStructWithBytesCall::abi_decode_returns(&data, true)?;
-    // let my_struct = res.my_struct;
-    // let bytes = res._1;
-    let (MyStruct { a, b, c }, bytes) = getStructWithBytesCall::abi_decode_returns(&data, true)?;
+    // Deconstruct a struct and bytes32 return value.
+    let getStructWithBytesReturn { my_struct: MyStruct { a, b, c }, _1 } =
+        getStructWithBytesCall::abi_decode_returns(&data, true)?;
 
     assert_eq!(a, U256::from(1));
     assert_eq!(b, U256::from(2));
@@ -116,17 +91,11 @@ fn main() -> Result<()> {
         "0506070800000000000000000000000000000000000000000000000000000000"
     );
 
-    // Previous return struct:
-    // struct getCompoundTupleStructReturn {
-    //   _0: (MyStruct, FixedBytes<32>),
-    //   _1: (MyStruct, FixedBytes<32>),
-    // }
-    // Accessing the result would have the following DevX.
-    // let res = getCompoundTupleStructCall::abi_decode_returns(&data, true)?;
-    // let (MyStruct { a, b, c }, bytes) = res._0;
-    // let (MyStruct { a: a2, b: b2, c: c2 }, bytes2) = res._1;
-    let ((MyStruct { a, b, c }, bytes), (MyStruct { a: a2, b: b2, c: c2 }, bytes2)) =
+    let getCompoundTupleStructReturn { _0, _1 } =
         getCompoundTupleStructCall::abi_decode_returns(&data, true)?;
+
+    let (MyStruct { a, b, c }, bytes) = _0;
+    let (MyStruct { a: a2, b: b2, c: c2 }, bytes2) = _1;
 
     assert_eq!(a, U256::from(1));
     assert_eq!(b, U256::from(2));

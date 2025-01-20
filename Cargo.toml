@@ -95,7 +95,7 @@ significant_drop_tightening = "allow"
 needless_return = "allow"
 
 [workspace.dependencies]
-alloy = { version = "0.9", features = [
+alloy = { git = "https://github.com/alloy-rs/alloy", branch = "yash/core-patch", features = [
     "eips",
     "full",
     "hyper",
@@ -132,3 +132,4 @@ alloy-core = { git = "https://github.com/alloy-rs/core", branch = "yash/fix-fn-r
 alloy-sol-types = { git = "https://github.com/alloy-rs/core", branch = "yash/fix-fn-ret" }
 alloy-primitives = { git = "https://github.com/alloy-rs/core", branch = "yash/fix-fn-ret" }
 alloy-dyn-abi = { git = "https://github.com/alloy-rs/core", branch = "yash/fix-fn-ret" }
+# alloy = { git = "https://github.com/alloy-rs/alloy", branch = "yash/core-patch" }
