@@ -32,7 +32,7 @@ async fn main() -> Result<()> {
     let account = address!("F605F9d1cB055E87E30bcAEe4CB9389a35aBe8Ff");
 
     // Get the WETH balance of the target account before mocking.
-    let balance_before = iweth.balanceOf(account).call().await?._0;
+    let balance_before = iweth.balanceOf(account).call().await?;
     println!("WETH balance before: {}", balance_before);
     assert_eq!(balance_before, U256::ZERO);
 
@@ -42,7 +42,7 @@ async fn main() -> Result<()> {
     provider.anvil_set_storage_at(WETH_ADDR, hashed_slot.into(), mocked_balance.into()).await?;
 
     // Get the WETH balance of the target account after mocking.
-    let balance_after = iweth.balanceOf(account).call().await?._0;
+    let balance_after = iweth.balanceOf(account).call().await?;
     println!("WETH balance after: {}", balance_after);
     assert_eq!(balance_after, mocked_balance);
 
