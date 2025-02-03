@@ -22,10 +22,15 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
+    // ProviderBuilder::new() enables the recommended fillers by default (ChainIdFiller, GasFiller
+    // and NonceFiller).
     let provider = ProviderBuilder::new()
+        // You can disable the recommended fillers by calling the `disable_recommended_fillers()`
+        // and pick the fillers of your choice.
+        .disable_recommended_fillers()
         // Add the `NonceFiller` to the provider.
-        // It is generally recommended to use the `.with_recommended_fillers()` method, which
-        // includes the `NonceFiller`.
+        // It is generally recommended to use the recommended fillers which includes the
+        // NonceFiller, enabled by building the provider using ProviderBuilder::new().
         //
         // The `NonceFiller` has two types: `Cached` and `Simple`.
         // Unlike `Cached`, `Simple` does not store the transaction count locally,

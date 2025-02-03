@@ -24,10 +24,8 @@ async fn main() -> Result<()> {
     let wallet = EthereumWallet::from(signer);
 
     // Create a provider with the wallet.
-    let provider = ProviderBuilder::new()
-        .with_recommended_fillers()
-        .wallet(wallet)
-        .on_anvil_with_config(|anvil| anvil.block_time(1));
+    let provider =
+        ProviderBuilder::new().wallet(wallet).on_anvil_with_config(|anvil| anvil.block_time(1));
 
     // Build a transaction to send 100 wei from Alice to Vitalik.
     // The `from` field is automatically filled to the first signer's address (Alice).

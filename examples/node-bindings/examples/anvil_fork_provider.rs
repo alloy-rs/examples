@@ -8,9 +8,7 @@ async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH.
     let rpc_url = "https://eth.merkle.io";
-    let provider = ProviderBuilder::new()
-        .with_recommended_fillers()
-        .on_anvil_with_config(|anvil| anvil.fork(rpc_url));
+    let provider = ProviderBuilder::new().on_anvil_with_config(|anvil| anvil.fork(rpc_url));
 
     // Get node info using the Anvil API.
     let info = provider.anvil_node_info().await?;
