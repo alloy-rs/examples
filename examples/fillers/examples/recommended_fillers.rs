@@ -13,10 +13,13 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
+    // After `alloy 0.11`, the recommended fillers are enabled by default when building the provider
+    // with `ProviderBuilder::new()`.
     let provider = ProviderBuilder::new()
         // Adds the `ChainIdFiller`, `GasFiller` and the `NonceFiller` layers.
         // This is the recommended way to set up the provider.
-        .with_recommended_fillers()
+        // One can disable the recommended fillers by calling the `disable_recommended_fillers()`
+        // method or building the provider with `ProviderBuilder::default()`.
         .on_anvil_with_wallet();
 
     // Build an EIP-1559 type transaction to send 100 wei to Vitalik.

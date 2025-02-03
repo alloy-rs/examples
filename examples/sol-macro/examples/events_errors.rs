@@ -46,7 +46,7 @@ sol!(
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let provider = ProviderBuilder::new().with_gas_estimation().on_anvil();
+    let provider = ProviderBuilder::new().on_anvil_with_wallet();
 
     // Deploy the `Counter` contract.
     let contract = CounterWithError::deploy(provider.clone()).await?;

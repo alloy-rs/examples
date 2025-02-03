@@ -7,9 +7,8 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let provider = ProviderBuilder::new()
-        .with_recommended_fillers()
-        .on_anvil_with_config(|anvil| anvil.block_time(1).chain_id(1337));
+    let provider =
+        ProviderBuilder::new().on_anvil_with_config(|anvil| anvil.block_time(1).chain_id(1337));
 
     // Get node info using the Anvil API.
     let info = provider.anvil_node_info().await?;
