@@ -13,10 +13,10 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let provider = ProviderBuilder::new()
+    let provider = ProviderBuilder::default()
         // Add the `GasFiller` to the provider.
-        // It is generally recommended to use the `.with_recommended_fillers()` method, which
-        // includes the `GasFiller`.
+        // It is generally recommended to use the recommended fillers which includes the GasFiller,
+        // enabled by building the provider using ProviderBuilder::new().
         .with_gas_estimation()
         .on_anvil_with_wallet();
 

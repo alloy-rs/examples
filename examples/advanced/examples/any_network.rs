@@ -49,11 +49,7 @@ async fn main() -> Result<()> {
 
     // Create a provider with the Arbitrum Sepolia network and the wallet.
     let rpc_url = "https://sepolia-rollup.arbitrum.io/rpc".parse()?;
-    let provider = ProviderBuilder::new()
-        .with_recommended_fillers()
-        .network::<AnyNetwork>()
-        .wallet(wallet)
-        .on_http(rpc_url);
+    let provider = ProviderBuilder::new().network::<AnyNetwork>().wallet(wallet).on_http(rpc_url);
 
     // Create a contract instance.
     let contract = Counter::new(COUNTER_CONTRACT_ADDRESS, &provider);

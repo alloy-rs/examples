@@ -13,8 +13,8 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Spin up a local Anvil node with the Cancun hardfork enabled.
     // Ensure `anvil` is available in $PATH.
-    let provider =
-        ProviderBuilder::new().on_anvil_with_config(|anvil| anvil.args(["--hardfork", "cancun"]));
+    let provider = ProviderBuilder::new()
+        .on_anvil_with_wallet_and_config(|anvil| anvil.args(["--hardfork", "cancun"]))?;
 
     // Create two users, Alice and Bob.
     let accounts = provider.get_accounts().await?;
@@ -27,15 +27,7 @@ async fn main() -> Result<()> {
 
     // Build a transaction to send the sidecar from Alice to Bob.
     // The `from` field is automatically filled to the first signer's address (Alice).
-    let gas_price = provider.get_gas_price().await?;
-    let eip1559_est = provider.estimate_eip1559_fees(None).await?;
-    let tx = TransactionRequest::default()
-        .with_to(bob)
-        .with_nonce(0)
-        .with_max_fee_per_blob_gas(gas_price)
-        .with_max_fee_per_gas(eip1559_est.max_fee_per_gas)
-        .with_max_priority_fee_per_gas(eip1559_est.max_priority_fee_per_gas)
-        .with_blob_sidecar(sidecar);
+    let tx = TransactionRequest::default().with_to(bob).with_blob_sidecar(sidecar);
 
     // Send the transaction and wait for the broadcast.
     let pending_tx = provider.send_transaction(tx).await?;

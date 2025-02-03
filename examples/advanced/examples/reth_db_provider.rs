@@ -11,7 +11,7 @@
 //!
 //! Learn more about `ProviderCall` [here](https://github.com/alloy-rs/alloy/pull/788).
 
-use std::{marker::PhantomData, path::PathBuf, sync::Arc};
+use std::{path::PathBuf, sync::Arc};
 
 use alloy::{
     eips::{BlockId, BlockNumberOrTag},
@@ -21,7 +21,7 @@ use alloy::{
         Provider, ProviderBuilder, ProviderCall, ProviderLayer, RootProvider, RpcWithBlock,
     },
     rpc::client::NoParams,
-    transports::{Transport, TransportErrorKind},
+    transports::TransportErrorKind,
 };
 use eyre::Result;
 
@@ -96,12 +96,11 @@ async fn main() -> Result<()> {
 }
 
 /// Implement the `ProviderLayer` trait for the `RethDBLayer` struct.
-impl<P, T> ProviderLayer<P, T> for RethDbLayer
+impl<P> ProviderLayer<P> for RethDbLayer
 where
-    P: Provider<T>,
-    T: Transport + Clone,
+    P: Provider,
 {
-    type Provider = RethDbProvider<P, T>;
+    type Provider = RethDbProvider<P>;
 
     fn layer(&self, inner: P) -> Self::Provider {
         RethDbProvider::new(inner, self.db_path().clone())
@@ -113,14 +112,13 @@ where
 /// It holds the `reth_provider::ProviderFactory` that enables read-only access to the database
 /// tables and static files.
 #[derive(Clone, Debug)]
-pub struct RethDbProvider<P, T> {
+pub struct RethDbProvider<P> {
     inner: P,
     db_path: PathBuf,
     provider_factory: DbAccessor,
-    _pd: PhantomData<T>,
 }
 
-impl<P, T> RethDbProvider<P, T> {
+impl<P> RethDbProvider<P> {
     /// Create a new `RethDbProvider` instance.
     pub fn new(inner: P, db_path: PathBuf) -> Self {
         let db = open_db_read_only(&db_path, Default::default()).unwrap();
@@ -134,7 +132,7 @@ impl<P, T> RethDbProvider<P, T> {
         let db_accessor: DbAccessor<
             ProviderFactory<NodeTypesWithDBAdapter<EthereumNode, Arc<DatabaseEnv>>>,
         > = DbAccessor::new(provider_factory);
-        Self { inner, db_path, provider_factory: db_accessor, _pd: PhantomData }
+        Self { inner, db_path, provider_factory: db_accessor }
     }
 
     const fn factory(&self) -> &DbAccessor {
@@ -150,17 +148,16 @@ impl<P, T> RethDbProvider<P, T> {
 /// Implement the `Provider` trait for the `RethDbProvider` struct.
 ///
 /// This is where we override specific RPC methods to fetch from the reth-db.
-impl<P, T> Provider<T> for RethDbProvider<P, T>
+impl<P> Provider for RethDbProvider<P>
 where
-    P: Provider<T>,
-    T: Transport + Clone,
+    P: Provider,
 {
-    fn root(&self) -> &RootProvider<T> {
+    fn root(&self) -> &RootProvider {
         self.inner.root()
     }
 
     /// Override the `get_block_number` method to fetch the latest block number from the reth-db.
-    fn get_block_number(&self) -> ProviderCall<T, NoParams, U64, u64> {
+    fn get_block_number(&self) -> ProviderCall<NoParams, U64, u64> {
         let provider = self.factory().provider().map_err(TransportErrorKind::custom).unwrap();
 
         let best = provider.best_block_number().map_err(TransportErrorKind::custom);
@@ -171,7 +168,7 @@ where
     /// Override the `get_transaction_count` method to fetch the transaction count of an address.
     ///
     /// `RpcWithBlock` uses `ProviderCall` under the hood.
-    fn get_transaction_count(&self, address: Address) -> RpcWithBlock<T, Address, U64, u64> {
+    fn get_transaction_count(&self, address: Address) -> RpcWithBlock<Address, U64, u64> {
         let this = self.factory().clone();
         RpcWithBlock::new_provider(move |block_id| {
             let provider = this.provider_at(block_id).map_err(TransportErrorKind::custom).unwrap();

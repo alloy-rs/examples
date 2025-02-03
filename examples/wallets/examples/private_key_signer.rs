@@ -25,8 +25,7 @@ async fn main() -> Result<()> {
 
     // Create a provider with the wallet.
     let rpc_url = anvil.endpoint_url();
-    let provider =
-        ProviderBuilder::new().with_recommended_fillers().wallet(wallet).on_http(rpc_url);
+    let provider = ProviderBuilder::new().wallet(wallet).on_http(rpc_url);
 
     // Build a transaction to send 100 wei from Alice to Vitalik.
     // The `from` field is automatically filled to the first signer's address (Alice).
