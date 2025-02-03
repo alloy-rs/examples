@@ -3,7 +3,13 @@
 use std::str::FromStr;
 
 use alloy::{
-    network::EthereumWallet, node_bindings::Anvil, primitives::I256, providers::{ProviderBuilder, WsConnect}, signers::local::PrivateKeySigner, sol, sol_types::SolEvent
+    network::EthereumWallet,
+    node_bindings::Anvil,
+    primitives::I256,
+    providers::{ProviderBuilder, WsConnect},
+    signers::local::PrivateKeySigner,
+    sol,
+    sol_types::SolEvent,
 };
 use eyre::Result;
 use futures_util::StreamExt;
