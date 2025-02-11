@@ -1,5 +1,6 @@
 //! This example demonstrates how to use the [`MulticallBuilder`] to make multicalls using the
 //! [`IMulticall3`] contract.
+
 use alloy::{
     primitives::{address, U256},
     providers::{CallItemBuilder, Failure, Provider, ProviderBuilder},
