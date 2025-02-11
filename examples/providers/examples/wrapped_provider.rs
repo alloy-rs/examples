@@ -109,7 +109,7 @@ async fn main() -> Result<()> {
     let counter = CounterContract::new(&provider, counter_instance);
     let num = counter.number().await?;
 
-    println!("Current Number {num}");
+    println!("Current number: {num}");
 
     counter.increment().await?;
 
