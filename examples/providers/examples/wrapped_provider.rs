@@ -94,6 +94,8 @@ impl<P: Provider> CounterContract<P> {
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    // Spin up a local Anvil node.
+    // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().spawn();
 
     let provider = ProviderBuilder::new().on_builtin(anvil.endpoint().as_str()).await?;
