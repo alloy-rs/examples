@@ -115,7 +115,7 @@ async fn main() -> Result<()> {
 
     let num = counter.number().await?;
 
-    println!("Incremented Number {num}");
+    println!("Incremented number: {num}");
 
     let block_num = counter.provider().get_block_number().await?;
 
