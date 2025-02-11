@@ -4,23 +4,15 @@
 use alloy::{
     network::EthereumWallet,
     node_bindings::Anvil,
+    primitives::address,
     providers::{Provider, ProviderBuilder},
+    rpc::types::TransactionReceipt,
     signers::local::PrivateKeySigner,
     sol,
-    transports::TransportResult,
+    transports::{TransportErrorKind, TransportResult},
 };
 use eyre::Result;
 use Counter::CounterInstance;
-
-/// Creates and returns an implementation of the [`Provider`] trait.
-async fn get_provider(url: &str) -> TransportResult<impl Provider> {
-    ProviderBuilder::new().on_builtin(url).await
-}
-
-/// Simple free function to get the latest block number.
-async fn get_block_number<P: Provider>(provider: &P) -> TransportResult<u64> {
-    provider.get_block_number().await
-}
 
 // Codegen from embedded Solidity code and precompiled bytecode.
 sol! {
@@ -64,24 +56,70 @@ impl<P: Provider> Deployer<P> {
     }
 }
 
+struct CounterContract<P: Provider> {
+    provider: P,
+    counter: CounterInstance<(), P>,
+}
+
+impl<P: Provider> CounterContract<P> {
+    /// Create a new instance of [`CounterContract`].
+    const fn new(provider: P, counter: CounterInstance<(), P>) -> Self {
+        Self { provider, counter }
+    }
+
+    /// Returns the current number stored in the [`Counter`].
+    async fn number(&self) -> TransportResult<u64> {
+        let number = self.counter.number().call().await.map_err(TransportErrorKind::custom)?;
+        Ok(number.number.to::<u64>())
+    }
+
+    /// Increments the number stored in the [`Counter`].
+    async fn increment(&self) -> TransportResult<TransactionReceipt> {
+        self.counter
+            .increment()
+            .from(address!("f39Fd6e51aad88F6F4ce6aB8827279cffFb92266")) // Default anvil signer
+            .send()
+            .await
+            .map_err(TransportErrorKind::custom)?
+            .get_receipt()
+            .await
+            .map_err(TransportErrorKind::custom)
+    }
+
+    /// Returns the inner provider.
+    fn provider(&self) -> &impl Provider {
+        &self.provider
+    }
+}
+
 #[tokio::main]
 async fn main() -> Result<()> {
     let anvil = Anvil::new().spawn();
 
-    let provider = get_provider(&anvil.endpoint()).await?;
-    let latest_block = get_block_number(&provider).await?;
-
-    println!("Latest block number: {latest_block}");
+    let provider = ProviderBuilder::new().on_builtin(anvil.endpoint().as_str()).await?;
 
     let signer_pk = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80".parse()?;
-    let deployer = Deployer::new(&provider, signer_pk);
-    let counter = deployer.deploy().await?;
+    let deployer = Deployer::new(provider.clone(), signer_pk);
+    let counter_instance = deployer.deploy().await?;
 
-    println!("Deployed `Counter` at {}", counter.address());
+    println!("Deployed `Counter` at {}", counter_instance.address());
 
-    let num = counter.number().call().await?.number.to::<u64>();
+    let counter = CounterContract::new(&provider, counter_instance);
+    let num = counter.number().await?;
 
     println!("Current Number {num}");
+
+    counter.increment().await?;
+
+    let num = counter.number().await?;
+
+    println!("Incremented Number {num}");
+
+    let provider = counter.provider();
+
+    let block_num = provider.get_block_number().await?;
+
+    println!("Current block number: {}", block_num);
 
     Ok(())
 }
