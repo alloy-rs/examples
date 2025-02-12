@@ -69,6 +69,7 @@ This repository contains the following examples:
   - [x] [HTTP](./examples/providers/examples/http.rs)
   - [x] [IPC](./examples/providers/examples/ipc.rs)
   - [x] [WS](./examples/providers/examples/ws.rs)
+  - [x] [Multicall Builder](./examples/providers/examples/multicall.rs)
   - [x] [WS with authentication](./examples/providers/examples/ws_with_auth.rs)
   - [x] [JSON-RPC Batch Request](./examples/providers/examples/batch_rpc.rs)
 - [x] Queries
