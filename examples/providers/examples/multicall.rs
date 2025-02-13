@@ -21,10 +21,7 @@ async fn main() -> eyre::Result<()> {
     // Create a new provider
     let provider = ProviderBuilder::new()
         .on_anvil_with_wallet_and_config(|a| a.fork("https://eth.merkle.io"))?;
-    // Deploy the Multicall3 contract
-    // let multicall3 = deploy_multicall3(&provider).await;
-    // Deploy the WETH contract
-    // let weth = deploy_weth(&provider).await;
+    // Create a new instance of the IWETH9 contract.
     let weth =
         IWETH9Instance::new(address!("0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"), &provider);
 
