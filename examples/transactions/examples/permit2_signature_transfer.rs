@@ -31,7 +31,7 @@ sol!(
 
 // The permit stuct that has to be signed is different from the contract input struct
 // even though they have the same name.
-// Also note that the EIP712 hash of this struct is snsitive to the order of the fields.
+// Also note that the EIP712 hash of this struct is sensitive to the order of the fields.
 sol! {
     struct TokenPermissions {
         address token;
