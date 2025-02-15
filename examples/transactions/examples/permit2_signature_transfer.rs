@@ -46,15 +46,15 @@ sol! {
     }
 }
 
-impl Into<ISignatureTransfer::PermitTransferFrom> for PermitTransferFrom {
-    fn into(self) -> ISignatureTransfer::PermitTransferFrom {
-        ISignatureTransfer::PermitTransferFrom {
+impl From<PermitTransferFrom> for ISignatureTransfer::PermitTransferFrom {
+    fn from(val: PermitTransferFrom) -> Self {
+        Self {
             permitted: ISignatureTransfer::TokenPermissions {
-                token: self.permitted.token,
-                amount: self.permitted.amount,
+                token: val.permitted.token,
+                amount: val.permitted.amount,
             },
-            nonce: self.nonce,
-            deadline: self.deadline,
+            nonce: val.nonce,
+            deadline: val.deadline,
         }
     }
 }
