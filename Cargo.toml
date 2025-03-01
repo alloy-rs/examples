@@ -95,7 +95,7 @@ significant_drop_tightening = "allow"
 needless_return = "allow"
 
 [workspace.dependencies]
-alloy = { version = "0.12", features = [
+alloy = { git = "https://github.com/merklefruit/alloy", branch = "nico/feat/fallback-layer", features = [
     "eips",
     "full",
     "hyper",
