@@ -19,9 +19,10 @@ fn main() -> Result<()> {
     let payload: ErrorPayload = serde_json::from_str(json)?;
 
     // Attempt to decode the error payload as our custom error.
-    let value = payload.as_decoded_error::<Errors::SomeCustomError>().unwrap();
+    let Errors::SomeCustomError { a } =
+        payload.as_decoded_error::<Errors::SomeCustomError>().unwrap();
 
-    assert_eq!(value.a, U256::from(1));
+    assert_eq!(a, U256::from(1));
 
     Ok(())
 }
