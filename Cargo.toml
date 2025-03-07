@@ -113,7 +113,7 @@ alloy = { version = "0.12", features = [
     "signer-yubihsm",
 ] }
 
-foundry-fork-db = { git = "https://github.com/foundry-rs/foundry-fork-db", rev = "e920df5" }
+foundry-fork-db = "0.12"
 
 revm-primitives = "15.0"
 revm = "19.0"
