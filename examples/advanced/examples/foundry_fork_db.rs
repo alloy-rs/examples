@@ -11,13 +11,11 @@ use std::sync::Arc;
 use alloy::{
     consensus::BlockHeader,
     eips::BlockId,
-    network::{AnyNetwork, TransactionBuilder, TransactionResponse},
+    network::{AnyNetwork, AnyRpcBlock, TransactionBuilder},
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},
-    rpc::types::{
-        serde_helpers::WithOtherFields, Block, BlockTransactionsKind, TransactionRequest,
-    },
+    rpc::types::TransactionRequest,
 };
 use eyre::Result;
 use foundry_fork_db::{cache::BlockchainDbMeta, BlockchainDb, SharedBackend};
@@ -29,8 +27,7 @@ async fn main() -> Result<()> {
     let anvil = Anvil::new().spawn();
     let provider = ProviderBuilder::new().network::<AnyNetwork>().on_http(anvil.endpoint_url());
 
-    let block =
-        provider.get_block(BlockId::latest(), BlockTransactionsKind::Hashes).await?.unwrap();
+    let block = provider.get_block(BlockId::latest()).await?.unwrap();
 
     // The `BlockchainDbMeta` is used a identifier when the db is flushed to the disk.
     // This aids in cases where the disk contains data from multiple forks.
@@ -120,8 +117,8 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-fn configure_evm_env<T: TransactionResponse, H: BlockHeader>(
-    block: WithOtherFields<Block<T, H>>,
+fn configure_evm_env(
+    block: AnyRpcBlock,
     shared: SharedBackend,
     tx_env: TxEnv,
 ) -> Evm<'static, (), CacheDB<SharedBackend>> {
