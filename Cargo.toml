@@ -95,7 +95,7 @@ significant_drop_tightening = "allow"
 needless_return = "allow"
 
 [workspace.dependencies]
-alloy = { git = "https://github.com/alloy-rs/alloy", rev = "79964358d42ff4f27d3cb21570dd8026c01d1e75", features = [
+alloy = { version = "0.12.1", features = [
     "eips",
     "full",
     "hyper",
@@ -113,7 +113,7 @@ alloy = { git = "https://github.com/alloy-rs/alloy", rev = "79964358d42ff4f27d3c
     "signer-yubihsm",
 ] }
 
-foundry-fork-db = "0.11"
+foundry-fork-db = "0.12"
 
 revm-primitives = "15.0"
 revm = "19.0"

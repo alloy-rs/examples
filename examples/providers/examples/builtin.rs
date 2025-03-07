@@ -15,7 +15,7 @@ async fn main() -> Result<()> {
 
     // Instantiate a HTTP transport provider by passing the HTTP endpoint url.
     let http_rpc_url = anvil.endpoint();
-    let http_provider = ProviderBuilder::new().on_builtin(&http_rpc_url).await?;
+    let http_provider = ProviderBuilder::new().connect(&http_rpc_url).await?;
 
     // Get latest block number.
     let block_number = http_provider.get_block_number().await?;
@@ -24,7 +24,7 @@ async fn main() -> Result<()> {
 
     // This requires the `pubsub` and `ws` features to be enabled.
     let ws_rpc_url = anvil.ws_endpoint();
-    let ws_provider = ProviderBuilder::new().on_builtin(&ws_rpc_url).await?;
+    let ws_provider = ProviderBuilder::new().connect(&ws_rpc_url).await?;
 
     let sub = ws_provider.subscribe_blocks().await?;
 
@@ -43,7 +43,7 @@ async fn main() -> Result<()> {
     // This requires the `pubsub` and `ipc` features to be enabled.
     // This would throw a runtime error if the ipc does not exist.
     let ipc_path = "/tmp/reth.ipc";
-    let ipc_provider = ProviderBuilder::new().on_builtin(ipc_path).await?;
+    let ipc_provider = ProviderBuilder::new().connect(ipc_path).await?;
 
     let _block_number = ipc_provider.get_block_number().await?;
 
