@@ -32,15 +32,14 @@
 use alloy::{
     consensus::TxEnvelope,
     hex,
-    network::{EthereumWallet, TransactionBuilder},
+    network::TransactionBuilder,
     primitives::{Bytes, U256},
-    providers::{Provider, ProviderBuilder},
+    providers::{Provider, ProviderBuilder, WalletProvider},
     rpc::types::TransactionRequest,
-    signers::local::PrivateKeySigner,
-    signers::local::{coins_bip39::English, LocalSignerError, MnemonicBuilder},
     sol,
     sol_types::SolCall,
 };
+
 use eyre::Result;
 use rand::Rng;
 
@@ -49,29 +48,11 @@ sol!(
     function setName(string calldata s) public;
 );
 
-async fn create_wallet() -> Result<PrivateKeySigner, LocalSignerError> {
-    let wallet = MnemonicBuilder::<English>::default()
-        .word_count(12)
-        .derivation_path("m/44'/60'/0'/2/1")?
-        .build_random()?;
-    Ok(wallet)
-}
-
 #[tokio::main]
 async fn main() -> Result<()> {
-    // set to local anvil provider
-    let rpc_url = "http://127.0.0.1:8545".parse()?;
-
-    let new_wallet = create_wallet().await.unwrap();
-
-    let wallet = EthereumWallet::from(new_wallet.clone());
-
-    let provider =
-        ProviderBuilder::new().with_recommended_fillers().wallet(wallet.clone()).on_http(rpc_url);
-
-    let nonce = provider.get_transaction_count(new_wallet.address()).await?;
+    let provider = ProviderBuilder::new().on_anvil_with_wallet();
+    let wallet = provider.wallet();
     let eip1559_est = provider.estimate_eip1559_fees(None).await?;
-
     let call = setNameCall { s: "hello".to_string() }.abi_encode();
     let input = Bytes::from(call);
 
@@ -89,7 +70,7 @@ async fn main() -> Result<()> {
         let tx = TransactionRequest::default()
             // this should be the local address dynamicExample is deployed to via anvil
             .with_to("0xdEAD000000000000000042069420694206942069".parse()?)
-            .with_nonce(nonce)
+            .with_nonce(1)
             .with_chain_id(31337)
             .with_value(U256::from(0))
             .with_gas_limit(100_000)

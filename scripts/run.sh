@@ -34,6 +34,8 @@ function main () {
             -e 'ws_auth' \
             -e 'ws' \
             -e 'yubi_signer' \
+            -e 'trace_block' \
+            -e 'mempool_tracecall' \
             | xargs -n1 echo
     )"
 

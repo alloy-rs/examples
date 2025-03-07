@@ -9,8 +9,7 @@ use futures_util::StreamExt;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    //let ws_url = "wss://eth-mainnet.g.alchemy.com/v2/your-api-key";
-    let ws_url = "ws://10.0.0.145:8546";
+    let ws_url = "wss://eth-mainnet.g.alchemy.com/v2/your-api-key";
     let ws = WsConnect::new(ws_url);
     let provider = ProviderBuilder::new().on_ws(ws).await?;
 
