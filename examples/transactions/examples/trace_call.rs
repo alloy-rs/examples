@@ -4,7 +4,7 @@ use alloy::{
     network::TransactionBuilder,
     primitives::{address, U256},
     providers::{ext::TraceApi, ProviderBuilder},
-    rpc::types::{trace::parity::TraceType, TransactionRequest},
+    rpc::types::TransactionRequest,
 };
 use eyre::Result;
 
@@ -21,8 +21,8 @@ async fn main() -> Result<()> {
         TransactionRequest::default().with_from(alice).with_to(vitalik).with_value(U256::from(100));
 
     // Trace the transaction on top of the latest block.
-    let trace_type = [TraceType::Trace];
-    let result = provider.trace_call(&tx, &trace_type).await?;
+    // Defaults to TraceType::Trace.
+    let result = provider.trace_call(&tx).await?;
 
     println!("{:?}", result.trace);
 

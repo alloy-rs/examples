@@ -36,7 +36,7 @@ async fn main() -> Result<()> {
     // Call the Chainlink ETH/USD feed contract.
     let tx = TransactionRequest::default().with_to(ETH_USD_FEED).with_input(input);
 
-    let response = provider.call(&tx).await?;
+    let response = provider.call(tx).await?;
     let result = U256::from_str(&response.to_string())?;
 
     // Get the gas price of the network.

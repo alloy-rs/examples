@@ -15,7 +15,7 @@ async fn main() -> Result<()> {
 
     // Instantiate a HTTP transport provider by passing the HTTP endpoint url.
     let http_rpc_url = anvil.endpoint();
-    let http_provider = ProviderBuilder::new().on_builtin(&http_rpc_url).await?;
+    let http_provider = ProviderBuilder::new().connect(&http_rpc_url).await?;
 
     // Get latest block number.
     let block_number = http_provider.get_block_number().await?;

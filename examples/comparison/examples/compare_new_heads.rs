@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
         let name = Arc::new(name.to_string());
         let url = url.to_string();
 
-        let provider = match ProviderBuilder::new().network::<AnyNetwork>().on_builtin(&url).await {
+        let provider = match ProviderBuilder::new().network::<AnyNetwork>().connect(&url).await {
             Ok(provider) => provider,
             Err(e) => {
                 eprintln!("skipping {} at {} because of error: {}", name, url, e);
