@@ -98,7 +98,7 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().spawn();
 
-    let provider = ProviderBuilder::new().on_builtin(anvil.endpoint().as_str()).await?;
+    let provider = ProviderBuilder::new().connect(anvil.endpoint().as_str()).await?;
 
     let signer_pk = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80".parse()?;
     let deployer = Deployer::new(provider.clone(), signer_pk);
