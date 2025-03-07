@@ -74,6 +74,8 @@ This repository contains the following examples:
   - [x] [Multicall Builder](./examples/providers/examples/multicall.rs)
   - [x] [WS with authentication](./examples/providers/examples/ws_with_auth.rs)
   - [x] [JSON-RPC Batch Request](./examples/providers/examples/batch_rpc.rs)
+  - [x] [Trace Block](./examples/providers/examples/trace_block.rs)
+  - [x] [Trace Call Mempool](./examples/providers/examples/mempool_tracecall.rs)
 - [x] Queries
   - [x] [Query contract storage](./examples/queries/examples/query_contract_storage.rs)
   - [x] [Query contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
@@ -124,6 +126,11 @@ This repository contains the following examples:
 - [x] Comparison
   - [x] [Compare block headers between providers](./examples/comparison/examples/compare_block_headers.rs)
   - [x] [Compare pending transactions between providers](./examples/comparison/examples/compare_pending_transactions.rs)
+- [x] Tx-Mining
+  - [x] [Mine TX hash with prefix using calldata](./examples/tx-hash-mining/examples/tx_hash_miner_data.rs)
+  - [x] [Mine TX hash with prefix using MaxFeePerGas](./examples/tx-hash-mining/examples/tx_hash_miner_fee.rs)
+  - [x] [Mine TX hash with prefix using gas](./examples/tx-hash-mining/examples/tx_hash_miner_gas.rs)
+  - [x] [Mine TX hash with prefix using MaxPriorityFeePerGas](./examples/tx-hash-mining/examples/tx_hash_miner_priority.rs)
 
 ## Contributing
 
