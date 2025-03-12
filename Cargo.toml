@@ -95,7 +95,7 @@ significant_drop_tightening = "allow"
 needless_return = "allow"
 
 [workspace.dependencies]
-alloy = { version = "0.12.1", features = [
+alloy = { version = "0.12.5", features = [
     "eips",
     "full",
     "hyper",
@@ -126,3 +126,11 @@ tokio = "1.42"
 eyre = "0.6"
 serde = "1.0"
 serde_json = "1.0"
+
+[patch.crates-io]
+alloy = { git = "https://github.com/alloy-rs/alloy", rev = "40dad58" }
+alloy-core = { git = "https://github.com/alloy-rs/core", branch = "v1.0-rc" }
+alloy-dyn-abi = { git = "https://github.com/alloy-rs/core", branch = "v1.0-rc" }
+alloy-json-abi = { git = "https://github.com/alloy-rs/core", branch = "v1.0-rc" }
+alloy-primitives = { git = "https://github.com/alloy-rs/core", branch = "v1.0-rc" }
+alloy-sol-types = { git = "https://github.com/alloy-rs/core", branch = "v1.0-rc" }
