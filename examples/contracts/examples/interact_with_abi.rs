@@ -23,7 +23,7 @@ async fn main() -> Result<()> {
     let contract = IWETH9::new(address!("C02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"), provider);
 
     // Call the contract, retrieve the total supply.
-    let total_supply = contract.totalSupply().call().await?._0;
+    let total_supply = contract.totalSupply().call().await?;
 
     println!("WETH total supply is {total_supply}");
 

@@ -3,7 +3,7 @@
 use alloy::{
     consensus::{SignableTransaction, TxEip1559},
     eips::eip2930::AccessList,
-    primitives::{address, b256, hex, PrimitiveSignature as Signature, TxKind, U256},
+    primitives::{address, b256, hex, Signature, TxKind, U256},
 };
 use eyre::Result;
 

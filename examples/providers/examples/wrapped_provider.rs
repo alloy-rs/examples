@@ -46,7 +46,7 @@ impl<P: Provider> Deployer<P> {
     }
 
     /// Deploys [`Counter`] using the given [`EthereumWallet`] and returns [`CounterInstance`]
-    async fn deploy(&self) -> Result<CounterInstance<(), &P>> {
+    async fn deploy(&self) -> Result<CounterInstance<&P>> {
         let addr = CounterInstance::deploy_builder(&self.provider)
             .from(self.wallet.default_signer().address())
             .deploy()
@@ -58,19 +58,19 @@ impl<P: Provider> Deployer<P> {
 
 struct CounterContract<P: Provider> {
     provider: P,
-    counter: CounterInstance<(), P>,
+    counter: CounterInstance<P>,
 }
 
 impl<P: Provider> CounterContract<P> {
     /// Create a new instance of [`CounterContract`].
-    const fn new(provider: P, counter: CounterInstance<(), P>) -> Self {
+    const fn new(provider: P, counter: CounterInstance<P>) -> Self {
         Self { provider, counter }
     }
 
     /// Returns the current number stored in the [`Counter`].
     async fn number(&self) -> TransportResult<u64> {
         let number = self.counter.number().call().await.map_err(TransportErrorKind::custom)?;
-        Ok(number.number.to::<u64>())
+        Ok(number.to::<u64>())
     }
 
     /// Increments the number stored in the [`Counter`].
