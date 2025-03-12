@@ -128,9 +128,10 @@ serde = "1.0"
 serde_json = "1.0"
 
 [patch.crates-io]
-alloy = { git = "https://github.com/alloy-rs/alloy", rev = "40dad58" }
-alloy-core = { git = "https://github.com/alloy-rs/core", branch = "v1.0-rc" }
-alloy-dyn-abi = { git = "https://github.com/alloy-rs/core", branch = "v1.0-rc" }
-alloy-json-abi = { git = "https://github.com/alloy-rs/core", branch = "v1.0-rc" }
-alloy-primitives = { git = "https://github.com/alloy-rs/core", branch = "v1.0-rc" }
-alloy-sol-types = { git = "https://github.com/alloy-rs/core", branch = "v1.0-rc" }
+alloy = { git = "https://github.com/alloy-rs/alloy", rev = "28f0495" }
+# https://github.com/alloy-rs/core/pull/901
+alloy-core = { git = "https://github.com/alloy-rs/core", rev = "85850de" }
+alloy-dyn-abi = { git = "https://github.com/alloy-rs/core", rev = "85850de" }
+alloy-json-abi = { git = "https://github.com/alloy-rs/core", rev = "85850de" }
+alloy-primitives = { git = "https://github.com/alloy-rs/core", rev = "85850de" }
+alloy-sol-types = { git = "https://github.com/alloy-rs/core", rev = "85850de" }

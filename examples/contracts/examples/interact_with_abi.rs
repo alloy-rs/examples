@@ -4,20 +4,13 @@ use alloy::{primitives::address, providers::ProviderBuilder, sol};
 use eyre::Result;
 
 // Codegen from ABI file to interact with the contract.
-// sol!(
-//     #[allow(missing_docs)]
-//     #[sol(rpc)]
-//     IWETH9,
-//     "examples/abi/IWETH9.json"
-// );
-
-sol! {
+sol!(
+    #[allow(missing_docs)]
     #[sol(rpc)]
-    contract IWETH9 {
-        function totalSupply() returns (uint256);
-        function balanceOf(address) returns (uint256); // Codegen fails here.
-    }
-}
+    IWETH9,
+    "examples/abi/IWETH9.json"
+);
+
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
