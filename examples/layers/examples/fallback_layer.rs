@@ -13,15 +13,13 @@ use alloy::{
 use eyre::Result;
 use tower::ServiceBuilder;
 
-/// Note: should be run with `RUST_LOG=alloy_transport=debug` to see the rankings.
 #[tokio::main]
 async fn main() -> Result<()> {
     let _ = tracing_subscriber::fmt::try_init();
 
     // Configure the fallback layer
-    let fallback_layer = FallbackLayer::default()
-        .with_active_transport_count(NonZeroUsize::new(3).unwrap())
-        .with_log_transport_rankings(true);
+    let fallback_layer =
+        FallbackLayer::default().with_active_transport_count(NonZeroUsize::new(3).unwrap());
 
     // Define your list of transports to use
     let transports = vec![
