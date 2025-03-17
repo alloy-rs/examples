@@ -30,6 +30,7 @@ This repository contains the following examples:
   - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
   - [x] [Deploy from bytecode](./examples/contracts/examples/deploy_from_bytecode.rs)
   - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
+  - [x] [Deploy and link library](./examples/contracts/examples/deploy_and_link_library.rs)
   - [x] [Interact with ABI](./examples/contracts/examples/interact_with_abi.rs)
   - [x] [Interact with contract instance](./examples/contracts/examples/interact_with_contract_instance.rs)
   - [x] [Decode custom JSON-RPC errors](./examples/contracts/examples/jsonrpc_error_decoding.rs)
