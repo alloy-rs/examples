@@ -67,7 +67,7 @@ async fn main() -> Result<()> {
 
     // Instantiate the deployed Counter contract
     let counter = Counter::new(counter_addr, &provider);
-    
+
     // Call `incrementUntil(10)` on the contract
     counter.incrementUntil(U256::from(10)).send().await?.watch().await?;
     println!("Counter.incrementUntil(10) invoked!");
