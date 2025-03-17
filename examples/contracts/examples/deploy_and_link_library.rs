@@ -1,4 +1,4 @@
-//! Example of deploying a contract that require [library linking](https://docs.soliditylang.org/en/latest/using-the-compiler.html#library-linking)
+//! Example of deploying a contract that requires [library linking](https://docs.soliditylang.org/en/latest/using-the-compiler.html#library-linking)
 
 use alloy::{
     hex::{FromHex, ToHexExt},
@@ -48,28 +48,31 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH.
     let provider = ProviderBuilder::new().on_anvil_with_wallet();
 
-    // first deploy the library (instead of using already-deployed ones)
+    // Deploy the library (instead of using existing ones)
     let lib_addr: Address = Comparators::deploy_builder(&provider).deploy().await?;
     println!("Deployed Comparators library at: {}", lib_addr);
 
-    // post-hoc (manual) linking by replacing the placeholder with actual library address
+    // Link the Counter contract bytecode by replacing the library placeholder
     let counter_linked_bytecode = Bytes::from_hex(
         Counter::BYTECODE.encode_hex().replace(LIBRARY_PLACEHOLDER_ADDRESS, &lib_addr.encode_hex()),
     )?;
-    println!("Counter bytecode fully linked!");
+    println!("Counter bytecode linked with Comparators library!");
 
-    // now deploy the contract with linked bytecode
+    // Deploy the Counter contract with the linked bytecode
     let counter_addr = Counter::deploy_builder(&provider)
         .map(|req| req.with_deploy_code(counter_linked_bytecode))
         .deploy()
         .await?;
     println!("Deployed Counter contract at: {}", counter_addr);
 
-    // test successful instantiation
+    // Instantiate the deployed Counter contract
     let counter = Counter::new(counter_addr, &provider);
+    
+    // Call `incrementUntil(10)` on the contract
     counter.incrementUntil(U256::from(10)).send().await?.watch().await?;
     println!("Counter.incrementUntil(10) invoked!");
 
+    // Assert the counter value is as expected
     let number = counter.number().call().await?.number;
     assert_eq!(number, U256::from(1));
     println!("Counter.number == 1 verified!");
