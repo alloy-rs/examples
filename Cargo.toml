@@ -5,7 +5,7 @@ resolver = "2"
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
-rust-version = "1.79"
+rust-version = "1.81"
 authors = ["Alloy Contributors"]
 license = "MIT OR Apache-2.0"
 homepage = "https://github.com/alloy-rs/examples"
@@ -95,7 +95,7 @@ significant_drop_tightening = "allow"
 needless_return = "allow"
 
 [workspace.dependencies]
-alloy = { version = "0.12.1", features = [
+alloy = { version = "0.12", features = [
     "eips",
     "full",
     "hyper",
@@ -112,15 +112,11 @@ alloy = { version = "0.12.1", features = [
     "signer-trezor",
     "signer-yubihsm",
 ] }
-
 foundry-fork-db = "0.12"
-
-revm-primitives = "15.0"
-revm = "19.0"
 
 # async
 futures-util = "0.3"
-tokio = "1.42"
+tokio = "1.44"
 
 # misc
 eyre = "0.6"
