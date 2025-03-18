@@ -123,8 +123,8 @@ This repository contains the following examples:
   - [x] [Using `foundry-fork-db`](./examples/advanced/examples/foundry_fork_db.rs)
   - [x] [Wrapping `Provider` trait over reth-db](./examples/advanced/examples/reth_db_provider.rs)
 - [x] Comparison
-  - [x] [Compare block headers between providers](./examples/comparison/examples/compare_block_headers.rs)
-  - [x] [Compare pending transactions between providers](./examples/comparison/examples/compare_pending_transactions.rs)
+  - [x] [Compare block headers between providers](./examples/comparison/examples/compare_new_heads.rs)
+  - [x] [Compare pending transactions between providers](./examples/comparison/examples/compare_pending_txs.rs)
 
 ## Contributing
 
