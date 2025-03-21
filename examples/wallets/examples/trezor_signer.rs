@@ -13,11 +13,10 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Instantiate the application by acquiring a lock on the Trezor device.
     let signer = TrezorSigner::new(HDPath::TrezorLive(0), Some(1)).await?;
-    let wallet = EthereumWallet::from(signer);
 
     // Create a provider with the wallet.
     let rpc_url = "https://eth.merkle.io".parse()?;
-    let provider = ProviderBuilder::new().wallet(wallet).on_http(rpc_url);
+    let provider = ProviderBuilder::new().wallet(signer).on_http(rpc_url);
 
     // Build a transaction to send 100 wei from Alice to Vitalik.
     // The `from` field is automatically filled to the first signer's address (Alice).

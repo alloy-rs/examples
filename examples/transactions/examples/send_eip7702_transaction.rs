@@ -45,8 +45,7 @@ async fn main() -> Result<()> {
 
     // Create a provider with the wallet for only Bob (not Alice).
     let rpc_url = anvil.endpoint_url();
-    let wallet = EthereumWallet::from(bob.clone());
-    let provider = ProviderBuilder::new().wallet(wallet).on_http(rpc_url);
+    let provider = ProviderBuilder::new().wallet(bob).on_http(rpc_url);
 
     // Deploy the contract Alice will authorize.
     let contract = Log::deploy(&provider).await?;
