@@ -1,4 +1,4 @@
-//! Demonstrates how to obtain a DynProvider from a Provider.
+//! Demonstrates how to obtain a `DynProvider` from a Provider.
 
 use alloy::{
     node_bindings::Anvil,
