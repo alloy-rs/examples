@@ -71,6 +71,7 @@ This repository contains the following examples:
   - [x] [HTTP](./examples/providers/examples/http.rs)
   - [x] [IPC](./examples/providers/examples/ipc.rs)
   - [x] [Wrapping a Provider](./examples/providers/examples/wrapped_provider.rs)
+  - [x] [DynProvider](./examples/providers/examples/dyn_provider.rs)
   - [x] [WS](./examples/providers/examples/ws.rs)
   - [x] [Multicall Builder](./examples/providers/examples/multicall.rs)
   - [x] [WS with authentication](./examples/providers/examples/ws_with_auth.rs)
