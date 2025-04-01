@@ -71,6 +71,7 @@ This repository contains the following examples:
   - [x] [HTTP](./examples/providers/examples/http.rs)
   - [x] [IPC](./examples/providers/examples/ipc.rs)
   - [x] [Wrapping a Provider](./examples/providers/examples/wrapped_provider.rs)
+  - [x] [DynProvider](./examples/providers/examples/dyn_provider.rs)
   - [x] [WS](./examples/providers/examples/ws.rs)
   - [x] [Multicall Builder](./examples/providers/examples/multicall.rs)
   - [x] [WS with authentication](./examples/providers/examples/ws_with_auth.rs)
@@ -123,8 +124,8 @@ This repository contains the following examples:
   - [x] [Using `foundry-fork-db`](./examples/advanced/examples/foundry_fork_db.rs)
   - [x] [Wrapping `Provider` trait over reth-db](./examples/advanced/examples/reth_db_provider.rs)
 - [x] Comparison
-  - [x] [Compare block headers between providers](./examples/comparison/examples/compare_block_headers.rs)
-  - [x] [Compare pending transactions between providers](./examples/comparison/examples/compare_pending_transactions.rs)
+  - [x] [Compare block headers between providers](./examples/comparison/examples/compare_new_heads.rs)
+  - [x] [Compare pending transactions between providers](./examples/comparison/examples/compare_pending_txs.rs)
 
 ## Contributing
 

@@ -34,6 +34,9 @@ function main () {
             -e 'ws_auth' \
             -e 'ws' \
             -e 'yubi_signer' \
+            -e 'foundry_fork_db' \
+            -e 'reth_db_layer' \
+            -e 'reth_db_provider' \
             | xargs -n1 echo
     )"
 
