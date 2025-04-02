@@ -46,7 +46,7 @@ async fn main() -> Result<()> {
     let total_supply = weth.totalSupply().into_transaction_request();
 
     // Requests need to be parallelized to be batched.
-    let (alice_weth, bob_weth, total_supply, block_number, alice_eth) = tokio::join!(
+    let (alice_weth, bob_weth, total_supply, block_number, alice_eth) = tokio::try_join!(
         // Batch `eth_call` requests.
         provider.call(alice_weth).decode_resp::<balanceOfCall>(),
         provider.call(bob_weth).decode_resp::<balanceOfCall>(),
@@ -54,14 +54,12 @@ async fn main() -> Result<()> {
         // Get block number and get balance calls can also be batched.
         provider.get_block_number(),
         provider.get_balance(alice)
-    );
+    )?;
 
     // Resolve `Ok`.
-    let alice_weth = alice_weth??; // Requires two `?` due to `decode_resp` usage.
-    let bob_weth = bob_weth??;
-    let total_supply = total_supply??;
-    let block_number = block_number?;
-    let alice_eth = alice_eth?;
+    let alice_weth = alice_weth?;
+    let bob_weth = bob_weth?;
+    let total_supply = total_supply?;
 
     println!("Block Number: {block_number}");
     println!(
