@@ -1,4 +1,4 @@
-//! Demonstrates how EthereumWallet can use multiple different types of signers.
+//! Demonstrates how `EthereumWallet` can use multiple different types of signers.
 
 use alloy::{
     network::{EthereumWallet, TransactionBuilder, TxSigner},
