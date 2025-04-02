@@ -1,7 +1,6 @@
 //! Example of watching and polling for contract events by `WebSocket` subscription.
 
 use alloy::{
-    network::EthereumWallet,
     node_bindings::Anvil,
     providers::{ProviderBuilder, WsConnect},
     signers::local::PrivateKeySigner,

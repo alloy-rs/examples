@@ -1,7 +1,7 @@
 //! Example of using the `ProviderBuilder` to create a provider with a signer and network.
 
 use alloy::{
-    network::{EthereumWallet, TransactionBuilder},
+    network::TransactionBuilder,
     node_bindings::Anvil,
     primitives::U256,
     providers::{Provider, ProviderBuilder},

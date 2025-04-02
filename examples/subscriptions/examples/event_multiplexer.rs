@@ -3,7 +3,6 @@
 use std::str::FromStr;
 
 use alloy::{
-    network::EthereumWallet,
     node_bindings::Anvil,
     primitives::I256,
     providers::{ProviderBuilder, WsConnect},

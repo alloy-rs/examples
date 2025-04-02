@@ -1,7 +1,7 @@
 //! Example of using the `WalletFiller` in the provider.
 
 use alloy::{
-    network::{EthereumWallet, TransactionBuilder},
+    network::TransactionBuilder,
     node_bindings::Anvil,
     primitives::{address, b256, U256},
     providers::{Provider, ProviderBuilder},
