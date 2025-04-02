@@ -1,7 +1,7 @@
 //! Example of signing and sending a transaction using a Yubi device.
 
 use alloy::{
-    network::{EthereumWallet, TransactionBuilder},
+    network::TransactionBuilder,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
@@ -22,11 +22,10 @@ async fn main() -> Result<()> {
     // `from_key` method to upload a key you already have, or the `new` method
     // to generate a new keypair.
     let signer = YubiSigner::connect(connector, Credentials::default(), 0);
-    let wallet = EthereumWallet::from(signer);
 
     // Create a provider with the wallet.
     let rpc_url = "https://eth.merkle.io".parse()?;
-    let provider = ProviderBuilder::new().wallet(wallet).on_http(rpc_url);
+    let provider = ProviderBuilder::new().wallet(signer).on_http(rpc_url);
 
     // Build a transaction to send 100 wei from Alice to Vitalik.
     // The `from` field is automatically filled to the first signer's address (Alice).

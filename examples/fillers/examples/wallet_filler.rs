@@ -1,7 +1,7 @@
 //! Example of using the `WalletFiller` in the provider.
 
 use alloy::{
-    network::{EthereumWallet, TransactionBuilder},
+    network::TransactionBuilder,
     node_bindings::Anvil,
     primitives::{address, b256, U256},
     providers::{Provider, ProviderBuilder},
@@ -18,13 +18,12 @@ async fn main() -> Result<()> {
 
     // Set up signer from the first default Anvil account (Alice).
     let signer: PrivateKeySigner = anvil.keys()[0].clone().into();
-    let wallet = EthereumWallet::from(signer);
 
     // Create a provider with the wallet.
     let rpc_url = anvil.endpoint_url();
     let provider = ProviderBuilder::new()
         // Add the `WalletFiller` to the provider
-        .wallet(wallet)
+        .wallet(signer)
         .on_http(rpc_url);
 
     // Build an EIP-1559 type transaction to send 100 wei to Vitalik.

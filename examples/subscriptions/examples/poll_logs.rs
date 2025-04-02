@@ -1,7 +1,6 @@
 //! Example of watching and polling for contract events by `WebSocket` subscription.
 
 use alloy::{
-    network::EthereumWallet,
     node_bindings::Anvil,
     providers::{ProviderBuilder, WsConnect},
     signers::local::PrivateKeySigner,
@@ -39,11 +38,10 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH.
     let anvil = Anvil::new().block_time(1).try_spawn()?;
     let pk: PrivateKeySigner = anvil.keys()[0].clone().into();
-    let wallet = EthereumWallet::new(pk);
 
     // Create a WebSocket provider.
     let ws = WsConnect::new(anvil.ws_endpoint());
-    let provider = ProviderBuilder::new().wallet(wallet).on_ws(ws).await?;
+    let provider = ProviderBuilder::new().wallet(pk).on_ws(ws).await?;
 
     // Deploy the `Counter` contract.
     let contract = Counter::deploy(provider.clone()).await?;

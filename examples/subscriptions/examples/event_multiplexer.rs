@@ -3,7 +3,6 @@
 use std::str::FromStr;
 
 use alloy::{
-    network::EthereumWallet,
     node_bindings::Anvil,
     primitives::I256,
     providers::{ProviderBuilder, WsConnect},
@@ -50,11 +49,10 @@ async fn main() -> Result<()> {
     let anvil = Anvil::new().block_time(1).try_spawn()?;
 
     let pk: PrivateKeySigner = anvil.keys()[0].clone().into();
-    let wallet = EthereumWallet::from(pk);
 
     // Create a provider.
     let ws = WsConnect::new(anvil.ws_endpoint());
-    let provider = ProviderBuilder::new().wallet(wallet).on_ws(ws).await?;
+    let provider = ProviderBuilder::new().wallet(pk).on_ws(ws).await?;
 
     // Deploy the `EventExample` contract.
     let contract = EventMultiplexer::deploy(provider).await?;

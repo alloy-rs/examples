@@ -3,7 +3,7 @@
 use std::path::PathBuf;
 
 use alloy::{
-    network::{EthereumWallet, TransactionBuilder},
+    network::TransactionBuilder,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
@@ -21,11 +21,10 @@ async fn main() -> Result<()> {
     let keystore_file_path =
         PathBuf::from(std::env::var("CARGO_MANIFEST_DIR")?).join("examples/keystore/alice.json");
     let signer = LocalSigner::decrypt_keystore(keystore_file_path, password)?;
-    let wallet = EthereumWallet::from(signer);
 
     // Create a provider with the wallet.
     let provider =
-        ProviderBuilder::new().wallet(wallet).on_anvil_with_config(|anvil| anvil.block_time(1));
+        ProviderBuilder::new().wallet(signer).on_anvil_with_config(|anvil| anvil.block_time(1));
 
     // Build a transaction to send 100 wei from Alice to Vitalik.
     // The `from` field is automatically filled to the first signer's address (Alice).

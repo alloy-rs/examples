@@ -1,7 +1,7 @@
 //! Example of using a local wallet to sign and send a transaction.
 
 use alloy::{
-    network::{EthereumWallet, TransactionBuilder},
+    network::TransactionBuilder,
     node_bindings::Anvil,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
@@ -21,11 +21,10 @@ async fn main() -> Result<()> {
     // The following code is for testing only. Set up signer from private key, be aware of danger.
     // let signer: PrivateKeySigner = "<PRIVATE_KEY>".parse().expect("should parse private key");
     let signer: PrivateKeySigner = anvil.keys()[0].clone().into();
-    let wallet = EthereumWallet::from(signer);
 
     // Create a provider with the wallet.
     let rpc_url = anvil.endpoint_url();
-    let provider = ProviderBuilder::new().wallet(wallet).on_http(rpc_url);
+    let provider = ProviderBuilder::new().wallet(signer).on_http(rpc_url);
 
     // Build a transaction to send 100 wei from Alice to Vitalik.
     // The `from` field is automatically filled to the first signer's address (Alice).
