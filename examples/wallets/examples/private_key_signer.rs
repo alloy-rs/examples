@@ -1,7 +1,7 @@
 //! Example of using a local wallet to sign and send a transaction.
 
 use alloy::{
-    network::{EthereumWallet, TransactionBuilder},
+    network::TransactionBuilder,
     node_bindings::Anvil,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},

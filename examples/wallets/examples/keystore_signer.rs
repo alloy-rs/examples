@@ -3,7 +3,7 @@
 use std::path::PathBuf;
 
 use alloy::{
-    network::{EthereumWallet, TransactionBuilder},
+    network::TransactionBuilder,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,

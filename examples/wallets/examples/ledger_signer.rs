@@ -1,7 +1,7 @@
 //! Example of signing and sending a transaction using a Ledger device.
 
 use alloy::{
-    network::{EthereumWallet, TransactionBuilder},
+    network::TransactionBuilder,
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,

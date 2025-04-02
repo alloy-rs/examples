@@ -5,7 +5,7 @@
 //! of Arbitrum's transaction receipts.
 
 use alloy::{
-    network::{AnyNetwork, EthereumWallet},
+    network::AnyNetwork,
     primitives::{address, Address, U128, U256, U64},
     providers::ProviderBuilder,
     signers::local::PrivateKeySigner,
