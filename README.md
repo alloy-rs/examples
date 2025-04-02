@@ -109,6 +109,7 @@ This repository contains the following examples:
   - [x] [Ledger signer](./examples/wallets/examples/ledger_signer.rs)
   - [x] [Private key signer](./examples/wallets/examples/private_key_signer.rs)
   - [x] [Mnemonic signer](./examples/wallets/examples/mnemonic_signer.rs)
+  - [x] [Ethereum Wallet](./examples/wallets/examples/ethereum_wallet.rs)
   - [x] [Sign message](./examples/wallets/examples/sign_message.rs)
   - [x] [Verify message](./examples/wallets/examples/verify_message.rs)
   - [x] [Sign permit hash](./examples/wallets/examples/sign_permit_hash.rs)
