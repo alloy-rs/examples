@@ -88,6 +88,8 @@ This repository contains the following examples:
   - [x] [Decode returns](./examples/sol-macro/examples/decode_returns.rs)
   - [x] [Structs and enums](./examples/sol-macro/examples/structs_enums.rs)
   - [x] [User defined types](./examples/sol-macro/examples/user_defined_types.rs)
+  - [x] [`all_derives` attribute](./examples/sol-macro/examples/all_derives.rs)
+  - [x] [`extra_derives` attribute](./examples/sol-macro/examples/extra_derives.rs)
 - [x] Transactions
   - [x] [Decode input](./examples/transactions/examples/decode_input.rs)
   - [x] [Encode and decode EIP-1559 transaction](./examples/transactions/examples/encode_decode_eip1559.rs)
