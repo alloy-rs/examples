@@ -70,6 +70,7 @@ This repository contains the following examples:
   - [x] [HTTP with authentication](./examples/providers/examples/http_with_auth.rs)
   - [x] [HTTP](./examples/providers/examples/http.rs)
   - [x] [IPC](./examples/providers/examples/ipc.rs)
+  - [x] [Mocking a Provider](./examples/providers/examples/mocking.rs)
   - [x] [Wrapping a Provider](./examples/providers/examples/wrapped_provider.rs)
   - [x] [DynProvider](./examples/providers/examples/dyn_provider.rs)
   - [x] [WS](./examples/providers/examples/ws.rs)
