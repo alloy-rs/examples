@@ -4,7 +4,7 @@
 //! This aids in testing parts of your code that relies on provider without having to connect to a
 //! network.
 use alloy::{
-    primitives::U256,
+    primitives::{Address, U256},
     providers::{Provider, ProviderBuilder},
     rpc::json_rpc::ErrorPayload,
     transports::mock::Asserter,
@@ -54,6 +54,16 @@ async fn main() -> eyre::Result<()> {
     // tries to deserialize the response to `u64` which is not possible.
     let err = provider.get_block_number().await.unwrap_err();
     assert!(err.is_deser_error());
+
+    // Since we're using the `MockTransport`, we can assert raw JSON-RPC requests as well.
+    let expected_balance = U256::from(1000);
+    asserter.push_success(&expected_balance);
+
+    // Raw request
+    let addr = Address::with_last_byte(1);
+    let balance: U256 = provider.raw_request("eth_getBalance".into(), (addr,)).await?;
+
+    assert_eq!(balance, expected_balance);
 
     Ok(())
 }
