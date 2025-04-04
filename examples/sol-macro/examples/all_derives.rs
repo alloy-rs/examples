@@ -1,4 +1,6 @@
 //! This example demonstrates the `all_derives` attribute in the `sol!` macro.
+//!
+//! The `all_derives` attribute enables the derivation of standard Rust traits.
 use alloy::{
     primitives::{Address, U256},
     sol,
@@ -7,6 +9,8 @@ use std::hash::{DefaultHasher, Hash, Hasher};
 
 sol! (
     #![sol(all_derives)]
+    // The `all_derives` attribute enables derivation of std rust traits such as
+    // `Default`, `Debug`, `PartialEq`, `Eq`, and `Hash`.
     struct Foo {
         uint256 a;
         uint64 b;
