@@ -5,7 +5,7 @@
 //! of Arbitrum's transaction receipts.
 
 use alloy::{
-    network::{AnyNetwork, EthereumWallet},
+    network::AnyNetwork,
     primitives::{address, Address, U128, U256, U64},
     providers::ProviderBuilder,
     signers::local::PrivateKeySigner,
@@ -45,11 +45,10 @@ async fn main() -> Result<()> {
     // [RISK WARNING! Writing a private key in the code file is insecure behavior.]
     // The following code is for testing only. Set up signer from private key, be aware of danger.
     let signer: PrivateKeySigner = "<PRIVATE_KEY>".parse().expect("should parse private key");
-    let wallet = EthereumWallet::from(signer);
 
     // Create a provider with the Arbitrum Sepolia network and the wallet.
     let rpc_url = "https://sepolia-rollup.arbitrum.io/rpc".parse()?;
-    let provider = ProviderBuilder::new().network::<AnyNetwork>().wallet(wallet).on_http(rpc_url);
+    let provider = ProviderBuilder::new().network::<AnyNetwork>().wallet(signer).on_http(rpc_url);
 
     // Create a contract instance.
     let contract = Counter::new(COUNTER_CONTRACT_ADDRESS, &provider);

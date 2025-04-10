@@ -30,6 +30,7 @@ This repository contains the following examples:
   - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
   - [x] [Deploy from bytecode](./examples/contracts/examples/deploy_from_bytecode.rs)
   - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
+  - [x] [Deploy and link library](./examples/contracts/examples/deploy_and_link_library.rs)
   - [x] [Interact with ABI](./examples/contracts/examples/interact_with_abi.rs)
   - [x] [Interact with contract instance](./examples/contracts/examples/interact_with_contract_instance.rs)
   - [x] [Decode custom JSON-RPC errors](./examples/contracts/examples/jsonrpc_error_decoding.rs)
@@ -69,8 +70,11 @@ This repository contains the following examples:
   - [x] [HTTP with authentication](./examples/providers/examples/http_with_auth.rs)
   - [x] [HTTP](./examples/providers/examples/http.rs)
   - [x] [IPC](./examples/providers/examples/ipc.rs)
+  - [x] [Mocking a Provider](./examples/providers/examples/mocking.rs)
   - [x] [Wrapping a Provider](./examples/providers/examples/wrapped_provider.rs)
+  - [x] [DynProvider](./examples/providers/examples/dyn_provider.rs)
   - [x] [WS](./examples/providers/examples/ws.rs)
+  - [x] [Multicall Batching Layer](./examples/providers/examples/multicall_batching.rs)
   - [x] [Multicall Builder](./examples/providers/examples/multicall.rs)
   - [x] [WS with authentication](./examples/providers/examples/ws_with_auth.rs)
   - [x] [JSON-RPC Batch Request](./examples/providers/examples/batch_rpc.rs)
@@ -84,6 +88,8 @@ This repository contains the following examples:
   - [x] [Decode returns](./examples/sol-macro/examples/decode_returns.rs)
   - [x] [Structs and enums](./examples/sol-macro/examples/structs_enums.rs)
   - [x] [User defined types](./examples/sol-macro/examples/user_defined_types.rs)
+  - [x] [`all_derives` attribute](./examples/sol-macro/examples/all_derives.rs)
+  - [x] [`extra_derives` attribute](./examples/sol-macro/examples/extra_derives.rs)
 - [x] Transactions
   - [x] [Decode input](./examples/transactions/examples/decode_input.rs)
   - [x] [Encode and decode EIP-1559 transaction](./examples/transactions/examples/encode_decode_eip1559.rs)
@@ -107,6 +113,7 @@ This repository contains the following examples:
   - [x] [Ledger signer](./examples/wallets/examples/ledger_signer.rs)
   - [x] [Private key signer](./examples/wallets/examples/private_key_signer.rs)
   - [x] [Mnemonic signer](./examples/wallets/examples/mnemonic_signer.rs)
+  - [x] [Ethereum Wallet](./examples/wallets/examples/ethereum_wallet.rs)
   - [x] [Sign message](./examples/wallets/examples/sign_message.rs)
   - [x] [Verify message](./examples/wallets/examples/verify_message.rs)
   - [x] [Sign permit hash](./examples/wallets/examples/sign_permit_hash.rs)
@@ -122,8 +129,8 @@ This repository contains the following examples:
   - [x] [Using `foundry-fork-db`](./examples/advanced/examples/foundry_fork_db.rs)
   - [x] [Wrapping `Provider` trait over reth-db](./examples/advanced/examples/reth_db_provider.rs)
 - [x] Comparison
-  - [x] [Compare block headers between providers](./examples/comparison/examples/compare_block_headers.rs)
-  - [x] [Compare pending transactions between providers](./examples/comparison/examples/compare_pending_transactions.rs)
+  - [x] [Compare block headers between providers](./examples/comparison/examples/compare_new_heads.rs)
+  - [x] [Compare pending transactions between providers](./examples/comparison/examples/compare_pending_txs.rs)
 
 ## Contributing
 
