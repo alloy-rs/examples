@@ -46,7 +46,7 @@ async fn main() -> Result<()> {
 
     // Retrieve the number, which should be 43.
     let builder = contract.number();
-    let number = builder.call().await?.number.to_string();
+    let number = builder.call().await?;
 
     println!("Retrieved number: {number}");
 

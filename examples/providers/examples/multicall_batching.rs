@@ -65,7 +65,7 @@ async fn main() -> Result<()> {
     println!(
         "Alice's WETH balance: {}\nBob's WETH balance: {}\nTotal WETH supply: {}\nAlice's ETH
     balance: {}",
-        alice_weth._0, bob_weth._0, total_supply._0, alice_eth
+        alice_weth, bob_weth, total_supply, alice_eth
     );
 
     Ok(())
