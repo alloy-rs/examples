@@ -1,7 +1,7 @@
 //! This example shows how to apply trait derivations globally by specifying the path.
 //!
 //! While the `all_derives` attribute is useful for deriving standard Rust traits such as Debug,
-//! PartialEq, Default etc., the `extra_derives` attribute allows us to derive other useful traits
+//! `PartialEq`, Default etc., the `extra_derives` attribute allows us to derive other useful traits
 //! by specifying their path.
 //!
 //! In this example, we'll derive `serde::Serialize` and `serde::Deserialize` for the types defined

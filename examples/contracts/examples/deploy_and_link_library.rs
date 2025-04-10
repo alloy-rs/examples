@@ -73,7 +73,7 @@ async fn main() -> Result<()> {
     println!("Counter.incrementUntil(10) invoked!");
 
     // Assert the counter value is as expected
-    let number = counter.number().call().await?.number;
+    let number = counter.number().call().await?;
     assert_eq!(number, U256::from(1));
     println!("Counter.number == 1 verified!");
 
