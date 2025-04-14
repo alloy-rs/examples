@@ -15,3 +15,11 @@ tokio.workspace = true
 [[bench]]
 name = "dyn_encoding"
 harness = false
+
+[[bench]]
+name = "static_encoding"
+harness = false
+
+[[bench]]
+name = "u256"
+harness = false
