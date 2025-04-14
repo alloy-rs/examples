@@ -24,7 +24,7 @@ async fn main() -> Result<()> {
     let signer = YubiSigner::connect(connector, Credentials::default(), 0);
 
     // Create a provider with the wallet.
-    let rpc_url = "https://eth.merkle.io".parse()?;
+    let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc".parse()?;
     let provider = ProviderBuilder::new().wallet(signer).on_http(rpc_url);
 
     // Build a transaction to send 100 wei from Alice to Vitalik.

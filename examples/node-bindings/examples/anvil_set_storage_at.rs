@@ -22,7 +22,7 @@ static WETH_ADDR: Address = address!("C02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2")
 async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let rpc_url = "https://eth.merkle.io";
+    let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc";
     let provider = ProviderBuilder::new().on_anvil_with_config(|anvil| anvil.fork(rpc_url));
 
     // Create an instance of the WETH contract.

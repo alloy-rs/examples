@@ -23,7 +23,7 @@ async fn main() -> Result<()> {
 
     // Define your list of transports to use
     let transports = vec![
-        Http::new(Url::parse("https://eth.merkle.io")?),
+        Http::new(Url::parse("https://reth-ethereum.ithaca.xyz/rpc")?),
         Http::new(Url::parse("https://eth.llamarpc.com")?),
         Http::new(Url::parse("https://ethereum-rpc.publicnode.com")?),
     ];
