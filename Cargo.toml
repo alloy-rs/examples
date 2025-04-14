@@ -98,7 +98,7 @@ needless_return = "allow"
 alloy = { version = "0.14", features = [
     "eips",
     "full",
-    "hyper",
+    # "hyper",
     "json-rpc",
     "node-bindings",
     "rpc-client",
