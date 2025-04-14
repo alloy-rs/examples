@@ -13,7 +13,7 @@ repository.workspace = true
 workspace = true
 
 [dev-dependencies]
-alloy.workspace = true
+alloy = { workspace = true, features = ["hyper"] }
 
 eyre.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
