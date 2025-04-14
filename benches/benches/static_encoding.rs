@@ -26,7 +26,7 @@ struct SwapCall {
 }
 
 fn encoding_benchmark(c: &mut Criterion) {
-    let mut group = c.benchmark_group("static_encoding");
+    let mut group = c.benchmark_group("Static");
 
     group.bench_function("Ethers", |b| {
         b.iter(|| {

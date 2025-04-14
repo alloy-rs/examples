@@ -16,7 +16,7 @@ sol! {
 }
 
 fn encoding_benchmark(c: &mut Criterion) {
-    let mut group = c.benchmark_group("dyn_encoding");
+    let mut group = c.benchmark_group("Dynamic");
 
     let json = r#"{
         "type": "function",

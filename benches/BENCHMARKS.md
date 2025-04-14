@@ -2,34 +2,49 @@
 
 ## Table of Contents
 
-- [Benchmark Results](#benchmark-results)
-  - [dyn_encoding](#dyn_encoding)
-  - [static_encoding](#static_encoding)
-  - [get_amount_in](#get_amount_in)
-  - [get_amount_out](#get_amount_out)
+- [ABI Encoding](#abi-encoding)
+  - [Dynamic ABI Encoding](#dynamic)
+  - [Static ABIEncoding](#static)
+- [U256 Operations](#u256-operations)
+  - [UNIV2: Get Amount In](#univ2:-get-amount-in)
+  - [UNIV2: Get Amount Out](#univ2:-get-amount-out)
 
-## Benchmark Results
+## ABI Encoding
 
-### dyn_encoding
+For this benchmark, we are abi-encoding the [`swap` function call](https://github.com/Uniswap/v2-core/blob/ee547b17853e71ed4e0101ccfd52e70d5acded58/contracts/UniswapV2Pair.sol#L159) from Uniswap V2, both statically and dynamically.
+
+```solidity
+function swap(uint amount0Out, uint amount1Out, address to, bytes calldata data) external;
+```
+
+### Dynamic
 
 |     | `Ethers`                 | `Alloy`                         |
 | :-- | :----------------------- | :------------------------------ |
-|     | `2.17 us` (✅ **1.00x**) | `1.78 us` (✅ **1.22x faster**) |
+|     | `2.12 us` (✅ **1.00x**) | `1.78 us` (✅ **1.19x faster**) |
 
-### static_encoding
-
-|     | `Ethers`                 | `Alloy`                           |
-| :-- | :----------------------- | :-------------------------------- |
-|     | `1.05 us` (✅ **1.00x**) | `92.43 ns` (🚀 **11.31x faster**) |
-
-### get_amount_in
+### Static
 
 |     | `Ethers`                   | `Alloy`                           |
 | :-- | :------------------------- | :-------------------------------- |
-|     | `504.23 ns` (✅ **1.00x**) | `247.20 ns` (🚀 **2.04x faster**) |
+|     | `997.39 ns` (✅ **1.00x**) | `92.69 ns` (🚀 **10.76x faster**) |
 
-### get_amount_out
+## U256 Operations
+
+For this benchmark, we are computing the `amountIn` and `amountOut` for the [`swap` function call](https://github.com/Uniswap/v2-core/blob/ee547b17853e71ed4e0101ccfd52e70d5acded58/contracts/UniswapV2Pair.sol#L159) from the current reserves of the Uniswap V2 pair, demonstrating the use of `U256` operations.
+
+### UNIV2: Get Amount In
+
+|     | `Ethers`                   | `Alloy`                           |
+| :-- | :------------------------- | :-------------------------------- |
+|     | `504.48 ns` (✅ **1.00x**) | `246.35 ns` (🚀 **2.05x faster**) |
+
+### UNIV2: Get Amount Out
 
 |     | `Ethers`                  | `Alloy`                          |
 | :-- | :------------------------ | :------------------------------- |
-|     | `53.82 ns` (✅ **1.00x**) | `18.21 ns` (🚀 **2.96x faster**) |
+|     | `53.89 ns` (✅ **1.00x**) | `18.20 ns` (🚀 **2.96x faster**) |
+
+---
+
+Made with [criterion-table](https://github.com/nu11ptr/criterion-table)
