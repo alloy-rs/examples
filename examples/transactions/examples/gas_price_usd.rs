@@ -26,7 +26,7 @@ sol!(
 async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let rpc_url = "https://eth.merkle.io";
+    let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc";
     let provider = ProviderBuilder::new().on_anvil_with_config(|anvil| anvil.fork(rpc_url));
 
     // Create a call to get the latest answer from the Chainlink ETH/USD feed.
