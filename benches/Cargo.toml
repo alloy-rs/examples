@@ -12,12 +12,16 @@ eyre.workspace = true
 serde_json.workspace = true
 tokio.workspace = true
 
-[[bench]]
-name = "dyn_encoding"
-harness = false
+[lib]
+name = "alloy_benches"
+path = "src/lib.rs"
 
 [[bench]]
 name = "static_encoding"
+harness = false
+
+[[bench]]
+name = "dyn_encoding"
 harness = false
 
 [[bench]]
