@@ -10,6 +10,9 @@
 //! between the two.
 //! This has been achieved without altering the resultant serialized JSON-RPC representations.
 //!
+//! One can easily convert the RPC types to their consensus counterparts using the `into_consensus`,
+//! `into_inner` or in the case of transactions `into_recovered` methods.
+//!
 //! See:
 //!
 //! - [Embed consensus `Header` into RPC type](https://github.com/alloy-rs/alloy/pull/1573)
@@ -29,12 +32,17 @@ async fn main() -> eyre::Result<()> {
 
     // Get the latest block from the RPC.
     let block = provider.get_block(BlockId::latest()).await?.ok_or_eyre("Block not found")?;
-    // The immediate type returned is the RPC `Block` type.
+    // The immediate type returned is the RPC `Block` type which consists of the relevant consensus
+    // types.
     assert!(matches!(block, alloy::rpc::types::Block { .. }));
     // This rpc block type contains the RPC `Header` type which encapsulates the consensus `Header`
     // type.
+    // Easily access the consensus `Header` type without having to rebuild into another type.
+    // If one needs to map the header or transaction to a different type, the following mapping
+    // methods can be used: `try_map_header`, `map_header`, `try_map_transactions`,
+    // `map_transactions`.
     assert!(matches!(block.header.inner, alloy::consensus::Header { .. }));
-    // One can use the `into_consensus method` to get the consensus representation of the block.
+    // One can use the `into_consensus` method to get the consensus representation of the block.
     let consensus = block.into_consensus();
     assert!(matches!(consensus, alloy::consensus::Block { .. }));
 
@@ -50,6 +58,8 @@ async fn main() -> eyre::Result<()> {
     // The RPC `Transaction` type wraps a `Recovered<T>` containing the consensus `Transaction`
     // type.
     // The `Recovered<T>` consists of the signer recovered from the signature.
+    // Unifying these reduces verbosity and allows for any one of the types using simple helper
+    // methods as shown below.
     let recovered_tx = tx.into_recovered();
     assert!(matches!(recovered_tx, alloy::consensus::transaction::Recovered { .. }));
     assert!(matches!(recovered_tx.inner(), alloy::consensus::EthereumTxEnvelope::Eip1559(_)));
