@@ -43,7 +43,8 @@ async fn main() -> Result<()> {
         .with_value(U256::from(1));
 
     let bob_balance_before = provider.get_balance(bob).await?;
-    _ = provider.send_transaction(tx).await?.get_receipt().await?;
+    let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
+    assert!(receipt.status(), "Transaction failed");
     let bob_balance_after = provider.get_balance(bob).await?;
     println!("Balance before: {}\nBalance after: {}", bob_balance_before, bob_balance_after);
 

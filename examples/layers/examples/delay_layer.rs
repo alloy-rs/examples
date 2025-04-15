@@ -1,7 +1,10 @@
 //! Demonstrates how to implement a custom transport layer that delays dispatching the requests.
 
 use eyre::Result;
-use std::{task::{Context, Poll}, time::Duration};
+use std::{
+    task::{Context, Poll},
+    time::Duration,
+};
 
 use alloy::{
     network::TransactionBuilder,
@@ -87,7 +90,8 @@ async fn main() -> Result<()> {
     let tx = TransactionRequest::default().with_to(bob).with_value(U256::from(1));
 
     let bob_balance_before = provider.get_balance(bob).await?;
-    _ = provider.send_transaction(tx).await?.get_receipt().await?;
+    let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
+    assert!(receipt.status(), "Transaction failed");
     let bob_balance_after = provider.get_balance(bob).await?;
     println!("Balance before: {}\nBalance after: {}", bob_balance_before, bob_balance_after);
 

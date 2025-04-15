@@ -41,7 +41,7 @@ This repository contains the following examples:
   - [x] [Nonce management filler](./examples/fillers/examples/nonce_filler.rs)
   - [x] [Recommended fillers](./examples/fillers/examples/recommended_fillers.rs)
   - [x] [Wallet management filler](./examples/fillers/examples/wallet_filler.rs)
-  - [x] [Custom UrgentQueue filler](./examples/fillers/examples/urgent_filler.rs)
+  - [x] [Custom gas priority filler](./examples/fillers/examples/urgent_filler.rs)
 - [x] Layers
   - [x] [Hyper layer transport](./examples/layers/examples/hyper_http_layer.rs)
   - [x] [Request / response logging layer](./examples/layers/examples/logging_layer.rs)
