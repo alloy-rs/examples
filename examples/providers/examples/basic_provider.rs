@@ -1,4 +1,5 @@
 //! Instantiate a basic provider without any fillers or layers.
+
 use eyre::Result;
 
 use alloy::{

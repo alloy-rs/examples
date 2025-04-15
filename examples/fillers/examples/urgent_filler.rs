@@ -1,5 +1,6 @@
 //! Rolls a custom filler that fetches priority fee information from an external endpoint and fills
 //! the EIP-1559 gas fields for urgent inclusion.
+
 use eyre::Result;
 
 use alloy::{
@@ -15,9 +16,9 @@ use alloy::{
 };
 use reqwest::Client;
 
-#[derive(Clone, Debug, Default)]
 /// The custom filler that fetches gas prices from an external API
 /// and fills the EIP-1559 gas fields for urgent inclusion.
+#[derive(Clone, Debug, Default)]
 pub struct UrgentQueue {
     client: Client,
 }

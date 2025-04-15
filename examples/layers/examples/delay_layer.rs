@@ -1,7 +1,7 @@
 //! Demonstrates how to implement a custom transport layer that delays dispatching the requests.
 
 use eyre::Result;
-use std::time::Duration;
+use std::{task::{Context, Poll}, time::Duration};
 
 use alloy::{
     network::TransactionBuilder,
@@ -12,8 +12,6 @@ use alloy::{
     signers::local::PrivateKeySigner,
     transports::BoxFuture,
 };
-
-use std::task::{Context, Poll};
 use tokio::time::sleep;
 use tower::{Layer, Service};
 
