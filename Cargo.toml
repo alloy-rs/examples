@@ -1,5 +1,5 @@
 [workspace]
-members = ["examples/*"]
+members = ["examples/*", "benches"]
 resolver = "2"
 
 [workspace.package]
@@ -113,7 +113,6 @@ alloy = { version = "0.14", features = [
     "signer-yubihsm",
 ] }
 
-
 # async
 futures-util = "0.3"
 tokio = "1.44"
@@ -122,3 +121,7 @@ tokio = "1.44"
 eyre = "0.6"
 serde = "1.0"
 serde_json = "1.0"
+
+# benchmarking
+criterion = "0.5"
+ethers = "2.0.14"

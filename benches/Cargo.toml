@@ -1,0 +1,29 @@
+[package]
+name = "alloy_benches"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+alloy.workspace = true
+criterion.workspace = true
+ethers.workspace = true
+eyre.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+
+[lib]
+name = "alloy_benches"
+path = "src/lib.rs"
+
+[[bench]]
+name = "static_encoding"
+harness = false
+
+[[bench]]
+name = "dyn_encoding"
+harness = false
+
+[[bench]]
+name = "u256"
+harness = false
