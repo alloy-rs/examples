@@ -81,6 +81,7 @@ This repository contains the following examples:
   - [x] [Multicall Builder](./examples/providers/examples/multicall.rs)
   - [x] [WS with authentication](./examples/providers/examples/ws_with_auth.rs)
   - [x] [JSON-RPC Batch Request](./examples/providers/examples/batch_rpc.rs)
+  - [x] [Consensus x RPC types unification](./examples/providers/examples/embed_consensus_rpc.rs)
   - [x] [Basic provider with no fillers](./examples/providers/examples/basic_provider.rs)
 - [x] Queries
   - [x] [Query contract storage](./examples/queries/examples/query_contract_storage.rs)
