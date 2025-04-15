@@ -58,6 +58,7 @@ impl<N: Network> TxFiller<N> for UrgentQueue {
         mut tx: SendableTx<N>,
     ) -> TransportResult<SendableTx<N>> {
         if let Some(builder) = tx.as_mut_builder() {
+            println!("Filling transaction with gas prices from Blocknative");
             builder.set_max_fee_per_gas(fillable.max_fee_per_gas);
             builder.set_max_priority_fee_per_gas(fillable.max_priority_fee_per_gas);
         } else {
@@ -76,6 +77,7 @@ impl<N: Network> TxFiller<N> for UrgentQueue {
     where
         P: Provider<N>,
     {
+        println!("Fetching gas prices from Blocknative");
         let data =
             match self.client.get("https://api.blocknative.com/gasprices/blockprices").send().await
             {
