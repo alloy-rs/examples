@@ -47,8 +47,12 @@ async fn main() -> eyre::Result<()> {
     let tx =
         provider.get_transaction_by_hash(tx_hash).await?.ok_or_eyre("Transaction not found")?;
     assert!(matches!(tx, alloy::rpc::types::Transaction { .. }));
-    // The RPC `Transaction` type contains the consensus `EthereumTxEnvelope` type.
-    assert!(matches!(tx.into_inner(), alloy::consensus::EthereumTxEnvelope::Eip1559(_)));
+    // The RPC `Transaction` type wraps a `Recovered<T>` containing the consensus `Transaction`
+    // type.
+    // The `Recovered<T>` consists of the signer recovered from the signature.
+    let recovered_tx = tx.into_recovered();
+    assert!(matches!(recovered_tx, alloy::consensus::transaction::Recovered { .. }));
+    assert!(matches!(recovered_tx.inner(), alloy::consensus::EthereumTxEnvelope::Eip1559(_)));
 
     let receipt = provider
         .get_transaction_receipt(tx_hash)
