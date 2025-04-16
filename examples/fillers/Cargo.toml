@@ -16,4 +16,6 @@ workspace = true
 alloy.workspace = true
 
 eyre.workspace = true
+serde_json.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
+reqwest = "0.12.10"

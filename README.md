@@ -41,10 +41,13 @@ This repository contains the following examples:
   - [x] [Nonce management filler](./examples/fillers/examples/nonce_filler.rs)
   - [x] [Recommended fillers](./examples/fillers/examples/recommended_fillers.rs)
   - [x] [Wallet management filler](./examples/fillers/examples/wallet_filler.rs)
+  - [x] [Custom gas priority filler](./examples/fillers/examples/urgent_filler.rs)
 - [x] Layers
   - [x] [Hyper layer transport](./examples/layers/examples/hyper_http_layer.rs)
   - [x] [Request / response logging layer](./examples/layers/examples/logging_layer.rs)
   - [x] [Retry-backoff layer](./examples/layers/examples/retry_layer.rs)
+  - [x] [Fallback layer](./examples/layers/examples/fallback_layer.rs)
+  - [x] [Delay layer](./examples/layers/examples/delay_layer.rs)
 - [x] Node Bindings
   - [x] [Deploy contract on local Anvil instance](./examples/node-bindings/examples/anvil_deploy_contract.rs)
   - [x] [Fork instance on Anvil](./examples/node-bindings/examples/anvil_fork_instance.rs)
@@ -79,6 +82,7 @@ This repository contains the following examples:
   - [x] [WS with authentication](./examples/providers/examples/ws_with_auth.rs)
   - [x] [JSON-RPC Batch Request](./examples/providers/examples/batch_rpc.rs)
   - [x] [Consensus x RPC types unification](./examples/providers/examples/embed_consensus_rpc.rs)
+  - [x] [Basic provider with no fillers](./examples/providers/examples/basic_provider.rs)
 - [x] Queries
   - [x] [Query contract storage](./examples/queries/examples/query_contract_storage.rs)
   - [x] [Query contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
