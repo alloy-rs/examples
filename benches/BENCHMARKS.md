@@ -3,76 +3,58 @@
 ## Table of Contents
 
 - [Benchmark Results](#benchmark-results)
-    - [Dynamic](#dynamic)
+    - [ABI Encoding](#abi-encoding)
     - [JSON-ABI Serialization](#json-abi-serialization)
     - [JSON-ABI Deserialization](#json-abi-deserialization)
-    - [Serialize Function Sig](#serialize-function-sig)
-    - [Deserialize Function](#deserialize-function)
+    - [Serde Function Signature](#serde-function-signature)
     - [Rlp Encoding and Decoding](#rlp-encoding-and-decoding)
-    - [Static](#static)
-    - [UNIV2-Get Amount In](#univ2-get-amount-in)
-    - [UNIV2-Get Amount Out](#univ2-get-amount-out)
+    - [U256 Operations](#u256-operations)
 
 ## Benchmark Results
 
-### Dynamic
+### ABI Encoding
 
-|        | `Ethers`                | `Alloy`                         |
-|:-------|:------------------------|:------------------------------- |
-|        | `2.29 us` (✅ **1.00x**) | `1.77 us` (✅ **1.29x faster**)  |
+|               | `Ethers`                | `Alloy`                           |
+|:--------------|:------------------------|:--------------------------------- |
+| **`Static`**  | `1.12 us` (✅ **1.00x**) | `90.89 ns` (🚀 **12.32x faster**)  |
+| **`Dynamic`** | `2.20 us` (✅ **1.00x**) | `1.88 us` (✅ **1.17x faster**)    |
 
 ### JSON-ABI Serialization
 
 |                     | `EthAbi`                 | `Alloy`                          |
 |:--------------------|:-------------------------|:-------------------------------- |
-| **`Seaport`**       | `41.35 us` (✅ **1.00x**) | `41.32 us` (✅ **1.00x faster**)  |
-| **`PoolManager`**   | `17.98 us` (✅ **1.00x**) | `17.45 us` (✅ **1.03x faster**)  |
-| **`UniswapV3Pool`** | `14.64 us` (✅ **1.00x**) | `12.98 us` (✅ **1.13x faster**)  |
+| **`Seaport`**       | `35.43 us` (✅ **1.00x**) | `38.68 us` (✅ **1.09x slower**)  |
+| **`PoolManager`**   | `18.33 us` (✅ **1.00x**) | `17.94 us` (✅ **1.02x faster**)  |
+| **`UniswapV3Pool`** | `14.61 us` (✅ **1.00x**) | `12.99 us` (✅ **1.12x faster**)  |
 
 ### JSON-ABI Deserialization
 
 |                     | `EthAbi`                  | `Alloy`                           |
 |:--------------------|:--------------------------|:--------------------------------- |
-| **`Seaport`**       | `220.47 us` (✅ **1.00x**) | `211.97 us` (✅ **1.04x faster**)  |
-| **`PoolManager`**   | `90.51 us` (✅ **1.00x**)  | `94.59 us` (✅ **1.04x slower**)   |
-| **`UniswapV3Pool`** | `70.76 us` (✅ **1.00x**)  | `70.14 us` (✅ **1.01x faster**)   |
+| **`Seaport`**       | `209.43 us` (✅ **1.00x**) | `210.67 us` (✅ **1.01x slower**)  |
+| **`PoolManager`**   | `89.05 us` (✅ **1.00x**)  | `93.31 us` (✅ **1.05x slower**)   |
+| **`UniswapV3Pool`** | `63.24 us` (✅ **1.00x**)  | `68.50 us` (✅ **1.08x slower**)   |
 
-### Serialize Function Sig
+### Serde Function Signature
 
-|        | `EthAbi`                | `Alloy`                            |
-|:-------|:------------------------|:---------------------------------- |
-|        | `5.10 us` (✅ **1.00x**) | `298.37 ns` (🚀 **17.10x faster**)  |
-
-### Deserialize Function
-
-|        | `EthAbi`                 | `Alloy`                          |
-|:-------|:-------------------------|:-------------------------------- |
-|        | `13.91 us` (✅ **1.00x**) | `14.27 us` (✅ **1.03x slower**)  |
+|                   | `EthAbi`                 | `Alloy`                            |
+|:------------------|:-------------------------|:---------------------------------- |
+| **`Serialize`**   | `5.03 us` (✅ **1.00x**)  | `247.82 ns` (🚀 **20.29x faster**)  |
+| **`Deserialize`** | `14.10 us` (✅ **1.00x**) | `14.05 us` (✅ **1.00x faster**)    |
 
 ### Rlp Encoding and Decoding
 
 |                | `Parity-Rlp`             | `Alloy-Rlp`                      |
 |:---------------|:-------------------------|:-------------------------------- |
-| **`Encoding`** | `85.85 ns` (✅ **1.00x**) | `24.74 ns` (🚀 **3.47x faster**)  |
-| **`Decoding`** | `89.95 ns` (✅ **1.00x**) | `22.07 ns` (🚀 **4.08x faster**)  |
+| **`Encoding`** | `86.70 ns` (✅ **1.00x**) | `26.88 ns` (🚀 **3.23x faster**)  |
+| **`Decoding`** | `88.79 ns` (✅ **1.00x**) | `21.43 ns` (🚀 **4.14x faster**)  |
 
-### Static
+### U256 Operations
 
-|        | `Ethers`                | `Alloy`                           |
-|:-------|:------------------------|:--------------------------------- |
-|        | `1.04 us` (✅ **1.00x**) | `94.68 ns` (🚀 **11.00x faster**)  |
-
-### UNIV2-Get Amount In
-
-|        | `Ethers`                  | `Alloy`                           |
-|:-------|:--------------------------|:--------------------------------- |
-|        | `512.03 ns` (✅ **1.00x**) | `222.05 ns` (🚀 **2.31x faster**)  |
-
-### UNIV2-Get Amount Out
-
-|        | `Ethers`                 | `Alloy`                          |
-|:-------|:-------------------------|:-------------------------------- |
-|        | `56.84 ns` (✅ **1.00x**) | `18.30 ns` (🚀 **3.11x faster**)  |
+|                    | `Ethers`                  | `Alloy`                           |
+|:-------------------|:--------------------------|:--------------------------------- |
+| **`getAmountIn`**  | `512.47 ns` (✅ **1.00x**) | `216.32 ns` (🚀 **2.37x faster**)  |
+| **`getAmountOut`** | `53.82 ns` (✅ **1.00x**)  | `18.19 ns` (🚀 **2.96x faster**)   |
 
 ---
 Made with [criterion-table](https://github.com/nu11ptr/criterion-table)
