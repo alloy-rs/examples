@@ -24,7 +24,7 @@ fn u256_benchmark(c: &mut Criterion) {
     let a_amount_in = aU256::from_str("1000000000000000000").unwrap();
     let e_amount_in = U256::from_dec_str("1000000000000000000").unwrap();
 
-    let mut group1 = c.benchmark_group("UNIV2: Get Amount In");
+    let mut group1 = c.benchmark_group("UNIV2-Get Amount In");
 
     group1.bench_function("Ethers", |b| {
         b.iter(|| {
@@ -52,7 +52,7 @@ fn u256_benchmark(c: &mut Criterion) {
 
     group1.finish();
 
-    let mut group2 = c.benchmark_group("UNIV2: Get Amount Out");
+    let mut group2 = c.benchmark_group("UNIV2-Get Amount Out");
 
     group2.bench_function("Ethers", |b| {
         b.iter(|| {
