@@ -12,6 +12,9 @@ eyre.workspace = true
 serde_json.workspace = true
 tokio.workspace = true
 ethabi = "18"
+rlp = "0.6.1"
+rlp-derive = "0.2.0"
+alloy-rlp = "0.3.11"
 
 [lib]
 name = "alloy_benches"
@@ -31,4 +34,8 @@ harness = false
 
 [[bench]]
 name = "json_abi"
+harness = false
+
+[[bench]]
+name = "rlp"
 harness = false
