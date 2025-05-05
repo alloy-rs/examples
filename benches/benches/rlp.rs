@@ -2,13 +2,10 @@
 
 use alloy_rlp::{Decodable, Encodable, RlpDecodable, RlpEncodable};
 
-use criterion::{
-    black_box, criterion_group, criterion_main, measurement::WallTime, BenchmarkGroup, Criterion,
-};
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use rlp::Encodable as ParityEncodable;
-#[derive(
-    Debug, RlpEncodable, RlpDecodable, PartialEq, rlp_derive::RlpDecodable, rlp_derive::RlpEncodable,
-)]
+
+#[derive(RlpEncodable, RlpDecodable, rlp_derive::RlpDecodable, rlp_derive::RlpEncodable)]
 pub struct MyStruct {
     pub a: u128,
     pub b: Vec<u8>,
@@ -21,7 +18,7 @@ fn rlp_encode(c: &mut Criterion) {
     let my_struct = MyStruct { a: 42, b: vec![1, 2, 3, 4, 5] };
 
     // Alloy RLP encoding
-    g.bench_function("rlp_encode/alloy", |b| {
+    g.bench_with_input("rlp_encode/alloy", &my_struct, |b, my_struct| {
         b.iter(|| {
             let mut out = Vec::new();
             let _ = my_struct.encode(&mut out);
@@ -30,7 +27,7 @@ fn rlp_encode(c: &mut Criterion) {
     });
 
     // Parity RLP encoding
-    g.bench_function("rlp_encode/parity", |b| {
+    g.bench_with_input("rlp_encode/parity", &my_struct, |b, my_struct| {
         b.iter(|| {
             let out = my_struct.rlp_bytes();
             black_box(out);
@@ -47,7 +44,7 @@ fn rlp_decode(c: &mut Criterion) {
     let _ = my_struct.encode(&mut encoded);
 
     // Alloy RLP decoding
-    g.bench_function("rlp_decode/alloy", |b| {
+    g.bench_with_input("rlp_decode/alloy", &encoded, |b, encoded| {
         b.iter(|| {
             let decoded = MyStruct::decode(&mut encoded.as_slice()).unwrap();
             black_box(decoded);
@@ -55,9 +52,9 @@ fn rlp_decode(c: &mut Criterion) {
     });
 
     // Parity RLP decoding
-    g.bench_function("rlp_decode/parity", |b| {
+    g.bench_with_input("rlp_decode/parity", &encoded, |b, encoded| {
         b.iter(|| {
-            let decoded: MyStruct = rlp::decode(&encoded).unwrap();
+            let decoded: MyStruct = rlp::decode(encoded).unwrap();
             black_box(decoded);
         })
     });
