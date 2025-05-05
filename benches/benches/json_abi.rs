@@ -52,7 +52,7 @@ fn ser(g: &mut BenchmarkGroup<'_, WallTime>, name: &str, s: &str) {
 }
 
 fn signature(c: &mut Criterion) {
-    let mut g = c.benchmark_group("Serialize Function Sig");
+    let mut g = c.benchmark_group("Serialize Function Signature");
     g.warm_up_time(Duration::from_secs(1));
     ser_signature(&mut g, "large-function", include_str!("../artifacts/LargeFunction.json"));
 }
@@ -80,22 +80,20 @@ fn ser_signature(g: &mut BenchmarkGroup<'_, WallTime>, name: &str, s: &str) {
 }
 
 fn deser_fn(c: &mut Criterion) {
-    let mut g = c.benchmark_group("Deserialize Function");
+    let mut g = c.benchmark_group("Deserialize Function Signature");
     g.warm_up_time(Duration::from_secs(1));
 
     let s = include_str!("../artifacts/LargeFunction.json");
 
     g.bench_with_input("EthAbi", s, |b, s| {
         b.iter(|| {
-            let f: ethabi::Function = serde_json::from_str(black_box(s)).unwrap();
-            assert_eq!(f.name, "largeFunction");
+            let _f: ethabi::Function = serde_json::from_str(black_box(s)).unwrap();
         });
     });
 
     g.bench_with_input("Alloy", s, |b, s| {
         b.iter(|| {
-            let f: Function = serde_json::from_str(black_box(s)).unwrap();
-            assert_eq!(f.name, "largeFunction");
+            let _f: Function = serde_json::from_str(black_box(s)).unwrap();
         });
     });
 }
