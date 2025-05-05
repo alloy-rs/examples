@@ -24,9 +24,9 @@ fn u256_benchmark(c: &mut Criterion) {
     let a_amount_in = aU256::from_str("1000000000000000000").unwrap();
     let e_amount_in = U256::from_dec_str("1000000000000000000").unwrap();
 
-    let mut group1 = c.benchmark_group("UNIV2: Get Amount In");
+    let mut group1 = c.benchmark_group("U256 Operations");
 
-    group1.bench_function("Ethers", |b| {
+    group1.bench_function("Ethers/getAmountIn", |b| {
         b.iter(|| {
             _ = e_get_amount_in(
                 black_box(e_uniswap_pair.reserve0),
@@ -38,7 +38,7 @@ fn u256_benchmark(c: &mut Criterion) {
         })
     });
 
-    group1.bench_function("Alloy", |b| {
+    group1.bench_function("Alloy/getAmountIn", |b| {
         b.iter(|| {
             _ = a_get_amount_in(
                 black_box(a_uniswap_pair.reserve0),
@@ -50,11 +50,7 @@ fn u256_benchmark(c: &mut Criterion) {
         })
     });
 
-    group1.finish();
-
-    let mut group2 = c.benchmark_group("UNIV2: Get Amount Out");
-
-    group2.bench_function("Ethers", |b| {
+    group1.bench_function("Ethers/getAmountOut", |b| {
         b.iter(|| {
             _ = e_get_amount_out(
                 black_box(e_uniswap_pair.reserve0),
@@ -64,7 +60,7 @@ fn u256_benchmark(c: &mut Criterion) {
         })
     });
 
-    group2.bench_function("Alloy", |b| {
+    group1.bench_function("Alloy/getAmountOut", |b| {
         b.iter(|| {
             _ = a_get_amount_out(
                 black_box(a_uniswap_pair.reserve0),
@@ -74,7 +70,7 @@ fn u256_benchmark(c: &mut Criterion) {
         })
     });
 
-    group2.finish();
+    group1.finish();
 }
 
 criterion_group!(benches, u256_benchmark);
