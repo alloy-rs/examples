@@ -21,11 +21,7 @@ name = "alloy_benches"
 path = "src/lib.rs"
 
 [[bench]]
-name = "static_encoding"
-harness = false
-
-[[bench]]
-name = "dyn_encoding"
+name = "abi_encoding"
 harness = false
 
 [[bench]]

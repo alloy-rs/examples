@@ -3,11 +3,13 @@ use alloy::{
     json_abi::Function,
     primitives::{uint, Address, Bytes, U256},
     sol,
+    sol_types::SolCall,
 };
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use ethers::{
-    abi::{Function as eFunction, Token},
-    types::{H160 as eH160, U256 as eU256},
+    abi::{AbiEncode, Function as eFunction, Token},
+    contract::EthCall,
+    types::{Bytes as eBytes, H160 as eH160, U256 as eU256},
 };
 
 sol! {
@@ -15,8 +17,17 @@ sol! {
     function swap(uint amount0Out, uint amount1Out, address to, bytes calldata data) external;
 }
 
+#[derive(EthCall)]
+#[ethcall(name = "swap")]
+struct SwapCall {
+    amount0_out: eU256,
+    amount1_out: eU256,
+    to: eH160,
+    data: eBytes,
+}
+
 fn encoding_benchmark(c: &mut Criterion) {
-    let mut group = c.benchmark_group("Dynamic");
+    let mut group = c.benchmark_group("ABI Encoding");
 
     let json = r#"{
         "type": "function",
@@ -47,7 +58,31 @@ fn encoding_benchmark(c: &mut Criterion) {
         "stateMutability": "nonpayable"
     }"#;
 
-    group.bench_function("Ethers", |b| {
+    group.bench_function("Ethers/Static", |b| {
+        b.iter(|| {
+            SwapCall {
+                amount0_out: black_box(eU256::from(1)),
+                amount1_out: black_box(eU256::from(0)),
+                to: black_box(eH160::from([0x42; 20])),
+                data: black_box(eBytes::new()),
+            }
+            .encode();
+        })
+    });
+
+    group.bench_function("Alloy/Static", |b| {
+        b.iter(|| {
+            swapCall {
+                amount0Out: black_box(U256::from(1)),
+                amount1Out: black_box(U256::from(0)),
+                to: black_box(Address::from([0x42; 20])),
+                data: black_box(Bytes::new()),
+            }
+            .abi_encode();
+        })
+    });
+
+    group.bench_function("Ethers/Dynamic", |b| {
         b.iter(|| {
             let function: eFunction = serde_json::from_str(json).expect("invalid function JSON");
             let ethers_input = [
@@ -61,7 +96,7 @@ fn encoding_benchmark(c: &mut Criterion) {
         })
     });
 
-    group.bench_function("Alloy", |b| {
+    group.bench_function("Alloy/Dynamic", |b| {
         b.iter(|| {
             let func: Function = serde_json::from_str(json).unwrap();
             let input = [
