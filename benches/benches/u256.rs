@@ -60,7 +60,7 @@ fn u256_benchmark(c: &mut Criterion) {
         })
     });
 
-    group1.bench_function("Alloy", |b| {
+    group1.bench_function("Alloy/get-amount-out", |b| {
         b.iter(|| {
             _ = a_get_amount_out(
                 black_box(a_uniswap_pair.reserve0),
