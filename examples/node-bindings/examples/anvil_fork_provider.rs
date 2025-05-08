@@ -13,7 +13,7 @@ async fn main() -> Result<()> {
     // Get node info using the Anvil API.
     let info = provider.anvil_node_info().await?;
 
-    println!("Node info: {:#?}", info);
+    println!("Node info: {info:#?}");
 
     assert_eq!(info.environment.chain_id, 1);
     assert_eq!(info.fork_config.fork_url, Some(rpc_url.to_string()));
