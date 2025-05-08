@@ -63,7 +63,7 @@ impl From<PermitTransferFrom> for ISignatureTransfer::PermitTransferFrom {
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let rpc_url = "https://eth.merkle.io";
+    let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc";
     let anvil = Anvil::new().fork(rpc_url).try_spawn()?;
 
     // Set up signers from the first two default Anvil accounts (Alice, Bob).

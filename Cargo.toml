@@ -1,5 +1,5 @@
 [workspace]
-members = ["examples/*"]
+members = ["examples/*", "benches"]
 resolver = "2"
 
 [workspace.package]
@@ -98,7 +98,6 @@ needless_return = "allow"
 alloy = { version = "0.15", features = [
     "eips",
     "full",
-    "hyper",
     "json-rpc",
     "node-bindings",
     "rpc-client",
@@ -112,7 +111,6 @@ alloy = { version = "0.15", features = [
     "signer-trezor",
     "signer-yubihsm",
 ] }
-foundry-fork-db = "0.12"
 
 # async
 futures-util = "0.3"
@@ -122,6 +120,10 @@ tokio = "1.44"
 eyre = "0.6"
 serde = "1.0"
 serde_json = "1.0"
+
+# benchmarking
+criterion = "0.5"
+ethers = "2.0.14"
 
 [patch.crates-io]
 foundry-fork-db = { git = "https://github.com/foundry-rs/foundry-fork-db.git", rev = "cdbbe64" }

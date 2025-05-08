@@ -24,7 +24,7 @@ async fn main() -> Result<()> {
     let client_with_auth = Client::builder().default_headers(headers).build()?;
 
     // Create the HTTP transport.
-    let rpc_url = "https://eth.merkle.io".parse()?;
+    let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc".parse()?;
     let http = Http::with_client(client_with_auth, rpc_url);
     let rpc_client = RpcClient::new(http, false);
 

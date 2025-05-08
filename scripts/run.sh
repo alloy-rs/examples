@@ -37,6 +37,7 @@ function main () {
             -e 'foundry_fork_db' \
             -e 'reth_db_layer' \
             -e 'reth_db_provider' \
+            -e 'ethereum_wallet' \
             | xargs -n1 echo
     )"
 
