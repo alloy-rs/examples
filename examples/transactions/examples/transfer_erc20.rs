@@ -21,7 +21,7 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH.
     let rpc_url = "https://eth.merkle.io";
     let provider =
-        ProviderBuilder::new().on_anvil_with_wallet_and_config(|anvil| anvil.fork(rpc_url))?;
+        ProviderBuilder::new().connect_anvil_with_wallet_and_config(|anvil| anvil.fork(rpc_url))?;
 
     // Create two users, Alice and Bob.
     let accounts = provider.get_accounts().await?;
@@ -32,8 +32,8 @@ async fn main() -> Result<()> {
     let contract = ERC20Example::deploy(provider).await?;
 
     // Register the balances of Alice and Bob before the transfer.
-    let alice_before_balance = contract.balanceOf(alice).call().await?._0;
-    let bob_before_balance = contract.balanceOf(bob).call().await?._0;
+    let alice_before_balance = contract.balanceOf(alice).call().await?;
+    let bob_before_balance = contract.balanceOf(bob).call().await?;
 
     // Transfer and wait for inclusion.
     let amount = U256::from(100);
@@ -42,8 +42,8 @@ async fn main() -> Result<()> {
     println!("Sent transaction: {tx_hash}");
 
     // Register the balances of Alice and Bob after the transfer.
-    let alice_after_balance = contract.balanceOf(alice).call().await?._0;
-    let bob_after_balance = contract.balanceOf(bob).call().await?._0;
+    let alice_after_balance = contract.balanceOf(alice).call().await?;
+    let bob_after_balance = contract.balanceOf(bob).call().await?;
 
     // Check the balances of Alice and Bob after the transfer.
     assert_eq!(alice_before_balance - alice_after_balance, amount);

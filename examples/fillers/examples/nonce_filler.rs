@@ -38,7 +38,7 @@ async fn main() -> Result<()> {
         // reorganizations.
         .with_cached_nonce_management()
         // .with_simple_nonce_management()
-        .on_anvil_with_wallet();
+        .connect_anvil_with_wallet();
 
     // Build an EIP-1559 type transaction to send 100 wei to Vitalik.
     let vitalik = address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045");

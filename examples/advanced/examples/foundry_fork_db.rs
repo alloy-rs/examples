@@ -25,7 +25,8 @@ use revm_primitives::{BlobExcessGasAndPrice, BlockEnv, TxEnv};
 #[tokio::main]
 async fn main() -> Result<()> {
     let anvil = Anvil::new().spawn();
-    let provider = ProviderBuilder::new().network::<AnyNetwork>().on_http(anvil.endpoint_url());
+    let provider =
+        ProviderBuilder::new().network::<AnyNetwork>().connect_http(anvil.endpoint_url());
 
     let block = provider.get_block(BlockId::latest()).await?.unwrap();
 

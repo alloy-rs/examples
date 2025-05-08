@@ -24,7 +24,7 @@ async fn main() -> Result<()> {
     let input = hex::decode(input)?;
 
     // Decode the input using the generated `swapExactTokensForTokens` bindings.
-    let decoded = swapExactTokensForTokensCall::abi_decode(&input, false);
+    let decoded = swapExactTokensForTokensCall::abi_decode(&input);
 
     match decoded {
         Ok(decoded) => {

@@ -37,7 +37,7 @@ async fn main() -> Result<()> {
     // Create a new RPC client with the Hyper transport.
     let rpc_client = RpcClient::new(http, true);
 
-    let provider = ProviderBuilder::new().on_client(rpc_client);
+    let provider = ProviderBuilder::new().connect_client(rpc_client);
 
     let num = provider.get_block_number().await.unwrap();
 

@@ -20,7 +20,7 @@ sol!(
 async fn main() -> eyre::Result<()> {
     // Create a new provider
     let provider = ProviderBuilder::new()
-        .on_anvil_with_wallet_and_config(|a| a.fork("https://eth.merkle.io"))?;
+        .connect_anvil_with_wallet_and_config(|a| a.fork("https://eth.merkle.io"))?;
     // Create a new instance of the IWETH9 contract.
     let weth =
         IWETH9Instance::new(address!("0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"), &provider);
@@ -43,7 +43,7 @@ async fn main() -> eyre::Result<()> {
 
     println!(
         "Initial total supply: {}, Alice's WETH balance: {}, Alice's ETH balance: {}",
-        init_total_supply._0, alice_weth._0, alice_eth_bal.balance
+        init_total_supply, alice_weth, alice_eth_bal
     );
 
     // Simulate a transfer of WETH from Alice to Bob.
@@ -81,7 +81,7 @@ async fn main() -> eyre::Result<()> {
     assert!(matches!(failed_transfer.unwrap_err(), Failure { idx: 1, return_data: _ }));
 
     let init_bob = init_bob?;
-    assert_eq!(init_bob._0, U256::ZERO);
+    assert_eq!(init_bob, U256::ZERO);
 
     assert!(deposit.is_ok());
     assert!(succ_transfer.is_ok());
@@ -89,7 +89,7 @@ async fn main() -> eyre::Result<()> {
     let alice_weth = alice_weth?;
     let bob_weth = bob_weth?;
 
-    println!("Alice's WETH balance: {}, Bob's WETH balance: {}", alice_weth._0, bob_weth._0);
+    println!("Alice's WETH balance: {}, Bob's WETH balance: {}", alice_weth, bob_weth);
 
     Ok(())
 }

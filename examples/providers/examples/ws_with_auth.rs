@@ -19,8 +19,8 @@ async fn main() -> Result<()> {
     let ws_bearer = WsConnect::new(rpc_url).with_auth(auth_bearer);
 
     // Create the provider.
-    let provider_basic = ProviderBuilder::new().on_ws(ws_basic).await?;
-    let provider_bearer = ProviderBuilder::new().on_ws(ws_bearer).await?;
+    let provider_basic = ProviderBuilder::new().connect_ws(ws_basic).await?;
+    let provider_bearer = ProviderBuilder::new().connect_ws(ws_bearer).await?;
 
     // Subscribe to new block headers.
     let sub_basic = provider_basic.subscribe_blocks();

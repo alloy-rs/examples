@@ -18,7 +18,7 @@ async fn main() -> Result<()> {
         // It is generally recommended to use the recommended fillers which includes the GasFiller,
         // enabled by building the provider using ProviderBuilder::new().
         .with_gas_estimation()
-        .on_anvil_with_wallet();
+        .connect_anvil_with_wallet();
 
     // Build an EIP-1559 type transaction to send 100 wei to Vitalik.
     let vitalik = address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045");

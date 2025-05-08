@@ -46,7 +46,7 @@ async fn main() -> Result<()> {
 
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let provider = ProviderBuilder::new().on_anvil_with_wallet();
+    let provider = ProviderBuilder::new().connect_anvil_with_wallet();
 
     // Deploy the library (instead of using existing ones)
     let lib_addr: Address = Comparators::deploy_builder(&provider).deploy().await?;
@@ -73,7 +73,7 @@ async fn main() -> Result<()> {
     println!("Counter.incrementUntil(10) invoked!");
 
     // Assert the counter value is as expected
-    let number = counter.number().call().await?.number;
+    let number = counter.number().call().await?;
     assert_eq!(number, U256::from(1));
     println!("Counter.number == 1 verified!");
 

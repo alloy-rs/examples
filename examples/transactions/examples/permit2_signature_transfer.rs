@@ -76,14 +76,14 @@ async fn main() -> Result<()> {
 
     // Create a provider with both signers pointing to anvil
     let rpc_url = anvil.endpoint_url();
-    let provider = ProviderBuilder::new().wallet(wallet).on_http(rpc_url);
+    let provider = ProviderBuilder::new().wallet(wallet).connect_http(rpc_url);
 
     // Deploy the `ERC20Example` contract.
     let token = ERC20Example::deploy(provider.clone()).await?;
 
     // Register the balances of Alice and Bob before the transfer.
-    let alice_before_balance = token.balanceOf(alice.address()).call().await?._0;
-    let bob_before_balance = token.balanceOf(bob.address()).call().await?._0;
+    let alice_before_balance = token.balanceOf(alice.address()).call().await?;
+    let bob_before_balance = token.balanceOf(bob.address()).call().await?;
 
     // Permit2 mainnet address
     let address = Address::from_str("0x000000000022D473030F116dDEE9F6B43aC78BA3")?;
@@ -130,8 +130,8 @@ async fn main() -> Result<()> {
     println!("Sent permit transfer: {}", tx_hash);
 
     // Register the balances of Alice and Bob after the transfer.
-    let alice_after_balance = token.balanceOf(alice.address()).call().await?._0;
-    let bob_after_balance = token.balanceOf(bob.address()).call().await?._0;
+    let alice_after_balance = token.balanceOf(alice.address()).call().await?;
+    let bob_after_balance = token.balanceOf(bob.address()).call().await?;
 
     // Check the balances of Alice and Bob after the transfer.
     assert_eq!(alice_before_balance - alice_after_balance, amount);

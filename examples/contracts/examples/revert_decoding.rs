@@ -27,7 +27,7 @@ sol! {
 async fn main() -> Result<()> {
     // Setup an Anvil provider with a wallet.
     // Make sure `anvil` is in your $PATH.
-    let provider = ProviderBuilder::new().on_anvil_with_wallet();
+    let provider = ProviderBuilder::new().connect_anvil_with_wallet();
 
     // Deploy the contract.
     let contract = ThrowsError::deploy(&provider).await?;

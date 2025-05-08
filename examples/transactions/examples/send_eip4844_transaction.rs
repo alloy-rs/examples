@@ -14,7 +14,7 @@ async fn main() -> Result<()> {
     // Spin up a local Anvil node with the Cancun hardfork enabled.
     // Ensure `anvil` is available in $PATH.
     let provider = ProviderBuilder::new()
-        .on_anvil_with_wallet_and_config(|anvil| anvil.args(["--hardfork", "cancun"]))?;
+        .connect_anvil_with_wallet_and_config(|anvil| anvil.args(["--hardfork", "cancun"]))?;
 
     // Create two users, Alice and Bob.
     let accounts = provider.get_accounts().await?;

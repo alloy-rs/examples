@@ -28,7 +28,7 @@ async fn main() -> eyre::Result<()> {
     // have been reached.
     let client = RpcClient::builder().layer(retry_layer).http(anvil.endpoint_url());
 
-    let provider = ProviderBuilder::new().on_client(client);
+    let provider = ProviderBuilder::new().connect_client(client);
 
     let latest_block = provider.get_block_number().await?;
 

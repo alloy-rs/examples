@@ -16,7 +16,7 @@ sol!(
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let provider = ProviderBuilder::new().on_anvil_with_wallet();
+    let provider = ProviderBuilder::new().connect_anvil_with_wallet();
 
     // Deploy the `Counter` contract.
     let contract = Counter::deploy(&provider).await?;
@@ -43,7 +43,7 @@ async fn main() -> Result<()> {
     // return value must be accessed by index - as if it is an unnamed value.
     // If you prefer to use named return values, it is recommended to embed the Solidity code
     // directly in the `sol!` macro as shown in `deploy_from_contract.rs`.
-    let number = builder.call().await?._0;
+    let number = builder.call().await?;
 
     println!("Retrieved number: {number}");
 
