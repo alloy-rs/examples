@@ -85,10 +85,7 @@ impl<N: Network> TxFiller<N> for UrgentQueue {
                 Ok(res) => res,
                 Err(e) => {
                     return Err(RpcError::Transport(TransportErrorKind::Custom(Box::new(
-                        std::io::Error::new(
-                            std::io::ErrorKind::Other,
-                            format!("Failed to fetch gas price, {e}"),
-                        ),
+                        std::io::Error::other(format!("Failed to fetch gas price, {e}")),
                     ))));
                 }
             };
