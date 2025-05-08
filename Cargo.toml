@@ -5,7 +5,7 @@ resolver = "2"
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
-rust-version = "1.81"
+rust-version = "1.82"
 authors = ["Alloy Contributors"]
 license = "MIT OR Apache-2.0"
 homepage = "https://github.com/alloy-rs/examples"
@@ -124,6 +124,3 @@ serde_json = "1.0"
 # benchmarking
 criterion = "0.5"
 ethers = "2.0.14"
-
-[patch.crates-io]
-foundry-fork-db = { git = "https://github.com/foundry-rs/foundry-fork-db.git", rev = "cdbbe64" }
