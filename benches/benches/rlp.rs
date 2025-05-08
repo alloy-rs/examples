@@ -28,13 +28,13 @@ fn rlp(c: &mut Criterion) {
     g.bench_with_input("Alloy-Rlp/Encoding", &my_struct, |b, my_struct| {
         b.iter(|| {
             let mut out = Vec::new();
-            let _ = my_struct.encode(&mut out);
+            my_struct.encode(&mut out);
             black_box(out);
         })
     });
 
     let mut encoded = Vec::new();
-    let _ = my_struct.encode(&mut encoded);
+    my_struct.encode(&mut encoded);
 
     // Parity RLP decoding
     g.bench_with_input("Parity-Rlp/Decoding", &encoded, |b, encoded| {
