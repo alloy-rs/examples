@@ -97,7 +97,7 @@ async fn main() -> Result<()> {
         .await?
         .watch()
         .await?;
-    println!("Sent approval: {}", tx_hash);
+    println!("Sent approval: {tx_hash}");
 
     // Create the EIP712 Domain and Permit
     let amount = U256::from(100);
@@ -127,7 +127,7 @@ async fn main() -> Result<()> {
         .await?
         .watch()
         .await?;
-    println!("Sent permit transfer: {}", tx_hash);
+    println!("Sent permit transfer: {tx_hash}");
 
     // Register the balances of Alice and Bob after the transfer.
     let alice_after_balance = token.balanceOf(alice.address()).call().await?;

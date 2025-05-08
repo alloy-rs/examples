@@ -24,7 +24,7 @@ async fn main() -> Result<()> {
     let mut rpcs = vec![];
     for (name, url) in tmp {
         if url.starts_with("http") {
-            eprintln!("skipping {} at {} because it is not a websocket/ipc endpoint", name, url);
+            eprintln!("skipping {name} at {url} because it is not a websocket/ipc endpoint");
             continue;
         }
         rpcs.push((name, url));
@@ -41,7 +41,7 @@ async fn main() -> Result<()> {
         let provider = match ProviderBuilder::new().network::<AnyNetwork>().connect(&url).await {
             Ok(provider) => provider,
             Err(e) => {
-                eprintln!("skipping {} at {} because of error: {}", name, url, e);
+                eprintln!("skipping {name} at {url} because of error: {e}");
                 continue;
             }
         };
@@ -49,7 +49,7 @@ async fn main() -> Result<()> {
         let mut stream = match provider.subscribe_pending_transactions().await {
             Ok(stream) => stream.into_stream().take(50),
             Err(e) => {
-                eprintln!("skipping {} at {} because of error: {}", name, url, e);
+                eprintln!("skipping {name} at {url} because of error: {e}");
                 continue;
             }
         };
@@ -60,7 +60,7 @@ async fn main() -> Result<()> {
             let _p = provider; // keep provider alive
             while let Some(tx_hash) = stream.next().await {
                 if let Err(e) = sx.send((name.clone(), tx_hash, Utc::now())) {
-                    eprintln!("sending to channel failed: {}", e);
+                    eprintln!("sending to channel failed: {e}");
                 }
             }
         }));

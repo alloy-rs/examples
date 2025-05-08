@@ -93,7 +93,7 @@ where
         let header = req.headers_mut();
         header.insert("x-alloy", "hyper".parse().unwrap());
 
-        println!("Request: {:?}", req);
+        println!("Request: {req:?}");
 
         let fut = self.inner.call(req);
 

@@ -13,7 +13,10 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let provider = ProviderBuilder::default()
+    let provider = ProviderBuilder::new()
+        // You can disable the recommended fillers by calling the `disable_recommended_fillers()`
+        // and pick the fillers of your choice.
+        .disable_recommended_fillers()
         // Add the `GasFiller` to the provider.
         // It is generally recommended to use the recommended fillers which includes the GasFiller,
         // enabled by building the provider using ProviderBuilder::new().

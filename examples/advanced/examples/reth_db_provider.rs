@@ -56,8 +56,9 @@ async fn main() -> Result<()> {
         // requests and returns the results from the reth-db database.
         // Any RPC method that is not implemented in the RethDbProvider gracefully falls back to the
         // RPC provider specified in the `connect_http` method.
-        let provider =
-            ProviderBuilder::new().layer(RethDbLayer::new(db_path)).connect_http(reth.endpoint_url());
+        let provider = ProviderBuilder::new()
+            .layer(RethDbLayer::new(db_path))
+            .connect_http(reth.endpoint_url());
 
         // Initialize the RPC provider to compare the time taken to fetch the results.
         let rpc_provider = ProviderBuilder::new().connect_http(reth.endpoint_url());

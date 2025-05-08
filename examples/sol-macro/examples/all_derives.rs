@@ -26,7 +26,7 @@ fn main() {
     let mut foo_list = vec![foo.clone(), foo, foo_bar];
 
     // `Debug` derived as well.
-    println!("Initial foo_list: {:?}", foo_list);
+    println!("Initial foo_list: {foo_list:?}");
 
     // `PartialEq` is derived, enabling us to apply `.dedup()`.
     foo_list.dedup();

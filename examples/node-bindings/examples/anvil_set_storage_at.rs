@@ -33,7 +33,7 @@ async fn main() -> Result<()> {
 
     // Get the WETH balance of the target account before mocking.
     let balance_before = iweth.balanceOf(account).call().await?;
-    println!("WETH balance before: {}", balance_before);
+    println!("WETH balance before: {balance_before}");
     assert_eq!(balance_before, U256::ZERO);
 
     // Mock WETH balance using the Anvil API.
@@ -43,7 +43,7 @@ async fn main() -> Result<()> {
 
     // Get the WETH balance of the target account after mocking.
     let balance_after = iweth.balanceOf(account).call().await?;
-    println!("WETH balance after: {}", balance_after);
+    println!("WETH balance after: {balance_after}");
     assert_eq!(balance_after, mocked_balance);
 
     Ok(())

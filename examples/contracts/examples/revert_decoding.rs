@@ -38,7 +38,7 @@ async fn main() -> Result<()> {
     // Get the raw bytes of the revert data.
     let revert_data = err.as_revert_data().unwrap();
 
-    println!("Decoding revert data: {:?}", revert_data);
+    println!("Decoding revert data: {revert_data:?}");
 
     // Decode the revert data as a custom error.
     let decoded_err = err.as_decoded_error::<SomeCustomError>().unwrap();
@@ -55,11 +55,11 @@ async fn main() -> Result<()> {
     // The above returns an enum with the errors as its variants.
     match decoded_err {
         ErrorsErrors::SomeCustomError(err) => {
-            println!("Decoded as: {:?}", err);
+            println!("Decoded as: {err:?}");
             assert_eq!(err.a, U256::from(1));
         }
         ErrorsErrors::AnotherError(err) => {
-            println!("Decoded as: {:?}", err);
+            println!("Decoded as: {err:?}");
             assert_eq!(err.b, 0);
         }
     }

@@ -89,7 +89,7 @@ async fn main() -> eyre::Result<()> {
     let alice_weth = alice_weth?;
     let bob_weth = bob_weth?;
 
-    println!("Alice's WETH balance: {}, Bob's WETH balance: {}", alice_weth, bob_weth);
+    println!("Alice's WETH balance: {alice_weth}, Bob's WETH balance: {bob_weth}");
 
     Ok(())
 }
