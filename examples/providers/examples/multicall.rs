@@ -42,8 +42,7 @@ async fn main() -> eyre::Result<()> {
     let (init_total_supply, alice_weth, alice_eth_bal) = multicall.aggregate().await?;
 
     println!(
-        "Initial total supply: {}, Alice's WETH balance: {}, Alice's ETH balance: {}",
-        init_total_supply, alice_weth, alice_eth_bal
+        "Initial total supply: {init_total_supply}, Alice's WETH balance: {alice_weth}, Alice's ETH balance: {alice_eth_bal}"
     );
 
     // Simulate a transfer of WETH from Alice to Bob.
