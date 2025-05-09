@@ -38,7 +38,7 @@ async fn main() -> Result<()> {
 
     // Print the trace results.
     for (index, trace_result) in result.iter().enumerate() {
-        println!("Trace result for transaction {}: {:?}", index, trace_result);
+        println!("Trace result for transaction {index}: {trace_result:?}");
     }
     Ok(())
 }

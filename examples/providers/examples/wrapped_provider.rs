@@ -119,7 +119,7 @@ async fn main() -> Result<()> {
 
     let block_num = counter.provider().get_block_number().await?;
 
-    println!("Current block number: {}", block_num);
+    println!("Current block number: {block_num}");
 
     Ok(())
 }

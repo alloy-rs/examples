@@ -63,9 +63,8 @@ async fn main() -> Result<()> {
 
     println!("Block Number: {block_number}");
     println!(
-        "Alice's WETH balance: {}\nBob's WETH balance: {}\nTotal WETH supply: {}\nAlice's ETH
-    balance: {}",
-        alice_weth, bob_weth, total_supply, alice_eth
+        "Alice's WETH balance: {alice_weth}\nBob's WETH balance: {bob_weth}\nTotal WETH supply: {total_supply}\nAlice's ETH
+    balance: {alice_eth}"
     );
 
     Ok(())
