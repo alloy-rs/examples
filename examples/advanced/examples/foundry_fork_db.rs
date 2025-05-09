@@ -156,4 +156,4 @@
 //     }
 // }
 
-fn main() {}
+const fn main() {}
