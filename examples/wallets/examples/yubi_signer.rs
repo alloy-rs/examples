@@ -25,7 +25,7 @@ async fn main() -> Result<()> {
 
     // Create a provider with the wallet.
     let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc".parse()?;
-    let provider = ProviderBuilder::new().wallet(signer).on_http(rpc_url);
+    let provider = ProviderBuilder::new().wallet(signer).connect_http(rpc_url);
 
     // Build a transaction to send 100 wei from Alice to Vitalik.
     // The `from` field is automatically filled to the first signer's address (Alice).

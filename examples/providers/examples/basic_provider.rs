@@ -24,7 +24,7 @@ async fn main() -> Result<()> {
         .disable_recommended_fillers()
         // Add the signer to the provider for signing transactions
         .wallet(signer)
-        .on_http(anvil.endpoint().parse()?);
+        .connect_http(anvil.endpoint().parse()?);
 
     let bob = Address::from([0x42; 20]);
     let fees = provider.estimate_eip1559_fees().await?;
@@ -46,7 +46,7 @@ async fn main() -> Result<()> {
     let receipt = provider.send_transaction(tx).await?.get_receipt().await?;
     assert!(receipt.status(), "Transaction failed");
     let bob_balance_after = provider.get_balance(bob).await?;
-    println!("Balance before: {}\nBalance after: {}", bob_balance_before, bob_balance_after);
+    println!("Balance before: {bob_balance_before}\nBalance after: {bob_balance_after}");
 
     Ok(())
 }

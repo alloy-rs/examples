@@ -75,7 +75,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Verify the signature
     let recovered_address = signature.recover_address_from_prehash(&eip712_hash)?;
-    println!("Recovered address: {}", recovered_address);
+    println!("Recovered address: {recovered_address}");
 
     assert_eq!(recovered_address, wallet.address(), "Signature verification failed");
     println!("Signature verified successfully!");
@@ -87,7 +87,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 fn print_tuple(value: &DynSolValue, field_names: &[&str]) {
     if let DynSolValue::Tuple(values) = value {
         for (value, name) in values.iter().zip(field_names.iter()) {
-            println!("  {}: {:?}", name, value);
+            println!("  {name}: {value:?}");
         }
     }
 }

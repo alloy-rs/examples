@@ -58,7 +58,7 @@ async fn main() -> eyre::Result<()> {
 
     let number = counter.number().call().await?;
 
-    println!("New number: {}", number);
+    println!("New number: {number}");
 
     Ok(())
 }

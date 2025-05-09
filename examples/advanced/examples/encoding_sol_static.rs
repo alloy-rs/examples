@@ -44,7 +44,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let encoded = hex::encode(swapExactTokensForTokensCall::abi_encode(&swap_data));
 
-    println!("Encoded: 0x{}", encoded);
+    println!("Encoded: 0x{encoded}");
 
     Ok(())
 }

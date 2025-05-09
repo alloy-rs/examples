@@ -21,7 +21,7 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH.
     let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc";
     let provider =
-        ProviderBuilder::new().on_anvil_with_wallet_and_config(|anvil| anvil.fork(rpc_url))?;
+        ProviderBuilder::new().connect_anvil_with_wallet_and_config(|anvil| anvil.fork(rpc_url))?;
 
     // Create two users, Alice and Bob.
     let accounts = provider.get_accounts().await?;

@@ -25,7 +25,7 @@ async fn main() -> Result<()> {
 
     // Set up the HTTP provider with the `reqwest` crate.
     let rpc_url = anvil.endpoint_url();
-    let provider = ProviderBuilder::new().wallet(signer).on_http(rpc_url);
+    let provider = ProviderBuilder::new().wallet(signer).connect_http(rpc_url);
 
     // Create a transaction.
     let tx = TransactionRequest::default().with_to(bob).with_value(U256::from(100));

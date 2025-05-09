@@ -33,7 +33,7 @@ async fn main() -> Result<()> {
     let flashbots_url = "https://rpc.flashbots.net".parse()?;
 
     // Create a provider.
-    let provider = ProviderBuilder::new().on_http(flashbots_url);
+    let provider = ProviderBuilder::new().connect_http(flashbots_url);
 
     // Create a signer from a random private key.
     let signer = PrivateKeySigner::random();

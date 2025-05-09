@@ -1,4 +1,4 @@
-//! Helpers for the UniswapV2 and Sushiswap arb simulation.
+//! Helpers for the `UniswapV2` and Sushiswap arb simulation.
 #![allow(missing_docs, dead_code)]
 use std::ops::{Add, Div, Mul, Sub};
 
@@ -143,4 +143,4 @@ pub(crate) async fn set_hash_storage_slot<P: Provider>(
     Ok(())
 }
 
-fn main() {}
+const fn main() {}

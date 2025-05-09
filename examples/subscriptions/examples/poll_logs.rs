@@ -41,7 +41,7 @@ async fn main() -> Result<()> {
 
     // Create a WebSocket provider.
     let ws = WsConnect::new(anvil.ws_endpoint());
-    let provider = ProviderBuilder::new().wallet(pk).on_ws(ws).await?;
+    let provider = ProviderBuilder::new().wallet(pk).connect_ws(ws).await?;
 
     // Deploy the `Counter` contract.
     let contract = Counter::deploy(provider.clone()).await?;

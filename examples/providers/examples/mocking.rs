@@ -20,7 +20,7 @@ async fn main() -> eyre::Result<()> {
     // Initialize the provider with the `MockTransport` that intercepts incoming requests and uses
     // the `Asserter` to return the next response.
     // `Asserter` is cheaply cloneable as the underlying queue is wrapped in an `Arc`.
-    let provider = ProviderBuilder::new().on_mocked_client(asserter.clone());
+    let provider = ProviderBuilder::new().connect_mocked_client(asserter.clone());
 
     // Mock the response for a basic `get_block_number` request.
     let expected_bn = 1000;

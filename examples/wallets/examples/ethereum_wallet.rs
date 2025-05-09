@@ -48,7 +48,7 @@ async fn main() -> eyre::Result<()> {
     wallet.register_signer(ledger);
 
     // Create a provider with the `WalletFiller`.
-    let provider = ProviderBuilder::new().wallet(wallet).on_http(anvil.endpoint_url());
+    let provider = ProviderBuilder::new().wallet(wallet).connect_http(anvil.endpoint_url());
 
     // Note that the `from` field hasn't been specified.
     // The wallet filler in the provider will set to it the default signer's address, which is

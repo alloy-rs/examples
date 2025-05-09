@@ -27,7 +27,7 @@ sol! {
 async fn main() -> eyre::Result<()> {
     // Create an AnvilProvider
     // Ensure `anvil` is available in $PATH.
-    let provider = ProviderBuilder::new().on_anvil_with_wallet();
+    let provider = ProviderBuilder::new().connect_anvil_with_wallet();
 
     // Deploy the `Counter` contract.
     let counter = Counter::deploy(&provider).await?;

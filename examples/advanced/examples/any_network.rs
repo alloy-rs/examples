@@ -48,7 +48,8 @@ async fn main() -> Result<()> {
 
     // Create a provider with the Arbitrum Sepolia network and the wallet.
     let rpc_url = "https://sepolia-rollup.arbitrum.io/rpc".parse()?;
-    let provider = ProviderBuilder::new().network::<AnyNetwork>().wallet(signer).on_http(rpc_url);
+    let provider =
+        ProviderBuilder::new().network::<AnyNetwork>().wallet(signer).connect_http(rpc_url);
 
     // Create a contract instance.
     let contract = Counter::new(COUNTER_CONTRACT_ADDRESS, &provider);
@@ -62,8 +63,8 @@ async fn main() -> Result<()> {
     let l1_gas = arb_fields.gas_used_for_l1.to::<u128>();
     let l1_block_number = arb_fields.l1_block_number.to::<u64>();
 
-    println!("Gas used for L1: {}", l1_gas);
-    println!("L1 block number: {}", l1_block_number);
+    println!("Gas used for L1: {l1_gas}");
+    println!("L1 block number: {l1_block_number}");
 
     Ok(())
 }

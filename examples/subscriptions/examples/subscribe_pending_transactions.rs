@@ -10,7 +10,7 @@ async fn main() -> Result<()> {
     // Create the provider.
     let rpc_url = "wss://eth-mainnet.g.alchemy.com/v2/your-api-key";
     let ws = WsConnect::new(rpc_url);
-    let provider = ProviderBuilder::new().on_ws(ws).await?;
+    let provider = ProviderBuilder::new().connect_ws(ws).await?;
 
     // Subscribe to pending transactions.
     // Alteratively use `subscribe_full_pending_transactions` to get the full transaction details

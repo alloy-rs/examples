@@ -46,11 +46,11 @@ async fn main() -> Result<()> {
 
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let provider = ProviderBuilder::new().on_anvil_with_wallet();
+    let provider = ProviderBuilder::new().connect_anvil_with_wallet();
 
     // Deploy the library (instead of using existing ones)
     let lib_addr: Address = Comparators::deploy_builder(&provider).deploy().await?;
-    println!("Deployed Comparators library at: {}", lib_addr);
+    println!("Deployed Comparators library at: {lib_addr}");
 
     // Link the Counter contract bytecode by replacing the library placeholder
     let counter_linked_bytecode = Bytes::from_hex(
@@ -63,7 +63,7 @@ async fn main() -> Result<()> {
         .map(|req| req.with_deploy_code(counter_linked_bytecode))
         .deploy()
         .await?;
-    println!("Deployed Counter contract at: {}", counter_addr);
+    println!("Deployed Counter contract at: {counter_addr}");
 
     // Instantiate the deployed Counter contract
     let counter = Counter::new(counter_addr, &provider);

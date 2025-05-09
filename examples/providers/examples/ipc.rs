@@ -10,7 +10,7 @@ async fn main() -> Result<()> {
 
     // Create the provider.
     let ipc = IpcConnect::new(ipc_path.to_string());
-    let provider = ProviderBuilder::new().on_ipc(ipc).await?;
+    let provider = ProviderBuilder::new().connect_ipc(ipc).await?;
 
     let latest_block = provider.get_block_number().await?;
 

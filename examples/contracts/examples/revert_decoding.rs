@@ -27,7 +27,7 @@ sol! {
 async fn main() -> Result<()> {
     // Setup an Anvil provider with a wallet.
     // Make sure `anvil` is in your $PATH.
-    let provider = ProviderBuilder::new().on_anvil_with_wallet();
+    let provider = ProviderBuilder::new().connect_anvil_with_wallet();
 
     // Deploy the contract.
     let contract = ThrowsError::deploy(&provider).await?;
@@ -38,12 +38,12 @@ async fn main() -> Result<()> {
     // Get the raw bytes of the revert data.
     let revert_data = err.as_revert_data().unwrap();
 
-    println!("Decoding revert data: {:?}", revert_data);
+    println!("Decoding revert data: {revert_data:?}");
 
     // Decode the revert data as a custom error.
     let decoded_err = err.as_decoded_error::<SomeCustomError>().unwrap();
 
-    println!("Decoded as: {:?}", decoded_err);
+    println!("Decoded as: {decoded_err:?}");
 
     assert_eq!(decoded_err, SomeCustomError { a: U256::from(1) });
 
@@ -55,11 +55,11 @@ async fn main() -> Result<()> {
     // The above returns an enum with the errors as its variants.
     match decoded_err {
         ErrorsErrors::SomeCustomError(err) => {
-            println!("Decoded as: {:?}", err);
+            println!("Decoded as: {err:?}");
             assert_eq!(err.a, U256::from(1));
         }
         ErrorsErrors::AnotherError(err) => {
-            println!("Decoded as: {:?}", err);
+            println!("Decoded as: {err:?}");
             assert_eq!(err.b, 0);
         }
     }

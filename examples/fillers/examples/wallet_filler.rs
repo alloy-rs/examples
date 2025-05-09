@@ -24,7 +24,7 @@ async fn main() -> Result<()> {
     let provider = ProviderBuilder::new()
         // Add the `WalletFiller` to the provider
         .wallet(signer)
-        .on_http(rpc_url);
+        .connect_http(rpc_url);
 
     // Build an EIP-1559 type transaction to send 100 wei to Vitalik.
     let vitalik = address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045");

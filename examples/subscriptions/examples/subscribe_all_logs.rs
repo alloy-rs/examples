@@ -23,7 +23,7 @@ async fn main() -> Result<()> {
     // Create the provider.
     let rpc_url = "wss://eth-mainnet.g.alchemy.com/v2/your-api-key";
     let ws = WsConnect::new(rpc_url);
-    let provider = ProviderBuilder::new().on_ws(ws).await?;
+    let provider = ProviderBuilder::new().connect_ws(ws).await?;
 
     // Create a filter to watch for all WETH9 events.
     let weth9_token_address = address!("C02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2");

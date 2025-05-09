@@ -23,7 +23,7 @@ async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH.
     let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc";
-    let provider = ProviderBuilder::new().on_anvil_with_config(|anvil| anvil.fork(rpc_url));
+    let provider = ProviderBuilder::new().connect_anvil_with_config(|anvil| anvil.fork(rpc_url));
 
     // Create an instance of the WETH contract.
     let iweth = IERC20::new(WETH_ADDR, provider.clone());
@@ -33,7 +33,7 @@ async fn main() -> Result<()> {
 
     // Get the WETH balance of the target account before mocking.
     let balance_before = iweth.balanceOf(account).call().await?;
-    println!("WETH balance before: {}", balance_before);
+    println!("WETH balance before: {balance_before}");
     assert_eq!(balance_before, U256::ZERO);
 
     // Mock WETH balance using the Anvil API.
@@ -43,7 +43,7 @@ async fn main() -> Result<()> {
 
     // Get the WETH balance of the target account after mocking.
     let balance_after = iweth.balanceOf(account).call().await?;
-    println!("WETH balance after: {}", balance_after);
+    println!("WETH balance after: {balance_after}");
     assert_eq!(balance_after, mocked_balance);
 
     Ok(())

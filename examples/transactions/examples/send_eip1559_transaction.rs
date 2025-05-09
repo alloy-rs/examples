@@ -12,7 +12,7 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let provider = ProviderBuilder::new().on_anvil();
+    let provider = ProviderBuilder::new().connect_anvil();
 
     // Create two users, Alice and Bob.
     let accounts = provider.get_accounts().await?;

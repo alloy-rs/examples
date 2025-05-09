@@ -26,7 +26,7 @@ sol! {
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let provider = ProviderBuilder::new().on_anvil_with_wallet();
+    let provider = ProviderBuilder::new().connect_anvil_with_wallet();
 
     // Deploy the `Counter` contract.
     let contract = Counter::deploy(&provider).await?;

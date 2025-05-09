@@ -16,7 +16,7 @@ async fn main() -> Result<()> {
     // Spin up a local Reth node.
     // Ensure `reth` is available in $PATH.
     let reth = Reth::new().dev().disable_discovery().instance(1).spawn();
-    let provider = ProviderBuilder::new().on_http(reth.endpoint().parse()?);
+    let provider = ProviderBuilder::new().connect_http(reth.endpoint().parse()?);
 
     // Get users, these have allocated balances in the dev genesis block.
     let alice = address!("70997970C51812dc3A010C7d01b50e0d17dc79C8");
@@ -43,10 +43,10 @@ async fn main() -> Result<()> {
     // Print the trace results.
     match result {
         Ok(traces) => {
-            println!("Traces:\n{:?}", traces);
+            println!("Traces:\n{traces:?}");
         }
         Err(err) => {
-            println!("Error tracing transactions: {:?}", err);
+            println!("Error tracing transactions: {err:?}");
         }
     }
 

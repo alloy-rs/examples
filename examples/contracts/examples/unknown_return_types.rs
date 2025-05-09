@@ -15,7 +15,7 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let provider = ProviderBuilder::new().on_anvil_with_wallet();
+    let provider = ProviderBuilder::new().connect_anvil_with_wallet();
 
     // Get the first account from the wallet, Alice.
     let alice = provider.get_accounts().await?[0];

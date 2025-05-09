@@ -23,7 +23,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Functions
     println!("Functions:");
     for (name, functions) in &abi.functions {
-        println!("\n>> {}:", name);
+        println!("\n>> {name}:");
         for function in functions {
             println!("    Inputs: {:?}", function.inputs);
             println!("    Outputs: {:?}", function.outputs);
@@ -36,7 +36,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Events
     println!("Events:");
     for (name, events) in &abi.events {
-        println!("\n>> {}:", name);
+        println!("\n>> {name}:");
         for event in events {
             println!("    Inputs: {:?}", event.inputs);
             println!("    Anonymous: {}", event.anonymous);
@@ -48,7 +48,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Errors
     println!("Errors:");
     for (name, errors) in &abi.errors {
-        println!(">> {}:", name);
+        println!(">> {name}:");
         for error in errors {
             println!("    Inputs: {:?}", error.inputs);
         }
