@@ -224,3 +224,5 @@
 //         provider.try_into_history_at_block(block_number)
 //     }
 // }
+
+fn main() {}

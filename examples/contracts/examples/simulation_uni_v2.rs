@@ -127,7 +127,7 @@ async fn main() -> Result<()> {
     .await?;
 
     let balance_of = iweth.balanceOf(*executor.address()).call().await?;
-    println!("Before - WETH balance of executor {:?}", balance_of);
+    println!("Before - WETH balance of executor {balance_of:?}");
 
     let weth_amount_in = get_amount_in(
         uniswap_pair.reserve0,
@@ -173,7 +173,7 @@ async fn main() -> Result<()> {
     pending.get_receipt().await?;
 
     let balance_of = iweth.balanceOf(*executor.address()).call().await?;
-    println!("After - WETH balance of executor {:?}", balance_of);
+    println!("After - WETH balance of executor {balance_of:?}");
 
     Ok(())
 }

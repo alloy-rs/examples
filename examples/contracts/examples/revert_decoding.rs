@@ -43,7 +43,7 @@ async fn main() -> Result<()> {
     // Decode the revert data as a custom error.
     let decoded_err = err.as_decoded_error::<SomeCustomError>().unwrap();
 
-    println!("Decoded as: {:?}", decoded_err);
+    println!("Decoded as: {decoded_err:?}");
 
     assert_eq!(decoded_err, SomeCustomError { a: U256::from(1) });
 

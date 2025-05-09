@@ -155,3 +155,5 @@
 //         ..Default::default()
 //     }
 // }
+
+fn main() {}

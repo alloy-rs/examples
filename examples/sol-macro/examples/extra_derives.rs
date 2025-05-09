@@ -27,6 +27,6 @@ fn main() -> eyre::Result<()> {
 
     // serde::Deserialize is derived for all types in the abi.
     let deserialized: Colors::Color = serde_json::from_str(&json)?;
-    println!("{:?}", deserialized);
+    println!("{deserialized:?}");
     Ok(())
 }

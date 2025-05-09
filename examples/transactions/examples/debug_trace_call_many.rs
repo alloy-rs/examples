@@ -43,10 +43,10 @@ async fn main() -> Result<()> {
     // Print the trace results.
     match result {
         Ok(traces) => {
-            println!("Traces:\n{:?}", traces);
+            println!("Traces:\n{traces:?}");
         }
         Err(err) => {
-            println!("Error tracing transactions: {:?}", err);
+            println!("Error tracing transactions: {err:?}");
         }
     }
 
