@@ -21,6 +21,7 @@ function main () {
             -e 'geth_local_instance' \
             -e 'ipc' \
             -e 'ledger_signer' \
+            -e 'permit2_signature_transfer' \
             -e 'reth_db_layer' \
             -e 'reth_db_provider' \
             -e 'reth_local_instance' \
