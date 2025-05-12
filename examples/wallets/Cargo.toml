@@ -16,9 +16,9 @@ workspace = true
 alloy.workspace = true
 
 aws-config = { version = "1.6", default-features = false }
-aws-sdk-kms = { version = "1.63", default-features = false }
+aws-sdk-kms = { version = "1.68", default-features = false }
 eyre.workspace = true
-gcloud-sdk = { version = "0.26", features = [
+gcloud-sdk = { version = "0.27", features = [
     "google-cloud-kms-v1",
     "google-longrunning",
 ] }

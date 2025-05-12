@@ -13,7 +13,7 @@ async fn main() -> Result<()> {
     // Create the provider.
     let rpc_url = "wss://eth-mainnet.g.alchemy.com/v2/your-api-key";
     let ws = WsConnect::new(rpc_url);
-    let provider = ProviderBuilder::new().on_ws(ws).await?;
+    let provider = ProviderBuilder::new().connect_ws(ws).await?;
 
     // Create a filter to watch for UNI token transfers.
     let uniswap_token_address = address!("1f9840a85d5aF5bf1D1762F925BDADdC4201F984");

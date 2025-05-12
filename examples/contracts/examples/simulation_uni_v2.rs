@@ -1,5 +1,5 @@
-//! Simulates an arbitrage between Uniswap V2 and SushiSwap by forking anvil and using the
-//! FlashBotsMultiCall contract.
+//! Simulates an arbitrage between Uniswap V2 and `SushiSwap` by forking anvil and using the
+//! `FlashBotsMultiCall` contract.
 use alloy::{
     hex,
     network::TransactionBuilder,
@@ -46,8 +46,9 @@ async fn main() -> Result<()> {
     let sushi_pair = get_sushi_pair();
 
     let wallet_address: Address = anvil.addresses()[0];
-    let provider =
-        ProviderBuilder::new().wallet(anvil.wallet().unwrap()).on_http(anvil.endpoint().parse()?);
+    let provider = ProviderBuilder::new()
+        .wallet(anvil.wallet().unwrap())
+        .connect_http(anvil.endpoint().parse()?);
 
     let executor = FlashBotsMultiCall::deploy(provider.clone(), wallet_address).await?;
     let iweth = IERC20::new(WETH_ADDR, provider.clone());
@@ -126,7 +127,7 @@ async fn main() -> Result<()> {
     .await?;
 
     let balance_of = iweth.balanceOf(*executor.address()).call().await?;
-    println!("Before - WETH balance of executor {:?}", balance_of);
+    println!("Before - WETH balance of executor {balance_of:?}");
 
     let weth_amount_in = get_amount_in(
         uniswap_pair.reserve0,
@@ -172,7 +173,7 @@ async fn main() -> Result<()> {
     pending.get_receipt().await?;
 
     let balance_of = iweth.balanceOf(*executor.address()).call().await?;
-    println!("After - WETH balance of executor {:?}", balance_of);
+    println!("After - WETH balance of executor {balance_of:?}");
 
     Ok(())
 }

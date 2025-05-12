@@ -17,24 +17,29 @@ use alloy::{
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
 };
+use alloy_evm::{eth::EthEvmContext, EthEvm, Evm};
 use eyre::Result;
 use foundry_fork_db::{cache::BlockchainDbMeta, BlockchainDb, SharedBackend};
-use revm::{db::CacheDB, DatabaseRef, Evm};
-use revm_primitives::{BlobExcessGasAndPrice, BlockEnv, TxEnv};
+use revm::{
+    context::{BlockEnv, Evm as RevmEvm, TxEnv},
+    context_interface::block::BlobExcessGasAndPrice,
+    database::WrapDatabaseRef,
+    handler::{instructions::EthInstructions, EthPrecompiles},
+    inspector::NoOpInspector,
+    DatabaseRef,
+};
 
 #[tokio::main]
 async fn main() -> Result<()> {
     let anvil = Anvil::new().spawn();
-    let provider = ProviderBuilder::new().network::<AnyNetwork>().on_http(anvil.endpoint_url());
+    let provider =
+        ProviderBuilder::new().network::<AnyNetwork>().connect_http(anvil.endpoint_url());
 
     let block = provider.get_block(BlockId::latest()).await?.unwrap();
 
     // The `BlockchainDbMeta` is used a identifier when the db is flushed to the disk.
     // This aids in cases where the disk contains data from multiple forks.
-    let meta = BlockchainDbMeta::default()
-        .with_chain_id(31337)
-        .with_block(&block.inner)
-        .with_url(&anvil.endpoint());
+    let meta = BlockchainDbMeta::default().with_block(&block.inner).with_url(&anvil.endpoint());
 
     let db = BlockchainDb::new(meta, None);
 
@@ -45,9 +50,8 @@ async fn main() -> Result<()> {
     //
     // For example, if we send two requests to get_full_block(0) simultaneously, the
     // `BackendHandler` is smart enough to only send one request to the RPC provider, and queue the
-    // other request until the response is received.
-    // Once the response from RPC provider is received it relays the response to both the requests
-    // over their respective channels.
+    // other request until the response is received. Once the response from RPC provider is
+    // received it relays the response to both the requests     // over their respective channels.
     //
     // The `SharedBackend` and `BackendHandler` communicate over an unbounded channel.
     let shared = SharedBackend::spawn_backend(Arc::new(provider.clone()), db, None).await;
@@ -69,9 +73,9 @@ async fn main() -> Result<()> {
 
     println!("-------get_full_block--------");
     // The backend handle falls back to the RPC provider if the block is not in the cache.
-    println!("1st request     (via rpc): {:?}", time_rpc);
+    println!("1st request     (via rpc): {time_rpc:?}");
     // The block is cached due to the previous request and can be fetched from db.
-    println!("2nd request (via fork db): {:?}\n", time_cache);
+    println!("2nd request (via fork db): {time_cache:?}\n");
 
     let alice = anvil.addresses()[0];
     let bob = anvil.addresses()[1];
@@ -87,7 +91,7 @@ async fn main() -> Result<()> {
         .with_gas_limit(21000)
         .with_nonce(0);
 
-    let mut evm = configure_evm_env(block, shared.clone(), configure_tx_env(tx_req));
+    let mut evm = configure_evm(block, shared.clone());
 
     // Fetches accounts from the RPC
     let start_t = std::time::Instant::now();
@@ -95,7 +99,7 @@ async fn main() -> Result<()> {
     let bob_bal = shared.basic_ref(bob)?.unwrap().balance;
     let time_rpc = start_t.elapsed();
 
-    let res = evm.transact().unwrap();
+    let res = evm.transact(configure_tx_env(tx_req)).unwrap();
 
     let total_spent = U256::from(res.result.gas_used()) * U256::from(basefee) + U256::from(100);
 
@@ -108,8 +112,8 @@ async fn main() -> Result<()> {
     let time_cache = start_t.elapsed();
 
     println!("-------get_account--------");
-    println!("1st request     (via rpc): {:?}", time_rpc);
-    println!("2nd request (via fork db): {:?}\n", time_cache);
+    println!("1st request     (via rpc): {time_rpc:?}");
+    println!("2nd request (via fork db): {time_cache:?}\n");
 
     assert_eq!(alice_bal_after, alice_bal - total_spent);
     assert_eq!(bob_bal_after, bob_bal + U256::from(100));
@@ -117,18 +121,16 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-fn configure_evm_env(
+fn configure_evm(
     block: AnyRpcBlock,
     shared: SharedBackend,
-    tx_env: TxEnv,
-) -> Evm<'static, (), CacheDB<SharedBackend>> {
-    let basefee = block.header.base_fee_per_gas().map(U256::from).unwrap_or_default();
+) -> EthEvm<WrapDatabaseRef<SharedBackend>, NoOpInspector> {
     let block_env = BlockEnv {
-        number: U256::from(block.header.number()),
-        coinbase: block.header.beneficiary(),
-        timestamp: U256::from(block.header.timestamp()),
-        gas_limit: U256::from(block.header.gas_limit()),
-        basefee,
+        number: block.header.number(),
+        beneficiary: block.header.beneficiary(),
+        timestamp: block.header.timestamp(),
+        gas_limit: block.header.gas_limit(),
+        basefee: block.header.base_fee_per_gas().unwrap_or(0),
         prevrandao: block.header.mix_hash(),
         difficulty: block.header.difficulty(),
         blob_excess_gas_and_price: Some(BlobExcessGasAndPrice::new(
@@ -137,19 +139,22 @@ fn configure_evm_env(
         )),
     };
 
-    let db = CacheDB::new(shared);
+    let context =
+        EthEvmContext::new(WrapDatabaseRef(shared), revm_primitives::hardfork::SpecId::PRAGUE)
+            .with_block(block_env);
 
-    let evm = Evm::builder().with_block_env(block_env).with_db(db).with_tx_env(tx_env).build();
+    let evm = RevmEvm::new(context, EthInstructions::default(), EthPrecompiles::default())
+        .with_inspector(NoOpInspector);
 
-    evm
+    EthEvm::new(evm, false)
 }
 
 fn configure_tx_env(tx_req: TransactionRequest) -> TxEnv {
     TxEnv {
         caller: tx_req.from.unwrap(),
-        transact_to: tx_req.to.unwrap(),
+        kind: tx_req.to.unwrap(),
         value: tx_req.value.unwrap(),
-        gas_price: U256::from(tx_req.max_fee_per_gas.unwrap()),
+        gas_price: tx_req.max_fee_per_gas.unwrap(),
         gas_limit: tx_req.gas.unwrap_or_default(),
         ..Default::default()
     }

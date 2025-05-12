@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
     // Apply the FallbackLayer to the transports
     let transport = ServiceBuilder::new().layer(fallback_layer).service(transports);
     let client = RpcClient::builder().transport(transport, false);
-    let provider = ProviderBuilder::new().on_client(client);
+    let provider = ProviderBuilder::new().connect_client(client);
 
     // Get the latest block number using the provider with ranked transports.
     // This will also print the rankings of the transports to the console.

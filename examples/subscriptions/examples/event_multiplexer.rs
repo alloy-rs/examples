@@ -52,7 +52,7 @@ async fn main() -> Result<()> {
 
     // Create a provider.
     let ws = WsConnect::new(anvil.ws_endpoint());
-    let provider = ProviderBuilder::new().wallet(pk).on_ws(ws).await?;
+    let provider = ProviderBuilder::new().wallet(pk).connect_ws(ws).await?;
 
     // Deploy the `EventExample` contract.
     let contract = EventMultiplexer::deploy(provider).await?;

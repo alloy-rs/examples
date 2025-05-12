@@ -20,7 +20,7 @@ async fn main() -> Result<()> {
         // This is the recommended way to set up the provider.
         // One can disable the recommended fillers by calling the `disable_recommended_fillers()`
         // method or building the provider with `ProviderBuilder::default()`.
-        .on_anvil_with_wallet();
+        .connect_anvil_with_wallet();
 
     // Build an EIP-1559 type transaction to send 100 wei to Vitalik.
     // Notice that the `nonce` field is set by the `NonceFiller`.

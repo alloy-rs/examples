@@ -29,7 +29,7 @@ async fn main() -> Result<()> {
     let rpc_client = RpcClient::new(http, false);
 
     // Create a provider with the HTTP transport.
-    let provider = ProviderBuilder::new().on_client(rpc_client);
+    let provider = ProviderBuilder::new().connect_client(rpc_client);
 
     // Get latest block number.
     let latest_block = provider.get_block_number().await?;

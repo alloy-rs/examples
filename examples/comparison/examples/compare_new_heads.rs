@@ -34,7 +34,7 @@ async fn main() -> Result<()> {
         let provider = match ProviderBuilder::new().network::<AnyNetwork>().connect(&url).await {
             Ok(provider) => provider,
             Err(e) => {
-                eprintln!("skipping {} at {} because of error: {}", name, url, e);
+                eprintln!("skipping {name} at {url} because of error: {e}");
                 continue;
             }
         };
@@ -42,7 +42,7 @@ async fn main() -> Result<()> {
         let mut stream = match provider.subscribe_blocks().await {
             Ok(stream) => stream.into_stream().take(10),
             Err(e) => {
-                eprintln!("skipping {} at {} because of error: {}", name, url, e);
+                eprintln!("skipping {name} at {url} because of error: {e}");
                 continue;
             }
         };
@@ -53,7 +53,7 @@ async fn main() -> Result<()> {
             let _p = provider; // keep provider alive
             while let Some(header) = stream.next().await {
                 if let Err(e) = sx.send((name.clone(), header, Utc::now())) {
-                    eprintln!("sending to channel failed: {}", e);
+                    eprintln!("sending to channel failed: {e}");
                 }
             }
         }));

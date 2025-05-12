@@ -12,7 +12,7 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Create a provider.
     let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc".parse()?;
-    let provider = ProviderBuilder::new().on_http(rpc_url);
+    let provider = ProviderBuilder::new().connect_http(rpc_url);
 
     // Build a transaction to send 100 wei from Alice to Vitalik.
     let alice = address!("f39Fd6e51aad88F6F4ce6aB8827279cffFb92266");

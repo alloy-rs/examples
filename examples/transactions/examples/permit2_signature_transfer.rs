@@ -76,7 +76,7 @@ async fn main() -> Result<()> {
 
     // Create a provider with both signers pointing to anvil
     let rpc_url = anvil.endpoint_url();
-    let provider = ProviderBuilder::new().wallet(wallet).on_http(rpc_url);
+    let provider = ProviderBuilder::new().wallet(wallet).connect_http(rpc_url);
 
     // Deploy the `ERC20Example` contract.
     let token = ERC20Example::deploy(provider.clone()).await?;
@@ -97,7 +97,7 @@ async fn main() -> Result<()> {
         .await?
         .watch()
         .await?;
-    println!("Sent approval: {}", tx_hash);
+    println!("Sent approval: {tx_hash}");
 
     // Create the EIP712 Domain and Permit
     let amount = U256::from(100);
@@ -127,7 +127,7 @@ async fn main() -> Result<()> {
         .await?
         .watch()
         .await?;
-    println!("Sent permit transfer: {}", tx_hash);
+    println!("Sent permit transfer: {tx_hash}");
 
     // Register the balances of Alice and Bob after the transfer.
     let alice_after_balance = token.balanceOf(alice.address()).call().await?;

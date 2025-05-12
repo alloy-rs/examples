@@ -13,12 +13,15 @@ use eyre::Result;
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let provider = ProviderBuilder::default()
+    let provider = ProviderBuilder::new()
+        // You can disable the recommended fillers by calling the `disable_recommended_fillers()`
+        // and pick the fillers of your choice.
+        .disable_recommended_fillers()
         // Add the `GasFiller` to the provider.
         // It is generally recommended to use the recommended fillers which includes the GasFiller,
         // enabled by building the provider using ProviderBuilder::new().
         .with_gas_estimation()
-        .on_anvil_with_wallet();
+        .connect_anvil_with_wallet();
 
     // Build an EIP-1559 type transaction to send 100 wei to Vitalik.
     let vitalik = address!("d8dA6BF26964aF9D7eEd9e03E53415D37aA96045");

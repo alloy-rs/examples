@@ -20,7 +20,7 @@ sol!(
 async fn main() -> eyre::Result<()> {
     // Create a new provider
     let provider = ProviderBuilder::new()
-        .on_anvil_with_wallet_and_config(|a| a.fork("https://reth-ethereum.ithaca.xyz/rpc"))?;
+        .connect_anvil_with_wallet_and_config(|a| a.fork("https://reth-ethereum.ithaca.xyz/rpc"))?;
     // Create a new instance of the IWETH9 contract.
     let weth =
         IWETH9Instance::new(address!("0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"), &provider);
@@ -42,8 +42,7 @@ async fn main() -> eyre::Result<()> {
     let (init_total_supply, alice_weth, alice_eth_bal) = multicall.aggregate().await?;
 
     println!(
-        "Initial total supply: {}, Alice's WETH balance: {}, Alice's ETH balance: {}",
-        init_total_supply, alice_weth, alice_eth_bal
+        "Initial total supply: {init_total_supply}, Alice's WETH balance: {alice_weth}, Alice's ETH balance: {alice_eth_bal}"
     );
 
     // Simulate a transfer of WETH from Alice to Bob.
@@ -89,7 +88,7 @@ async fn main() -> eyre::Result<()> {
     let alice_weth = alice_weth?;
     let bob_weth = bob_weth?;
 
-    println!("Alice's WETH balance: {}, Bob's WETH balance: {}", alice_weth, bob_weth);
+    println!("Alice's WETH balance: {alice_weth}, Bob's WETH balance: {bob_weth}");
 
     Ok(())
 }

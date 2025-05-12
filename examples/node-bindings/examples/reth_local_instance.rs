@@ -11,7 +11,7 @@ async fn main() -> Result<()> {
     // Spin up a local Reth node.
     // Ensure `reth` is available in $PATH.
     let reth = Reth::new().dev().disable_discovery().instance(1).spawn();
-    let provider = ProviderBuilder::new().on_http(reth.endpoint().parse()?);
+    let provider = ProviderBuilder::new().connect_http(reth.endpoint().parse()?);
 
     let chain_id = provider.get_chain_id().await?;
 

@@ -5,7 +5,7 @@ resolver = "2"
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
-rust-version = "1.81"
+rust-version = "1.83"
 authors = ["Alloy Contributors"]
 license = "MIT OR Apache-2.0"
 homepage = "https://github.com/alloy-rs/examples"
@@ -95,7 +95,7 @@ significant_drop_tightening = "allow"
 needless_return = "allow"
 
 [workspace.dependencies]
-alloy = { version = "0.14", features = [
+alloy = { version = "0.15", features = [
     "eips",
     "full",
     "json-rpc",
@@ -114,7 +114,7 @@ alloy = { version = "0.14", features = [
 
 # async
 futures-util = "0.3"
-tokio = "1.44"
+tokio = "1.45"
 
 # misc
 eyre = "0.6"

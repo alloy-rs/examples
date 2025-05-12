@@ -19,8 +19,7 @@ sol!(
 );
 
 fn main() -> eyre::Result<()> {
-    let mut color_struct = Colors::Color::default();
-    color_struct.r = 255;
+    let color_struct = Colors::Color { r: 255, ..Default::default() };
 
     // serde::Serialize is derived for types passed to the `sol!` macro.
     let json = serde_json::to_string_pretty(&color_struct)?;
@@ -28,6 +27,6 @@ fn main() -> eyre::Result<()> {
 
     // serde::Deserialize is derived for all types in the abi.
     let deserialized: Colors::Color = serde_json::from_str(&json)?;
-    println!("{:?}", deserialized);
+    println!("{deserialized:?}");
     Ok(())
 }

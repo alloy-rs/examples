@@ -15,7 +15,7 @@ async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH.
     let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc";
-    let provider = ProviderBuilder::new().on_anvil_with_config(|anvil| anvil.fork(rpc_url));
+    let provider = ProviderBuilder::new().connect_anvil_with_config(|anvil| anvil.fork(rpc_url));
 
     // Hash of the tx we want to trace.
     let hash = b256!("97a02abf405d36939e5b232a5d4ef5206980c5a6661845436058f30600c52df7");

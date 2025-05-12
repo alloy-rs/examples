@@ -13,17 +13,18 @@ repository.workspace = true
 workspace = true
 
 [dev-dependencies]
+foundry-fork-db = "0.13"
 alloy.workspace = true
-# foundry-fork-db = "0.12"
+alloy-evm = "0.7.2"
 
-# # reth
-# revm-primitives = { version = "17.0.0", default-features = false }
-# revm = { version = "21.0.0", default-features = false }
-# reth-db = { git = "https://github.com/paradigmxyz/reth", package = "reth-db", rev = "v1.3.8" }
-# reth-provider = { git = "https://github.com/paradigmxyz/reth", package = "reth-provider", rev = "v1.3.8" }
-# reth-node-types = { git = "https://github.com/paradigmxyz/reth", package = "reth-node-types", rev = "v1.3.8" }
-# reth-chainspec = { git = "https://github.com/paradigmxyz/reth", package = "reth-chainspec", rev = "v1.3.8" }
-# reth-node-ethereum = { git = "https://github.com/paradigmxyz/reth", package = "reth-node-ethereum", rev = "v1.3.8" }
+# reth
+revm = { version = "23.1.0", default-features = false }
+revm-primitives = { version = "19.0.0", default-features = false }
+reth-db = { git = "https://github.com/paradigmxyz/reth", package = "reth-db", rev = "55f4b0b" }
+reth-provider = { git = "https://github.com/paradigmxyz/reth", package = "reth-provider", rev = "55f4b0b" }
+reth-node-types = { git = "https://github.com/paradigmxyz/reth", package = "reth-node-types", rev = "55f4b0b" }
+reth-chainspec = { git = "https://github.com/paradigmxyz/reth", package = "reth-chainspec", rev = "55f4b0b" }
+reth-node-ethereum = { git = "https://github.com/paradigmxyz/reth", package = "reth-node-ethereum", rev = "55f4b0b" }
 
 eyre.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }

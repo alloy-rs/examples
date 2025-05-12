@@ -85,10 +85,7 @@ impl<N: Network> TxFiller<N> for UrgentQueue {
                 Ok(res) => res,
                 Err(e) => {
                     return Err(RpcError::Transport(TransportErrorKind::Custom(Box::new(
-                        std::io::Error::new(
-                            std::io::ErrorKind::Other,
-                            format!("Failed to fetch gas price, {}", e),
-                        ),
+                        std::io::Error::other(format!("Failed to fetch gas price, {e}")),
                     ))));
                 }
             };
@@ -107,14 +104,15 @@ impl<N: Network> TxFiller<N> for UrgentQueue {
 #[tokio::main]
 async fn main() -> Result<()> {
     // Instantiate the provider with the UrgentQueue filler
-    let provider = ProviderBuilder::new().filler(UrgentQueue::default()).on_anvil_with_wallet();
+    let provider =
+        ProviderBuilder::new().filler(UrgentQueue::default()).connect_anvil_with_wallet();
     let bob = Address::from([0x42; 20]);
     let tx = TransactionRequest::default().with_to(bob).with_value(U256::from(1));
 
     let bob_balance_before = provider.get_balance(bob).await?;
     let res = provider.send_transaction(tx).await?.get_receipt().await?;
     let bob_balance_after = provider.get_balance(bob).await?;
-    println!("Balance before: {}\nBalance after: {}", bob_balance_before, bob_balance_after);
+    println!("Balance before: {bob_balance_before}\nBalance after: {bob_balance_after}");
 
     let tx = provider.get_transaction_by_hash(res.transaction_hash).await?.unwrap();
     println!("Max fee per gas: {:?}", tx.max_fee_per_gas());

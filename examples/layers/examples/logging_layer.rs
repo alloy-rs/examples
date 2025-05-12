@@ -78,7 +78,7 @@ async fn main() -> Result<()> {
     let client = ClientBuilder::default().layer(LoggingLayer).http(rpc_url);
 
     // Create a new provider with the client.
-    let provider = ProviderBuilder::new().on_client(client);
+    let provider = ProviderBuilder::new().connect_client(client);
 
     for _ in 0..10 {
         let _block_number = provider.get_block_number().into_future().await?;
