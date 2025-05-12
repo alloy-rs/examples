@@ -21,4 +21,4 @@ impl RethDbLayer {
     }
 }
 
-fn main() {}
+const fn main() {}

@@ -73,9 +73,9 @@ async fn main() -> Result<()> {
 
     println!("-------get_full_block--------");
     // The backend handle falls back to the RPC provider if the block is not in the cache.
-    println!("1st request     (via rpc): {:?}", time_rpc);
+    println!("1st request     (via rpc): {time_rpc:?}");
     // The block is cached due to the previous request and can be fetched from db.
-    println!("2nd request (via fork db): {:?}\n", time_cache);
+    println!("2nd request (via fork db): {time_cache:?}\n");
 
     let alice = anvil.addresses()[0];
     let bob = anvil.addresses()[1];
@@ -112,8 +112,8 @@ async fn main() -> Result<()> {
     let time_cache = start_t.elapsed();
 
     println!("-------get_account--------");
-    println!("1st request     (via rpc): {:?}", time_rpc);
-    println!("2nd request (via fork db): {:?}\n", time_cache);
+    println!("1st request     (via rpc): {time_rpc:?}");
+    println!("2nd request (via fork db): {time_cache:?}\n");
 
     assert_eq!(alice_bal_after, alice_bal - total_spent);
     assert_eq!(bob_bal_after, bob_bal + U256::from(100));
