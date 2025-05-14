@@ -49,7 +49,7 @@ participate in the discussion around bugs and participate in reviewing PRs.
 
 ### Contributions Related to Spelling and Grammar
 
-At this time, we will not be accepting contributions that only fix spelling 
+At this time, we will not be accepting contributions that only fix spelling
 or grammatical errors in documentation, code or elsewhere.
 
 ### Asking for General Help
@@ -113,8 +113,8 @@ functional guidelines of the Alloy project.
 Pull Requests are the way concrete changes are made to the code, documentation,
 and dependencies in the Alloy repository.
 
-Before making a large change, it is  usually a good idea to first open an issue 
-describing the change to solicit feedback and guidance. This will increase the 
+Before making a large change, it is usually a good idea to first open an issue
+describing the change to solicit feedback and guidance. This will increase the
 likelihood of the PR getting merged.
 
 When opening a PR **please select the "Allow Edits From Maintainers" option**.
@@ -146,7 +146,7 @@ cargo run --example $YOUR_EXAMPLE_NAME
 To run all (runnable) examples:
 
 ```sh
-./scripts/run.sh
+./scripts/test.sh
 ```
 
 ### Tests

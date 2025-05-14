@@ -23,7 +23,7 @@ jobs:
       - name: Run examples
         run: |
           # Run examples with the current version of Alloy
-          ./scripts/run.sh
+          ./scripts/test.sh
 
           # Fetch the latest commit hash of the `main` branch from the Alloy repository
           export latest_alloy_commit=$(git ls-remote https://github.com/alloy-rs/alloy.git \
@@ -38,4 +38,4 @@ jobs:
           cargo update
 
           # Run the examples with the latest version of Alloy
-          ./scripts/run.sh
+          ./scripts/test.sh

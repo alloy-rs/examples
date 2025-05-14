@@ -9,6 +9,10 @@ set -eo pipefail
 # 2. Filter out the examples that have external dependencies or are not meant to be run.
 # 1. Run all examples that are left after filtering.
 function main () {
+    # Change directory to project root
+    SCRIPT_PATH="$(cd "$( dirname "$0" )" >/dev/null 2>&1 && pwd)"
+    cd "$SCRIPT_PATH/.." || exit
+
     export examples="$(
         cargo run --example 2>&1 \
             | grep -E '^ ' \
@@ -17,12 +21,17 @@ function main () {
             -e 'aws_signer' \
             -e 'builtin' \
             -e 'debug_trace_call_many' \
+            -e 'ethereum_wallet' \
+            -e 'foundry_fork_db' \
             -e 'gcp_signer' \
             -e 'geth_local_instance' \
             -e 'ipc' \
+            -e 'keystore_signer' \
             -e 'ledger_signer' \
             -e 'permit2_signature_transfer' \
             -e 'reth_db_layer' \
+            -e 'reth_db_layer' \
+            -e 'reth_db_provider' \
             -e 'reth_db_provider' \
             -e 'reth_local_instance' \
             -e 'subscribe_all_logs' \
@@ -35,23 +44,25 @@ function main () {
             -e 'ws_auth' \
             -e 'ws' \
             -e 'yubi_signer' \
-            -e 'foundry_fork_db' \
-            -e 'reth_db_layer' \
-            -e 'reth_db_provider' \
-            -e 'ethereum_wallet' \
             | xargs -n1 echo
     )"
 
-    for example in $examples; do
-        cargo run --example $example --quiet 1>/dev/null
+    # Pre-build the examples prior to running them
+    cargo build $(printf -- '--example %s ' $examples)
 
-        if [ $? -ne 0 ]; then
-            echo "Failed to run: $example"
-            exit 1
+    # Run all the examples that are left after filtering.
+    printf '%s\n' $examples \
+    | xargs -n1 -P10 -I{} bash -c '
+        bin="./target/debug/examples/{}"
+        if [[ -x "$bin" ]]; then
+            "$bin" >/dev/null \
+            && echo "Successfully ran: {}" \
+            || { echo "Failed to run: {}" >&2; exit 1; }
         else
-            echo "Successfully ran: $example"
+            echo "Missing binary: $bin" >&2
+            exit 1
         fi
-    done
+        '
 }
 
 # Run the main function.
