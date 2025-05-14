@@ -64,7 +64,7 @@ function main () {
 
     # Run all the examples that are left after filtering.
     printf '%s\n' $examples \
-    | xargs -P10 -I{} bash -c '
+    | xargs -P4 -I{} bash -c '
         bin="./target/debug/examples/{}"
         if [[ -x "$bin" ]]; then
             "$bin" >/dev/null \
