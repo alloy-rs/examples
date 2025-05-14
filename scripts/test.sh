@@ -3,6 +3,17 @@
 # Exit if anything fails.
 set -eo pipefail
 
+# Utilities
+GREEN="\033[00;32m"
+
+function log () {
+  echo -e "$1"
+  echo "################################################################################"
+  echo "#### $2 "
+  echo "################################################################################"
+  echo -e "\033[0m"
+}
+
 # This script will do the following:
 #
 # 1. Gather all the examples from the output of `cargo run --example` command.
@@ -44,12 +55,16 @@ function main () {
             | xargs -n1 echo
     )"
 
+    log $GREEN "Building..."
+
     # Pre-build the filtered examples prior to running them.
     cargo build $(printf -- '--example %s ' $examples)
 
+    log $GREEN "Running..."
+
     # Run all the examples that are left after filtering.
     printf '%s\n' $examples \
-    | xargs -n1 -P10 -I{} bash -c '
+    | xargs -P10 -I{} bash -c '
         bin="./target/debug/examples/{}"
         if [[ -x "$bin" ]]; then
             "$bin" >/dev/null \
@@ -60,6 +75,8 @@ function main () {
             exit 1
         fi
         '
+
+    log $GREEN "Done"
 }
 
 # Run the main function.
