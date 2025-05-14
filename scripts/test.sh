@@ -7,12 +7,9 @@ set -eo pipefail
 #
 # 1. Gather all the examples from the output of `cargo run --example` command.
 # 2. Filter out the examples that have external dependencies or are not meant to be run.
-# 1. Run all examples that are left after filtering.
+# 3. Pre-build the filtered examples prior to running them.
+# 4. Run all the examples in parallel (up to 10) that are left after filtering.
 function main () {
-    # Change directory to project root
-    SCRIPT_PATH="$(cd "$( dirname "$0" )" >/dev/null 2>&1 && pwd)"
-    cd "$SCRIPT_PATH/.." || exit
-
     export examples="$(
         cargo run --example 2>&1 \
             | grep -E '^ ' \
@@ -47,7 +44,7 @@ function main () {
             | xargs -n1 echo
     )"
 
-    # Pre-build the examples prior to running them
+    # Pre-build the filtered examples prior to running them.
     cargo build $(printf -- '--example %s ' $examples)
 
     # Run all the examples that are left after filtering.
