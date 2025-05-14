@@ -67,8 +67,8 @@ async fn main() -> Result<()> {
     let anvil = Anvil::new().fork(rpc_url).try_spawn()?;
 
     // Set up signers from the first two default Anvil accounts (Alice, Bob).
-    let alice: PrivateKeySigner = anvil.keys()[0].clone().into();
-    let bob: PrivateKeySigner = anvil.keys()[1].clone().into();
+    let alice: PrivateKeySigner = anvil.keys()[8].clone().into();
+    let bob: PrivateKeySigner = anvil.keys()[9].clone().into();
 
     // We can manage multiple signers with the same wallet
     let mut wallet = EthereumWallet::new(alice.clone());
