@@ -39,4 +39,4 @@ jobs:
         with:
           cache-on-failure: true
       - name: Run examples
-        run: ./scripts/run.sh
+        run: ./scripts/test.sh

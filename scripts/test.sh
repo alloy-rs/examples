@@ -3,11 +3,23 @@
 # Exit if anything fails.
 set -eo pipefail
 
+# Utilities
+GREEN="\033[00;32m"
+
+function log () {
+  echo -e "$1"
+  echo "################################################################################"
+  echo "#### $2 "
+  echo "################################################################################"
+  echo -e "\033[0m"
+}
+
 # This script will do the following:
 #
 # 1. Gather all the examples from the output of `cargo run --example` command.
 # 2. Filter out the examples that have external dependencies or are not meant to be run.
-# 1. Run all examples that are left after filtering.
+# 3. Pre-build the filtered examples prior to running them.
+# 4. Run all the examples in parallel (up to 10) that are left after filtering.
 function main () {
     export examples="$(
         cargo run --example 2>&1 \
@@ -17,12 +29,17 @@ function main () {
             -e 'aws_signer' \
             -e 'builtin' \
             -e 'debug_trace_call_many' \
+            -e 'ethereum_wallet' \
+            -e 'foundry_fork_db' \
             -e 'gcp_signer' \
             -e 'geth_local_instance' \
             -e 'ipc' \
+            -e 'keystore_signer' \
             -e 'ledger_signer' \
             -e 'permit2_signature_transfer' \
             -e 'reth_db_layer' \
+            -e 'reth_db_layer' \
+            -e 'reth_db_provider' \
             -e 'reth_db_provider' \
             -e 'reth_local_instance' \
             -e 'subscribe_all_logs' \
@@ -35,23 +52,31 @@ function main () {
             -e 'ws_auth' \
             -e 'ws' \
             -e 'yubi_signer' \
-            -e 'foundry_fork_db' \
-            -e 'reth_db_layer' \
-            -e 'reth_db_provider' \
-            -e 'ethereum_wallet' \
             | xargs -n1 echo
     )"
 
-    for example in $examples; do
-        cargo run --example $example --quiet 1>/dev/null
+    log $GREEN "Building..."
 
-        if [ $? -ne 0 ]; then
-            echo "Failed to run: $example"
-            exit 1
+    # Pre-build the filtered examples prior to running them.
+    cargo build $(printf -- '--example %s ' $examples)
+
+    log $GREEN "Running..."
+
+    # Run all the examples that are left after filtering.
+    printf '%s\n' $examples \
+    | xargs -P4 -I{} bash -c '
+        bin="./target/debug/examples/{}"
+        if [[ -x "$bin" ]]; then
+            "$bin" >/dev/null \
+            && echo "Successfully ran: {}" \
+            || { echo "Failed to run: {}" >&2; exit 1; }
         else
-            echo "Successfully ran: $example"
+            echo "Missing binary: $bin" >&2
+            exit 1
         fi
-    done
+        '
+
+    log $GREEN "Done"
 }
 
 # Run the main function.
