@@ -13,7 +13,7 @@ repository.workspace = true
 workspace = true
 
 [dependencies]
-foundry-fork-db = "0.13"
+foundry-fork-db = "0.14"
 alloy.workspace = true
 ethers.workspace = true
 alloy-evm = "0.7.2"
