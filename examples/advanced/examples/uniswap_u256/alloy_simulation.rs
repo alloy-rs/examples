@@ -1,22 +1,21 @@
-//! Simulates an arbitrage between Uniswap V2 and `Sushiswap` by forking anvil and using the
-//! `FlashBotsMultiCall` contract.
+//! Uniswap V2 Arbitrage Simulation using alloy
+
 use alloy::{
     hex,
     network::TransactionBuilder,
-    node_bindings::Anvil,
-    primitives::{utils::parse_units, Address, Bytes, B256, U256},
+    primitives::{utils::parse_units, Bytes, B256, U256},
     providers::{ext::AnvilApi, Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
     sol,
     sol_types::SolCall,
 };
 
-mod helpers;
-use crate::helpers::{
+use eyre::Result;
+use revm_primitives::address;
+use uniswap_u256::helpers::alloy::{
     get_amount_in, get_amount_out, get_sushi_pair, get_uniswap_pair, set_hash_storage_slot,
     DAI_ADDR, WETH_ADDR,
 };
-use eyre::Result;
 
 sol! {
     function swap(uint amount0Out, uint amount1Out, address to, bytes calldata data) external;
@@ -32,30 +31,24 @@ sol!(
 sol!(
     #[sol(rpc)]
     FlashBotsMultiCall,
-    "examples/artifacts/FlashBotsMultiCall.json"
+    "examples/abi/FlashBotsMultiCall.json"
 );
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Spawn `anvil` and fork mainnet
-    // Make sure you have `anvil` in $PATH
-    let anvil = Anvil::new().fork("https://reth-ethereum.ithaca.xyz/rpc").try_spawn()?;
-
-    // Get the pool contract interfaces
     let uniswap_pair = get_uniswap_pair();
     let sushi_pair = get_sushi_pair();
 
-    let wallet_address: Address = anvil.addresses()[0];
+    let wallet_address = address!("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
     let provider = ProviderBuilder::new()
-        .wallet(anvil.wallet().unwrap())
-        .connect_http(anvil.endpoint().parse()?);
+        .connect_anvil_with_wallet_and_config(|a| a.fork("https://reth-ethereum.ithaca.xyz/rpc"))?;
 
     let executor = FlashBotsMultiCall::deploy(provider.clone(), wallet_address).await?;
     let iweth = IERC20::new(WETH_ADDR, provider.clone());
 
     // Mock WETH balance for executor contract
     set_hash_storage_slot(
-        &provider,
+        provider.clone(),
         WETH_ADDR,
         U256::from(3),
         *executor.address(),
@@ -127,7 +120,7 @@ async fn main() -> Result<()> {
     .await?;
 
     let balance_of = iweth.balanceOf(*executor.address()).call().await?;
-    println!("Before - WETH balance of executor {balance_of:?}");
+    println!("Before - WETH balance of executor {:?}", balance_of);
 
     let weth_amount_in = get_amount_in(
         uniswap_pair.reserve0,
@@ -173,7 +166,7 @@ async fn main() -> Result<()> {
     pending.get_receipt().await?;
 
     let balance_of = iweth.balanceOf(*executor.address()).call().await?;
-    println!("After - WETH balance of executor {balance_of:?}");
+    println!("After - WETH balance of executor {:?}", balance_of);
 
     Ok(())
 }
