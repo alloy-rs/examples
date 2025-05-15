@@ -1,14 +1,12 @@
-//! Simple arbitrage profit calculator for WETH/DAI pools
-//! Reads the balaces of the Uniswap V2 and `Sushiswap` pools and calculates a basic arb
-//! opportunity.
+//! Uniswap V2 Arbitrage Profit Calculation using alloy U256
 
-mod helpers;
-use crate::helpers::{get_amount_in, get_amount_out, get_sushi_pair, get_uniswap_pair};
 use alloy::primitives::utils::format_units;
 use eyre::Result;
+use uniswap_u256::helpers::alloy::{
+    get_amount_in, get_amount_out, get_sushi_pair, get_uniswap_pair,
+};
 
 fn main() -> Result<()> {
-    // Get the pool contract interfaces
     let uniswap_pair = get_uniswap_pair();
     let sushi_pair = get_sushi_pair();
 
@@ -21,6 +19,7 @@ fn main() -> Result<()> {
     );
 
     let dai_amount_out = get_amount_out(uniswap_pair.reserve1, uniswap_pair.reserve0, amount_in);
+
     let weth_amount_out = get_amount_out(sushi_pair.reserve0, sushi_pair.reserve1, dai_amount_out);
 
     if weth_amount_out < amount_in {
