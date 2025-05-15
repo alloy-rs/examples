@@ -2,21 +2,26 @@ use alloy::primitives::U256 as AlloyU256;
 use ethers::types::{Address, U256};
 use std::ops::{Add, Div, Mul, Sub};
 
+/// Uniswap V2 Pair
 #[derive(Debug)]
 pub struct UniV2Pair {
+    /// Address of the pair contract
     pub address: Address,
+    /// Token0 address
     pub token0: Address,
+    /// Token1 address
     pub token1: Address,
+    /// Reserves of token0
     pub reserve0: U256,
+    /// Reserves of token1
     pub reserve1: U256,
 }
 
 // https://etherscan.io/address/0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11
+/// Get DAI-WETH Uniswap V2 pair
 pub fn get_uniswap_pair() -> UniV2Pair {
     UniV2Pair {
-        address: "0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11"
-            .parse()
-            .unwrap(),
+        address: "0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11".parse().unwrap(),
         token0: dai(),
         token1: weth(),
         reserve0: U256::from_dec_str("6227630995751221000110015").unwrap(),
@@ -25,11 +30,10 @@ pub fn get_uniswap_pair() -> UniV2Pair {
 }
 
 // https://etherscan.io/address/0xC3D03e4F041Fd4cD388c549Ee2A29a9E5075882f
+/// Get DAI-WETH SushiSwap pair
 pub fn get_sushi_pair() -> UniV2Pair {
     UniV2Pair {
-        address: "0xC3D03e4F041Fd4cD388c549Ee2A29a9E5075882f"
-            .parse()
-            .unwrap(),
+        address: "0xC3D03e4F041Fd4cD388c549Ee2A29a9E5075882f".parse().unwrap(),
         token0: dai(),
         token1: weth(),
         reserve0: U256::from_dec_str("4314397529132715691120541").unwrap(),
@@ -37,8 +41,11 @@ pub fn get_sushi_pair() -> UniV2Pair {
     }
 }
 
+/// Helper trait to convert to alloy types
 pub trait ToAlloy {
+    /// Target type
     type To;
+    /// Convert to target type
     fn to_alloy(self) -> Self::To;
 }
 
@@ -52,24 +59,19 @@ impl ToAlloy for U256 {
 }
 
 fn weth() -> Address {
-    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-        .parse()
-        .unwrap()
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2".parse().unwrap()
 }
 
 fn dai() -> Address {
-    "0x6B175474E89094C44Da98b954EedeAC495271d0F"
-        .parse()
-        .unwrap()
+    "0x6B175474E89094C44Da98b954EedeAC495271d0F".parse().unwrap()
 }
 
+/// Displays the token amount in a human-readable format
 pub fn display_token(value: U256) -> String {
-    format!(
-        "{:.16}",
-        value.low_u128() as f64 / 1_000_000_000_000_000_000.0
-    )
+    format!("{:.16}", value.low_u128() as f64 / 1_000_000_000_000_000_000.0)
 }
 
+/// Gets the amountOut
 pub fn get_amount_out(reserve_in: U256, reserve_out: U256, amount_in: U256) -> U256 {
     let amount_in_with_fee = amount_in * U256::from(997); // uniswap fee 0.3%
     let numerator = amount_in_with_fee * reserve_out;
@@ -77,6 +79,7 @@ pub fn get_amount_out(reserve_in: U256, reserve_out: U256, amount_in: U256) -> U
     numerator / denominator
 }
 
+/// Gets the amountIn
 pub fn get_amount_in(
     reserves00: U256,
     reserves01: U256,
@@ -119,10 +122,7 @@ fn get_numerator(
             .mul(reserves10)
             .div(reserves11)
             .div(reserves00);
-        sqrt(presqrt)
-            .sub(U256::from(1000))
-            .mul(reserves11)
-            .mul(reserves00)
+        sqrt(presqrt).sub(U256::from(1000)).mul(reserves11).mul(reserves00)
     } else {
         let presqrt = get_uniswappy_fee()
             .mul(get_uniswappy_fee())
@@ -130,10 +130,7 @@ fn get_numerator(
             .mul(reserves11)
             .div(reserves10)
             .div(reserves01);
-        (sqrt(presqrt))
-            .sub(U256::from(1000))
-            .mul(reserves10)
-            .mul(reserves01)
+        (sqrt(presqrt)).sub(U256::from(1000)).mul(reserves10).mul(reserves01)
     }
 }
 

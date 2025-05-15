@@ -15,6 +15,7 @@ workspace = true
 [dependencies]
 foundry-fork-db = "0.13"
 alloy.workspace = true
+ethers.workspace = true
 alloy-evm = "0.7.2"
 
 # reth

@@ -2,27 +2,35 @@ use std::ops::{Add, Div, Mul, Sub};
 
 use alloy::{
     primitives::{address, keccak256, Address, U256},
-    providers::{ext::AnvilApi, RootProvider},
+    providers::{ext::AnvilApi, Provider},
     sol_types::SolValue,
-    transports::http::{Client, Http},
     uint,
 };
 use ethers::types::U256 as EthersU256;
 use eyre::Result;
 
+/// WETH address
 pub static WETH_ADDR: Address = address!("C02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2");
+/// DAI address
 pub static DAI_ADDR: Address = address!("6B175474E89094C44Da98b954EedeAC495271d0F");
 
+/// Uniswap V2 Pair
 #[derive(Debug)]
 pub struct UniV2Pair {
+    /// Pair contract address
     pub address: Address,
+    /// Token0 address
     pub token0: Address,
+    /// Token1 address
     pub token1: Address,
+    /// Reserves of token0
     pub reserve0: U256,
+    /// Reserves of token1
     pub reserve1: U256,
 }
 
 // https://etherscan.io/address/0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11
+/// Get DAI-WETH Uniswap V2 pair
 pub fn get_uniswap_pair() -> UniV2Pair {
     UniV2Pair {
         address: address!("A478c2975Ab1Ea89e8196811F51A7B7Ade33eB11"),
@@ -34,6 +42,7 @@ pub fn get_uniswap_pair() -> UniV2Pair {
 }
 
 // https://etherscan.io/address/0xC3D03e4F041Fd4cD388c549Ee2A29a9E5075882f
+/// Get DAI-WETH SushiSwap pair
 pub fn get_sushi_pair() -> UniV2Pair {
     UniV2Pair {
         address: address!("C3D03e4F041Fd4cD388c549Ee2A29a9E5075882f"),
@@ -44,9 +53,11 @@ pub fn get_sushi_pair() -> UniV2Pair {
     }
 }
 
+/// Helper trait to convert to alloy types
 pub trait ToEthers {
+    /// Target type
     type To;
-
+    /// Convert to target type
     fn to_ethers(self) -> Self::To;
 }
 
@@ -59,6 +70,7 @@ impl ToEthers for U256 {
     }
 }
 
+/// Get amount out for Uniswap V2
 pub fn get_amount_out(reserve_in: U256, reserve_out: U256, amount_in: U256) -> U256 {
     let amount_in_with_fee = amount_in * get_uniswappy_fee();
     let numerator = amount_in_with_fee * reserve_out;
@@ -66,6 +78,7 @@ pub fn get_amount_out(reserve_in: U256, reserve_out: U256, amount_in: U256) -> U
     numerator / denominator
 }
 
+/// Get amount in for Uniswap V2
 pub fn get_amount_in(
     reserves00: U256,
     reserves01: U256,
@@ -144,8 +157,9 @@ fn get_uniswappy_fee() -> U256 {
     U256::from(997)
 }
 
-pub async fn set_hash_storage_slot(
-    anvil_provider: &RootProvider<Http<Client>>,
+/// Set a storage slot in the Anvil node
+pub async fn set_hash_storage_slot<P: Provider>(
+    anvil_provider: P,
     address: Address,
     hash_slot: U256,
     hash_key: Address,
