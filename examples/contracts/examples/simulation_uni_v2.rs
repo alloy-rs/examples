@@ -1,4 +1,4 @@
-//! Simulates an arbitrage between Uniswap V2 and `SushiSwap` by forking anvil and using the
+//! Simulates an arbitrage between Uniswap V2 and `Sushiswap` by forking anvil and using the
 //! `FlashBotsMultiCall` contract.
 use alloy::{
     hex,

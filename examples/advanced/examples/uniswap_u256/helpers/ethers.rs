@@ -30,7 +30,7 @@ pub fn get_uniswap_pair() -> UniV2Pair {
 }
 
 // https://etherscan.io/address/0xC3D03e4F041Fd4cD388c549Ee2A29a9E5075882f
-/// Get DAI-WETH SushiSwap pair
+/// Get DAI-WETH Sushiswap pair
 pub fn get_sushi_pair() -> UniV2Pair {
     UniV2Pair {
         address: "0xC3D03e4F041Fd4cD388c549Ee2A29a9E5075882f".parse().unwrap(),

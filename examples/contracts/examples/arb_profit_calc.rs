@@ -1,5 +1,5 @@
 //! Simple arbitrage profit calculator for WETH/DAI pools
-//! Reads the balaces of the Uniswap V2 and `SushiSwap` pools and calculates a basic arb
+//! Reads the balaces of the Uniswap V2 and `Sushiswap` pools and calculates a basic arb
 //! opportunity.
 
 mod helpers;
