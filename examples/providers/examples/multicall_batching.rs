@@ -28,7 +28,7 @@ async fn main() -> Result<()> {
         // The `CallBatchLayer` will wait for a certain amount of time before sending a request. See: <https://docs.rs/alloy-provider/latest/alloy_provider/layers/struct.CallBatchLayer.html#method.wait>.
         // This delay is added to aggregate any incoming `eth_calls` that can be together.
         // In this case, we set the delay to 10ms.
-        .layer(CallBatchLayer::new().wait(Duration::from_secs(10)))
+        .layer(CallBatchLayer::new().wait(Duration::from_millis(10)))
         // Can also use the shorthand `with_call_batching` on the build which set the delay to 1ms.
         // .with_call_batching()
         .connect_anvil_with_wallet_and_config(|a| a.fork("https://reth-ethereum.ithaca.xyz/rpc"))?;
