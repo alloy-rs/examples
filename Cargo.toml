@@ -111,6 +111,7 @@ alloy = { version = "1.0.13", features = [
     "signer-trezor",
     "signer-yubihsm",
 ] }
+alloy-chains = "0.2.0"
 
 # async
 futures-util = "0.3"

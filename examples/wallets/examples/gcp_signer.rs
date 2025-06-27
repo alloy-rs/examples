@@ -4,6 +4,7 @@ use alloy::signers::{
     gcp::{GcpKeyRingRef, GcpSigner, KeySpecifier},
     Signer,
 };
+use alloy_chains::NamedChain;
 use eyre::Result;
 use gcloud_sdk::{
     google::cloud::kms::v1::key_management_service_client::KeyManagementServiceClient, GoogleApi,
@@ -27,7 +28,9 @@ async fn main() -> Result<()> {
 
     let key_version = 1;
     let specifier = KeySpecifier::new(keyring, &key_name, key_version);
-    let signer = GcpSigner::new(client, specifier, Some(key_version)).await?;
+
+    let chain = NamedChain::Mainnet;
+    let signer = GcpSigner::new(client, specifier, Some(chain.into())).await?;
 
     let message = "Hello, world!";
     let signature = signer.sign_message(message.as_bytes()).await?;
