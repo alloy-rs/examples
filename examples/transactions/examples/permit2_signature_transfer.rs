@@ -64,7 +64,14 @@ async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
     let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc";
-    let anvil = Anvil::new().fork(rpc_url).try_spawn()?;
+    // NOTE: ⚠️ Due to changes in EIP-7702 (see: https://getfoundry.sh/anvil/overview/#eip-7702-and-default-accounts),
+    // the default mnemonic cannot be used for signature-based testing.
+    // Instead, we use a custom mnemonic generated via:
+    // `anvil --mnemonic-random 12 --fork-url $RPC_URL`
+    let anvil = Anvil::new()
+        .fork(rpc_url)
+        .mnemonic("tunnel tiger ankle life lift risk wash material promote damp sadness middle")
+        .try_spawn()?;
 
     // Set up signers from the first two default Anvil accounts (Alice, Bob).
     let alice: PrivateKeySigner = anvil.keys()[8].clone().into();
