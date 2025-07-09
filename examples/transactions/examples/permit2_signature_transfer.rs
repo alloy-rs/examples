@@ -1,17 +1,22 @@
 //! Example of how to transfer ERC20 tokens from one account to another using a signed permit.
 
-use std::str::FromStr;
-
 use alloy::{
     network::EthereumWallet,
     node_bindings::Anvil,
     primitives::{Address, U256},
     providers::{Provider, ProviderBuilder},
-    signers::{local::PrivateKeySigner, Signer},
+    signers::{
+        local::{
+            coins_bip39::{English, Mnemonic},
+            PrivateKeySigner,
+        },
+        Signer,
+    },
     sol,
     sol_types::eip712_domain,
 };
 use eyre::Result;
+use std::str::FromStr;
 
 // Codegen from artifact.
 sol!(
@@ -65,13 +70,10 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH.
     let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc";
     // NOTE: ⚠️ Due to changes in EIP-7702 (see: https://getfoundry.sh/anvil/overview/#eip-7702-and-default-accounts),
-    // the default mnemonic cannot be used for signature-based testing.
-    // Instead, we use a custom mnemonic generated via:
-    // `anvil --mnemonic-random 12 --fork-url $RPC_URL`
-    let anvil = Anvil::new()
-        .fork(rpc_url)
-        .mnemonic("tunnel tiger ankle life lift risk wash material promote damp sadness middle")
-        .try_spawn()?;
+    // the default mnemonic cannot be used for signature-based testing. Instead, we use a custom
+    // mnemonic.
+    let mnemonic = generate_mnemonic()?;
+    let anvil = Anvil::new().fork(rpc_url).mnemonic(mnemonic).try_spawn()?;
 
     // Set up signers from the first two default Anvil accounts (Alice, Bob).
     let alice: PrivateKeySigner = anvil.keys()[8].clone().into();
@@ -145,4 +147,10 @@ async fn main() -> Result<()> {
     assert_eq!(bob_after_balance - bob_before_balance, amount);
 
     Ok(())
+}
+
+fn generate_mnemonic() -> Result<String> {
+    let mut rng = rand::thread_rng();
+    let mnemonic = Mnemonic::<English>::new_with_count(&mut rng, 12)?.to_phrase();
+    Ok(mnemonic)
 }
