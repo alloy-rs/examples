@@ -16,4 +16,5 @@ workspace = true
 alloy = { workspace = true, features = ["eip712"]}
 
 eyre.workspace = true
+rand.workspace = true
 tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }

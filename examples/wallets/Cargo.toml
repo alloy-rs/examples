@@ -23,7 +23,7 @@ gcloud-sdk = { version = "0.27", features = [
     "google-cloud-kms-v1",
     "google-longrunning",
 ] }
-rand = "0.8.5"
+rand.workspace = true
 serde = { workspace = true, features = ["derive"] }
 tempfile = "3.19"
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
