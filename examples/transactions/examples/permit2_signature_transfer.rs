@@ -70,7 +70,8 @@ async fn main() -> Result<()> {
     // Ensure `anvil` is available in $PATH.
     let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc";
     // NOTE: ⚠️ Due to changes in EIP-7702 (see: https://getfoundry.sh/anvil/overview/#eip-7702-and-default-accounts),
-    // the default mnemonic cannot be used for signature-based testing. Instead, we use a custom mnemonic.
+    // the default mnemonic cannot be used for signature-based testing. Instead, we use a custom
+    // mnemonic.
     let mnemonic = generate_mnemonic()?;
     let anvil = Anvil::new().fork(rpc_url).mnemonic(mnemonic).try_spawn()?;
 
