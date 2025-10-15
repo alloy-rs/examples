@@ -17,6 +17,6 @@ alloy = { workspace = true, features = ["hyper"] }
 
 eyre.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
-tower = { version = "0.5", features = ["retry"] }
-http-body-util = "0.1"
-tracing-subscriber = "0.3"
+tower = { workspace = true, features = ["retry"] }
+http-body-util.workspace = true
+tracing-subscriber.workspace = true

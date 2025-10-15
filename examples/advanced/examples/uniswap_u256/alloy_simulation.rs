@@ -10,8 +10,8 @@ use alloy::{
     sol_types::SolCall,
 };
 
+use alloy::primitives::address;
 use eyre::Result;
-use revm_primitives::address;
 use uniswap_u256::helpers::alloy::{
     get_amount_in, get_amount_out, get_sushi_pair, get_uniswap_pair, set_hash_storage_slot,
     DAI_ADDR, WETH_ADDR,

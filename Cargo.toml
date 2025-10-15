@@ -95,7 +95,7 @@ significant_drop_tightening = "allow"
 needless_return = "allow"
 
 [workspace.dependencies]
-alloy = { version = "1.0.13", features = [
+alloy = { version = "1.0.38", features = [
     "eips",
     "full",
     "json-rpc",
@@ -128,3 +128,22 @@ ethers = "2.0.14"
 
 # rand
 rand = "0.8.5"
+
+# additional dependencies
+chrono = "0.4"
+clap = "4.5"
+reqwest = "0.12.15"
+tower = "0.5"
+http-body-util = "0.1"
+tracing-subscriber = "0.3"
+aws-config = { version = "1.6", default-features = false }
+aws-sdk-kms = { version = "1.68", default-features = false }
+gcloud-sdk = "0.27"
+tempfile = "3.19"
+foundry-fork-db = "0.19"
+alloy-evm = "0.22"
+revm = { version = "30", default-features = false }
+ethabi = "18"
+rlp = "0.6.1"
+rlp-derive = "0.2.0"
+alloy-rlp = "0.3.11"
