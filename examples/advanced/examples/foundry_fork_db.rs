@@ -26,6 +26,7 @@ use revm::{
     database::WrapDatabaseRef,
     handler::{instructions::EthInstructions, EthPrecompiles},
     inspector::NoOpInspector,
+    primitives::hardfork::SpecId,
     DatabaseRef,
 };
 
@@ -126,22 +127,20 @@ fn configure_evm(
     shared: SharedBackend,
 ) -> EthEvm<WrapDatabaseRef<SharedBackend>, NoOpInspector> {
     let block_env = BlockEnv {
-        number: block.header.number(),
+        number: U256::from(block.header.number()),
         beneficiary: block.header.beneficiary(),
-        timestamp: block.header.timestamp(),
+        timestamp: U256::from(block.header.timestamp()),
         gas_limit: block.header.gas_limit(),
         basefee: block.header.base_fee_per_gas().unwrap_or(0),
         prevrandao: block.header.mix_hash(),
         difficulty: block.header.difficulty(),
-        blob_excess_gas_and_price: Some(BlobExcessGasAndPrice::new(
+        blob_excess_gas_and_price: Some(BlobExcessGasAndPrice::new_with_spec(
             block.header.excess_blob_gas().unwrap_or_default(),
-            false,
+            SpecId::PRAGUE,
         )),
     };
 
-    let context =
-        EthEvmContext::new(WrapDatabaseRef(shared), revm_primitives::hardfork::SpecId::PRAGUE)
-            .with_block(block_env);
+    let context = EthEvmContext::new(WrapDatabaseRef(shared), SpecId::PRAGUE).with_block(block_env);
 
     let evm = RevmEvm::new(context, EthInstructions::default(), EthPrecompiles::default())
         .with_inspector(NoOpInspector);

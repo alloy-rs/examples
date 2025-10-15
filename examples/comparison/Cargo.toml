@@ -15,8 +15,8 @@ workspace = true
 [dev-dependencies]
 alloy.workspace = true
 
-chrono = "0.4"
-clap = { version = "4.5", features = ["derive"] }
+chrono.workspace = true
+clap = { workspace = true, features = ["derive"] }
 eyre.workspace = true
 futures-util.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
