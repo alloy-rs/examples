@@ -2,10 +2,9 @@
 
 use alloy::{
     consensus::{
-        EthereumTxEnvelope, SidecarBuilder, Signed, SimpleCoder, TxEip4844Variant,
-        TxEip4844WithSidecar,
+        EnvKzgSettings, EthereumTxEnvelope, SidecarBuilder, SimpleCoder, TxEip4844WithSidecar,
     },
-    eips::Encodable2718,
+    eips::{eip7594::BlobTransactionSidecarEip7594, Encodable2718},
     network::{TransactionBuilder, TransactionBuilder4844},
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
@@ -17,7 +16,7 @@ async fn main() -> Result<()> {
     // Spin up a local Anvil node with the Cancun hardfork enabled.
     // Ensure `anvil` is available in $PATH.
     let provider = ProviderBuilder::new()
-        .connect_anvil_with_wallet_and_config(|anvil| anvil.args(["--hardfork", "cancun"]))?;
+        .connect_anvil_with_wallet_and_config(|anvil| anvil.args(["--hardfork", "osaka"]))?;
 
     // Create two users, Alice and Bob.
     let accounts = provider.get_accounts().await?;
@@ -32,24 +31,17 @@ async fn main() -> Result<()> {
     // The `from` field is automatically filled to the first signer's address (Alice).
     let tx = TransactionRequest::default().with_to(bob).with_blob_sidecar(sidecar);
 
-    // Fill the transaction (e.g., nonce, gas, etc.) using the provider and convert it to an envelope.
+    // Fill the transaction (e.g., nonce, gas, etc.) using the provider and convert it to an
+    // envelope.
     let envelope = provider.fill(tx).await?.try_into_envelope()?;
 
-    // Create an EIP-4844 transaction with sidecar, using the data from the envelope(extracting the tx and sidecar).
-    let tx_with_sidecar = TxEip4844WithSidecar::from_tx_and_sidecar(
-        envelope.as_eip4844().unwrap().tx().tx().clone(),
-        envelope.as_eip4844().unwrap().tx().sidecar().unwrap().clone(),
-    );
+    // Convert the envelope into an EIP-7594 transaction by converting the sidecar.
+    let tx: EthereumTxEnvelope<TxEip4844WithSidecar<BlobTransactionSidecarEip7594>> =
+        envelope.try_into_pooled()?.try_map_eip4844(|tx| {
+            tx.try_map_sidecar(|sidecar| sidecar.try_into_7594(&EnvKzgSettings::Default.get()))
+        })?;
 
-    // Here we now convert the sidecar of the transaction into the EIP-7594 variant.
-    // I want to use the conversion helpers added here: https://github.com/alloy-rs/alloy/pull/3040
-
-    // Wrap the transaction in the EIP-4844 variant enum.
-    let tx = TxEip4844Variant::TxEip4844WithSidecar(tx_with_sidecar);
-
-    // Now we encode the final transaction with the signature from the envelope.
-    let encoded_tx =
-        EthereumTxEnvelope::Eip4844(Signed::new_unhashed(tx, *envelope.signature())).encoded_2718();
+    let encoded_tx = tx.encoded_2718();
 
     // Send the raw transaction to the network.
     let pending_tx = provider.send_raw_transaction(&encoded_tx).await?;
