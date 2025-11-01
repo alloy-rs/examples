@@ -114,8 +114,7 @@ alloy = { version = "1.0.42", features = [
     "kzg"
 ] }
 alloy-chains = "0.2.0"
-alloy-ens = { version = "1.0.41", features = ["contract", "provider"] }
-
+alloy-ens = { version = "1.0.42", features=["provider"] }
 # async
 futures-util = "0.3"
 tokio = "1.45"
