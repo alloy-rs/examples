@@ -1,7 +1,6 @@
 //! Example of resolving ENS names to Ethereum addresses.
 
 use alloy::providers::ProviderBuilder;
-use alloy_ens::ProviderEnsExt;
 use eyre::Result;
 
 #[tokio::main]
