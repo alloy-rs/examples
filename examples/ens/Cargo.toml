@@ -18,4 +18,3 @@ alloy.workspace = true
 eyre.workspace = true
 futures-util.workspace = true
 tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }
-alloy-ens.workspace = true
