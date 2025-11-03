@@ -112,11 +112,11 @@ alloy = { version = "1.0.41", features = [
     "signer-yubihsm",
     "kzg"
 ] }
-alloy-chains = "0.2.0"
+alloy-chains = "0.2.17"
 
 # async
 futures-util = "0.3"
-tokio = "1.45"
+tokio = "1.48"
 
 # misc
 eyre = "0.6"
@@ -133,18 +133,18 @@ rand = "0.8.5"
 # additional dependencies
 chrono = "0.4"
 clap = "4.5"
-reqwest = "0.12.15"
+reqwest = "0.12.24"
 tower = "0.5"
 http-body-util = "0.1"
 tracing-subscriber = "0.3"
-aws-config = { version = "1.6", default-features = false }
-aws-sdk-kms = { version = "1.68", default-features = false }
+aws-config = { version = "1.8", default-features = false }
+aws-sdk-kms = { version = "1.77", default-features = false }
 gcloud-sdk = "0.27"
-tempfile = "3.19"
+tempfile = "3.23"
 foundry-fork-db = "0.19"
 alloy-evm = "0.22"
 revm = { version = "30", default-features = false }
 ethabi = "18"
 rlp = "0.6.1"
 rlp-derive = "0.2.0"
-alloy-rlp = "0.3.11"
+alloy-rlp = "0.3.12"
