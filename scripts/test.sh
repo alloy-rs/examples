@@ -42,6 +42,7 @@ function main () {
             -e 'reth_db_provider' \
             -e 'reth_db_provider' \
             -e 'reth_local_instance' \
+            -e 'send_eip7594_transaction' \
             -e 'subscribe_all_logs' \
             -e 'subscribe_logs' \
             -e 'subscribe_pending_transactions' \
