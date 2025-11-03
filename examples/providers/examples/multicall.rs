@@ -25,8 +25,8 @@ async fn main() -> eyre::Result<()> {
     let weth =
         IWETH9Instance::new(address!("0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"), &provider);
 
-    let alice = address!("70997970C51812dc3A010C7d01b50e0d17dc79C8");
-    let bob = address!("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
+    let alice = address!("0xa71c300000000000000000000000000000000000");
+    let bob = address!("0xb0b0000000000000000000000000000000000000");
 
     let multicall = provider
         .multicall()
