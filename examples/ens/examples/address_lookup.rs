@@ -1,4 +1,5 @@
 //! Example of looking up ENS names from Ethereum addresses.
+
 use alloy::{ens::ProviderEnsExt, primitives::address, providers::ProviderBuilder};
 use eyre::Result;
 
