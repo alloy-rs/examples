@@ -95,8 +95,9 @@ significant_drop_tightening = "allow"
 needless_return = "allow"
 
 [workspace.dependencies]
-alloy = { version = "1.0.41", features = [
+alloy = { version = "1.1.0", features = [
     "eips",
+    "ens",
     "full",
     "json-rpc",
     "node-bindings",
