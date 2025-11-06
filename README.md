@@ -26,6 +26,9 @@ This repository contains the following examples:
   - [x] [Creating Instances](./examples/big-numbers/examples/create_instances.rs)
   - [x] [Math operations](./examples/big-numbers/examples/math_operations.rs)
   - [x] [Math utilities](./examples/big-numbers/examples/math_utilities.rs)
+- [x] Comparison
+  - [x] [Compare block headers between providers](./examples/comparison/examples/compare_new_heads.rs)
+  - [x] [Compare pending transactions between providers](./examples/comparison/examples/compare_pending_txs.rs)
 - [x] Contracts
   - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
   - [x] [Deploy from bytecode](./examples/contracts/examples/deploy_from_bytecode.rs)
@@ -36,6 +39,11 @@ This repository contains the following examples:
   - [x] [Decode custom JSON-RPC errors](./examples/contracts/examples/jsonrpc_error_decoding.rs)
   - [x] [Decode revert data into custom errors](./examples/contracts/examples/revert_decoding.rs)
   - [x] [Handle unknown return types using `DynSol`](./examples/contracts/examples/unknown_return_types.rs)
+  - [x] [Simple arbitrage profit calculator for WETH/DAI pools](./examples/contracts/examples/arb_profit_calc.rs)
+  - [x] [Simulate an arbitrage between `Uniswap V2` and `Sushiswap`](./examples/contracts/examples/simulation_uni_v2.rs)
+- [x] ENS
+  - [x] [Look up ENS name from Ethereum address](./examples/ens/examples/address_lookup.rs)
+  - [x] [Resolving ENS name to Ethereum address](./examples/ens/examples/name_resolution.rs)
 - [x] Fillers (Middleware)
   - [x] [Gas estimation filler](./examples/fillers/examples/gas_filler.rs)
   - [x] [Nonce management filler](./examples/fillers/examples/nonce_filler.rs)
@@ -60,13 +68,6 @@ This repository contains the following examples:
 - [x] Primitives
   - [x] [Bytes and address types](./examples/primitives/examples/bytes_and_address_types.rs)
   - [x] [Hashing functions](./examples/primitives/examples/hashing_functions.rs)
-- [x] Subscriptions
-  - [x] [Subscribe and watch blocks](./examples/subscriptions/examples/subscribe_blocks.rs)
-  - [x] [Watch and poll for contract event logs](./examples/subscriptions/examples/poll_logs.rs)
-  - [x] [Subscribe and listen for specific contract event logs](./examples/subscriptions/examples/subscribe_logs.rs)
-  - [x] [Subscribe and listen for all contract event logs](./examples/subscriptions/examples/subscribe_all_logs.rs)
-  - [x] [Subscribe and listen to pending transactions in the public mempool](./examples/subscriptions/examples/subscribe_pending_transactions.rs)
-  - [x] [Event multiplexer](./examples/subscriptions/examples/event_multiplexer.rs)
 - [x] Providers
   - [x] [Builder](./examples/providers/examples/builder.rs)
   - [x] [Builtin](./examples/providers/examples/builtin.rs)
@@ -76,9 +77,9 @@ This repository contains the following examples:
   - [x] [Mocking a Provider](./examples/providers/examples/mocking.rs)
   - [x] [Wrapping a Provider](./examples/providers/examples/wrapped_provider.rs)
   - [x] [DynProvider](./examples/providers/examples/dyn_provider.rs)
-  - [x] [WS](./examples/providers/examples/ws.rs)
   - [x] [Multicall Batching Layer](./examples/providers/examples/multicall_batching.rs)
   - [x] [Multicall Builder](./examples/providers/examples/multicall.rs)
+  - [x] [WS](./examples/providers/examples/ws.rs)
   - [x] [WS with authentication](./examples/providers/examples/ws_with_auth.rs)
   - [x] [JSON-RPC Batch Request](./examples/providers/examples/batch_rpc.rs)
   - [x] [Consensus x RPC types unification](./examples/providers/examples/embed_consensus_rpc.rs)
@@ -95,6 +96,13 @@ This repository contains the following examples:
   - [x] [User defined types](./examples/sol-macro/examples/user_defined_types.rs)
   - [x] [`all_derives` attribute](./examples/sol-macro/examples/all_derives.rs)
   - [x] [`extra_derives` attribute](./examples/sol-macro/examples/extra_derives.rs)
+- [x] Subscriptions
+  - [x] [Subscribe and watch blocks](./examples/subscriptions/examples/subscribe_blocks.rs)
+  - [x] [Watch and poll for contract event logs](./examples/subscriptions/examples/poll_logs.rs)
+  - [x] [Subscribe and listen for specific contract event logs](./examples/subscriptions/examples/subscribe_logs.rs)
+  - [x] [Subscribe and listen for all contract event logs](./examples/subscriptions/examples/subscribe_all_logs.rs)
+  - [x] [Subscribe and listen to pending transactions in the public mempool](./examples/subscriptions/examples/subscribe_pending_transactions.rs)
+  - [x] [Event multiplexer](./examples/subscriptions/examples/event_multiplexer.rs)
 - [x] Transactions
   - [x] [Decode input](./examples/transactions/examples/decode_input.rs)
   - [x] [Encode and decode EIP-1559 transaction](./examples/transactions/examples/encode_decode_eip1559.rs)
@@ -104,6 +112,7 @@ This repository contains the following examples:
   - [x] [Trace call](./examples/transactions/examples/trace_call.rs)
   - [x] [Trace transaction](./examples/transactions/examples/trace_transaction.rs)
   - [x] [Transfer ERC20 token](./examples/transactions/examples/transfer_erc20.rs)
+  - [x] [Transfer ERC20 token using a signed permit](./examples/transactions/examples/permit2_signature_transfer.rs)
   - [x] [Transfer ETH](./examples/transactions/examples/transfer_eth.rs)
   - [x] [Sign and send a raw transaction](./examples/transactions/examples/send_raw_transaction.rs)
   - [x] [Send legacy transaction](./examples/transactions/examples/send_legacy_transaction.rs)
@@ -133,10 +142,9 @@ This repository contains the following examples:
   - [x] [Encoding with `dyn_abi`](./examples/advanced/examples/encoding_dyn_abi.rs)
   - [x] [Static encoding with `sol!`](./examples/advanced/examples/encoding_sol_static.rs)
   - [x] [Using `foundry-fork-db`](./examples/advanced/examples/foundry_fork_db.rs)
-  - [x] [Wrapping `Provider` trait over reth-db](./examples/advanced/examples/reth_db_provider.rs)
-- [x] Comparison
-  - [x] [Compare block headers between providers](./examples/comparison/examples/compare_new_heads.rs)
-  - [x] [Compare pending transactions between providers](./examples/comparison/examples/compare_pending_txs.rs)
+  - [x] [Uniswap V2 arbitrage profit calculation using Alloy](./examples/advanced/examples/uniswap_u256/alloy_profit.rs)
+  - [x] [Uniswap V2 arbitrage profit calculation using Ethers](./examples/advanced/examples/uniswap_u256/ethers_profit.rs)
+  - [x] [Uniswap V2 arbitrage simulation](./examples/advanced/examples/uniswap_u256/alloy_simulation.rs)
 
 ## Contributing
 
