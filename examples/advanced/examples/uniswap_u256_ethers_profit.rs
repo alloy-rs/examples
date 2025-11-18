@@ -1,8 +1,9 @@
 //! Uniswap V2 Arbitrage Profit Calculation using ethers-rs U256
-use eyre::Result;
-use uniswap_u256::helpers::ethers::{
+
+use examples_advanced::helpers::ethers::{
     display_token, get_amount_in, get_amount_out, get_sushi_pair, get_uniswap_pair,
 };
+use eyre::Result;
 
 fn main() -> Result<()> {
     let uniswap_pair = get_uniswap_pair();

@@ -1,18 +1,25 @@
-//! Ethers helpers for benchmarking U256
-use alloy::primitives::U256 as AlloyU256;
-use ethers::types::{Address, U256};
 use std::ops::{Add, Div, Mul, Sub};
 
+use alloy::primitives::U256 as AlloyU256;
+use ethers::types::{Address, U256};
+
+/// Uniswap V2 Pair
 #[derive(Debug)]
 pub struct UniV2Pair {
+    /// Address of the pair contract
     pub address: Address,
+    /// Token0 address
     pub token0: Address,
+    /// Token1 address
     pub token1: Address,
+    /// Reserves of token0
     pub reserve0: U256,
+    /// Reserves of token1
     pub reserve1: U256,
 }
 
 // https://etherscan.io/address/0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11
+/// Get DAI-WETH Uniswap V2 pair
 pub fn get_uniswap_pair() -> UniV2Pair {
     UniV2Pair {
         address: "0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11".parse().unwrap(),
@@ -24,6 +31,7 @@ pub fn get_uniswap_pair() -> UniV2Pair {
 }
 
 // https://etherscan.io/address/0xC3D03e4F041Fd4cD388c549Ee2A29a9E5075882f
+/// Get DAI-WETH Sushiswap pair
 pub fn get_sushi_pair() -> UniV2Pair {
     UniV2Pair {
         address: "0xC3D03e4F041Fd4cD388c549Ee2A29a9E5075882f".parse().unwrap(),
@@ -34,8 +42,11 @@ pub fn get_sushi_pair() -> UniV2Pair {
     }
 }
 
+/// Helper trait to convert to alloy types
 pub trait ToAlloy {
+    /// Target type
     type To;
+    /// Convert to target type
     fn to_alloy(self) -> Self::To;
 }
 
@@ -56,10 +67,12 @@ fn dai() -> Address {
     "0x6B175474E89094C44Da98b954EedeAC495271d0F".parse().unwrap()
 }
 
+/// Displays the token amount in a human-readable format
 pub fn display_token(value: U256) -> String {
     format!("{:.16}", value.low_u128() as f64 / 1_000_000_000_000_000_000.0)
 }
 
+/// Gets the amountOut
 pub fn get_amount_out(reserve_in: U256, reserve_out: U256, amount_in: U256) -> U256 {
     let amount_in_with_fee = amount_in * U256::from(997); // uniswap fee 0.3%
     let numerator = amount_in_with_fee * reserve_out;
@@ -67,6 +80,7 @@ pub fn get_amount_out(reserve_in: U256, reserve_out: U256, amount_in: U256) -> U
     numerator / denominator
 }
 
+/// Gets the amountIn
 pub fn get_amount_in(
     reserves00: U256,
     reserves01: U256,

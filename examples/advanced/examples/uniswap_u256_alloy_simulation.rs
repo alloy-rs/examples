@@ -3,19 +3,17 @@
 use alloy::{
     hex,
     network::TransactionBuilder,
-    primitives::{utils::parse_units, Bytes, B256, U256},
+    primitives::{address, utils::parse_units, Bytes, B256, U256},
     providers::{ext::AnvilApi, Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
     sol,
     sol_types::SolCall,
 };
-
-use alloy::primitives::address;
-use eyre::Result;
-use uniswap_u256::helpers::alloy::{
+use examples_advanced::helpers::alloy::{
     get_amount_in, get_amount_out, get_sushi_pair, get_uniswap_pair, set_hash_storage_slot,
     DAI_ADDR, WETH_ADDR,
 };
+use eyre::Result;
 
 sol! {
     function swap(uint amount0Out, uint amount1Out, address to, bytes calldata data) external;

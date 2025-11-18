@@ -4,12 +4,12 @@ use criterion::{criterion_group, criterion_main, Criterion};
 use ethers::types::U256;
 use std::{hint::black_box, str::FromStr};
 
-use alloy_benches::{
-    alloy_helpers::{
+use examples_advanced::helpers::{
+    alloy::{
         get_amount_in as a_get_amount_in, get_amount_out as a_get_amount_out,
         get_sushi_pair as a_get_sushi_pair, get_uniswap_pair as a_get_uniswap_pair,
     },
-    ethers_helpers::{
+    ethers::{
         get_amount_in as e_get_amount_in, get_amount_out as e_get_amount_out,
         get_sushi_pair as e_get_sushi_pair, get_uniswap_pair as e_get_uniswap_pair,
     },
