@@ -1,7 +1,6 @@
 //! Benchmarking alloy RLP encode and decode against parity-rlp.
 
 use alloy_rlp::{Decodable, Encodable, RlpDecodable, RlpEncodable};
-
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use rlp::Encodable as ParityEncodable;
 

@@ -16,10 +16,6 @@ rlp.workspace = true
 rlp-derive.workspace = true
 alloy-rlp.workspace = true
 
-[lib]
-name = "alloy_benches"
-path = "src/lib.rs"
-
 [[bench]]
 name = "abi_encoding"
 harness = false
