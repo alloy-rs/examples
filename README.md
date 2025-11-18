@@ -142,9 +142,9 @@ This repository contains the following examples:
   - [x] [Encoding with `dyn_abi`](./examples/advanced/examples/encoding_dyn_abi.rs)
   - [x] [Static encoding with `sol!`](./examples/advanced/examples/encoding_sol_static.rs)
   - [x] [Using `foundry-fork-db`](./examples/advanced/examples/foundry_fork_db.rs)
-  - [x] [Uniswap V2 arbitrage profit calculation using Alloy](./examples/advanced/examples/uniswap_u256/alloy_profit.rs)
-  - [x] [Uniswap V2 arbitrage profit calculation using Ethers](./examples/advanced/examples/uniswap_u256/ethers_profit.rs)
-  - [x] [Uniswap V2 arbitrage simulation](./examples/advanced/examples/uniswap_u256/alloy_simulation.rs)
+  - [x] [Uniswap V2 arbitrage profit calculation using Alloy](./examples/advanced/examples/uniswap_u256_alloy_profit.rs)
+  - [x] [Uniswap V2 arbitrage profit calculation using Ethers](./examples/advanced/examples/uniswap_u256_ethers_profit.rs)
+  - [x] [Uniswap V2 arbitrage simulation](./examples/advanced/examples/uniswap_u256_alloy_simulation.rs)
 
 ## Contributing
 

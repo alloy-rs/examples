@@ -1,15 +1,15 @@
-use alloy::primitives::U256 as aU256;
-
-use criterion::{criterion_group, criterion_main, Criterion};
-use ethers::types::U256;
 use std::{hint::black_box, str::FromStr};
 
-use alloy_benches::{
-    alloy_helpers::{
+use alloy::primitives::U256 as AlloyU256;
+use criterion::{criterion_group, criterion_main, Criterion};
+use ethers::types::U256;
+
+use helpers::{
+    alloy::{
         get_amount_in as a_get_amount_in, get_amount_out as a_get_amount_out,
         get_sushi_pair as a_get_sushi_pair, get_uniswap_pair as a_get_uniswap_pair,
     },
-    ethers_helpers::{
+    ethers::{
         get_amount_in as e_get_amount_in, get_amount_out as e_get_amount_out,
         get_sushi_pair as e_get_sushi_pair, get_uniswap_pair as e_get_uniswap_pair,
     },
@@ -21,7 +21,7 @@ fn u256_benchmark(c: &mut Criterion) {
     let e_uniswap_pair = e_get_uniswap_pair();
     let e_sushi_pair = e_get_sushi_pair();
 
-    let a_amount_in = aU256::from_str("1000000000000000000").unwrap();
+    let a_amount_in = AlloyU256::from_str("1000000000000000000").unwrap();
     let e_amount_in = U256::from_dec_str("1000000000000000000").unwrap();
 
     let mut group1 = c.benchmark_group("U256 Operations");

@@ -15,8 +15,8 @@ workspace = true
 [dependencies]
 foundry-fork-db.workspace = true
 alloy.workspace = true
-ethers.workspace = true
 alloy-evm.workspace = true
+helpers.workspace = true
 
 # reth
 revm = { workspace = true, default-features = false }
@@ -25,20 +25,3 @@ eyre.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
 serde = { workspace = true, features = ["derive"] }
 serde_json.workspace = true
-
-
-[[bin]]
-name = "alloy_profit"
-path = "examples/uniswap_u256/alloy_profit.rs"
-
-[[bin]]
-name = "alloy_simulation"
-path = "examples/uniswap_u256/alloy_simulation.rs"
-
-[[bin]]
-name = "ethers_profit"
-path = "examples/uniswap_u256/ethers_profit.rs"
-
-[lib]
-name = "uniswap_u256"
-path = "examples/uniswap_u256/lib.rs"

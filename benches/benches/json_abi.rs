@@ -1,11 +1,12 @@
 //! Benchmarks alloy JSON-ABI serialization and deserialization against ethabi.
 #![allow(unknown_lints, clippy::incompatible_msrv)]
 
+use std::{hint::black_box, time::Duration};
+
 use alloy::json_abi::{Function, JsonAbi};
 use criterion::{
     criterion_group, criterion_main, measurement::WallTime, BenchmarkGroup, Criterion,
 };
-use std::{hint::black_box, time::Duration};
 
 fn ser_group(c: &mut Criterion) {
     let mut g = c.benchmark_group("JSON-ABI Serialization");

@@ -50,6 +50,7 @@ function main () {
             -e 'trace_call' \
             -e 'trace_transaction' \
             -e 'trezor_signer' \
+            -e 'urgent_filler' \
             -e 'ws_auth' \
             -e 'ws' \
             -e 'yubi_signer' \

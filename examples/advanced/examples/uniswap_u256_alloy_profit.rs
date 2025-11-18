@@ -1,8 +1,8 @@
-//! Uniswap V2 Arbitrage Profit Calculation using ethers-rs U256
+//! Uniswap V2 Arbitrage Profit Calculation using alloy U256
+
+use alloy::primitives::utils::format_units;
 use eyre::Result;
-use uniswap_u256::helpers::ethers::{
-    display_token, get_amount_in, get_amount_out, get_sushi_pair, get_uniswap_pair,
-};
+use helpers::alloy::{get_amount_in, get_amount_out, get_sushi_pair, get_uniswap_pair};
 
 fn main() -> Result<()> {
     let uniswap_pair = get_uniswap_pair();
@@ -26,9 +26,9 @@ fn main() -> Result<()> {
     }
 
     let profit = weth_amount_out - amount_in;
-    println!("Ethers-rs U256");
-    println!("WETH amount in {}", display_token(amount_in));
-    println!("WETH profit: {}", display_token(profit));
+    println!("Alloy U256");
+    println!("WETH amount in {}", format_units(amount_in, 18).unwrap());
+    println!("WETH profit: {}", format_units(profit, 18).unwrap());
 
     Ok(())
 }
