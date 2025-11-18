@@ -1,10 +1,8 @@
 //! Uniswap V2 Arbitrage Profit Calculation using alloy U256
 
 use alloy::primitives::utils::format_units;
-use examples_advanced::helpers::alloy::{
-    get_amount_in, get_amount_out, get_sushi_pair, get_uniswap_pair,
-};
 use eyre::Result;
+use helpers::alloy::{get_amount_in, get_amount_out, get_sushi_pair, get_uniswap_pair};
 
 fn main() -> Result<()> {
     let uniswap_pair = get_uniswap_pair();

@@ -4,7 +4,7 @@ use alloy::primitives::U256 as AlloyU256;
 use criterion::{criterion_group, criterion_main, Criterion};
 use ethers::types::U256;
 
-use examples_advanced::helpers::{
+use helpers::{
     alloy::{
         get_amount_in as a_get_amount_in, get_amount_out as a_get_amount_out,
         get_sushi_pair as a_get_sushi_pair, get_uniswap_pair as a_get_uniswap_pair,

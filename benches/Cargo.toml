@@ -15,6 +15,7 @@ ethabi.workspace = true
 rlp.workspace = true
 rlp-derive.workspace = true
 alloy-rlp.workspace = true
+helpers.workspace = true
 
 [[bench]]
 name = "abi_encoding"

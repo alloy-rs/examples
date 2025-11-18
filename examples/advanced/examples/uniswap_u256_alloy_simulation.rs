@@ -9,11 +9,11 @@ use alloy::{
     sol,
     sol_types::SolCall,
 };
-use examples_advanced::helpers::alloy::{
+use eyre::Result;
+use helpers::alloy::{
     get_amount_in, get_amount_out, get_sushi_pair, get_uniswap_pair, set_hash_storage_slot,
     DAI_ADDR, WETH_ADDR,
 };
-use eyre::Result;
 
 sol! {
     function swap(uint amount0Out, uint amount1Out, address to, bytes calldata data) external;
