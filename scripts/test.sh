@@ -56,23 +56,26 @@ function main () {
     log $GREEN "Building..."
 
     # Pre-build the filtered examples prior to running them.
-    cargo build $(printf -- '--example %s ' $examples)
+    cargo build $(printf -- '--example %s ' $(echo "$examples"))
 
     log $GREEN "Running..."
 
-    # Run all the examples that are left after filtering.
-    printf '%s\n' $examples \
-    | xargs -P4 -I{} bash -c '
-        bin="./target/debug/examples/{}"
+    printf '%s\n' $examples | xargs -P4 -I{} bash -c '
+        name="$1"
+        bin="./target/debug/examples/$name"
+
         if [[ -x "$bin" ]]; then
-            "$bin" >/dev/null \
-            && echo "Successfully ran: {}" \
-            || { echo "Failed to run: {}" >&2; exit 1; }
+            if "$bin" >/dev/null; then
+                echo "Successfully ran: $name"
+            else
+                echo "Failed to run: $name" >&2
+                exit 1
+            fi
         else
             echo "Missing binary: $bin" >&2
             exit 1
         fi
-        '
+    ' -- {}
 
     log $GREEN "Done"
 }
