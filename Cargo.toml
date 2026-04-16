@@ -95,7 +95,7 @@ significant_drop_tightening = "allow"
 needless_return = "allow"
 
 [workspace.dependencies]
-alloy = { version = "1.1.0", features = [
+alloy = { version = "2.0.0", features = [
     "eips",
     "ens",
     "full",
@@ -140,11 +140,11 @@ http-body-util = "0.1"
 tracing-subscriber = "0.3"
 aws-config = { version = "1.8", default-features = false }
 aws-sdk-kms = { version = "1.77", default-features = false }
-gcloud-sdk = "0.27"
+gcloud-sdk = { version = "0.29", default-features = false }
 tempfile = "3.23"
-foundry-fork-db = "0.19"
-alloy-evm = "0.22"
-revm = { version = "30", default-features = false }
+foundry-fork-db = "0.25"
+alloy-evm = "0.32"
+revm = { version = "37", default-features = false }
 ethabi = "18"
 rlp = "0.6.1"
 rlp-derive = "0.2.0"

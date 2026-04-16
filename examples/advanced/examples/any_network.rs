@@ -59,7 +59,7 @@ async fn main() -> Result<()> {
     let receipt = builder.send().await?.get_receipt().await?;
 
     // Fetch the `gasUsedForL1` and `l1BlockNumber` fields from the receipt.
-    let arb_fields: ArbOtherFields = receipt.other.deserialize_into()?;
+    let arb_fields: ArbOtherFields = receipt.deserialize_other()?;
     let l1_gas = arb_fields.gas_used_for_l1.to::<u128>();
     let l1_block_number = arb_fields.l1_block_number.to::<u64>();
 
