@@ -102,8 +102,7 @@ async fn main() -> Result<()> {
 
     let res = evm.transact(configure_tx_env(tx_req)).unwrap();
 
-    let total_spent =
-        U256::from(res.result.tx_gas_used()) * U256::from(basefee) + U256::from(100);
+    let total_spent = U256::from(res.result.tx_gas_used()) * U256::from(basefee) + U256::from(100);
 
     shared.data().do_commit(res.state);
 

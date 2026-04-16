@@ -39,10 +39,9 @@ async fn main() -> Result<()> {
     let envelope = provider.fill(tx).await?.try_into_envelope()?;
 
     // Convert the envelope into a pooled transaction with EIP-7594 sidecar.
-    let tx: EthereumTxEnvelope<TxEip4844WithSidecar<BlobTransactionSidecarEip7594>> =
-        envelope.try_into_pooled()?.try_map_eip4844(|tx| {
-            tx.try_map_sidecar(|sidecar| sidecar.try_into_eip7594())
-        })?;
+    let tx: EthereumTxEnvelope<TxEip4844WithSidecar<BlobTransactionSidecarEip7594>> = envelope
+        .try_into_pooled()?
+        .try_map_eip4844(|tx| tx.try_map_sidecar(|sidecar| sidecar.try_into_eip7594()))?;
 
     let encoded_tx = tx.encoded_2718();
 
