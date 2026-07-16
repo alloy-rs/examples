@@ -5,7 +5,7 @@ resolver = "2"
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
-rust-version = "1.85"
+rust-version = "1.95.0"
 authors = ["Alloy Contributors"]
 license = "MIT OR Apache-2.0"
 homepage = "https://github.com/alloy-rs/examples"
@@ -142,9 +142,9 @@ aws-config = { version = "1.8", default-features = false }
 aws-sdk-kms = { version = "1.77", default-features = false }
 gcloud-sdk = { version = "0.29", default-features = false }
 tempfile = "3.23"
-foundry-fork-db = "0.25"
-alloy-evm = "0.32"
-revm = { version = "37", default-features = false }
+foundry-fork-db = "0.27"
+alloy-evm = "0.37"
+revm = { version = "41", default-features = false }
 ethabi = "18"
 rlp = "0.6.1"
 rlp-derive = "0.2.0"

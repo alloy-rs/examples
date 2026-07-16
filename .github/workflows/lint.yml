@@ -17,14 +17,14 @@ concurrency:
 jobs:
   clippy:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@clippy
       - uses: Swatinem/rust-cache@v2
         with:
           cache-on-failure: true
-      - run: cargo +nightly clippy --examples --all-features
+      - run: cargo +nightly clippy --workspace --examples --all-features --locked
         env:
           RUSTFLAGS: -Dwarnings
 
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@nightly
         with:
           components: rustfmt
