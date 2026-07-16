@@ -26,7 +26,7 @@ jobs:
           ./scripts/test.sh
 
           # Fetch the latest commit hash of the `main` branch from the Alloy repository
-          export latest_alloy_commit=$(git ls-remote https://github.com/alloy-rs/alloy.git \
+          latest_alloy_commit=$(git ls-remote https://github.com/alloy-rs/alloy.git \
             | grep refs/heads/main \
             | cut -f 1)
 

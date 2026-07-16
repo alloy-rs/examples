@@ -15,6 +15,32 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  compile:
+    name: Compile all examples
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
+      - run: cargo check --workspace --examples --all-features --locked
+
+  msrv:
+    name: Check MSRV
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.95.0
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
+      - run: cargo check --workspace --examples --all-features --locked
+
   checks:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -26,7 +52,7 @@ jobs:
         with:
           cache-on-failure: true
       - name: cargo hack
-        run: cargo hack check --feature-powerset --depth 2
+        run: cargo hack check --feature-powerset --depth 2 --locked
 
   examples:
     runs-on: ubuntu-latest
@@ -39,4 +65,4 @@ jobs:
         with:
           cache-on-failure: true
       - name: Run examples
-        run: ./scripts/test.sh
+        run: ./scripts/test.sh --locked

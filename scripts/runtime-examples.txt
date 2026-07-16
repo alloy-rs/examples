@@ -1,0 +1,26 @@
+# Deterministic examples that require no RPC service, node process, credentials, or hardware.
+decoding_json_abi
+encoding_dyn_abi
+encoding_sol_static
+uniswap_u256_alloy_profit
+uniswap_u256_ethers_profit
+comparison_equivalence
+conversion
+create_instances
+math_operations
+math_utilities
+arb_profit_calc
+jsonrpc_error_decoding
+bytes_and_address_types
+hashing_functions
+all_derives
+decode_returns
+extra_derives
+structs_enums
+user_defined_types
+decode_input
+encode_decode_eip1559
+mnemonic_signer
+sign_message
+sign_permit_hash
+verify_message
