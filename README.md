@@ -22,6 +22,9 @@ Examples that query a live network or fork it with Anvil require you to supply a
 RPC_URL=https://your-ethereum-endpoint cargo run --example http
 ```
 
+WebSocket and IPC examples use `WS_URL` and `IPC_PATH`, respectively. Examples with authentication
+also list their required credential variables in the error they return.
+
 The fallback-layer example accepts a comma-separated list instead:
 
 ```sh

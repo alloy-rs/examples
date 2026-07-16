@@ -3726,6 +3726,7 @@ name = "examples-subscriptions"
 version = "0.1.0"
 dependencies = [
  "alloy",
+ "example-support",
  "eyre",
  "futures-util",
  "tokio",

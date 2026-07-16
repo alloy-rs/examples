@@ -4,6 +4,7 @@ use alloy::{
     node_bindings::Anvil,
     providers::{Provider, ProviderBuilder},
 };
+use example_support::ipc_path;
 use eyre::Result;
 use futures_util::StreamExt;
 
@@ -42,8 +43,7 @@ async fn main() -> Result<()> {
 
     // This requires the `pubsub` and `ipc` features to be enabled.
     // This would throw a runtime error if the ipc does not exist.
-    let ipc_path = "/tmp/reth.ipc";
-    let ipc_provider = ProviderBuilder::new().connect(ipc_path).await?;
+    let ipc_provider = ProviderBuilder::new().connect(&ipc_path()?).await?;
 
     let _block_number = ipc_provider.get_block_number().await?;
 

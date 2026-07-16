@@ -11,7 +11,7 @@ use alloy::{
     signers::local::PrivateKeySigner,
     sol,
 };
-use example_support::rpc_url;
+use example_support::{required_env, rpc_url};
 use eyre::Result;
 
 // The address of the contract below deployed to Arbitrum Sepolia.
@@ -45,7 +45,7 @@ struct ArbOtherFields {
 async fn main() -> Result<()> {
     // [RISK WARNING! Writing a private key in the code file is insecure behavior.]
     // The following code is for testing only. Set up signer from private key, be aware of danger.
-    let signer: PrivateKeySigner = "<PRIVATE_KEY>".parse().expect("should parse private key");
+    let signer: PrivateKeySigner = required_env("PRIVATE_KEY")?.parse()?;
 
     // Create a provider with the Arbitrum Sepolia network and the wallet.
     let rpc_url = rpc_url()?.parse()?;
