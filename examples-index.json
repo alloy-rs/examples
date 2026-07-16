@@ -1195,6 +1195,25 @@
       }
     },
     {
+      "name": "ws_with_reconnect",
+      "category": "providers",
+      "package": "examples-providers",
+      "source": "examples/providers/examples/ws_with_reconnect.rs",
+      "summary": "Example of configuring WebSocket connection and reconnection retries.",
+      "command": "cargo run --locked -p examples-providers --example ws_with_reconnect",
+      "runtime": {
+        "class": "configured-network",
+        "network": "user-supplied",
+        "environment": [
+          "WS_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
       "name": "query_contract_storage",
       "category": "queries",
       "package": "examples-queries",
@@ -1484,6 +1503,25 @@
         ],
         "arguments": [],
         "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "watch_canonical_blocks",
+      "category": "subscriptions",
+      "package": "examples-subscriptions",
+      "source": "examples/subscriptions/examples/watch_canonical_blocks.rs",
+      "summary": "Example of resuming a canonical block stream from a known block number.",
+      "command": "cargo run --locked -p examples-subscriptions --example watch_canonical_blocks",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
         "hardware": [],
         "services": []
       }
@@ -2069,6 +2107,29 @@
           "Trezor device"
         ],
         "services": []
+      }
+    },
+    {
+      "name": "turnkey_signer",
+      "category": "wallets",
+      "package": "examples-wallets",
+      "source": "examples/wallets/examples/turnkey_signer.rs",
+      "summary": "Example showing how to use the Turnkey managed signer.",
+      "command": "cargo run --locked -p examples-wallets --example turnkey_signer",
+      "runtime": {
+        "class": "cloud-credentials",
+        "network": null,
+        "environment": [
+          "TURNKEY_ADDRESS",
+          "TURNKEY_API_PRIVATE_KEY",
+          "TURNKEY_ORGANIZATION_ID"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": [
+          "Turnkey"
+        ]
       }
     },
     {

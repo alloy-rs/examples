@@ -18,4 +18,4 @@ example-support.workspace = true
 
 eyre.workspace = true
 futures-util.workspace = true
-tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }
+tokio = { workspace = true, features = ["rt-multi-thread", "macros", "time"] }

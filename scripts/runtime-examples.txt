@@ -1,4 +1,4 @@
-# Deterministic examples that require no RPC service, node process, credentials, or hardware.
+# Deterministic examples validated at runtime by CI. The workflow provides required binaries.
 decoding_json_abi
 encoding_dyn_abi
 encoding_sol_static
@@ -24,3 +24,4 @@ mnemonic_signer
 sign_message
 sign_permit_hash
 verify_message
+watch_canonical_blocks
