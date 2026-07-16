@@ -51,6 +51,8 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           cache-on-failure: true
+      - name: Check example index
+        run: python3 scripts/generate-example-index.py --check
       - name: cargo hack
         run: cargo hack check --feature-powerset --depth 2 --locked
 

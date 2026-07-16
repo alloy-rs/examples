@@ -2,9 +2,8 @@
 //! Reads the balaces of the Uniswap V2 and `Sushiswap` pools and calculates a basic arb
 //! opportunity.
 
-mod helpers;
-use crate::helpers::{get_amount_in, get_amount_out, get_sushi_pair, get_uniswap_pair};
 use alloy::primitives::utils::format_units;
+use examples_contracts::{get_amount_in, get_amount_out, get_sushi_pair, get_uniswap_pair};
 use eyre::Result;
 
 fn main() -> Result<()> {

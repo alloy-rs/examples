@@ -128,12 +128,14 @@ less work from you.
 This section lists some commonly needed commands.
 
 ```sh
-cargo check --examples --all-features
-cargo build --examples --all-features
-cargo +nightly fmt --all
+cargo check --workspace --examples --all-features --locked
+cargo build --workspace --examples --all-features --locked
+cargo +nightly fmt --all --check
 cargo +nightly clippy \
+	--workspace \
 	--examples \
 	--all-features \
+	--locked \
 	-- -D warnings
 ```
 
@@ -148,6 +150,15 @@ To run all (runnable) examples:
 ```sh
 ./scripts/test.sh
 ```
+
+When adding or renaming an example, give it a leading `//!` summary, add it to `README.md`, and run:
+
+```sh
+python3 scripts/generate-example-index.py
+```
+
+Commit the updated `examples-index.json`. Add an example to `scripts/runtime-examples.txt` only when
+it is deterministic and requires no network service, node process, credentials, or hardware.
 
 ### Tests
 
