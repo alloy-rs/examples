@@ -106,6 +106,7 @@ This repository contains the following examples:
   - [x] [Multicall Builder](./examples/providers/examples/multicall.rs)
   - [x] [WS](./examples/providers/examples/ws.rs)
   - [x] [WS with authentication](./examples/providers/examples/ws_with_auth.rs)
+  - [x] [WS with configurable reconnects](./examples/providers/examples/ws_with_reconnect.rs)
   - [x] [JSON-RPC Batch Request](./examples/providers/examples/batch_rpc.rs)
   - [x] [Consensus x RPC types unification](./examples/providers/examples/embed_consensus_rpc.rs)
   - [x] [Basic provider with no fillers](./examples/providers/examples/basic_provider.rs)
@@ -124,6 +125,7 @@ This repository contains the following examples:
   - [x] [`extra_derives` attribute](./examples/sol-macro/examples/extra_derives.rs)
 - [x] Subscriptions
   - [x] [Subscribe and watch blocks](./examples/subscriptions/examples/subscribe_blocks.rs)
+  - [x] [Resume a canonical block stream](./examples/subscriptions/examples/watch_canonical_blocks.rs)
   - [x] [Watch and poll for contract event logs](./examples/subscriptions/examples/poll_logs.rs)
   - [x] [Subscribe and listen for specific contract event logs](./examples/subscriptions/examples/subscribe_logs.rs)
   - [x] [Subscribe and listen for all contract event logs](./examples/subscriptions/examples/subscribe_all_logs.rs)
@@ -160,6 +162,7 @@ This repository contains the following examples:
   - [x] [Verify message](./examples/wallets/examples/verify_message.rs)
   - [x] [Sign permit hash](./examples/wallets/examples/sign_permit_hash.rs)
   - [x] [Trezor signer](./examples/wallets/examples/trezor_signer.rs)
+  - [x] [Turnkey signer](./examples/wallets/examples/turnkey_signer.rs)
   - [x] [Yubi signer](./examples/wallets/examples/yubi_signer.rs)
   - [x] [Keystore signer](./examples/wallets/examples/keystore_signer.rs)
   - [x] [Create keystore](./examples/wallets/examples/create_keystore.rs)

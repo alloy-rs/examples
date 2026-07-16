@@ -115,7 +115,7 @@ def environment_from(source: str) -> list[str]:
     return sorted(names)
 
 
-def runtime_metadata(name: str, source: str, offline: set[str]) -> dict:
+def runtime_metadata(name: str, source: str, runtime_allowlist: set[str]) -> dict:
     environment = environment_from(source)
     binaries = []
     hardware = []
@@ -148,15 +148,15 @@ def runtime_metadata(name: str, source: str, offline: set[str]) -> dict:
         services.append("AWS KMS")
     if "GcpSigner" in source:
         services.append("Google Cloud KMS")
+    if "TurnkeySigner" in source:
+        services.append("Turnkey")
 
     if name in {"compare_new_heads", "compare_pending_txs"}:
         arguments.append("-r <name>:<url> (repeat for each provider)")
 
-    if name in offline:
-        runtime_class = "offline"
-    elif hardware:
+    if hardware:
         runtime_class = "hardware"
-    elif any(service.endswith("KMS") for service in services):
+    elif any(service.endswith("KMS") for service in services) or "Turnkey" in services:
         runtime_class = "cloud-credentials"
     elif arguments or environment:
         runtime_class = "configured-network"
@@ -164,6 +164,8 @@ def runtime_metadata(name: str, source: str, offline: set[str]) -> dict:
         runtime_class = "external-service"
     elif binaries:
         runtime_class = "local-node"
+    elif name in runtime_allowlist:
+        runtime_class = "offline"
     elif "std::fs::" in source or "read_to_string" in source:
         runtime_class = "local-filesystem"
     else:
@@ -194,7 +196,7 @@ def runtime_metadata(name: str, source: str, offline: set[str]) -> dict:
 
 def build_index() -> dict:
     metadata = load_metadata()
-    offline = load_runtime_allowlist()
+    runtime_allowlist = load_runtime_allowlist()
     examples = []
 
     for package in metadata["packages"]:
@@ -220,7 +222,7 @@ def build_index() -> dict:
                     "command": (
                         f"cargo run --locked -p {package_name} --example {target['name']}"
                     ),
-                    "runtime": runtime_metadata(target["name"], source, offline),
+                    "runtime": runtime_metadata(target["name"], source, runtime_allowlist),
                 }
             )
 
@@ -231,7 +233,7 @@ def build_index() -> dict:
         raise SystemExit(f"Duplicate example target names: {', '.join(duplicates)}")
 
     target_names = set(names)
-    unknown_allowlist = sorted(offline - target_names)
+    unknown_allowlist = sorted(runtime_allowlist - target_names)
     if unknown_allowlist:
         raise SystemExit(
             "Unknown examples in scripts/runtime-examples.txt: " + ", ".join(unknown_allowlist)

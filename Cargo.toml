@@ -110,6 +110,7 @@ alloy = { version = "2.0.0", features = [
     "signer-ledger",
     "signer-mnemonic",
     "signer-trezor",
+    "signer-turnkey",
     "signer-yubihsm",
     "kzg",
 ] }
