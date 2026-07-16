@@ -19,7 +19,7 @@ async fn main() -> Result<()> {
     // Set up signer using Alice's keystore file.
     // The private key belongs to Alice, the first default Anvil account.
     let keystore_file_path =
-        PathBuf::from(std::env::var("CARGO_MANIFEST_DIR")?).join("examples/keystore/alice.json");
+        PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("examples/keystore/alice.json");
     let signer = LocalSigner::decrypt_keystore(keystore_file_path, password)?;
 
     // Create a provider with the wallet.

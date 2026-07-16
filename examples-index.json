@@ -642,7 +642,7 @@
       "command": "cargo run --locked -p examples-layers --example fallback_layer",
       "runtime": {
         "class": "configured-network",
-        "network": "ethereum-mainnet",
+        "network": "user-supplied",
         "environment": [
           "RPC_URLS"
         ],
@@ -737,7 +737,7 @@
       "command": "cargo run --locked -p examples-node-bindings --example anvil_fork_instance",
       "runtime": {
         "class": "configured-network",
-        "network": "ethereum-mainnet-fork",
+        "network": "user-supplied",
         "environment": [
           "RPC_URL"
         ],
@@ -758,7 +758,7 @@
       "command": "cargo run --locked -p examples-node-bindings --example anvil_fork_provider",
       "runtime": {
         "class": "configured-network",
-        "network": "ethereum-mainnet-fork",
+        "network": "user-supplied",
         "environment": [
           "RPC_URL"
         ],
@@ -1007,7 +1007,7 @@
       "command": "cargo run --locked -p examples-providers --example embed_consensus_rpc",
       "runtime": {
         "class": "configured-network",
-        "network": "ethereum-mainnet",
+        "network": "user-supplied",
         "environment": [
           "RPC_URL"
         ],
@@ -1026,7 +1026,7 @@
       "command": "cargo run --locked -p examples-providers --example http",
       "runtime": {
         "class": "configured-network",
-        "network": "ethereum-mainnet",
+        "network": "user-supplied",
         "environment": [
           "RPC_URL"
         ],
@@ -1045,7 +1045,7 @@
       "command": "cargo run --locked -p examples-providers --example http_with_auth",
       "runtime": {
         "class": "configured-network",
-        "network": "ethereum-mainnet",
+        "network": "user-supplied",
         "environment": [
           "RPC_AUTHORIZATION",
           "RPC_URL"
@@ -1162,7 +1162,7 @@
       "command": "cargo run --locked -p examples-providers --example ws",
       "runtime": {
         "class": "configured-network",
-        "network": "ethereum-mainnet",
+        "network": "user-supplied",
         "environment": [
           "WS_URL"
         ],
@@ -1181,7 +1181,7 @@
       "command": "cargo run --locked -p examples-providers --example ws_with_auth",
       "runtime": {
         "class": "configured-network",
-        "network": "ethereum-mainnet",
+        "network": "user-supplied",
         "environment": [
           "WS_BEARER_TOKEN",
           "WS_PASSWORD",
@@ -1478,7 +1478,7 @@
       "command": "cargo run --locked -p examples-subscriptions --example subscribe_pending_transactions",
       "runtime": {
         "class": "configured-network",
-        "network": "ethereum-mainnet",
+        "network": "user-supplied",
         "environment": [
           "WS_URL"
         ],
@@ -1744,7 +1744,7 @@
       "command": "cargo run --locked -p examples-transactions --example trace_call",
       "runtime": {
         "class": "configured-network",
-        "network": "ethereum-mainnet",
+        "network": "user-supplied",
         "environment": [
           "RPC_URL"
         ],
@@ -1803,7 +1803,7 @@
       "command": "cargo run --locked -p examples-transactions --example transfer_erc20",
       "runtime": {
         "class": "configured-network",
-        "network": "ethereum-mainnet-fork",
+        "network": "user-supplied",
         "environment": [
           "RPC_URL"
         ],
@@ -1948,11 +1948,9 @@
       "summary": "Example of using a keystore wallet to sign and send a transaction.",
       "command": "cargo run --locked -p examples-wallets --example keystore_signer",
       "runtime": {
-        "class": "configured-network",
+        "class": "local-node",
         "network": "local-development",
-        "environment": [
-          "CARGO_MANIFEST_DIR"
-        ],
+        "environment": [],
         "arguments": [],
         "binaries": [
           "anvil"

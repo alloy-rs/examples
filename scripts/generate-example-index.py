@@ -16,6 +16,42 @@ ROOT = Path(__file__).resolve().parent.parent
 INDEX_PATH = ROOT / "examples-index.json"
 RUNTIME_ALLOWLIST = ROOT / "scripts" / "runtime-examples.txt"
 
+# Examples with fixed chain-specific addresses, block ranges, or transaction hashes. Endpoint-based
+# examples default to user-supplied so generic provider and transport examples are not mislabeled.
+NETWORK_OVERRIDES = {
+    "address_lookup": "ethereum-mainnet",
+    "any_network": "arbitrum-sepolia",
+    "name_resolution": "ethereum-mainnet",
+    "query_contract_storage": "ethereum-mainnet",
+    "query_deployed_bytecode": "ethereum-mainnet",
+    "query_logs": "ethereum-mainnet",
+    "query_logs_chunked": "ethereum-mainnet",
+    "subscribe_all_logs": "ethereum-mainnet",
+    "subscribe_logs": "ethereum-mainnet",
+    "ledger_signer": "ethereum-mainnet",
+    "trezor_signer": "ethereum-mainnet",
+    "yubi_signer": "ethereum-mainnet",
+    "anvil_set_storage_at": "ethereum-mainnet-fork",
+    "gas_price_usd": "ethereum-mainnet-fork",
+    "interact_with_abi": "ethereum-mainnet-fork",
+    "multicall": "ethereum-mainnet-fork",
+    "multicall_batching": "ethereum-mainnet-fork",
+    "permit2_signature_transfer": "ethereum-mainnet-fork",
+    "simulation_uni_v2": "ethereum-mainnet-fork",
+    "trace_transaction": "ethereum-mainnet-fork",
+    "uniswap_u256_alloy_simulation": "ethereum-mainnet-fork",
+}
+
+CARGO_PROVIDED_ENV = {
+    "DEBUG",
+    "HOST",
+    "NUM_JOBS",
+    "OPT_LEVEL",
+    "OUT_DIR",
+    "PROFILE",
+    "TARGET",
+}
+
 
 def load_metadata() -> dict:
     result = subprocess.run(
@@ -61,6 +97,12 @@ def environment_from(source: str) -> list[str]:
     names = set(
         re.findall(r'(?:required_env|std::env::var)\("([A-Z][A-Z0-9_]*)"\)', source)
     )
+    names = {
+        name
+        for name in names
+        if not name.startswith(("CARGO_", "DEP_", "RUSTC_"))
+        and name not in CARGO_PROVIDED_ENV
+    }
     helpers = {
         "rpc_url()": "RPC_URL",
         "rpc_urls()": "RPC_URLS",
@@ -127,22 +169,17 @@ def runtime_metadata(name: str, source: str, offline: set[str]) -> dict:
     else:
         runtime_class = "local"
 
-    network = None
+    network = NETWORK_OVERRIDES.get(name)
     endpoint_environment = {"RPC_URL", "RPC_URLS", "WS_URL"}.intersection(environment)
-    if name == "any_network":
-        network = "arbitrum-sepolia"
-    elif arguments:
-        network = "user-supplied"
-    elif endpoint_environment and "anvil" in binaries:
-        network = "ethereum-mainnet-fork"
-    elif endpoint_environment:
-        network = "ethereum-mainnet"
-    elif "Flashbots Protect" in services:
-        network = "ethereum-mainnet"
-    elif binaries:
-        network = "local-development"
-    elif "IPC_PATH" in environment:
-        network = "configured-node"
+    if network is None:
+        if arguments or endpoint_environment:
+            network = "user-supplied"
+        elif "Flashbots Protect" in services:
+            network = "ethereum-mainnet"
+        elif binaries:
+            network = "local-development"
+        elif "IPC_PATH" in environment:
+            network = "configured-node"
 
     return {
         "class": runtime_class,
