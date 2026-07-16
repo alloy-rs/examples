@@ -1,5 +1,5 @@
 [package]
-name = "examples-subscriptions"
+name = "example-support"
 publish.workspace = true
 version.workspace = true
 edition.workspace = true
@@ -12,10 +12,5 @@ repository.workspace = true
 [lints]
 workspace = true
 
-[dev-dependencies]
-alloy.workspace = true
-example-support.workspace = true
-
+[dependencies]
 eyre.workspace = true
-futures-util.workspace = true
-tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }

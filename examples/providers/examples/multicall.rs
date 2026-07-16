@@ -6,6 +6,7 @@ use alloy::{
     providers::{CallItemBuilder, Failure, Provider, ProviderBuilder},
     sol,
 };
+use example_support::rpc_url;
 use IWETH9::IWETH9Instance;
 
 sol!(
@@ -19,8 +20,9 @@ sol!(
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
     // Create a new provider
-    let provider = ProviderBuilder::new()
-        .connect_anvil_with_wallet_and_config(|a| a.fork("https://reth-ethereum.ithaca.xyz/rpc"))?;
+    let rpc_url = rpc_url()?;
+    let provider =
+        ProviderBuilder::new().connect_anvil_with_wallet_and_config(|anvil| anvil.fork(rpc_url))?;
     // Create a new instance of the IWETH9 contract.
     let weth =
         IWETH9Instance::new(address!("0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"), &provider);

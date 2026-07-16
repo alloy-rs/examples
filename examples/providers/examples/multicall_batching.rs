@@ -9,6 +9,7 @@ use alloy::{
     providers::{layers::CallBatchLayer, Provider, ProviderBuilder},
     sol,
 };
+use example_support::rpc_url;
 use eyre::Result;
 use IWETH9::{balanceOfCall, totalSupplyCall, IWETH9Instance};
 
@@ -23,6 +24,7 @@ sol!(
 #[tokio::main]
 async fn main() -> Result<()> {
     // Instantiate a provider with the `CallBatchLayer` enabled.
+    let rpc_url = rpc_url()?;
     let provider = ProviderBuilder::new()
         // Enables `eth_call` batching by leveraging the Multicall3 contract.
         // The `CallBatchLayer` will wait for a certain amount of time before sending a request. See: <https://docs.rs/alloy-provider/latest/alloy_provider/layers/struct.CallBatchLayer.html#method.wait>.
@@ -31,7 +33,7 @@ async fn main() -> Result<()> {
         .layer(CallBatchLayer::new().wait(Duration::from_millis(10)))
         // Can also use the shorthand `with_call_batching` on the build which set the delay to 1ms.
         // .with_call_batching()
-        .connect_anvil_with_wallet_and_config(|a| a.fork("https://reth-ethereum.ithaca.xyz/rpc"))?;
+        .connect_anvil_with_wallet_and_config(|anvil| anvil.fork(rpc_url))?;
 
     // Create a new instance of the IWETH9 contract.
     let weth =

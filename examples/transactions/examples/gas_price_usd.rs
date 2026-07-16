@@ -8,6 +8,7 @@ use alloy::{
     sol,
     sol_types::SolCall,
 };
+use example_support::rpc_url;
 use eyre::Result;
 use std::str::FromStr;
 
@@ -26,7 +27,7 @@ sol!(
 async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc";
+    let rpc_url = rpc_url()?;
     let provider = ProviderBuilder::new().connect_anvil_with_config(|anvil| anvil.fork(rpc_url));
 
     // Create a call to get the latest answer from the Chainlink ETH/USD feed.

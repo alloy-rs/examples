@@ -24,11 +24,12 @@ use alloy::{
     primitives::b256,
     providers::{Provider, ProviderBuilder},
 };
+use example_support::rpc_url;
 use eyre::OptionExt;
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
-    let provider = ProviderBuilder::new().connect("https://reth-ethereum.ithaca.xyz/rpc").await?;
+    let provider = ProviderBuilder::new().connect(&rpc_url()?).await?;
 
     // Get the latest block from the RPC.
     let block = provider.get_block(BlockId::latest()).await?.ok_or_eyre("Block not found")?;

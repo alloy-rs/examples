@@ -16,6 +16,27 @@ To run an example, use the command `cargo run --example <Example>`:
 cargo run --example mnemonic_signer
 ```
 
+Examples that query a live network or fork it with Anvil require you to supply an endpoint:
+
+```sh
+RPC_URL=https://your-ethereum-endpoint cargo run --example http
+```
+
+WebSocket and IPC examples use `WS_URL` and `IPC_PATH`, respectively. Examples with authentication
+also list their required credential variables in the error they return.
+
+The fallback-layer example accepts a comma-separated list instead:
+
+```sh
+RPC_URLS=https://first-endpoint,https://second-endpoint cargo run --example fallback_layer
+```
+
+Use an endpoint for the network named by the example. For example, `any_network` expects an
+Arbitrum Sepolia endpoint, while mainnet contract and ENS examples expect Ethereum mainnet.
+Examples that fork a network also require [`anvil`](https://getfoundry.sh/anvil/overview/) in
+`PATH`. Hardware-wallet and cloud-signer examples require the device or credentials described in
+their source code.
+
 ## Overview
 
 This repository contains the following examples:

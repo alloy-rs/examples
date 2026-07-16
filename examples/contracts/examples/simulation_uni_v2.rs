@@ -16,6 +16,7 @@ use crate::helpers::{
     get_amount_in, get_amount_out, get_sushi_pair, get_uniswap_pair, set_hash_storage_slot,
     DAI_ADDR, WETH_ADDR,
 };
+use example_support::rpc_url;
 use eyre::Result;
 
 sol! {
@@ -39,7 +40,7 @@ sol!(
 async fn main() -> Result<()> {
     // Spawn `anvil` and fork mainnet
     // Make sure you have `anvil` in $PATH
-    let anvil = Anvil::new().fork("https://reth-ethereum.ithaca.xyz/rpc").try_spawn()?;
+    let anvil = Anvil::new().fork(rpc_url()?).try_spawn()?;
 
     // Get the pool contract interfaces
     let uniswap_pair = get_uniswap_pair();

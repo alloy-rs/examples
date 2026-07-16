@@ -10,6 +10,7 @@ use alloy::{
         layers::FallbackLayer,
     },
 };
+use example_support::rpc_urls;
 use eyre::Result;
 use tower::ServiceBuilder;
 
@@ -17,16 +18,16 @@ use tower::ServiceBuilder;
 async fn main() -> Result<()> {
     let _ = tracing_subscriber::fmt::try_init();
 
-    // Configure the fallback layer
+    // Configure the fallback layer for the endpoints supplied in `RPC_URLS`.
+    let rpc_urls = rpc_urls()?;
+    let active_transport_count =
+        NonZeroUsize::new(rpc_urls.len()).expect("rpc_urls() rejects an empty list");
     let fallback_layer =
-        FallbackLayer::default().with_active_transport_count(NonZeroUsize::new(3).unwrap());
+        FallbackLayer::default().with_active_transport_count(active_transport_count);
 
-    // Define your list of transports to use
-    let transports = vec![
-        Http::new(Url::parse("https://reth-ethereum.ithaca.xyz/rpc")?),
-        Http::new(Url::parse("https://eth.llamarpc.com")?),
-        Http::new(Url::parse("https://ethereum-rpc.publicnode.com")?),
-    ];
+    // Define one transport for each configured endpoint.
+    let transports =
+        rpc_urls.iter().map(|url| Ok(Http::new(Url::parse(url)?))).collect::<Result<Vec<_>>>()?;
 
     // Apply the FallbackLayer to the transports
     let transport = ServiceBuilder::new().layer(fallback_layer).service(transports);
