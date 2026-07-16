@@ -12,6 +12,7 @@ use alloy::{
         Http,
     },
 };
+use example_support::rpc_url;
 use eyre::Result;
 
 #[tokio::main]
@@ -24,7 +25,7 @@ async fn main() -> Result<()> {
     let client_with_auth = Client::builder().default_headers(headers).build()?;
 
     // Create the HTTP transport.
-    let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc".parse()?;
+    let rpc_url = rpc_url()?.parse()?;
     let http = Http::with_client(client_with_auth, rpc_url);
     let rpc_client = RpcClient::new(http, false);
 

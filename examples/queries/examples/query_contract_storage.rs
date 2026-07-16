@@ -4,12 +4,13 @@ use alloy::{
     primitives::{address, U256},
     providers::{Provider, ProviderBuilder},
 };
+use example_support::rpc_url;
 use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
     // Create a provider.
-    let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc".parse()?;
+    let rpc_url = rpc_url()?.parse()?;
     let provider = ProviderBuilder::new().connect_http(rpc_url);
 
     // Get storage slot 0 from the Uniswap V3 USDC-ETH pool on Ethereum mainnet.

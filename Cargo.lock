@@ -3581,11 +3581,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "example-support"
+version = "0.1.0"
+dependencies = [
+ "eyre",
+]
+
+[[package]]
 name = "examples-advanced"
 version = "0.1.0"
 dependencies = [
  "alloy",
  "alloy-evm",
+ "example-support",
  "eyre",
  "foundry-fork-db",
  "helpers",
@@ -3620,6 +3628,7 @@ name = "examples-contracts"
 version = "0.1.0"
 dependencies = [
  "alloy",
+ "example-support",
  "eyre",
  "serde_json",
  "tokio",
@@ -3630,6 +3639,7 @@ name = "examples-ens"
 version = "0.1.0"
 dependencies = [
  "alloy",
+ "example-support",
  "eyre",
  "futures-util",
  "tokio",
@@ -3651,6 +3661,7 @@ name = "examples-layers"
 version = "0.1.0"
 dependencies = [
  "alloy",
+ "example-support",
  "eyre",
  "http-body-util",
  "tokio",
@@ -3663,6 +3674,7 @@ name = "examples-node-bindings"
 version = "0.1.0"
 dependencies = [
  "alloy",
+ "example-support",
  "eyre",
  "tokio",
 ]
@@ -3680,6 +3692,7 @@ name = "examples-providers"
 version = "0.1.0"
 dependencies = [
  "alloy",
+ "example-support",
  "eyre",
  "futures-util",
  "tokio",
@@ -3690,6 +3703,7 @@ name = "examples-queries"
 version = "0.1.0"
 dependencies = [
  "alloy",
+ "example-support",
  "eyre",
  "futures-util",
  "tokio",
@@ -3722,6 +3736,7 @@ name = "examples-transactions"
 version = "0.1.0"
 dependencies = [
  "alloy",
+ "example-support",
  "eyre",
  "rand 0.8.7",
  "tokio",
@@ -3735,6 +3750,7 @@ dependencies = [
  "alloy-chains",
  "aws-config",
  "aws-sdk-kms",
+ "example-support",
  "eyre",
  "gcloud-sdk",
  "rand 0.8.7",

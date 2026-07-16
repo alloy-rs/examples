@@ -15,6 +15,7 @@ workspace = true
 [dev-dependencies]
 alloy.workspace = true
 alloy-chains.workspace = true
+example-support.workspace = true
 
 aws-config = { workspace = true, default-features = false }
 aws-sdk-kms = { workspace = true, default-features = false }

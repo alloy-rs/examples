@@ -13,6 +13,7 @@ use alloy::{
     sol,
     sol_types::SolEvent,
 };
+use example_support::rpc_url;
 use eyre::Result;
 
 sol! {
@@ -23,7 +24,7 @@ sol! {
 #[tokio::main]
 async fn main() -> Result<()> {
     // Create a provider.
-    let rpc_url = "https://ethereum-rpc.publicnode.com".parse()?;
+    let rpc_url = rpc_url()?.parse()?;
     let provider = ProviderBuilder::new().connect_http(rpc_url);
 
     let latest_block = provider.get_block_number().await?;

@@ -11,6 +11,7 @@ use alloy::{
     signers::local::PrivateKeySigner,
     sol,
 };
+use example_support::rpc_url;
 use eyre::Result;
 
 // The address of the contract below deployed to Arbitrum Sepolia.
@@ -47,7 +48,7 @@ async fn main() -> Result<()> {
     let signer: PrivateKeySigner = "<PRIVATE_KEY>".parse().expect("should parse private key");
 
     // Create a provider with the Arbitrum Sepolia network and the wallet.
-    let rpc_url = "https://sepolia-rollup.arbitrum.io/rpc".parse()?;
+    let rpc_url = rpc_url()?.parse()?;
     let provider =
         ProviderBuilder::new().network::<AnyNetwork>().wallet(signer).connect_http(rpc_url);
 

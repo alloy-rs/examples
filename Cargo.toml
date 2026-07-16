@@ -1,5 +1,5 @@
 [workspace]
-members = ["helpers", "examples/*", "benches"]
+members = ["example-support", "helpers", "examples/*", "benches"]
 resolver = "2"
 
 [workspace.package]
@@ -151,4 +151,5 @@ rlp-derive = "0.2.0"
 alloy-rlp = "0.3.12"
 
 # helpers
+example-support = { path = "example-support" }
 helpers = { path = "helpers" }
