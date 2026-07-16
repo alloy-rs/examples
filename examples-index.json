@@ -1007,7 +1007,7 @@
       "command": "cargo run --locked -p examples-providers --example embed_consensus_rpc",
       "runtime": {
         "class": "configured-network",
-        "network": "user-supplied",
+        "network": "ethereum-mainnet",
         "environment": [
           "RPC_URL"
         ],
@@ -2097,7 +2097,7 @@
       "command": "cargo run --locked -p examples-wallets --example yubi_signer",
       "runtime": {
         "class": "hardware",
-        "network": "ethereum-mainnet",
+        "network": "user-supplied",
         "environment": [
           "RPC_URL"
         ],

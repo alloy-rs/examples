@@ -21,6 +21,7 @@ RUNTIME_ALLOWLIST = ROOT / "scripts" / "runtime-examples.txt"
 NETWORK_OVERRIDES = {
     "address_lookup": "ethereum-mainnet",
     "any_network": "arbitrum-sepolia",
+    "embed_consensus_rpc": "ethereum-mainnet",
     "name_resolution": "ethereum-mainnet",
     "query_contract_storage": "ethereum-mainnet",
     "query_deployed_bytecode": "ethereum-mainnet",
@@ -30,7 +31,6 @@ NETWORK_OVERRIDES = {
     "subscribe_logs": "ethereum-mainnet",
     "ledger_signer": "ethereum-mainnet",
     "trezor_signer": "ethereum-mainnet",
-    "yubi_signer": "ethereum-mainnet",
     "anvil_set_storage_at": "ethereum-mainnet-fork",
     "gas_price_usd": "ethereum-mainnet-fork",
     "interact_with_abi": "ethereum-mainnet-fork",
