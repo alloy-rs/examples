@@ -37,6 +37,10 @@ Examples that fork a network also require [`anvil`](https://getfoundry.sh/anvil/
 `PATH`. Hardware-wallet and cloud-signer examples require the device or credentials described in
 their source code.
 
+For programmatic discovery, [`examples-index.json`](./examples-index.json) lists every example with
+its summary, source path, exact command, network, environment variables, binaries, services, and
+hardware requirements. The index is generated from Cargo metadata and the example source files.
+
 ## Overview
 
 This repository contains the following examples:
@@ -127,6 +131,7 @@ This repository contains the following examples:
   - [x] [Event multiplexer](./examples/subscriptions/examples/event_multiplexer.rs)
 - [x] Transactions
   - [x] [Decode input](./examples/transactions/examples/decode_input.rs)
+  - [x] [Decode a receipt log](./examples/transactions/examples/decode_receipt_log.rs)
   - [x] [Encode and decode EIP-1559 transaction](./examples/transactions/examples/encode_decode_eip1559.rs)
   - [x] [Get gas price in USD](./examples/transactions/examples/gas_price_usd.rs)
   - [x] [Simulate using `debug_traceCallMany`](./examples/transactions/examples/debug_trace_call_many.rs)

@@ -11,12 +11,11 @@ use alloy::{
     sol_types::SolCall,
 };
 
-mod helpers;
-use crate::helpers::{
+use example_support::rpc_url;
+use examples_contracts::{
     get_amount_in, get_amount_out, get_sushi_pair, get_uniswap_pair, set_hash_storage_slot,
     DAI_ADDR, WETH_ADDR,
 };
-use example_support::rpc_url;
 use eyre::Result;
 
 sol! {

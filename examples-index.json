@@ -1,0 +1,2113 @@
+{
+  "schema_version": 1,
+  "description": "Generated Alloy example catalog. Use runtime fields to choose examples compatible with the available network, credentials, binaries, and hardware.",
+  "examples": [
+    {
+      "name": "any_network",
+      "category": "advanced",
+      "package": "examples-advanced",
+      "source": "examples/advanced/examples/any_network.rs",
+      "summary": "Example of using `AnyNetwork` to get a type-safe representation of network-specific data.",
+      "command": "cargo run --locked -p examples-advanced --example any_network",
+      "runtime": {
+        "class": "configured-network",
+        "network": "arbitrum-sepolia",
+        "environment": [
+          "PRIVATE_KEY",
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "decoding_json_abi",
+      "category": "advanced",
+      "package": "examples-advanced",
+      "source": "examples/advanced/examples/decoding_json_abi.rs",
+      "summary": "Example for deserializing ABI using `json_abi`.",
+      "command": "cargo run --locked -p examples-advanced --example decoding_json_abi",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "encoding_dyn_abi",
+      "category": "advanced",
+      "package": "examples-advanced",
+      "source": "examples/advanced/examples/encoding_dyn_abi.rs",
+      "summary": "Example of [EIP712](https://eips.ethereum.org/EIPS/eip-712) encoding and decoding via `dyn_abi`.",
+      "command": "cargo run --locked -p examples-advanced --example encoding_dyn_abi",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "encoding_sol_static",
+      "category": "advanced",
+      "package": "examples-advanced",
+      "source": "examples/advanced/examples/encoding_sol_static.rs",
+      "summary": "Example for static encoding calldata via `sol!`.",
+      "command": "cargo run --locked -p examples-advanced --example encoding_sol_static",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "foundry_fork_db",
+      "category": "advanced",
+      "package": "examples-advanced",
+      "source": "examples/advanced/examples/foundry_fork_db.rs",
+      "summary": "This example demonstrates how to use `foundry_fork_db` to build a minimal fork with a db that caches responses from the RPC provider.",
+      "command": "cargo run --locked -p examples-advanced --example foundry_fork_db",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "uniswap_u256_alloy_profit",
+      "category": "advanced",
+      "package": "examples-advanced",
+      "source": "examples/advanced/examples/uniswap_u256_alloy_profit.rs",
+      "summary": "Uniswap V2 Arbitrage Profit Calculation using alloy U256",
+      "command": "cargo run --locked -p examples-advanced --example uniswap_u256_alloy_profit",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "uniswap_u256_alloy_simulation",
+      "category": "advanced",
+      "package": "examples-advanced",
+      "source": "examples/advanced/examples/uniswap_u256_alloy_simulation.rs",
+      "summary": "Uniswap V2 Arbitrage Simulation using alloy",
+      "command": "cargo run --locked -p examples-advanced --example uniswap_u256_alloy_simulation",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet-fork",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "uniswap_u256_ethers_profit",
+      "category": "advanced",
+      "package": "examples-advanced",
+      "source": "examples/advanced/examples/uniswap_u256_ethers_profit.rs",
+      "summary": "Uniswap V2 Arbitrage Profit Calculation using ethers-rs U256",
+      "command": "cargo run --locked -p examples-advanced --example uniswap_u256_ethers_profit",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "comparison_equivalence",
+      "category": "big-numbers",
+      "package": "examples-big-numbers",
+      "source": "examples/big-numbers/examples/comparison_equivalence.rs",
+      "summary": "Example of comparison and equivalence of `U256` instances.",
+      "command": "cargo run --locked -p examples-big-numbers --example comparison_equivalence",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "conversion",
+      "category": "big-numbers",
+      "package": "examples-big-numbers",
+      "source": "examples/big-numbers/examples/conversion.rs",
+      "summary": "Example of converting `U256` to native Rust types.",
+      "command": "cargo run --locked -p examples-big-numbers --example conversion",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "create_instances",
+      "category": "big-numbers",
+      "package": "examples-big-numbers",
+      "source": "examples/big-numbers/examples/create_instances.rs",
+      "summary": "Example of creating instances of `U256` from strings and numbers.",
+      "command": "cargo run --locked -p examples-big-numbers --example create_instances",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "math_operations",
+      "category": "big-numbers",
+      "package": "examples-big-numbers",
+      "source": "examples/big-numbers/examples/math_operations.rs",
+      "summary": "Example of performing arithmetic operations with `U256`.",
+      "command": "cargo run --locked -p examples-big-numbers --example math_operations",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "math_utilities",
+      "category": "big-numbers",
+      "package": "examples-big-numbers",
+      "source": "examples/big-numbers/examples/math_utilities.rs",
+      "summary": "Example of using math utilities to handle big numbers in 'wei' units.",
+      "command": "cargo run --locked -p examples-big-numbers --example math_utilities",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "compare_new_heads",
+      "category": "comparison",
+      "package": "examples-comparison",
+      "source": "examples/comparison/examples/compare_new_heads.rs",
+      "summary": "Example of comparing new block headers from multiple providers.",
+      "command": "cargo run --locked -p examples-comparison --example compare_new_heads",
+      "runtime": {
+        "class": "configured-network",
+        "network": "user-supplied",
+        "environment": [],
+        "arguments": [
+          "-r <name>:<url> (repeat for each provider)"
+        ],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "compare_pending_txs",
+      "category": "comparison",
+      "package": "examples-comparison",
+      "source": "examples/comparison/examples/compare_pending_txs.rs",
+      "summary": "Example of comparing pending transactions from multiple providers.",
+      "command": "cargo run --locked -p examples-comparison --example compare_pending_txs",
+      "runtime": {
+        "class": "configured-network",
+        "network": "user-supplied",
+        "environment": [],
+        "arguments": [
+          "-r <name>:<url> (repeat for each provider)"
+        ],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "arb_profit_calc",
+      "category": "contracts",
+      "package": "examples-contracts",
+      "source": "examples/contracts/examples/arb_profit_calc.rs",
+      "summary": "Simple arbitrage profit calculator for WETH/DAI pools Reads the balaces of the Uniswap V2 and `Sushiswap` pools and calculates a basic arb opportunity.",
+      "command": "cargo run --locked -p examples-contracts --example arb_profit_calc",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "deploy_and_link_library",
+      "category": "contracts",
+      "package": "examples-contracts",
+      "source": "examples/contracts/examples/deploy_and_link_library.rs",
+      "summary": "Example of deploying a contract that requires [library linking](https://docs.soliditylang.org/en/latest/using-the-compiler.html#library-linking)",
+      "command": "cargo run --locked -p examples-contracts --example deploy_and_link_library",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "deploy_from_artifact",
+      "category": "contracts",
+      "package": "examples-contracts",
+      "source": "examples/contracts/examples/deploy_from_artifact.rs",
+      "summary": "Example of deploying a contract from an artifact using the `sol!` macro to Anvil and interacting with it.",
+      "command": "cargo run --locked -p examples-contracts --example deploy_from_artifact",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "deploy_from_bytecode",
+      "category": "contracts",
+      "package": "examples-contracts",
+      "source": "examples/contracts/examples/deploy_from_bytecode.rs",
+      "summary": "Example of deploying a contract at runtime from Solidity bytecode to Anvil and interacting with it.",
+      "command": "cargo run --locked -p examples-contracts --example deploy_from_bytecode",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "deploy_from_contract",
+      "category": "contracts",
+      "package": "examples-contracts",
+      "source": "examples/contracts/examples/deploy_from_contract.rs",
+      "summary": "Example of deploying a contract from Solidity code using the `sol!` macro to Anvil and interacting with it.",
+      "command": "cargo run --locked -p examples-contracts --example deploy_from_contract",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "interact_with_abi",
+      "category": "contracts",
+      "package": "examples-contracts",
+      "source": "examples/contracts/examples/interact_with_abi.rs",
+      "summary": "Example of generating code from ABI file using the `sol!` macro to interact with the contract.",
+      "command": "cargo run --locked -p examples-contracts --example interact_with_abi",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet-fork",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "interact_with_contract_instance",
+      "category": "contracts",
+      "package": "examples-contracts",
+      "source": "examples/contracts/examples/interact_with_contract_instance.rs",
+      "summary": "This example demonstrates how to interact with a contract that is already deployed onchain using the `ContractInstance` interface.",
+      "command": "cargo run --locked -p examples-contracts --example interact_with_contract_instance",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "jsonrpc_error_decoding",
+      "category": "contracts",
+      "package": "examples-contracts",
+      "source": "examples/contracts/examples/jsonrpc_error_decoding.rs",
+      "summary": "This example demonstrates how to decode a custom JSON RPC error.",
+      "command": "cargo run --locked -p examples-contracts --example jsonrpc_error_decoding",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "revert_decoding",
+      "category": "contracts",
+      "package": "examples-contracts",
+      "source": "examples/contracts/examples/revert_decoding.rs",
+      "summary": "This example demonstrates how to decode revert data into a custom error.",
+      "command": "cargo run --locked -p examples-contracts --example revert_decoding",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "simulation_uni_v2",
+      "category": "contracts",
+      "package": "examples-contracts",
+      "source": "examples/contracts/examples/simulation_uni_v2.rs",
+      "summary": "Simulates an arbitrage between Uniswap V2 and `Sushiswap` by forking anvil and using the `FlashBotsMultiCall` contract.",
+      "command": "cargo run --locked -p examples-contracts --example simulation_uni_v2",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet-fork",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "unknown_return_types",
+      "category": "contracts",
+      "package": "examples-contracts",
+      "source": "examples/contracts/examples/unknown_return_types.rs",
+      "summary": "Example demonstrating how one can handle unknown / complex return types using `DynSol`.",
+      "command": "cargo run --locked -p examples-contracts --example unknown_return_types",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "address_lookup",
+      "category": "ens",
+      "package": "examples-ens",
+      "source": "examples/ens/examples/address_lookup.rs",
+      "summary": "Example of looking up ENS names from Ethereum addresses.",
+      "command": "cargo run --locked -p examples-ens --example address_lookup",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "name_resolution",
+      "category": "ens",
+      "package": "examples-ens",
+      "source": "examples/ens/examples/name_resolution.rs",
+      "summary": "Example of resolving ENS names to Ethereum addresses.",
+      "command": "cargo run --locked -p examples-ens --example name_resolution",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "gas_filler",
+      "category": "fillers",
+      "package": "examples-fillers",
+      "source": "examples/fillers/examples/gas_filler.rs",
+      "summary": "Example of using the `GasFiller` in the provider.",
+      "command": "cargo run --locked -p examples-fillers --example gas_filler",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "nonce_filler",
+      "category": "fillers",
+      "package": "examples-fillers",
+      "source": "examples/fillers/examples/nonce_filler.rs",
+      "summary": "Example of using the `NonceFiller` in the provider.",
+      "command": "cargo run --locked -p examples-fillers --example nonce_filler",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "recommended_fillers",
+      "category": "fillers",
+      "package": "examples-fillers",
+      "source": "examples/fillers/examples/recommended_fillers.rs",
+      "summary": "Example of using the `.with_recommended_fillers()` method in the provider.",
+      "command": "cargo run --locked -p examples-fillers --example recommended_fillers",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "urgent_filler",
+      "category": "fillers",
+      "package": "examples-fillers",
+      "source": "examples/fillers/examples/urgent_filler.rs",
+      "summary": "Rolls a custom filler that fetches priority fee information from an external endpoint and fills the EIP-1559 gas fields for urgent inclusion.",
+      "command": "cargo run --locked -p examples-fillers --example urgent_filler",
+      "runtime": {
+        "class": "external-service",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": [
+          "Blocknative gas API"
+        ]
+      }
+    },
+    {
+      "name": "wallet_filler",
+      "category": "fillers",
+      "package": "examples-fillers",
+      "source": "examples/fillers/examples/wallet_filler.rs",
+      "summary": "Example of using the `WalletFiller` in the provider.",
+      "command": "cargo run --locked -p examples-fillers --example wallet_filler",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "delay_layer",
+      "category": "layers",
+      "package": "examples-layers",
+      "source": "examples/layers/examples/delay_layer.rs",
+      "summary": "Demonstrates how to implement a custom transport layer that delays dispatching the requests.",
+      "command": "cargo run --locked -p examples-layers --example delay_layer",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "fallback_layer",
+      "category": "layers",
+      "package": "examples-layers",
+      "source": "examples/layers/examples/fallback_layer.rs",
+      "summary": "Test the fallback layer provider.",
+      "command": "cargo run --locked -p examples-layers --example fallback_layer",
+      "runtime": {
+        "class": "configured-network",
+        "network": "user-supplied",
+        "environment": [
+          "RPC_URLS"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "hyper_http_layer",
+      "category": "layers",
+      "package": "examples-layers",
+      "source": "examples/layers/examples/hyper_http_layer.rs",
+      "summary": "This example demonstrates how to write a custom layer for the [`hyper`] HTTP client that can modify the underlying HTTP request before it is sent.",
+      "command": "cargo run --locked -p examples-layers --example hyper_http_layer",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "logging_layer",
+      "category": "layers",
+      "package": "examples-layers",
+      "source": "examples/layers/examples/logging_layer.rs",
+      "summary": "This examples demonstrates how to implement your own custom transport layer. As a demonstration we implement a simple request / response logging layer.",
+      "command": "cargo run --locked -p examples-layers --example logging_layer",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "retry_layer",
+      "category": "layers",
+      "package": "examples-layers",
+      "source": "examples/layers/examples/retry_layer.rs",
+      "summary": "This example demonstrates how to use the [`RetryBackoffLayer`] in the provider.",
+      "command": "cargo run --locked -p examples-layers --example retry_layer",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "anvil_deploy_contract",
+      "category": "node-bindings",
+      "package": "examples-node-bindings",
+      "source": "examples/node-bindings/examples/anvil_deploy_contract.rs",
+      "summary": "Example of deploying a contract to a local Anvil node using the [`ProviderBuilder`].",
+      "command": "cargo run --locked -p examples-node-bindings --example anvil_deploy_contract",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "anvil_fork_instance",
+      "category": "node-bindings",
+      "package": "examples-node-bindings",
+      "source": "examples/node-bindings/examples/anvil_fork_instance.rs",
+      "summary": "Example of spinning up a forked Anvil instance and connecting it with a provider.",
+      "command": "cargo run --locked -p examples-node-bindings --example anvil_fork_instance",
+      "runtime": {
+        "class": "configured-network",
+        "network": "user-supplied",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "anvil_fork_provider",
+      "category": "node-bindings",
+      "package": "examples-node-bindings",
+      "source": "examples/node-bindings/examples/anvil_fork_provider.rs",
+      "summary": "Example of spinning up a forked Anvil node using the [`ProviderBuilder`].",
+      "command": "cargo run --locked -p examples-node-bindings --example anvil_fork_provider",
+      "runtime": {
+        "class": "configured-network",
+        "network": "user-supplied",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "anvil_local_instance",
+      "category": "node-bindings",
+      "package": "examples-node-bindings",
+      "source": "examples/node-bindings/examples/anvil_local_instance.rs",
+      "summary": "Example of spinning up a local Anvil instance and connecting it with a provider.",
+      "command": "cargo run --locked -p examples-node-bindings --example anvil_local_instance",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "anvil_local_provider",
+      "category": "node-bindings",
+      "package": "examples-node-bindings",
+      "source": "examples/node-bindings/examples/anvil_local_provider.rs",
+      "summary": "Example of spinning up a local Anvil node using the [`ProviderBuilder`].",
+      "command": "cargo run --locked -p examples-node-bindings --example anvil_local_provider",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "anvil_set_storage_at",
+      "category": "node-bindings",
+      "package": "examples-node-bindings",
+      "source": "examples/node-bindings/examples/anvil_set_storage_at.rs",
+      "summary": "Example of mocking WETH balance of a target account using [`AnvilApi::anvil_set_storage_at`].",
+      "command": "cargo run --locked -p examples-node-bindings --example anvil_set_storage_at",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet-fork",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "geth_local_instance",
+      "category": "node-bindings",
+      "package": "examples-node-bindings",
+      "source": "examples/node-bindings/examples/geth_local_instance.rs",
+      "summary": "Example of spinning up a local Geth node instance and connecting it with a provider.",
+      "command": "cargo run --locked -p examples-node-bindings --example geth_local_instance",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "geth"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "reth_local_instance",
+      "category": "node-bindings",
+      "package": "examples-node-bindings",
+      "source": "examples/node-bindings/examples/reth_local_instance.rs",
+      "summary": "Example of spinning up a local Reth node instance and connecting it with a provider.",
+      "command": "cargo run --locked -p examples-node-bindings --example reth_local_instance",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "reth"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "bytes_and_address_types",
+      "category": "primitives",
+      "package": "examples-primitives",
+      "source": "examples/primitives/examples/bytes_and_address_types.rs",
+      "summary": "Example of basic usage of bytes and address types and macros.",
+      "command": "cargo run --locked -p examples-primitives --example bytes_and_address_types",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "hashing_functions",
+      "category": "primitives",
+      "package": "examples-primitives",
+      "source": "examples/primitives/examples/hashing_functions.rs",
+      "summary": "Example of basic usage of hashing functions.",
+      "command": "cargo run --locked -p examples-primitives --example hashing_functions",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "basic_provider",
+      "category": "providers",
+      "package": "examples-providers",
+      "source": "examples/providers/examples/basic_provider.rs",
+      "summary": "Instantiate a basic provider without any fillers or layers.",
+      "command": "cargo run --locked -p examples-providers --example basic_provider",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "batch_rpc",
+      "category": "providers",
+      "package": "examples-providers",
+      "source": "examples/providers/examples/batch_rpc.rs",
+      "summary": "Example depicting how to make a Batch RPC request using the HTTP provider.",
+      "command": "cargo run --locked -p examples-providers --example batch_rpc",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "builder",
+      "category": "providers",
+      "package": "examples-providers",
+      "source": "examples/providers/examples/builder.rs",
+      "summary": "Example of using the `ProviderBuilder` to create a provider with a signer and network.",
+      "command": "cargo run --locked -p examples-providers --example builder",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "builtin",
+      "category": "providers",
+      "package": "examples-providers",
+      "source": "examples/providers/examples/builtin.rs",
+      "summary": "Example of using the `on_builtin` method in the provider.",
+      "command": "cargo run --locked -p examples-providers --example builtin",
+      "runtime": {
+        "class": "configured-network",
+        "network": "local-development",
+        "environment": [
+          "IPC_PATH"
+        ],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "dyn_provider",
+      "category": "providers",
+      "package": "examples-providers",
+      "source": "examples/providers/examples/dyn_provider.rs",
+      "summary": "Demonstrates how to obtain a `DynProvider` from a Provider.",
+      "command": "cargo run --locked -p examples-providers --example dyn_provider",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "embed_consensus_rpc",
+      "category": "providers",
+      "package": "examples-providers",
+      "source": "examples/providers/examples/embed_consensus_rpc.rs",
+      "summary": "This example demonstrates how alloy's RPC types and consensus types are tied together.",
+      "command": "cargo run --locked -p examples-providers --example embed_consensus_rpc",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "http",
+      "category": "providers",
+      "package": "examples-providers",
+      "source": "examples/providers/examples/http.rs",
+      "summary": "Example of using the HTTP provider with the `reqwest` crate to get the latest block number.",
+      "command": "cargo run --locked -p examples-providers --example http",
+      "runtime": {
+        "class": "configured-network",
+        "network": "user-supplied",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "http_with_auth",
+      "category": "providers",
+      "package": "examples-providers",
+      "source": "examples/providers/examples/http_with_auth.rs",
+      "summary": "Example of using the reqwest HTTP client with an `Authorization` header to get the latest block number.",
+      "command": "cargo run --locked -p examples-providers --example http_with_auth",
+      "runtime": {
+        "class": "configured-network",
+        "network": "user-supplied",
+        "environment": [
+          "RPC_AUTHORIZATION",
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "ipc",
+      "category": "providers",
+      "package": "examples-providers",
+      "source": "examples/providers/examples/ipc.rs",
+      "summary": "Example of using the IPC provider to get the latest block number.",
+      "command": "cargo run --locked -p examples-providers --example ipc",
+      "runtime": {
+        "class": "configured-network",
+        "network": "configured-node",
+        "environment": [
+          "IPC_PATH"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "mocking",
+      "category": "providers",
+      "package": "examples-providers",
+      "source": "examples/providers/examples/mocking.rs",
+      "summary": "This example shows to how to use the `MockTransport` to mock the provider responses for testing purposes.",
+      "command": "cargo run --locked -p examples-providers --example mocking",
+      "runtime": {
+        "class": "local",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "multicall",
+      "category": "providers",
+      "package": "examples-providers",
+      "source": "examples/providers/examples/multicall.rs",
+      "summary": "This example demonstrates how to use the [`MulticallBuilder`] to make multicalls using the [`IMulticall3`] contract.",
+      "command": "cargo run --locked -p examples-providers --example multicall",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet-fork",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "multicall_batching",
+      "category": "providers",
+      "package": "examples-providers",
+      "source": "examples/providers/examples/multicall_batching.rs",
+      "summary": "Demonstrate the Multicall Batch Layer. Provider layer that aggregates contract calls (`eth_call`) over a time period into a single Multicall3 contract call. This is useful for reducing the number of requests made to the RPC.",
+      "command": "cargo run --locked -p examples-providers --example multicall_batching",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet-fork",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "wrapped_provider",
+      "category": "providers",
+      "package": "examples-providers",
+      "source": "examples/providers/examples/wrapped_provider.rs",
+      "summary": "Example demonstrating how to wrap the [`Provider`] in a struct and pass it through free functions.",
+      "command": "cargo run --locked -p examples-providers --example wrapped_provider",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "ws",
+      "category": "providers",
+      "package": "examples-providers",
+      "source": "examples/providers/examples/ws.rs",
+      "summary": "Example of using the WS provider to subscribe to new blocks.",
+      "command": "cargo run --locked -p examples-providers --example ws",
+      "runtime": {
+        "class": "configured-network",
+        "network": "user-supplied",
+        "environment": [
+          "WS_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "ws_with_auth",
+      "category": "providers",
+      "package": "examples-providers",
+      "source": "examples/providers/examples/ws_with_auth.rs",
+      "summary": "Example of using the WS provider with auth to subscribe to new blocks.",
+      "command": "cargo run --locked -p examples-providers --example ws_with_auth",
+      "runtime": {
+        "class": "configured-network",
+        "network": "user-supplied",
+        "environment": [
+          "WS_BEARER_TOKEN",
+          "WS_PASSWORD",
+          "WS_URL",
+          "WS_USERNAME"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "query_contract_storage",
+      "category": "queries",
+      "package": "examples-queries",
+      "source": "examples/queries/examples/query_contract_storage.rs",
+      "summary": "Example of querying contract storage from the Ethereum network.",
+      "command": "cargo run --locked -p examples-queries --example query_contract_storage",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "query_deployed_bytecode",
+      "category": "queries",
+      "package": "examples-queries",
+      "source": "examples/queries/examples/query_deployed_bytecode.rs",
+      "summary": "Example of querying deployed bytecode of a contract on the Ethereum network.",
+      "command": "cargo run --locked -p examples-queries --example query_deployed_bytecode",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "query_logs",
+      "category": "queries",
+      "package": "examples-queries",
+      "source": "examples/queries/examples/query_logs.rs",
+      "summary": "Example of querying logs from the Ethereum network.",
+      "command": "cargo run --locked -p examples-queries --example query_logs",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "query_logs_chunked",
+      "category": "queries",
+      "package": "examples-queries",
+      "source": "examples/queries/examples/query_logs_chunked.rs",
+      "summary": "Example of querying event logs over a large block range using `chunked()`.",
+      "command": "cargo run --locked -p examples-queries --example query_logs_chunked",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "all_derives",
+      "category": "sol-macro",
+      "package": "examples-sol-macro",
+      "source": "examples/sol-macro/examples/all_derives.rs",
+      "summary": "This example demonstrates the `all_derives` attribute in the `sol!` macro.",
+      "command": "cargo run --locked -p examples-sol-macro --example all_derives",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "decode_returns",
+      "category": "sol-macro",
+      "package": "examples-sol-macro",
+      "source": "examples/sol-macro/examples/decode_returns.rs",
+      "summary": "Example showing how to decode return values from a call to a contract using the `sol!` macro.",
+      "command": "cargo run --locked -p examples-sol-macro --example decode_returns",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "events_errors",
+      "category": "sol-macro",
+      "package": "examples-sol-macro",
+      "source": "examples/sol-macro/examples/events_errors.rs",
+      "summary": "Example showing how to decode events and errors from a contract using the `sol!` macro.",
+      "command": "cargo run --locked -p examples-sol-macro --example events_errors",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "extra_derives",
+      "category": "sol-macro",
+      "package": "examples-sol-macro",
+      "source": "examples/sol-macro/examples/extra_derives.rs",
+      "summary": "This example shows how to apply trait derivations globally by specifying the path.",
+      "command": "cargo run --locked -p examples-sol-macro --example extra_derives",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "structs_enums",
+      "category": "sol-macro",
+      "package": "examples-sol-macro",
+      "source": "examples/sol-macro/examples/structs_enums.rs",
+      "summary": "Example showing how to use the `sol!` macro to generate Rust bindings for Solidity structs and enums.",
+      "command": "cargo run --locked -p examples-sol-macro --example structs_enums",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "user_defined_types",
+      "category": "sol-macro",
+      "package": "examples-sol-macro",
+      "source": "examples/sol-macro/examples/user_defined_types.rs",
+      "summary": "Example showing defining user defined value types and type aliases using the `sol!` macro.",
+      "command": "cargo run --locked -p examples-sol-macro --example user_defined_types",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "event_multiplexer",
+      "category": "subscriptions",
+      "package": "examples-subscriptions",
+      "source": "examples/subscriptions/examples/event_multiplexer.rs",
+      "summary": "Example of multiplexing the watching of event logs.",
+      "command": "cargo run --locked -p examples-subscriptions --example event_multiplexer",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "poll_logs",
+      "category": "subscriptions",
+      "package": "examples-subscriptions",
+      "source": "examples/subscriptions/examples/poll_logs.rs",
+      "summary": "Example of watching and polling for contract events by `WebSocket` subscription.",
+      "command": "cargo run --locked -p examples-subscriptions --example poll_logs",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "subscribe_all_logs",
+      "category": "subscriptions",
+      "package": "examples-subscriptions",
+      "source": "examples/subscriptions/examples/subscribe_all_logs.rs",
+      "summary": "Example of subscribing and listening for all contract events by `WebSocket` subscription.",
+      "command": "cargo run --locked -p examples-subscriptions --example subscribe_all_logs",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet",
+        "environment": [
+          "WS_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "subscribe_blocks",
+      "category": "subscriptions",
+      "package": "examples-subscriptions",
+      "source": "examples/subscriptions/examples/subscribe_blocks.rs",
+      "summary": "Example of subscribing to blocks and watching block headers by polling.",
+      "command": "cargo run --locked -p examples-subscriptions --example subscribe_blocks",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "subscribe_logs",
+      "category": "subscriptions",
+      "package": "examples-subscriptions",
+      "source": "examples/subscriptions/examples/subscribe_logs.rs",
+      "summary": "Example of subscribing and listening for specific contract events by `WebSocket` subscription.",
+      "command": "cargo run --locked -p examples-subscriptions --example subscribe_logs",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet",
+        "environment": [
+          "WS_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "subscribe_pending_transactions",
+      "category": "subscriptions",
+      "package": "examples-subscriptions",
+      "source": "examples/subscriptions/examples/subscribe_pending_transactions.rs",
+      "summary": "Example of subscribing and listening for pending transactions in the public mempool by `WebSocket` subscription.",
+      "command": "cargo run --locked -p examples-subscriptions --example subscribe_pending_transactions",
+      "runtime": {
+        "class": "configured-network",
+        "network": "user-supplied",
+        "environment": [
+          "WS_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "debug_trace_call_many",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/debug_trace_call_many.rs",
+      "summary": "Example of how to trace a transaction using `debug_trace_call_many`.",
+      "command": "cargo run --locked -p examples-transactions --example debug_trace_call_many",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "reth"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "decode_input",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/decode_input.rs",
+      "summary": "Example of how to decode the input of a transaction.",
+      "command": "cargo run --locked -p examples-transactions --example decode_input",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "decode_receipt_log",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/decode_receipt_log.rs",
+      "summary": "Example depicting how to decode logs present in a transaction receipt.",
+      "command": "cargo run --locked -p examples-transactions --example decode_receipt_log",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "encode_decode_eip1559",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/encode_decode_eip1559.rs",
+      "summary": "Example showing how to encode and decode an [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transaction.",
+      "command": "cargo run --locked -p examples-transactions --example encode_decode_eip1559",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "gas_price_usd",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/gas_price_usd.rs",
+      "summary": "Example of how to get the gas price in USD using the Chainlink ETH/USD feed.",
+      "command": "cargo run --locked -p examples-transactions --example gas_price_usd",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet-fork",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "permit2_signature_transfer",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/permit2_signature_transfer.rs",
+      "summary": "Example of how to transfer ERC20 tokens from one account to another using a signed permit.",
+      "command": "cargo run --locked -p examples-transactions --example permit2_signature_transfer",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet-fork",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "send_eip1559_transaction",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/send_eip1559_transaction.rs",
+      "summary": "Example showing how to send an [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transaction.",
+      "command": "cargo run --locked -p examples-transactions --example send_eip1559_transaction",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "send_eip4844_transaction",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/send_eip4844_transaction.rs",
+      "summary": "Example showing how to send an [EIP-4844](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-4844.md) transaction.",
+      "command": "cargo run --locked -p examples-transactions --example send_eip4844_transaction",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "send_eip7594_transaction",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/send_eip7594_transaction.rs",
+      "summary": "Example showing how to send an [EIP-7594](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7594.md) transaction.",
+      "command": "cargo run --locked -p examples-transactions --example send_eip7594_transaction",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "send_eip7702_transaction",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/send_eip7702_transaction.rs",
+      "summary": "Example showing how to send an [EIP-7702](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7702.md) transaction.",
+      "command": "cargo run --locked -p examples-transactions --example send_eip7702_transaction",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "send_legacy_transaction",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/send_legacy_transaction.rs",
+      "summary": "Example showing how to send a legacy transaction.",
+      "command": "cargo run --locked -p examples-transactions --example send_legacy_transaction",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "send_private_transaction",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/send_private_transaction.rs",
+      "summary": "Example of sending a private transaction using Flashbots Protect.",
+      "command": "cargo run --locked -p examples-transactions --example send_private_transaction",
+      "runtime": {
+        "class": "external-service",
+        "network": "ethereum-mainnet",
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": [
+          "Flashbots Protect"
+        ]
+      }
+    },
+    {
+      "name": "send_raw_transaction",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/send_raw_transaction.rs",
+      "summary": "Example of signing, encoding and sending a raw transaction using a wallet.",
+      "command": "cargo run --locked -p examples-transactions --example send_raw_transaction",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "trace_call",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/trace_call.rs",
+      "summary": "Example of how to trace a transaction using `trace_call`.",
+      "command": "cargo run --locked -p examples-transactions --example trace_call",
+      "runtime": {
+        "class": "configured-network",
+        "network": "user-supplied",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "trace_call_many",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/trace_call_many.rs",
+      "summary": "Example of how to trace a transaction using `trace_call_many`.",
+      "command": "cargo run --locked -p examples-transactions --example trace_call_many",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "reth"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "trace_transaction",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/trace_transaction.rs",
+      "summary": "Example of how to trace a transaction using `trace_transaction`.",
+      "command": "cargo run --locked -p examples-transactions --example trace_transaction",
+      "runtime": {
+        "class": "configured-network",
+        "network": "ethereum-mainnet-fork",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "transfer_erc20",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/transfer_erc20.rs",
+      "summary": "Example of how to transfer ERC20 tokens from one account to another.",
+      "command": "cargo run --locked -p examples-transactions --example transfer_erc20",
+      "runtime": {
+        "class": "configured-network",
+        "network": "user-supplied",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "transfer_eth",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/transfer_eth.rs",
+      "summary": "Example of how to transfer ETH from one account to another.",
+      "command": "cargo run --locked -p examples-transactions --example transfer_eth",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "with_access_list",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/with_access_list.rs",
+      "summary": "Example of sending a EIP-1559 transaction with access list.",
+      "command": "cargo run --locked -p examples-transactions --example with_access_list",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "aws_signer",
+      "category": "wallets",
+      "package": "examples-wallets",
+      "source": "examples/wallets/examples/aws_signer.rs",
+      "summary": "Example showing how to use the AWS KMS signer.",
+      "command": "cargo run --locked -p examples-wallets --example aws_signer",
+      "runtime": {
+        "class": "cloud-credentials",
+        "network": null,
+        "environment": [
+          "AWS_KEY_ID"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": [
+          "AWS KMS"
+        ]
+      }
+    },
+    {
+      "name": "create_keystore",
+      "category": "wallets",
+      "package": "examples-wallets",
+      "source": "examples/wallets/examples/create_keystore.rs",
+      "summary": "Example of creating a keystore file from a private key and password, and then reading it back.",
+      "command": "cargo run --locked -p examples-wallets --example create_keystore",
+      "runtime": {
+        "class": "local-filesystem",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "ethereum_wallet",
+      "category": "wallets",
+      "package": "examples-wallets",
+      "source": "examples/wallets/examples/ethereum_wallet.rs",
+      "summary": "Demonstrates how `EthereumWallet` can use multiple different types of signers.",
+      "command": "cargo run --locked -p examples-wallets --example ethereum_wallet",
+      "runtime": {
+        "class": "hardware",
+        "network": "local-development",
+        "environment": [
+          "AWS_KEY_ID"
+        ],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [
+          "Ledger device"
+        ],
+        "services": [
+          "AWS KMS"
+        ]
+      }
+    },
+    {
+      "name": "gcp_signer",
+      "category": "wallets",
+      "package": "examples-wallets",
+      "source": "examples/wallets/examples/gcp_signer.rs",
+      "summary": "Example showing how to use the GCP KMS signer.",
+      "command": "cargo run --locked -p examples-wallets --example gcp_signer",
+      "runtime": {
+        "class": "cloud-credentials",
+        "network": null,
+        "environment": [
+          "GOOGLE_KEYRING",
+          "GOOGLE_KEY_NAME",
+          "GOOGLE_LOCATION",
+          "GOOGLE_PROJECT_ID"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": [
+          "Google Cloud KMS"
+        ]
+      }
+    },
+    {
+      "name": "keystore_signer",
+      "category": "wallets",
+      "package": "examples-wallets",
+      "source": "examples/wallets/examples/keystore_signer.rs",
+      "summary": "Example of using a keystore wallet to sign and send a transaction.",
+      "command": "cargo run --locked -p examples-wallets --example keystore_signer",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "ledger_signer",
+      "category": "wallets",
+      "package": "examples-wallets",
+      "source": "examples/wallets/examples/ledger_signer.rs",
+      "summary": "Example of signing and sending a transaction using a Ledger device.",
+      "command": "cargo run --locked -p examples-wallets --example ledger_signer",
+      "runtime": {
+        "class": "hardware",
+        "network": "ethereum-mainnet",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [
+          "Ledger device"
+        ],
+        "services": []
+      }
+    },
+    {
+      "name": "mnemonic_signer",
+      "category": "wallets",
+      "package": "examples-wallets",
+      "source": "examples/wallets/examples/mnemonic_signer.rs",
+      "summary": "Example of using `MnemonicBuilder` to access a wallet from a mnemonic phrase.",
+      "command": "cargo run --locked -p examples-wallets --example mnemonic_signer",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "private_key_signer",
+      "category": "wallets",
+      "package": "examples-wallets",
+      "source": "examples/wallets/examples/private_key_signer.rs",
+      "summary": "Example of using a local wallet to sign and send a transaction.",
+      "command": "cargo run --locked -p examples-wallets --example private_key_signer",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "sign_message",
+      "category": "wallets",
+      "package": "examples-wallets",
+      "source": "examples/wallets/examples/sign_message.rs",
+      "summary": "Example of signing a message with a signer.",
+      "command": "cargo run --locked -p examples-wallets --example sign_message",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "sign_permit_hash",
+      "category": "wallets",
+      "package": "examples-wallets",
+      "source": "examples/wallets/examples/sign_permit_hash.rs",
+      "summary": "Example of signing a permit hash using a wallet.",
+      "command": "cargo run --locked -p examples-wallets --example sign_permit_hash",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "trezor_signer",
+      "category": "wallets",
+      "package": "examples-wallets",
+      "source": "examples/wallets/examples/trezor_signer.rs",
+      "summary": "Example of signing and sending a transaction using a Trezor device.",
+      "command": "cargo run --locked -p examples-wallets --example trezor_signer",
+      "runtime": {
+        "class": "hardware",
+        "network": "ethereum-mainnet",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [
+          "Trezor device"
+        ],
+        "services": []
+      }
+    },
+    {
+      "name": "verify_message",
+      "category": "wallets",
+      "package": "examples-wallets",
+      "source": "examples/wallets/examples/verify_message.rs",
+      "summary": "Example of verifying that a message was signed by the provided address.",
+      "command": "cargo run --locked -p examples-wallets --example verify_message",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "yubi_signer",
+      "category": "wallets",
+      "package": "examples-wallets",
+      "source": "examples/wallets/examples/yubi_signer.rs",
+      "summary": "Example of signing and sending a transaction using a Yubi device.",
+      "command": "cargo run --locked -p examples-wallets --example yubi_signer",
+      "runtime": {
+        "class": "hardware",
+        "network": "user-supplied",
+        "environment": [
+          "RPC_URL"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [
+          "YubiHSM device"
+        ],
+        "services": []
+      }
+    }
+  ]
+}
