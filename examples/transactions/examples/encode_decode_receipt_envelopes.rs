@@ -24,6 +24,11 @@ fn main() -> Result<()> {
 
     for (tx_type, envelope) in envelopes {
         let encoded = envelope.encoded_2718();
+        if tx_type == TxType::Legacy {
+            assert!(encoded[0] >= 0xc0);
+        } else {
+            assert_eq!(encoded[0], tx_type as u8);
+        }
         let decoded = ReceiptEnvelope::decode_2718_exact(&encoded)?;
 
         assert_eq!(decoded.tx_type(), tx_type);

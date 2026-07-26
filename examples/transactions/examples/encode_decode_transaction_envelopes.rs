@@ -11,6 +11,7 @@ use alloy::{
     eips::{
         eip2718::{Decodable2718, Encodable2718},
         eip2930::AccessList,
+        eip7702::Authorization,
     },
     primitives::{address, b256, Address, Signature, TxKind, U256},
     rpc::types::Transaction as RpcTransaction,
@@ -19,9 +20,20 @@ use alloy::{
 use eyre::Result;
 
 fn main() -> Result<()> {
-    let signer = PrivateKeySigner::random();
+    // Fixed test-only keys keep the bytes and hashes reproducible. Never use them on a real chain.
+    let signer = PrivateKeySigner::from_bytes(&b256!(
+        "0000000000000000000000000000000000000000000000000000000000000001"
+    ))?;
+    let authorization_signer = PrivateKeySigner::from_bytes(&b256!(
+        "0000000000000000000000000000000000000000000000000000000000000002"
+    ))?;
     let signer_address = signer.address();
-    let to = address!("0000000000000000000000000000000000000001");
+    let to = address!("1111111111111111111111111111111111111111");
+    let authorization = Authorization { chain_id: U256::from(1), address: to, nonce: 0 };
+    let authorization_signature =
+        authorization_signer.sign_hash_sync(&authorization.signature_hash())?;
+    let signed_authorization = authorization.into_signed(authorization_signature);
+    assert_eq!(signed_authorization.recover_authority()?, authorization_signer.address());
 
     let envelopes = [
         (
@@ -74,6 +86,8 @@ fn main() -> Result<()> {
         ),
         (
             TxType::Eip4844,
+            // This is the execution/block form. Submitting a blob transaction requires a sidecar;
+            // see the `send_eip4844_transaction` example for the pooled representation.
             sign(
                 TxEip4844 {
                     chain_id: 1,
@@ -101,11 +115,11 @@ fn main() -> Result<()> {
                     nonce: 4,
                     max_fee_per_gas: 20_000_000_000,
                     max_priority_fee_per_gas: 1_000_000_000,
-                    gas_limit: 21_000,
+                    gas_limit: 50_000,
                     to,
                     value: U256::from(5),
                     access_list: AccessList::default(),
-                    authorization_list: Vec::new(),
+                    authorization_list: vec![signed_authorization],
                     ..Default::default()
                 },
                 &signer,
@@ -117,16 +131,23 @@ fn main() -> Result<()> {
         round_trip(envelope, tx_type, signer_address)?;
     }
 
-    // Ethereum's concrete JSON-RPC transaction response contains a recovered `TxEnvelope`.
+    // Ethereum's concrete JSON-RPC transaction response wraps a `TxEnvelope` with the `from`
+    // address reported by the node.
     // `into_inner` removes the RPC-only block metadata without serializing through JSON again.
     let rpc_transaction: RpcTransaction = serde_json::from_str(RPC_TRANSACTION)?;
-    let rpc_signer = rpc_transaction.inner.signer();
-    let rpc_hash = *rpc_transaction.inner.tx_hash();
+    let rpc_from = rpc_transaction.inner.signer();
+    let reported_hash = *rpc_transaction.inner.tx_hash();
     let envelope: TxEnvelope = rpc_transaction.into_inner();
 
-    assert_eq!(envelope.recover_signer()?, rpc_signer);
-    assert_eq!(*envelope.tx_hash(), rpc_hash);
-    round_trip(envelope, TxType::Eip1559, rpc_signer)?;
+    // Verify the node-reported sender against the signature. The envelope initially retains the
+    // hash reported in JSON, so decode its canonical bytes to independently recompute the hash.
+    assert_eq!(envelope.recover_signer()?, rpc_from);
+    assert_eq!(*envelope.tx_hash(), reported_hash);
+    let encoded = envelope.encoded_2718();
+    let decoded = TxEnvelope::decode_2718_exact(&encoded)?;
+    assert_eq!(decoded.tx_type(), TxType::Eip1559);
+    assert_eq!(decoded.recover_signer()?, rpc_from);
+    assert_eq!(*decoded.tx_hash(), reported_hash);
 
     Ok(())
 }
@@ -143,11 +164,19 @@ where
 fn round_trip(envelope: TxEnvelope, tx_type: TxType, signer: Address) -> Result<()> {
     let tx_hash = *envelope.tx_hash();
 
-    // `encoded_2718` is the allocating convenience method. Use `encode_2718` when reusing a buffer.
+    // `encoded_2718` allocates. `encode_2718` appends to a caller-owned buffer.
     let encoded = envelope.encoded_2718();
     let mut reusable_buffer = Vec::with_capacity(envelope.encode_2718_len());
     envelope.encode_2718(&mut reusable_buffer);
     assert_eq!(encoded, reusable_buffer);
+    reusable_buffer.clear();
+    envelope.encode_2718(&mut reusable_buffer);
+    assert_eq!(encoded, reusable_buffer);
+    if tx_type == TxType::Legacy {
+        assert!(encoded[0] >= 0xc0);
+    } else {
+        assert_eq!(encoded[0], tx_type as u8);
+    }
 
     // Use the exact decoder for a buffer that must contain one envelope and no trailing bytes.
     let decoded = TxEnvelope::decode_2718_exact(&encoded)?;
