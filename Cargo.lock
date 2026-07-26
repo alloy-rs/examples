@@ -3729,6 +3729,7 @@ dependencies = [
  "example-support",
  "eyre",
  "rand 0.8.7",
+ "serde_json",
  "tokio",
 ]
 

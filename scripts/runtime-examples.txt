@@ -19,7 +19,8 @@ extra_derives
 structs_enums
 user_defined_types
 decode_input
-encode_decode_eip1559
+encode_decode_receipt_envelopes
+encode_decode_transaction_envelopes
 mnemonic_signer
 sign_message
 sign_permit_hash
