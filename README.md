@@ -134,7 +134,8 @@ This repository contains the following examples:
 - [x] Transactions
   - [x] [Decode input](./examples/transactions/examples/decode_input.rs)
   - [x] [Decode a receipt log](./examples/transactions/examples/decode_receipt_log.rs)
-  - [x] [Encode and decode EIP-1559 transaction](./examples/transactions/examples/encode_decode_eip1559.rs)
+  - [x] [Encode and decode transaction envelopes](./examples/transactions/examples/encode_decode_transaction_envelopes.rs)
+  - [x] [Encode and decode receipt envelopes](./examples/transactions/examples/encode_decode_receipt_envelopes.rs)
   - [x] [Get gas price in USD](./examples/transactions/examples/gas_price_usd.rs)
   - [x] [Simulate using `debug_traceCallMany`](./examples/transactions/examples/debug_trace_call_many.rs)
   - [x] [Simulate using `trace_callMany`](./examples/transactions/examples/trace_call_many.rs)

@@ -1582,12 +1582,29 @@
       }
     },
     {
-      "name": "encode_decode_eip1559",
+      "name": "encode_decode_receipt_envelopes",
       "category": "transactions",
       "package": "examples-transactions",
-      "source": "examples/transactions/examples/encode_decode_eip1559.rs",
-      "summary": "Example showing how to encode and decode an [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) transaction.",
-      "command": "cargo run --locked -p examples-transactions --example encode_decode_eip1559",
+      "source": "examples/transactions/examples/encode_decode_receipt_envelopes.rs",
+      "summary": "Encode and decode Ethereum receipt envelopes with EIP-2718.",
+      "command": "cargo run --locked -p examples-transactions --example encode_decode_receipt_envelopes",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "encode_decode_transaction_envelopes",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/encode_decode_transaction_envelopes.rs",
+      "summary": "Encode and decode signed Ethereum transaction envelopes with EIP-2718.",
+      "command": "cargo run --locked -p examples-transactions --example encode_decode_transaction_envelopes",
       "runtime": {
         "class": "offline",
         "network": null,
