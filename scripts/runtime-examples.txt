@@ -26,3 +26,4 @@ sign_message
 sign_permit_hash
 verify_message
 watch_canonical_blocks
+watch_canonical_logs

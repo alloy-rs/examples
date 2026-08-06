@@ -1527,6 +1527,25 @@
       }
     },
     {
+      "name": "watch_canonical_logs",
+      "category": "subscriptions",
+      "package": "examples-subscriptions",
+      "source": "examples/subscriptions/examples/watch_canonical_logs.rs",
+      "summary": "Example of resuming a canonical log stream from a known block number.",
+      "command": "cargo run --locked -p examples-subscriptions --example watch_canonical_logs",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
       "name": "debug_trace_call_many",
       "category": "transactions",
       "package": "examples-transactions",

@@ -126,6 +126,7 @@ This repository contains the following examples:
 - [x] Subscriptions
   - [x] [Subscribe and watch blocks](./examples/subscriptions/examples/subscribe_blocks.rs)
   - [x] [Resume a canonical block stream](./examples/subscriptions/examples/watch_canonical_blocks.rs)
+  - [x] [Resume a canonical log stream](./examples/subscriptions/examples/watch_canonical_logs.rs)
   - [x] [Watch and poll for contract event logs](./examples/subscriptions/examples/poll_logs.rs)
   - [x] [Subscribe and listen for specific contract event logs](./examples/subscriptions/examples/subscribe_logs.rs)
   - [x] [Subscribe and listen for all contract event logs](./examples/subscriptions/examples/subscribe_all_logs.rs)
