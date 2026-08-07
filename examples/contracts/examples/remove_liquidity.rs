@@ -20,6 +20,12 @@ const DEADLINE_SECONDS: u64 = 20 * 60;
 sol! {
     #[allow(missing_docs)]
     #[sol(rpc)]
+    interface IUniswapV2Factory {
+        function getPair(address tokenA, address tokenB) external view returns (address pair);
+    }
+
+    #[allow(missing_docs)]
+    #[sol(rpc)]
     interface IUniswapV2Pair {
         function approve(address spender, uint256 value) external returns (bool);
         function balanceOf(address owner) external view returns (uint256);
@@ -34,6 +40,8 @@ sol! {
     #[allow(missing_docs, clippy::too_many_arguments)]
     #[sol(rpc)]
     interface IUniswapV2Router02 {
+        function factory() external view returns (address);
+
         function removeLiquidity(
             address tokenA,
             address tokenB,
@@ -79,8 +87,21 @@ async fn main() -> Result<()> {
     let token_0_call = pair.token0();
     let token_1_call = pair.token1();
     let reserves_call = pair.getReserves();
-    let (token_0, token_1, reserves) =
-        tokio::try_join!(token_0_call.call(), token_1_call.call(), reserves_call.call(),)?;
+    let factory_call = router.factory();
+    let (token_0, token_1, reserves, factory_address) = tokio::try_join!(
+        token_0_call.call(),
+        token_1_call.call(),
+        reserves_call.call(),
+        factory_call.call(),
+    )?;
+
+    let factory = IUniswapV2Factory::new(factory_address, &provider);
+    let router_pair = factory.getPair(token_0, token_1).call().await?;
+    ensure!(
+        router_pair == pair_address,
+        "PAIR_ADDRESS {pair_address} does not match router pair {router_pair}"
+    );
+
     println!(
         "Removing {liquidity} LP tokens from {pair_address}\n\
          token0: {token_0} (reserve: {})\n\
