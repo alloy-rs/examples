@@ -61,6 +61,7 @@ This repository contains the following examples:
   - [x] [Deploy and link library](./examples/contracts/examples/deploy_and_link_library.rs)
   - [x] [Interact with ABI](./examples/contracts/examples/interact_with_abi.rs)
   - [x] [Interact with contract instance](./examples/contracts/examples/interact_with_contract_instance.rs)
+  - [x] [Remove liquidity from a Uniswap V2-compatible pair](./examples/contracts/examples/remove_liquidity.rs)
   - [x] [Decode custom JSON-RPC errors](./examples/contracts/examples/jsonrpc_error_decoding.rs)
   - [x] [Decode revert data into custom errors](./examples/contracts/examples/revert_decoding.rs)
   - [x] [Handle unknown return types using `DynSol`](./examples/contracts/examples/unknown_return_types.rs)
