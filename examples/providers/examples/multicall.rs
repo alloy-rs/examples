@@ -52,7 +52,9 @@ async fn main() -> eyre::Result<()> {
 
     // This would fail as Alice doesn't have any WETH.
     let tx = CallItemBuilder::new(weth.transfer(bob, U256::from(10))).allow_failure(true);
-    let deposit = CallItemBuilder::new(weth.deposit()).value(wad); // Set the amount of eth that should be deposited into the contract.
+    let deposit = CallItemBuilder::new(weth.deposit()).value(wad); // Set the amount of eth that
+                                                                   // should be deposited into the
+                                                                   // contract.
     let multicall = provider
         .multicall()
         // Bob's intial WETH balance.
