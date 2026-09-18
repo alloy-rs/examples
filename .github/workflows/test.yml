@@ -19,7 +19,12 @@ jobs:
     name: Compile all examples
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
     steps:
+      - name: Secure runner
+        uses: tempoxyz/gh-actions/actions/secure-runner@ca2b15de1d1f6edd2276736187d7e4c2d898972c
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
@@ -31,7 +36,12 @@ jobs:
     name: Check MSRV
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
     steps:
+      - name: Secure runner
+        uses: tempoxyz/gh-actions/actions/secure-runner@ca2b15de1d1f6edd2276736187d7e4c2d898972c
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@master
         with:
@@ -44,10 +54,20 @@ jobs:
   checks:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      contents: read
+      id-token: write
     steps:
+      - name: Secure runner
+        uses: tempoxyz/gh-actions/actions/secure-runner@ca2b15de1d1f6edd2276736187d7e4c2d898972c
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - uses: taiki-e/install-action@cargo-hack
+      - name: Install cargo-hack
+        uses: tempoxyz/gh-actions/vendor/taiki-e/install-action@25cce154e7fb10f99361a166468a6c56b9c31aa3
+        with:
+          tool: cargo-hack@0.6.45
+          checksum: true
+          fallback: none
       - uses: Swatinem/rust-cache@v2
         with:
           cache-on-failure: true
@@ -59,7 +79,12 @@ jobs:
   examples:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
     steps:
+      - name: Secure runner
+        uses: tempoxyz/gh-actions/actions/secure-runner@ca2b15de1d1f6edd2276736187d7e4c2d898972c
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - uses: foundry-rs/foundry-toolchain@v1
