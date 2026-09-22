@@ -10,7 +10,6 @@ on:
     # Needed so we can run it manually
 
 env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   BRANCH: cargo-update
   TITLE: "chore(deps): weekly `cargo update`"
   BODY: |
@@ -31,8 +30,9 @@ jobs:
     name: Update
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       id-token: write
+      pull-requests: write
     steps:
       - name: Secure runner
         uses: tempoxyz/gh-actions/actions/secure-runner@68851d67c611dc0050e9f3fcd5bd47f3f899a00e
