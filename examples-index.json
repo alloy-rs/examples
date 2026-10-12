@@ -1702,6 +1702,23 @@
       }
     },
     {
+      "name": "send_bundle",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/send_bundle.rs",
+      "summary": "Example of sending a MEV bundle with `eth_sendBundle` via Flashbots authentication.",
+      "command": "cargo run --locked -p examples-transactions --example send_bundle",
+      "runtime": {
+        "class": "local",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
       "name": "send_eip1559_transaction",
       "category": "transactions",
       "package": "examples-transactions",
