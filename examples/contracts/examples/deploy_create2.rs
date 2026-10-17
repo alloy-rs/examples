@@ -1,7 +1,7 @@
 //! Example of deploying a contract at a deterministic CREATE2 address using generated bindings.
 //!
 //! CREATE2 is executed by a factory contract, so address prediction uses the factory's address,
-//! not the transaction sender. Ordinary Contract::deploy uses CREATE instead.
+//! not the transaction sender. Ordinary `Contract::deploy` uses CREATE instead.
 
 use alloy::{
     primitives::{B256, U256},
