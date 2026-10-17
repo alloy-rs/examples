@@ -9,6 +9,7 @@ import socket
 import subprocess
 import threading
 import time
+import traceback
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.request import Request, urlopen
 
@@ -121,7 +122,12 @@ def test_bundle(node):
                 else:
                     # Anvil validates the signature, chain ID, funding, nonce, and gas parameters.
                     tx_hash = rpc(node, "eth_sendRawTransaction", [raw_tx])
-                    receipt = rpc(node, "eth_getTransactionReceipt", [tx_hash])
+                    for _ in range(100):
+                        receipt = rpc(node, "eth_getTransactionReceipt", [tx_hash])
+                        if receipt is not None:
+                            break
+                        time.sleep(0.1)
+                    assert receipt is not None, "Transaction receipt did not arrive"
                     assert int(receipt["status"], 16) == 1
                     assert receipt["from"].lower() == SENDER
                     assert receipt["to"].lower() == SENDER
@@ -134,6 +140,7 @@ def test_bundle(node):
                 self.wfile.write(data)
             except Exception as error:
                 errors.append(error)
+                traceback.print_exc()
                 self.send_error(500)
 
         def log_message(self, *_args):
