@@ -17,6 +17,8 @@ ROOT = Path(__file__).resolve().parent.parent
 # Public Anvil development key; never use this account on a live network.
 PRIVATE_KEY = "ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
 SENDER = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
+AUTH_KEY = "00" * 31 + "01"
+AUTH_ADDRESS = "0x7e5f4552091a69125d5dfcb7b8c2659029395bdf"
 
 
 def rpc(url, method, params):
@@ -106,7 +108,7 @@ def test_bundle(node):
                 assert int(bundle["blockNumber"], 16) == latest + 1
                 raw_tx, = bundle["txs"]
                 address, signature = self.headers["X-Flashbots-Signature"].split(":")
-                assert address.lower() == SENDER
+                assert address.lower() == AUTH_ADDRESS
                 digest = subprocess.check_output(["cast", "keccak", body.decode()], text=True).strip()
                 subprocess.run(
                     ["cast", "wallet", "verify", "--address", address, "0x" + digest.encode().hex(), signature],
@@ -142,7 +144,7 @@ def test_bundle(node):
         worker.start()
         env = {
             "PRIVATE_KEY": PRIVATE_KEY,
-            "FLASHBOTS_AUTH_KEY": PRIVATE_KEY,
+            "FLASHBOTS_AUTH_KEY": AUTH_KEY,
             "RPC_URL": node,
             "RELAY_URL": f"http://127.0.0.1:{relay.server_port}",
         }
