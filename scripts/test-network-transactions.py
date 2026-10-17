@@ -109,7 +109,7 @@ def test_bundle(node):
                 assert address.lower() == SENDER
                 digest = subprocess.check_output(["cast", "keccak", body.decode()], text=True).strip()
                 subprocess.run(
-                    ["cast", "wallet", "verify", "--address", address, digest, signature],
+                    ["cast", "wallet", "verify", "--address", address, "0x" + digest.encode().hex(), signature],
                     check=True, capture_output=True, text=True, timeout=10,
                 )
                 requests.append(request)

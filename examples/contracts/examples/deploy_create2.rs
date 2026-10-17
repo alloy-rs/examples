@@ -43,7 +43,7 @@ async fn main() -> Result<()> {
     let predicted = factory.address().create2_from_code(salt, &init_code);
     assert!(provider.get_code_at(predicted).await?.is_empty());
 
-    let receipt = factory.deploy(salt, init_code.clone()).send().await?.get_receipt().await?;
+    let receipt = factory.deploy_(salt, init_code.clone()).send().await?.get_receipt().await?;
     ensure!(receipt.status(), "CREATE2 deployment reverted");
     assert!(!provider.get_code_at(predicted).await?.is_empty());
 
@@ -53,7 +53,7 @@ async fn main() -> Result<()> {
     assert_eq!(counter.number().call().await?, U256::from(42));
 
     // Reusing the same salt and creation code at the same factory cannot redeploy this address.
-    assert!(factory.deploy(salt, init_code).call().await.is_err());
+    assert!(factory.deploy_(salt, init_code).call().await.is_err());
     println!("CREATE2 deployed Counter at {predicted}");
     Ok(())
 }
