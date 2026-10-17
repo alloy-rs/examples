@@ -6,7 +6,7 @@
 //! Chain IDs, nonces, and fees are filled independently for each provider.
 
 use alloy::{
-    network::{AnyNetwork, EthereumWallet, TransactionBuilder},
+    network::{AnyNetwork, EthereumWallet, ReceiptResponse, TransactionBuilder},
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,
     signers::local::PrivateKeySigner,
