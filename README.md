@@ -46,6 +46,7 @@ hardware requirements. The index is generated from Cargo metadata and the exampl
 This repository contains the following examples:
 
 - [x] Big numbers
+  - [x] [Signed integers](./examples/big-numbers/examples/signed_numbers.rs)
   - [x] [Comparison and equivalence](./examples/big-numbers/examples/comparison_equivalence.rs)
   - [x] [Conversion](./examples/big-numbers/examples/conversion.rs)
   - [x] [Creating Instances](./examples/big-numbers/examples/create_instances.rs)
@@ -55,6 +56,8 @@ This repository contains the following examples:
   - [x] [Compare block headers between providers](./examples/comparison/examples/compare_new_heads.rs)
   - [x] [Compare pending transactions between providers](./examples/comparison/examples/compare_pending_txs.rs)
 - [x] Contracts
+  - [x] [Deploy with CREATE2](./examples/contracts/examples/deploy_create2.rs)
+  - [x] [Deploy an ERC-1167 minimal proxy](./examples/contracts/examples/deploy_minimal_proxy.rs)
   - [x] [Deploy from artifact](./examples/contracts/examples/deploy_from_artifact.rs)
   - [x] [Deploy from bytecode](./examples/contracts/examples/deploy_from_bytecode.rs)
   - [x] [Deploy from contract](./examples/contracts/examples/deploy_from_contract.rs)
