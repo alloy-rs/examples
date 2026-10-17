@@ -156,6 +156,7 @@ This repository contains the following examples:
   - [x] [Send EIP-7594 transaction](./examples/transactions/examples/send_eip7594_transaction.rs)
   - [x] [Send EIP-7702 transaction](./examples/transactions/examples/send_eip7702_transaction.rs)
   - [x] [Send private transaction using Flashbots Protect](./examples/transactions/examples/send_private_transaction.rs)
+  - [x] [Send MEV bundle with `eth_sendBundle`](./examples/transactions/examples/send_bundle.rs)
   - [x] [Send transaction with access list](./examples/transactions/examples/with_access_list.rs)
 - [x] Wallets
   - [x] [AWS signer](./examples/wallets/examples/aws_signer.rs)
