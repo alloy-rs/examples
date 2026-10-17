@@ -1736,6 +1736,26 @@
       }
     },
     {
+      "name": "multi_network_signer",
+      "category": "transactions",
+      "package": "examples-transactions",
+      "source": "examples/transactions/examples/multi_network_signer.rs",
+      "summary": "Example of sharing one signer across providers for multiple EVM-compatible networks.",
+      "command": "cargo run --locked -p examples-transactions --example multi_network_signer",
+      "runtime": {
+        "class": "configured-network",
+        "network": "user-supplied",
+        "environment": [
+          "PRIVATE_KEY",
+          "RPC_URLS"
+        ],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
       "name": "permit2_signature_transfer",
       "category": "transactions",
       "package": "examples-transactions",
