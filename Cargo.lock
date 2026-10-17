@@ -3814,6 +3814,7 @@ dependencies = [
  "alloy",
  "example-support",
  "eyre",
+ "futures-util",
  "rand 0.8.8",
  "serde_json",
  "tokio",
