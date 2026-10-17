@@ -1,69 +1,47 @@
-//! Example of sending a MEV bundle with `eth_sendBundle` via Flashbots authentication.
+//! Example of sending a signed transaction bundle with `eth_sendBundle` and Flashbots
+//! authentication.
 //!
-//! Bundle submission is time-sensitive. This example shows how to:
-//! 1. Build and sign a transaction locally
-//! 2. Wrap it in an [`EthSendBundle`]
-//! 3. Submit it to a relay with the `X-Flashbots-Signature` header via [`MevApi::send_bundle`]
-//!
-//! See the [Flashbots auction docs](https://docs.flashbots.net/flashbots-auction/searchers/advanced/rpc-endpoint)
-//! and Alloy's `provider-mev-api` feature.
+//! Set `RPC_URL` to a regular Ethereum JSON-RPC endpoint and `RELAY_URL` to a compatible
+//! bundle relay on the same network. `PRIVATE_KEY` must belong to a funded account.
+//! `FLASHBOTS_AUTH_KEY` is a separate, persistent identity key that does not need funds.
+//! This example sends a zero-value transaction to the sender itself, spending gas if included.
+//! Relay acceptance does not guarantee inclusion; bundles target a specific block.
 
 use alloy::{
-    network::{eip2718::Encodable2718, EthereumWallet, NetworkTransactionBuilder, TransactionBuilder},
-    primitives::U256,
-    providers::{ext::MevApi, ProviderBuilder},
+    network::{eip2718::Encodable2718, TransactionBuilder},
+    providers::{ext::MevApi, Provider, ProviderBuilder},
     rpc::types::{mev::EthSendBundle, TransactionRequest},
     signers::local::PrivateKeySigner,
 };
+use example_support::{required_env, rpc_url};
 use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Flashbots relay endpoint. Other builders expose compatible `eth_sendBundle` APIs.
-    let relay_url = "https://relay.flashbots.net".parse()?;
+    let signer = required_env("PRIVATE_KEY")?.parse::<PrivateKeySigner>()?;
+    let sender = signer.address();
+    let flashbots_auth = required_env("FLASHBOTS_AUTH_KEY")?.parse::<PrivateKeySigner>()?;
+    let relay_url = required_env("RELAY_URL")?.parse()?;
 
-    // Signer used only for the Flashbots `X-Flashbots-Signature` header (identity), not the tx.
-    let flashbots_auth = PrivateKeySigner::random();
+    // Use a regular node for chain ID, pending nonce, gas estimation, and fee estimation.
+    // A bundle relay generally does not provide these Ethereum RPC methods.
+    let provider = ProviderBuilder::new().wallet(signer).connect_http(rpc_url()?.parse()?);
+    let relay = ProviderBuilder::new().connect_http(relay_url);
+    let tx = TransactionRequest::default().with_from(sender).with_to(sender);
 
-    // Create a provider pointed at the MEV relay.
-    let provider = ProviderBuilder::new().connect_http(relay_url);
-
-    // Build a sample transaction with a separate wallet. This tx is intentionally underfunded so
-    // the relay will reject it — the goal is to demonstrate the API, not land a real bundle.
-    let signer = PrivateKeySigner::random();
-    let wallet = EthereumWallet::from(signer);
-    let recipient = PrivateKeySigner::random().address();
-
-    let tx = TransactionRequest::default()
-        .with_to(recipient)
-        .with_nonce(0)
-        .with_chain_id(1)
-        .with_value(U256::from(100))
-        .with_gas_limit(21_000)
-        .with_max_priority_fee_per_gas(1_000_000_000)
-        .with_max_fee_per_gas(20_000_000_000);
-
-    let tx_envelope = tx.build(&wallet).await?;
-    let raw_tx = tx_envelope.encoded_2718().into();
-
-    // Target the next block. In production, query a regular RPC for the latest block number.
-    let target_block = 1u64;
-
+    // Fill and sign locally without broadcasting to the public mempool.
+    let envelope = provider.fill(tx).await?.try_into_envelope()?;
+    let target_block = provider.get_block_number().await? + 1;
     let bundle = EthSendBundle {
-        txs: vec![raw_tx],
+        txs: vec![envelope.encoded_2718().into()],
         block_number: target_block,
         ..Default::default()
     };
 
-    // `send_bundle` returns a builder; call `.with_auth(signer)` to attach Flashbots signature
-    // headers, then await the request.
-    match provider.send_bundle(bundle).with_auth(flashbots_auth).await {
-        Ok(bundle_hash) => println!("Bundle accepted: {bundle_hash:?}"),
-        Err(err) => {
-            // Expected for this underfunded demo transaction.
-            println!("Bundle submission failed (expected for demo tx): {err}");
-        }
-    }
+    // The builder signs the request body and attaches the X-Flashbots-Signature header.
+    // Propagate relay errors so a rejected submission is not reported as success.
+    let response = relay.send_bundle(bundle).with_auth(flashbots_auth).await?;
+    println!("Bundle accepted for block {target_block}: {response:?}");
 
     Ok(())
 }

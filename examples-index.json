@@ -1706,12 +1706,17 @@
       "category": "transactions",
       "package": "examples-transactions",
       "source": "examples/transactions/examples/send_bundle.rs",
-      "summary": "Example of sending a MEV bundle with `eth_sendBundle` via Flashbots authentication.",
+      "summary": "Example of sending a signed transaction bundle with `eth_sendBundle` and Flashbots authentication.",
       "command": "cargo run --locked -p examples-transactions --example send_bundle",
       "runtime": {
-        "class": "local",
-        "network": null,
-        "environment": [],
+        "class": "configured-network",
+        "network": "user-supplied",
+        "environment": [
+          "FLASHBOTS_AUTH_KEY",
+          "PRIVATE_KEY",
+          "RELAY_URL",
+          "RPC_URL"
+        ],
         "arguments": [],
         "binaries": [],
         "hardware": [],
