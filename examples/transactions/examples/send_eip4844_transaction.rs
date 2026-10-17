@@ -1,7 +1,7 @@
 //! Example showing how to send an [EIP-4844](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-4844.md) transaction.
 
 use alloy::{
-    consensus::{SidecarBuilder, SimpleCoder},
+    consensus::{BlobTransactionSidecar, SidecarBuilder, SimpleCoder},
     eips::eip4844::DATA_GAS_PER_BLOB,
     network::{TransactionBuilder, TransactionBuilder4844},
     providers::{Provider, ProviderBuilder},
@@ -23,11 +23,11 @@ async fn main() -> Result<()> {
 
     // Create a sidecar with some data.
     let sidecar: SidecarBuilder<SimpleCoder> = SidecarBuilder::from_slice(b"Blobs are fun!");
-    let sidecar = sidecar.build()?;
+    let sidecar: BlobTransactionSidecar = sidecar.build()?;
 
     // Build a transaction to send the sidecar from Alice to Bob.
     // The `from` field is automatically filled to the first signer's address (Alice).
-    let tx = TransactionRequest::default().with_to(bob).with_blob_sidecar(sidecar);
+    let tx = TransactionRequest::default().with_to(bob).with_blob_sidecar(sidecar.into());
 
     // Send the transaction and wait for the broadcast.
     let pending_tx = provider.send_transaction(tx).await?;

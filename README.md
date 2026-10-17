@@ -16,6 +16,31 @@ To run an example, use the command `cargo run --example <Example>`:
 cargo run --example mnemonic_signer
 ```
 
+Examples that query a live network or fork it with Anvil require you to supply an endpoint:
+
+```sh
+RPC_URL=https://your-ethereum-endpoint cargo run --example http
+```
+
+WebSocket and IPC examples use `WS_URL` and `IPC_PATH`, respectively. Examples with authentication
+also list their required credential variables in the error they return.
+
+The fallback-layer example accepts a comma-separated list instead:
+
+```sh
+RPC_URLS=https://first-endpoint,https://second-endpoint cargo run --example fallback_layer
+```
+
+Use an endpoint for the network named by the example. For example, `any_network` expects an
+Arbitrum Sepolia endpoint, while mainnet contract and ENS examples expect Ethereum mainnet.
+Examples that fork a network also require [`anvil`](https://getfoundry.sh/anvil/overview/) in
+`PATH`. Hardware-wallet and cloud-signer examples require the device or credentials described in
+their source code.
+
+For programmatic discovery, [`examples-index.json`](./examples-index.json) lists every example with
+its summary, source path, exact command, network, environment variables, binaries, services, and
+hardware requirements. The index is generated from Cargo metadata and the example source files.
+
 ## Overview
 
 This repository contains the following examples:
@@ -36,6 +61,7 @@ This repository contains the following examples:
   - [x] [Deploy and link library](./examples/contracts/examples/deploy_and_link_library.rs)
   - [x] [Interact with ABI](./examples/contracts/examples/interact_with_abi.rs)
   - [x] [Interact with contract instance](./examples/contracts/examples/interact_with_contract_instance.rs)
+  - [x] [Remove liquidity from a Uniswap V2-compatible pair](./examples/contracts/examples/remove_liquidity.rs)
   - [x] [Decode custom JSON-RPC errors](./examples/contracts/examples/jsonrpc_error_decoding.rs)
   - [x] [Decode revert data into custom errors](./examples/contracts/examples/revert_decoding.rs)
   - [x] [Handle unknown return types using `DynSol`](./examples/contracts/examples/unknown_return_types.rs)
@@ -81,6 +107,7 @@ This repository contains the following examples:
   - [x] [Multicall Builder](./examples/providers/examples/multicall.rs)
   - [x] [WS](./examples/providers/examples/ws.rs)
   - [x] [WS with authentication](./examples/providers/examples/ws_with_auth.rs)
+  - [x] [WS with configurable reconnects](./examples/providers/examples/ws_with_reconnect.rs)
   - [x] [JSON-RPC Batch Request](./examples/providers/examples/batch_rpc.rs)
   - [x] [Consensus x RPC types unification](./examples/providers/examples/embed_consensus_rpc.rs)
   - [x] [Basic provider with no fillers](./examples/providers/examples/basic_provider.rs)
@@ -88,6 +115,7 @@ This repository contains the following examples:
   - [x] [Query contract storage](./examples/queries/examples/query_contract_storage.rs)
   - [x] [Query contract deployed bytecode](./examples/queries/examples/query_deployed_bytecode.rs)
   - [x] [Query logs](./examples/queries/examples/query_logs.rs)
+  - [x] [Query logs in chunks](./examples/queries/examples/query_logs_chunked.rs)
 - [x] `sol!` macro
   - [x] [Contracts](./examples/contracts/examples/deploy_from_contract.rs)
   - [x] [Events and errors](./examples/sol-macro/examples/events_errors.rs)
@@ -98,6 +126,8 @@ This repository contains the following examples:
   - [x] [`extra_derives` attribute](./examples/sol-macro/examples/extra_derives.rs)
 - [x] Subscriptions
   - [x] [Subscribe and watch blocks](./examples/subscriptions/examples/subscribe_blocks.rs)
+  - [x] [Resume a canonical block stream](./examples/subscriptions/examples/watch_canonical_blocks.rs)
+  - [x] [Resume a canonical log stream](./examples/subscriptions/examples/watch_canonical_logs.rs)
   - [x] [Watch and poll for contract event logs](./examples/subscriptions/examples/poll_logs.rs)
   - [x] [Subscribe and listen for specific contract event logs](./examples/subscriptions/examples/subscribe_logs.rs)
   - [x] [Subscribe and listen for all contract event logs](./examples/subscriptions/examples/subscribe_all_logs.rs)
@@ -105,7 +135,9 @@ This repository contains the following examples:
   - [x] [Event multiplexer](./examples/subscriptions/examples/event_multiplexer.rs)
 - [x] Transactions
   - [x] [Decode input](./examples/transactions/examples/decode_input.rs)
-  - [x] [Encode and decode EIP-1559 transaction](./examples/transactions/examples/encode_decode_eip1559.rs)
+  - [x] [Decode a receipt log](./examples/transactions/examples/decode_receipt_log.rs)
+  - [x] [Encode and decode transaction envelopes](./examples/transactions/examples/encode_decode_transaction_envelopes.rs)
+  - [x] [Encode and decode receipt envelopes](./examples/transactions/examples/encode_decode_receipt_envelopes.rs)
   - [x] [Get gas price in USD](./examples/transactions/examples/gas_price_usd.rs)
   - [x] [Simulate using `debug_traceCallMany`](./examples/transactions/examples/debug_trace_call_many.rs)
   - [x] [Simulate using `trace_callMany`](./examples/transactions/examples/trace_call_many.rs)
@@ -133,6 +165,7 @@ This repository contains the following examples:
   - [x] [Verify message](./examples/wallets/examples/verify_message.rs)
   - [x] [Sign permit hash](./examples/wallets/examples/sign_permit_hash.rs)
   - [x] [Trezor signer](./examples/wallets/examples/trezor_signer.rs)
+  - [x] [Turnkey signer](./examples/wallets/examples/turnkey_signer.rs)
   - [x] [Yubi signer](./examples/wallets/examples/yubi_signer.rs)
   - [x] [Keystore signer](./examples/wallets/examples/keystore_signer.rs)
   - [x] [Create keystore](./examples/wallets/examples/create_keystore.rs)

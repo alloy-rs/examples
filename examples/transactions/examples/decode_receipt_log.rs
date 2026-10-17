@@ -43,7 +43,9 @@ async fn main() -> eyre::Result<()> {
     // `Increment`.
     let maybe_log = receipt.decoded_log::<Counter::Increment>();
 
-    let Some(increment_log) = maybe_log else { eyre::bail!("Increment not emitted") };
+    let Some(increment_log) = maybe_log else {
+        eyre::bail!("Increment not emitted");
+    };
 
     assert_eq!(increment_log.address, *counter.address());
     let Counter::Increment { value } = increment_log.data;

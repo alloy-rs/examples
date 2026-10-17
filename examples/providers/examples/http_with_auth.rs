@@ -12,19 +12,20 @@ use alloy::{
         Http,
     },
 };
+use example_support::{required_env, rpc_url};
 use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
     // Set the Authorization header.
     let mut headers = HeaderMap::new();
-    headers.insert(AUTHORIZATION, HeaderValue::from_static("deadbeef"));
+    headers.insert(AUTHORIZATION, required_env("RPC_AUTHORIZATION")?.parse::<HeaderValue>()?);
 
     // Create the reqwest::Client with the AUTHORIZATION header.
     let client_with_auth = Client::builder().default_headers(headers).build()?;
 
     // Create the HTTP transport.
-    let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc".parse()?;
+    let rpc_url = rpc_url()?.parse()?;
     let http = Http::with_client(client_with_auth, rpc_url);
     let rpc_client = RpcClient::new(http, false);
 

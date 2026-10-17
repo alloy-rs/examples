@@ -9,6 +9,7 @@ use alloy::{
     sol,
     sol_types::SolCall,
 };
+use example_support::rpc_url;
 use eyre::Result;
 use helpers::alloy::{
     get_amount_in, get_amount_out, get_sushi_pair, get_uniswap_pair, set_hash_storage_slot,
@@ -38,8 +39,9 @@ async fn main() -> Result<()> {
     let sushi_pair = get_sushi_pair();
 
     let wallet_address = address!("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
-    let provider = ProviderBuilder::new()
-        .connect_anvil_with_wallet_and_config(|a| a.fork("https://reth-ethereum.ithaca.xyz/rpc"))?;
+    let rpc_url = rpc_url()?;
+    let provider =
+        ProviderBuilder::new().connect_anvil_with_wallet_and_config(|anvil| anvil.fork(rpc_url))?;
 
     let executor = FlashBotsMultiCall::deploy(provider.clone(), wallet_address).await?;
     let iweth = IERC20::new(WETH_ADDR, provider.clone());

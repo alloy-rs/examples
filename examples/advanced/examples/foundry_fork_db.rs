@@ -40,7 +40,7 @@ async fn main() -> Result<()> {
 
     // The `BlockchainDbMeta` is used a identifier when the db is flushed to the disk.
     // This aids in cases where the disk contains data from multiple forks.
-    let meta = BlockchainDbMeta::default().with_block(&block.inner).with_url(&anvil.endpoint());
+    let meta = BlockchainDbMeta::default().with_url(&anvil.endpoint());
 
     let db = BlockchainDb::new(meta, None);
 
@@ -102,7 +102,7 @@ async fn main() -> Result<()> {
 
     let res = evm.transact(configure_tx_env(tx_req)).unwrap();
 
-    let total_spent = U256::from(res.result.gas_used()) * U256::from(basefee) + U256::from(100);
+    let total_spent = U256::from(res.result.tx_gas_used()) * U256::from(basefee) + U256::from(100);
 
     shared.data().do_commit(res.state);
 
@@ -138,12 +138,17 @@ fn configure_evm(
             block.header.excess_blob_gas().unwrap_or_default(),
             SpecId::PRAGUE,
         )),
+        slot_num: 0,
     };
 
     let context = EthEvmContext::new(WrapDatabaseRef(shared), SpecId::PRAGUE).with_block(block_env);
 
-    let evm = RevmEvm::new(context, EthInstructions::default(), EthPrecompiles::default())
-        .with_inspector(NoOpInspector);
+    let evm = RevmEvm::new(
+        context,
+        EthInstructions::new_mainnet_with_spec(SpecId::PRAGUE),
+        EthPrecompiles::new(SpecId::PRAGUE),
+    )
+    .with_inspector(NoOpInspector);
 
     EthEvm::new(evm, false)
 }

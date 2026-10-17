@@ -1,12 +1,13 @@
 //! Example of looking up ENS names from Ethereum addresses.
 
 use alloy::{ens::ProviderEnsExt, primitives::address, providers::ProviderBuilder};
+use example_support::rpc_url;
 use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
     // Create a provider.
-    let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc".parse()?;
+    let rpc_url = rpc_url()?.parse()?;
     let provider = ProviderBuilder::new().connect_http(rpc_url);
 
     // Vitalik's Ethereum address.

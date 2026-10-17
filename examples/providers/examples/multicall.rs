@@ -6,6 +6,7 @@ use alloy::{
     providers::{CallItemBuilder, Failure, Provider, ProviderBuilder},
     sol,
 };
+use example_support::rpc_url;
 use IWETH9::IWETH9Instance;
 
 sol!(
@@ -19,8 +20,9 @@ sol!(
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
     // Create a new provider
-    let provider = ProviderBuilder::new()
-        .connect_anvil_with_wallet_and_config(|a| a.fork("https://reth-ethereum.ithaca.xyz/rpc"))?;
+    let rpc_url = rpc_url()?;
+    let provider =
+        ProviderBuilder::new().connect_anvil_with_wallet_and_config(|anvil| anvil.fork(rpc_url))?;
     // Create a new instance of the IWETH9 contract.
     let weth =
         IWETH9Instance::new(address!("0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"), &provider);
@@ -50,7 +52,9 @@ async fn main() -> eyre::Result<()> {
 
     // This would fail as Alice doesn't have any WETH.
     let tx = CallItemBuilder::new(weth.transfer(bob, U256::from(10))).allow_failure(true);
-    let deposit = CallItemBuilder::new(weth.deposit()).value(wad); // Set the amount of eth that should be deposited into the contract.
+    let deposit = CallItemBuilder::new(weth.deposit()).value(wad); // Set the amount of eth that
+                                                                   // should be deposited into the
+                                                                   // contract.
     let multicall = provider
         .multicall()
         // Bob's intial WETH balance.

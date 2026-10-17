@@ -10,20 +10,20 @@ use alloy::{
 };
 use eyre::Result;
 
-pub(crate) static WETH_ADDR: Address = address!("C02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2");
-pub(crate) static DAI_ADDR: Address = address!("6B175474E89094C44Da98b954EedeAC495271d0F");
+pub static WETH_ADDR: Address = address!("C02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2");
+pub static DAI_ADDR: Address = address!("6B175474E89094C44Da98b954EedeAC495271d0F");
 
 #[derive(Debug)]
-pub(crate) struct UniV2Pair {
-    pub(crate) address: Address,
-    pub(crate) token0: Address,
-    pub(crate) token1: Address,
-    pub(crate) reserve0: U256,
-    pub(crate) reserve1: U256,
+pub struct UniV2Pair {
+    pub address: Address,
+    pub token0: Address,
+    pub token1: Address,
+    pub reserve0: U256,
+    pub reserve1: U256,
 }
 
 // https://etherscan.io/address/0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11
-pub(crate) fn get_uniswap_pair() -> UniV2Pair {
+pub fn get_uniswap_pair() -> UniV2Pair {
     UniV2Pair {
         address: address!("A478c2975Ab1Ea89e8196811F51A7B7Ade33eB11"),
         token0: DAI_ADDR,
@@ -34,7 +34,7 @@ pub(crate) fn get_uniswap_pair() -> UniV2Pair {
 }
 
 // https://etherscan.io/address/0xC3D03e4F041Fd4cD388c549Ee2A29a9E5075882f
-pub(crate) fn get_sushi_pair() -> UniV2Pair {
+pub fn get_sushi_pair() -> UniV2Pair {
     UniV2Pair {
         address: address!("C3D03e4F041Fd4cD388c549Ee2A29a9E5075882f"),
         token0: DAI_ADDR,
@@ -44,14 +44,14 @@ pub(crate) fn get_sushi_pair() -> UniV2Pair {
     }
 }
 
-pub(crate) fn get_amount_out(reserve_in: U256, reserve_out: U256, amount_in: U256) -> U256 {
+pub fn get_amount_out(reserve_in: U256, reserve_out: U256, amount_in: U256) -> U256 {
     let amount_in_with_fee = amount_in * get_uniswappy_fee();
     let numerator = amount_in_with_fee * reserve_out;
     let denominator = reserve_in * U256::from(1000) + amount_in_with_fee;
     numerator / denominator
 }
 
-pub(crate) fn get_amount_in(
+pub fn get_amount_in(
     reserves00: U256,
     reserves01: U256,
     is_weth0: bool,
@@ -129,7 +129,7 @@ fn get_uniswappy_fee() -> U256 {
     U256::from(997)
 }
 
-pub(crate) async fn set_hash_storage_slot<P: Provider>(
+pub async fn set_hash_storage_slot<P: Provider>(
     anvil_provider: &P,
     address: Address,
     hash_slot: U256,
@@ -142,5 +142,3 @@ pub(crate) async fn set_hash_storage_slot<P: Provider>(
 
     Ok(())
 }
-
-const fn main() {}

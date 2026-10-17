@@ -1,7 +1,9 @@
 //! Example of sending a private transaction using Flashbots Protect.
 
 use alloy::{
-    network::{eip2718::Encodable2718, EthereumWallet, TransactionBuilder},
+    network::{
+        eip2718::Encodable2718, EthereumWallet, NetworkTransactionBuilder, TransactionBuilder,
+    },
     primitives::U256,
     providers::{Provider, ProviderBuilder},
     rpc::types::TransactionRequest,

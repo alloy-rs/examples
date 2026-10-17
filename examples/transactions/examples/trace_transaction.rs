@@ -8,13 +8,14 @@ use alloy::{
         GethDefaultTracingOptions,
     },
 };
+use example_support::rpc_url;
 use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc";
+    let rpc_url = rpc_url()?;
     let provider = ProviderBuilder::new().connect_anvil_with_config(|anvil| anvil.fork(rpc_url));
 
     // Hash of the tx we want to trace.

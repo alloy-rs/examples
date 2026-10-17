@@ -57,7 +57,7 @@ async fn main() -> Result<()> {
         .expect("Failed to get contract address");
 
     // Get the contract abi.
-    let path = std::env::current_dir()?.join("examples/contracts/examples/abi/Colors.json");
+    let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("examples/abi/Colors.json");
     let contents = std::fs::read(path)?;
     let abi: JsonAbi = serde_json::from_slice(&contents)?;
 

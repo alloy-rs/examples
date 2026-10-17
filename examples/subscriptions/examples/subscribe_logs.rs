@@ -5,14 +5,14 @@ use alloy::{
     providers::{Provider, ProviderBuilder, WsConnect},
     rpc::types::{BlockNumberOrTag, Filter},
 };
+use example_support::ws_url;
 use eyre::Result;
 use futures_util::stream::StreamExt;
 
 #[tokio::main]
 async fn main() -> Result<()> {
     // Create the provider.
-    let rpc_url = "wss://eth-mainnet.g.alchemy.com/v2/your-api-key";
-    let ws = WsConnect::new(rpc_url);
+    let ws = WsConnect::new(ws_url()?);
     let provider = ProviderBuilder::new().connect_ws(ws).await?;
 
     // Create a filter to watch for UNI token transfers.

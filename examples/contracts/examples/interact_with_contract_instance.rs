@@ -45,7 +45,8 @@ async fn main() -> Result<()> {
         .expect("Failed to get contract address");
 
     // Get the contract ABI.
-    let path = std::env::current_dir()?.join("examples/contracts/examples/artifacts/Counter.json");
+    let path =
+        std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("examples/artifacts/Counter.json");
 
     // Read the artifact which contains `abi`, `bytecode`, `deployedBytecode` and `metadata`.
     let artifact = std::fs::read(path).expect("Failed to read artifact");

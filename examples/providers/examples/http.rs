@@ -1,12 +1,13 @@
 //! Example of using the HTTP provider with the `reqwest` crate to get the latest block number.
 
 use alloy::providers::{Provider, ProviderBuilder};
+use example_support::rpc_url;
 use eyre::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
     // Create a provider with the HTTP transport using the `reqwest` crate.
-    let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc".parse()?;
+    let rpc_url = rpc_url()?.parse()?;
     let provider = ProviderBuilder::new().connect_http(rpc_url);
 
     // Get latest block number.

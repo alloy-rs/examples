@@ -4,18 +4,19 @@ use alloy::{
     providers::{Provider, ProviderBuilder, WsConnect},
     transports::Authorization,
 };
+use example_support::{required_env, ws_url};
 use eyre::Result;
 use futures_util::StreamExt;
 
 #[tokio::main]
 async fn main() -> Result<()> {
     // Create authorization methods.
-    let auth = Authorization::basic("username", "password");
-    let auth_bearer = Authorization::bearer("bearer-token");
+    let auth = Authorization::basic(required_env("WS_USERNAME")?, required_env("WS_PASSWORD")?);
+    let auth_bearer = Authorization::bearer(required_env("WS_BEARER_TOKEN")?);
 
     // Create the WS connection object with authentication.
-    let rpc_url = "wss://your-ws-endpoint.com/";
-    let ws_basic = WsConnect::new(rpc_url).with_auth(auth);
+    let rpc_url = ws_url()?;
+    let ws_basic = WsConnect::new(&rpc_url).with_auth(auth);
     let ws_bearer = WsConnect::new(rpc_url).with_auth(auth_bearer);
 
     // Create the provider.

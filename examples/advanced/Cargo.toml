@@ -16,6 +16,7 @@ workspace = true
 foundry-fork-db.workspace = true
 alloy.workspace = true
 alloy-evm.workspace = true
+example-support.workspace = true
 helpers.workspace = true
 
 # reth

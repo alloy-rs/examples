@@ -15,6 +15,7 @@ use alloy::{
     sol,
     sol_types::eip712_domain,
 };
+use example_support::rpc_url;
 use eyre::Result;
 use std::str::FromStr;
 
@@ -68,7 +69,7 @@ impl From<PermitTransferFrom> for ISignatureTransfer::PermitTransferFrom {
 async fn main() -> Result<()> {
     // Spin up a local Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc";
+    let rpc_url = rpc_url()?;
     // NOTE: ⚠️ Due to changes in EIP-7702 (see: https://getfoundry.sh/anvil/overview/#eip-7702-and-default-accounts),
     // the default mnemonic cannot be used for signature-based testing. Instead, we use a custom
     // mnemonic.

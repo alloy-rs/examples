@@ -6,6 +6,7 @@ use alloy::{
     sol,
     sol_types::SolValue,
 };
+use example_support::rpc_url;
 use eyre::Result;
 
 sol!(
@@ -22,7 +23,7 @@ static WETH_ADDR: Address = address!("C02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2")
 async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc";
+    let rpc_url = rpc_url()?;
     let provider = ProviderBuilder::new().connect_anvil_with_config(|anvil| anvil.fork(rpc_url));
 
     // Create an instance of the WETH contract.

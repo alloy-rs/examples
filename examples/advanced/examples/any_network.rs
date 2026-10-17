@@ -11,6 +11,7 @@ use alloy::{
     signers::local::PrivateKeySigner,
     sol,
 };
+use example_support::{required_env, rpc_url};
 use eyre::Result;
 
 // The address of the contract below deployed to Arbitrum Sepolia.
@@ -44,10 +45,10 @@ struct ArbOtherFields {
 async fn main() -> Result<()> {
     // [RISK WARNING! Writing a private key in the code file is insecure behavior.]
     // The following code is for testing only. Set up signer from private key, be aware of danger.
-    let signer: PrivateKeySigner = "<PRIVATE_KEY>".parse().expect("should parse private key");
+    let signer: PrivateKeySigner = required_env("PRIVATE_KEY")?.parse()?;
 
     // Create a provider with the Arbitrum Sepolia network and the wallet.
-    let rpc_url = "https://sepolia-rollup.arbitrum.io/rpc".parse()?;
+    let rpc_url = rpc_url()?.parse()?;
     let provider =
         ProviderBuilder::new().network::<AnyNetwork>().wallet(signer).connect_http(rpc_url);
 
@@ -59,7 +60,7 @@ async fn main() -> Result<()> {
     let receipt = builder.send().await?.get_receipt().await?;
 
     // Fetch the `gasUsedForL1` and `l1BlockNumber` fields from the receipt.
-    let arb_fields: ArbOtherFields = receipt.other.deserialize_into()?;
+    let arb_fields: ArbOtherFields = receipt.deserialize_other()?;
     let l1_gas = arb_fields.gas_used_for_l1.to::<u128>();
     let l1_block_number = arb_fields.l1_block_number.to::<u64>();
 

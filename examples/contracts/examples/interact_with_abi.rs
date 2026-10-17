@@ -1,6 +1,7 @@
 //! Example of generating code from ABI file using the `sol!` macro to interact with the contract.
 
 use alloy::{primitives::address, providers::ProviderBuilder, sol};
+use example_support::rpc_url;
 use eyre::Result;
 
 // Codegen from ABI file to interact with the contract.
@@ -15,7 +16,7 @@ sol!(
 async fn main() -> Result<()> {
     // Spin up a forked Anvil node.
     // Ensure `anvil` is available in $PATH.
-    let rpc_url = "https://reth-ethereum.ithaca.xyz/rpc";
+    let rpc_url = rpc_url()?;
     let provider =
         ProviderBuilder::new().connect_anvil_with_wallet_and_config(|anvil| anvil.fork(rpc_url))?;
 

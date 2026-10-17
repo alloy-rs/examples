@@ -1,7 +1,7 @@
 //! Example of signing, encoding and sending a raw transaction using a wallet.
 
 use alloy::{
-    network::TransactionBuilder,
+    network::{NetworkTransactionBuilder, TransactionBuilder},
     primitives::U256,
     providers::{Provider, ProviderBuilder, WalletProvider},
     rpc::types::TransactionRequest,

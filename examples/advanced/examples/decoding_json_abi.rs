@@ -4,7 +4,8 @@ use alloy::json_abi::JsonAbi;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Get the contract abi.
-    let path = std::env::current_dir()?.join("examples/advanced/examples/abi/SimpleLending.json");
+    let path =
+        std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("examples/abi/SimpleLending.json");
     let contents = std::fs::read(path)?;
     let abi: JsonAbi = serde_json::from_slice(&contents)?;
 
