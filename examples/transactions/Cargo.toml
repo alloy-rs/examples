@@ -20,3 +20,4 @@ eyre.workspace = true
 rand.workspace = true
 serde_json.workspace = true
 tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }
+futures-util.workspace = true

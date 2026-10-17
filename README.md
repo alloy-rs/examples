@@ -134,6 +134,7 @@ This repository contains the following examples:
   - [x] [Subscribe and listen to pending transactions in the public mempool](./examples/subscriptions/examples/subscribe_pending_transactions.rs)
   - [x] [Event multiplexer](./examples/subscriptions/examples/event_multiplexer.rs)
 - [x] Transactions
+  - [x] [Share one signer across multiple networks](./examples/transactions/examples/multi_network_signer.rs)
   - [x] [Decode input](./examples/transactions/examples/decode_input.rs)
   - [x] [Decode a receipt log](./examples/transactions/examples/decode_receipt_log.rs)
   - [x] [Encode and decode transaction envelopes](./examples/transactions/examples/encode_decode_transaction_envelopes.rs)
