@@ -233,6 +233,23 @@
       }
     },
     {
+      "name": "signed_numbers",
+      "category": "big-numbers",
+      "package": "examples-big-numbers",
+      "source": "examples/big-numbers/examples/signed_numbers.rs",
+      "summary": "Example of creating, converting, and calculating with signed integers such as `I24` and `I256`.",
+      "command": "cargo run --locked -p examples-big-numbers --example signed_numbers",
+      "runtime": {
+        "class": "offline",
+        "network": null,
+        "environment": [],
+        "arguments": [],
+        "binaries": [],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
       "name": "compare_new_heads",
       "category": "comparison",
       "package": "examples-comparison",
@@ -307,6 +324,25 @@
       }
     },
     {
+      "name": "deploy_create2",
+      "category": "contracts",
+      "package": "examples-contracts",
+      "source": "examples/contracts/examples/deploy_create2.rs",
+      "summary": "Example of deploying a contract at a deterministic CREATE2 address using generated bindings.",
+      "command": "cargo run --locked -p examples-contracts --example deploy_create2",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
       "name": "deploy_from_artifact",
       "category": "contracts",
       "package": "examples-contracts",
@@ -351,6 +387,25 @@
       "source": "examples/contracts/examples/deploy_from_contract.rs",
       "summary": "Example of deploying a contract from Solidity code using the `sol!` macro to Anvil and interacting with it.",
       "command": "cargo run --locked -p examples-contracts --example deploy_from_contract",
+      "runtime": {
+        "class": "local-node",
+        "network": "local-development",
+        "environment": [],
+        "arguments": [],
+        "binaries": [
+          "anvil"
+        ],
+        "hardware": [],
+        "services": []
+      }
+    },
+    {
+      "name": "deploy_minimal_proxy",
+      "category": "contracts",
+      "package": "examples-contracts",
+      "source": "examples/contracts/examples/deploy_minimal_proxy.rs",
+      "summary": "Example of deploying an ERC-1167 minimal proxy and calling its implementation through bindings.",
+      "command": "cargo run --locked -p examples-contracts --example deploy_minimal_proxy",
       "runtime": {
         "class": "local-node",
         "network": "local-development",

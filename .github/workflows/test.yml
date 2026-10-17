@@ -107,3 +107,11 @@ jobs:
           cache-on-failure: true
       - name: Run examples
         run: ./scripts/test.sh --locked
+      - name: Run local deployment examples
+        run: |
+          cargo run --locked -p examples-contracts --example deploy_create2
+          cargo run --locked -p examples-contracts --example deploy_minimal_proxy
+      - name: Run configured transaction examples locally
+        run: |
+          cargo build --locked -p examples-transactions --example multi_network_signer --example send_bundle
+          python3 scripts/test-network-transactions.py
