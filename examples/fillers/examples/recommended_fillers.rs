@@ -1,4 +1,4 @@
-//! Example of using the `.with_recommended_fillers()` method in the provider.
+//! Example of using the recommended fillers, which `ProviderBuilder::new()` enables by default.
 
 use alloy::{
     consensus::Transaction,
