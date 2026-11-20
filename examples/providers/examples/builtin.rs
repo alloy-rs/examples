@@ -1,4 +1,4 @@
-//! Example of using the `on_builtin` method in the provider.
+//! Example of using the `connect` method of the provider builder, which picks the HTTP, WS or IPC transport from the URL.
 
 use alloy::{
     node_bindings::Anvil,
